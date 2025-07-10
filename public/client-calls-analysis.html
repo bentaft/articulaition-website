@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AI-Powered Client & Partner Calls Analysis - Articulaition" />
+    <title>Client & Partner Calls Analysis - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    
+    <style>
+        :root {
+            --primary-orange: #ff934d;
+            --primary-blue: #4a90e2;
+            --success-green: #10b981;
+            --client-teal: #0891b2;
+            --relationship-purple: #7c3aed;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --bg-primary: #fafbfc;
+            --bg-secondary: #f4f6f8;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 25%, #edf2f7 50%, #e2e8f0 75%, #cbd5e0 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .dashboard-container {
+            background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 100%);
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .dashboard-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(8, 145, 178, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.025) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(255, 147, 77, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(74, 144, 226, 0.015) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Animation Classes */
+        .fade-in { 
+            animation: fadeIn 1s ease-out forwards; 
+            opacity: 0; 
+        }
+        
+        .slide-up { 
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+            opacity: 0; 
+            transform: translateY(30px); 
+        }
+        
+        .scale-in { 
+            animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+            opacity: 0; 
+            transform: scale(0.9); 
+        }
+        
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleIn { to { opacity: 1; transform: scale(1); } }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+
+        /* Header Styling */
+        .main-header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-section img {
+            height: 32px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--client-teal), var(--relationship-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--text-secondary);
+        }
+
+        .breadcrumb .current {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Page Title Section */
+        .page-title-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title-with-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .title-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--client-teal), var(--relationship-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .page-description {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Analysis Options */
+        .analysis-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .analysis-option {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 2px solid rgba(0, 0, 0, 0.06);
+            border-radius: 24px;
+            padding: 2.5rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: center;
+            position: relative;
+        }
+
+        .analysis-option:hover {
+            transform: translateY(-4px);
+            border-color: var(--client-teal);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .analysis-option.selected {
+            border-color: var(--client-teal);
+            background: rgba(8, 145, 178, 0.05);
+        }
+
+        .option-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--client-teal), var(--relationship-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .option-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .option-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .option-features {
+            margin-top: 1.5rem;
+        }
+
+        .features-list {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            display: none;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .upload-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .upload-center {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .upload-option-single {
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px dashed rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .upload-option-single:hover {
+            border-color: var(--client-teal);
+            background: rgba(8, 145, 178, 0.02);
+        }
+        
+        .file-selected {
+            margin-top: 1.5rem;
+            background: rgba(16, 185, 129, 0.05);
+            border: 2px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .file-selected .file-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--success-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .file-selected .file-details {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .file-selected .file-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+        
+        .file-selected .file-size {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+        
+        .file-selected .remove-file {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .file-selected .remove-file:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .upload-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--client-teal), var(--relationship-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .upload-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .upload-button {
+            background: var(--client-teal);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .upload-button:hover {
+            background: #0c7b93;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* AI Practice Section */
+        .ai-practice-section {
+            display: none;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .ai-practice-section.active {
+            display: block;
+        }
+
+        .scenario-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .scenario-type {
+            background: linear-gradient(
+              135deg,
+              rgba(255, 255, 255, 0.95),
+              rgba(255, 255, 255, 0.85)
+            );
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 16px;
+            padding: 1.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .scenario-type:hover {
+            transform: translateY(-4px);
+            border-color: var(--client-teal);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            background: linear-gradient(
+              135deg,
+              rgba(255, 255, 255, 0.98),
+              rgba(255, 255, 255, 0.95)
+            );
+        }
+
+        .scenario-type.selected {
+            border-color: var(--client-teal);
+            background: linear-gradient(
+              135deg,
+              rgba(8, 145, 178, 0.08),
+              rgba(8, 145, 178, 0.04)
+            );
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(8, 145, 178, 0.15);
+        }
+
+        .scenario-type::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+              135deg,
+              transparent 0%,
+              rgba(8, 145, 178, 0.02) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .scenario-type:hover::before,
+        .scenario-type.selected::before {
+            opacity: 1;
+        }
+
+        .scenario-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 1.25rem;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--client-teal), var(--relationship-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(8, 145, 178, 0.25);
+        }
+
+        .scenario-type:hover .scenario-icon {
+            transform: scale(1.05);
+        }
+
+        .scenario-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            position: relative;
+            z-index: 2;
+            line-height: 1.3;
+        }
+
+        .scenario-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            position: relative;
+            z-index: 2;
+            font-weight: 400;
+            max-width: 240px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Conversation Container */
+        .conversation-container {
+            margin-top: 3rem;
+        }
+
+        .scenario-intro {
+            background: rgba(8, 145, 178, 0.05);
+            border: 1px solid rgba(8, 145, 178, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .scenario-intro .scenario-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--client-teal);
+            margin-bottom: 1rem;
+        }
+
+        .scenario-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .conversation-flow {
+            min-height: 200px;
+            margin-bottom: 2rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--client-teal), var(--relationship-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-blue));
+        }
+
+        .message-content {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            max-width: 70%;
+            line-height: 1.5;
+        }
+
+        .message.user .message-content {
+            background: rgba(8, 145, 178, 0.1);
+            border-color: rgba(8, 145, 178, 0.2);
+        }
+
+        /* Recording Interface */
+        .recording-interface {
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(0, 0, 0, 0.06);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .mic-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--client-teal), var(--relationship-purple));
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .mic-button:hover {
+            transform: scale(1.05);
+        }
+
+        .mic-button.recording {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(8, 145, 178, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(8, 145, 178, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(8, 145, 178, 0); }
+        }
+
+        .recording-status {
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .recording-timer {
+            color: var(--text-muted);
+            font-family: monospace;
+            font-size: 1.125rem;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, var(--client-teal), #0c7b93);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .primary-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .primary-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .secondary-button {
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text-primary);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .secondary-button:hover {
+            background: white;
+            border-color: var(--client-teal);
+            transform: translateY(-1px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 2rem 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .analysis-options,
+            .scenario-types {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .analysis-option {
+                padding: 2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="main-header fade-in">
+        <nav class="header-nav">
+          <div class="logo-section">
+            <img src="images/logo-header.svg" alt="Articulaition.com" />
+          </div>
+          <div class="nav-links">
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="professional-communication.html" class="nav-link">Professional</a>
+            <a href="personal-communication.html" class="nav-link">Personal</a>
+          </div>
+          <div class="user-menu">
+            <div class="user-avatar">JD</div>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb slide-up delay-100">
+          <a href="dashboard.html">Dashboard</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <a href="professional-communication.html">Professional</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <span class="current">Client Calls Analysis</span>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title-section slide-up delay-200">
+          <div class="title-with-icon">
+            <div class="title-icon">
+              <i data-lucide="phone" class="w-6 h-6"></i>
+            </div>
+            <h1 class="page-title">Client & Partner Calls Analysis</h1>
+          </div>
+          <p class="page-description">
+            Build trust and rapport—refine your consultative approach, active listening, and relationship-building skills.
+          </p>
+        </div>
+
+        <!-- Analysis Options -->
+        <div class="analysis-options">
+          <!-- Upload Existing Recording -->
+          <div class="analysis-option scale-in delay-300" data-type="upload">
+            <div class="option-icon">
+              <i data-lucide="upload" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">Upload Client Call</h3>
+            <p class="option-description">
+              Upload a recording of your client call, partner meeting, or consultative conversation for analysis.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Trust-building analysis • Active listening assessment • Rapport metrics • Consultation effectiveness
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Practice Session -->
+          <div class="analysis-option scale-in delay-400" data-type="practice">
+            <div class="option-icon">
+              <i data-lucide="users" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">AI Client Simulation</h3>
+            <p class="option-description">
+              Practice with our AI that simulates different client personalities, concerns, and relationship dynamics.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Virtual clients • Relationship challenges • Trust-building scenarios • Advisory conversations
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+          <h2 class="section-title">Upload Your Client Call</h2>
+          <p class="section-subtitle">Upload an audio file of your client call or partner conversation</p>
+
+          <div class="upload-center">
+            <div class="upload-option-single" id="fileUpload">
+              <div class="upload-icon">
+                <i data-lucide="folder" class="w-6 h-6"></i>
+              </div>
+              <div class="upload-title">Choose File</div>
+              <div class="upload-description">Select an audio file from your device (MP3, M4A, WAV)</div>
+              <button class="upload-button" id="chooseFileBtn">
+                <i data-lucide="upload" class="w-4 h-4"></i>
+                Select File
+              </button>
+              <input type="file" id="audioFile" accept=".mp3,.m4a,.wav" hidden />
+              
+              <div class="file-selected" id="fileSelected" style="display: none;">
+                <div class="file-icon">
+                  <i data-lucide="file-audio" class="w-5 h-5"></i>
+                </div>
+                <div class="file-details">
+                  <div class="file-name" id="fileName">client-call.mp3</div>
+                  <div class="file-size" id="fileSize">2.4 MB</div>
+                </div>
+                <button class="remove-file" id="removeFile">
+                  <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="secondary-button" id="backToOptions">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="primary-button" id="analyzeUpload" disabled>
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              Analyze Recording
+            </button>
+          </div>
+        </div>
+
+        <!-- AI Practice Section -->
+        <div class="ai-practice-section" id="practiceSection">
+          <h2 class="section-title">Choose Client Scenario</h2>
+          <p class="section-subtitle">Select the type of client interaction you'd like to practice</p>
+
+          <div class="scenario-types">
+            <div class="scenario-type" data-scenario="discovery">
+              <div class="scenario-icon">
+                <i data-lucide="search" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Discovery Call</div>
+              <div class="scenario-description">Initial consultation to understand client needs and build rapport</div>
+            </div>
+
+            <div class="scenario-type" data-scenario="advisory">
+              <div class="scenario-icon">
+                <i data-lucide="lightbulb" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Advisory Consultation</div>
+              <div class="scenario-description">Strategic advice session addressing client challenges and opportunities</div>
+            </div>
+
+            <div class="scenario-type" data-scenario="escalation">
+              <div class="scenario-icon">
+                <i data-lucide="alert-circle" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Issue Escalation</div>
+              <div class="scenario-description">Handle client concerns and service recovery situations</div>
+            </div>
+
+            <div class="scenario-type" data-scenario="renewal">
+              <div class="scenario-icon">
+                <i data-lucide="refresh-ccw" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Renewal Discussion</div>
+              <div class="scenario-description">Contract renewal conversations and relationship deepening</div>
+            </div>
+
+            <div class="scenario-type" data-scenario="expansion">
+              <div class="scenario-icon">
+                <i data-lucide="trending-up" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Account Expansion</div>
+              <div class="scenario-description">Discuss additional services and growth opportunities</div>
+            </div>
+
+            <div class="scenario-type" data-scenario="partnership">
+              <div class="scenario-icon">
+                <i data-lucide="handshake" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Strategic Partnership</div>
+              <div class="scenario-description">Partner collaboration and joint initiative discussions</div>
+            </div>
+          </div>
+
+          <div class="conversation-container" id="conversationContainer" style="display: none;">
+            <!-- Scenario Introduction -->
+            <div class="scenario-intro">
+              <div class="scenario-title">
+                <i data-lucide="phone" class="w-5 h-5 inline mr-2"></i>
+                <span id="scenarioTitle">Discovery Call</span>
+              </div>
+              <div class="scenario-text" id="scenarioText">
+                You're conducting a discovery call with a potential new client. They're considering your services but seem hesitant about making a decision. Your goal is to understand their needs and build trust.
+              </div>
+            </div>
+
+            <!-- Conversation Flow -->
+            <div class="conversation-flow" id="conversationFlow">
+              <!-- Messages will be inserted here -->
+            </div>
+
+            <div class="action-buttons">
+              <button class="secondary-button" id="backToScenarios">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Scenarios
+              </button>
+              <button class="secondary-button" id="recordButton" style="display: none;">
+                <i data-lucide="mic" class="w-4 h-4"></i>
+                Record Response
+              </button>
+              <button class="primary-button" id="endCall" style="display: none;">
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                Submit for Analysis
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons" id="scenarioActions">
+            <button class="secondary-button" id="backToOptionsFromPractice">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="secondary-button" id="changeScenario">
+              <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+              Change Scenario
+            </button>
+            <button class="primary-button" id="startPractice" disabled>
+              <i data-lucide="play" class="w-4 h-4"></i>
+              Start Client Call Practice
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio-recorder.js"></script>
+    <script src="js/recording-integration.js"></script>
+    <script src="js/ai-conversation-engine.js"></script>
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Initialize recording functionality
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof initializeRecording === 'function') {
+          initializeRecording();
+        }
+      });
+
+      // Initialize AI engine
+      const aiEngine = new AIConversationEngine();
+      
+      // Initialize Gemini AI engine for scenario generation
+      let geminiEngine = null;
+      try {
+        geminiEngine = new GeminiAIEngine();
+        console.log("Gemini AI Engine initialized:", geminiEngine.isConfigured() ? "Configured" : "Not configured");
+      } catch (error) {
+        console.warn("Gemini AI Engine not available:", error);
+      }
+
+      // Client call scenarios
+      const clientScenarios = {
+        'discovery': {
+          title: 'Initial Discovery Call',
+          description: 'You\'re conducting a discovery call with a potential new client who is evaluating multiple service providers.',
+          initialMessage: 'Thank you for taking the time to speak with me today. I have to be honest - we\'re talking to several companies about this project, so I\'m curious what makes your approach different. We\'ve been burned before by agencies that overpromise and underdeliver.'
+        },
+        'advisory': {
+          title: 'Strategic Advisory Session',
+          description: 'An existing client is facing strategic challenges and needs your expert guidance and recommendations.',
+          initialMessage: 'I\'m really struggling with this decision. The market is changing so quickly, and I\'m not sure if we should pivot our strategy or double down on what we\'re doing. I trust your judgment, but I need to understand the risks better.'
+        },
+        'escalation': {
+          title: 'Service Issue Resolution',
+          description: 'A client is unhappy with recent service delivery and you need to address their concerns while preserving the relationship.',
+          initialMessage: 'I have to tell you, I\'m pretty frustrated with how things have been going lately. The last two deliverables were late, and the quality wasn\'t what we expected. I\'m starting to question whether this partnership is working.'
+        },
+        'renewal': {
+          title: 'Contract Renewal Discussion',
+          description: 'A key client\'s contract is up for renewal, but they\'re considering their options and budget constraints.',
+          initialMessage: 'So our contract is coming up for renewal, and I need to be transparent - we\'re looking at tightening our budget next year. The work has been good, but the CFO is pushing me to evaluate all our vendor relationships.'
+        },
+        'expansion': {
+          title: 'Account Growth Opportunity',
+          description: 'You\'re discussing additional services with a satisfied client who has new needs and budget to invest.',
+          initialMessage: 'We\'ve been really happy with the work you\'ve done so far. I\'m curious about expanding our engagement to include some of the other areas we discussed. Budget isn\'t the main concern, but I need to understand the timeline and resource commitment.'
+        },
+        'partnership': {
+          title: 'Strategic Partnership Discussion',
+          description: 'You\'re exploring a deeper partnership relationship with mutual benefits and shared goals.',
+          initialMessage: 'I\'ve been thinking about our conversation last week regarding a more strategic partnership. It\'s an interesting idea, but I need to understand how this would work operationally and what the mutual benefits would be.'
+        }
+      };
+
+      // State management
+      let currentMode = null;
+      let selectedScenario = null;
+      let isRecording = false;
+      let recordingInterval = null;
+      let callPhase = 'opening'; // opening, discovery, advisory, closing
+
+      // Wait for DOM to be ready before setting up event listeners
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('Client calls analysis page loaded');
+        
+        // DOM elements
+        const analysisOptions = document.querySelectorAll('.analysis-option');
+        const uploadSection = document.getElementById('uploadSection');
+        const practiceSection = document.getElementById('practiceSection');
+        const scenarioTypes = document.querySelectorAll('.scenario-type');
+        const conversationContainer = document.getElementById('conversationContainer');
+        const conversationFlow = document.getElementById('conversationFlow');
+        const recordButton = document.getElementById('recordButton');
+        const startPracticeBtn = document.getElementById('startPractice');
+        const scenarioActions = document.getElementById('scenarioActions');
+        const endCallBtn = document.getElementById('endCall');
+        const changeScenarioBtn = document.getElementById('changeScenario');
+
+        console.log('Found analysis options:', analysisOptions.length);
+        console.log('Upload section:', uploadSection);
+        console.log('Practice section:', practiceSection);
+        console.log('Scenario types:', scenarioTypes.length);
+        
+        // Verify critical elements exist
+        if (!analysisOptions.length) {
+          console.error('No analysis options found!');
+          return;
+        }
+        
+        if (!uploadSection) {
+          console.error('Upload section not found!');
+          return;
+        }
+        
+        if (!practiceSection) {
+          console.error('Practice section not found!');
+          return;
+        }
+
+        // Analysis option selection
+        analysisOptions.forEach((option) => {
+          option.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Clear previous selections
+            analysisOptions.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+            currentMode = option.dataset.type;
+            
+            if (currentMode === 'upload') {
+              uploadSection.classList.add('active');
+              practiceSection.classList.remove('active');
+            } else if (currentMode === 'practice') {
+              practiceSection.classList.add('active');
+              uploadSection.classList.remove('active');
+            }
+          });
+        });
+
+        // Scenario selection
+        scenarioTypes.forEach(scenario => {
+          scenario.addEventListener('click', () => {
+            scenarioTypes.forEach(s => s.classList.remove('selected'));
+            scenario.classList.add('selected');
+            selectedScenario = scenario.dataset.scenario;
+            startPracticeBtn.disabled = false;
+          });
+        });
+
+        // Start practice session
+        if (startPracticeBtn) {
+          startPracticeBtn.addEventListener('click', async () => {
+            conversationContainer.style.display = 'block';
+            scenarioActions.style.display = 'none';
+            
+            // Update scenario info
+            const scenarioInfo = clientScenarios[selectedScenario];
+            document.getElementById('scenarioTitle').textContent = scenarioInfo.title;
+            document.getElementById('scenarioText').textContent = scenarioInfo.description;
+            
+            // Initialize call
+            callPhase = 'opening';
+            // Show record button when practice starts
+            recordButton.style.display = 'inline-flex';
+            
+            // Add initial AI message after delay
+            setTimeout(() => {
+              addAIMessage(scenarioInfo.initialMessage);
+              // Continue showing record button
+            }, 1500);
+          });
+        }
+
+        // Change Scenario button
+        if (changeScenarioBtn) {
+          changeScenarioBtn.addEventListener('click', async () => {
+            if (!selectedScenario) {
+              alert('Please select a scenario first');
+              return;
+            }
+
+            // Update button state to show loading
+            changeScenarioBtn.disabled = true;
+            changeScenarioBtn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Generating...';
+
+            try {
+              // Get the current scenario information
+              const currentScenario = clientScenarios[selectedScenario];
+              
+              // Use GeminiAIEngine to generate a new scenario
+              if (geminiEngine && geminiEngine.generateScenario) {
+                const newScenarioDescription = await geminiEngine.generateScenario(selectedScenario, currentScenario.title);
+                
+                // Update the scenario description with the new one
+                clientScenarios[selectedScenario].description = newScenarioDescription;
+                
+                // Update the display if we're already in the selected scenario
+                const scenarioTextElement = document.getElementById('scenarioText');
+                if (scenarioTextElement) {
+                  scenarioTextElement.textContent = newScenarioDescription;
+                }
+                
+                console.log('Generated new scenario:', newScenarioDescription);
+              } else {
+                console.warn('GeminiAI engine not available, using fallback');
+                // Fallback: Generate a simple variation
+                const fallbackScenarios = {
+                  'discovery': 'You\'re conducting a discovery call with a potential new client who recently had a poor experience with their previous service provider. They\'re cautious but willing to explore alternatives if you can demonstrate clear value and reliability.',
+                  'advisory': 'An existing client is facing a critical strategic decision that could significantly impact their business. They value your expertise but are feeling pressure from their board to make a decision quickly. They need both strategic guidance and confidence in the recommendation.',
+                  'escalation': 'A client is frustrated with recent service issues and is considering switching providers. They\'ve escalated to you as their main contact, and while they\'re upset, they\'re willing to give you one more chance to address their concerns and restore their confidence.',
+                  'renewal': 'A long-term client is evaluating whether to renew their contract. While they\'ve been satisfied with your service, they\'re facing budget constraints and need to justify the continued investment to their stakeholders.',
+                  'expansion': 'A successful client is considering expanding their engagement with your services to other departments or business units. They need to understand the implementation process, costs, and potential return on investment.',
+                  'partnership': 'You\'re discussing a potential strategic partnership with another company. Both parties see mutual benefits, but there are concerns about competitive overlap and how to structure the relationship for mutual success.'
+                };
+                
+                const newDescription = fallbackScenarios[selectedScenario] || currentScenario.description;
+                clientScenarios[selectedScenario].description = newDescription;
+                
+                const scenarioTextElement = document.getElementById('scenarioText');
+                if (scenarioTextElement) {
+                  scenarioTextElement.textContent = newDescription;
+                }
+              }
+              
+              // Success feedback
+              changeScenarioBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> Updated!';
+              setTimeout(() => {
+                changeScenarioBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-4 h-4"></i> Change Scenario';
+                changeScenarioBtn.disabled = false;
+              }, 2000);
+              
+            } catch (error) {
+              console.error('Error generating new scenario:', error);
+              alert('Failed to generate new scenario. Please try again.');
+              
+              // Reset button state
+              changeScenarioBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-4 h-4"></i> Change Scenario';
+              changeScenarioBtn.disabled = false;
+            }
+          });
+        }
+
+      // Recording functionality is now handled by recording-integration.js
+      // The audio-recorder.js and recording-integration.js scripts provide:
+      // - Real audio recording using Web Audio API
+      // - Microphone permission handling
+      // - Audio visualization
+      // - Recording playback and download
+      // - Base64 encoding for analysis
+      
+        // Add function to handle call progression after recording stops
+        window.generateAIResponse = function() {
+          handleCallProgression();
+        };
+
+        async function handleCallProgression() {
+          // Simulate user response based on call phase
+          const simulatedResponse = generateCallResponse();
+          addUserMessage(simulatedResponse);
+          
+          // Hide record button during processing
+          recordButton.style.display = 'none';
+          
+          // Generate AI counter-response
+          setTimeout(async () => {
+            try {
+              const response = await aiEngine.generateResponse(simulatedResponse, 'client_call');
+              addAIMessage(response.message);
+              
+              // Progress through call phases
+              if (callPhase === 'opening') {
+                callPhase = 'discovery';
+                // Show record button for discovery phase
+                recordButton.style.display = 'inline-flex';
+              } else if (callPhase === 'discovery') {
+                callPhase = 'advisory';
+                // Show record button for advisory phase
+                recordButton.style.display = 'inline-flex';
+              } else if (callPhase === 'advisory') {
+                callPhase = 'closing';
+                // Show record button for closing phase
+                recordButton.style.display = 'inline-flex';
+                endCallBtn.style.display = 'inline-flex';
+              }
+              
+              // Timer is now managed by recording-integration.js
+            } catch (error) {
+              console.error('Error generating AI response:', error);
+              addAIMessage("That's a thoughtful approach. I appreciate you taking the time to understand our situation. What would you recommend as our next steps?");
+              // Show record button to continue
+              recordButton.style.display = 'inline-flex';
+              // Timer is now managed by recording-integration.js
+            }
+          }, 2000);
+        }
+
+        function generateCallResponse() {
+          const responses = {
+            opening: [
+              "I completely understand your concern about agencies overpromising. Let me share our approach and why we're different...",
+              "Thank you for being so direct about your past experiences. I'd love to understand more about what went wrong and how we can ensure better outcomes...",
+              "I appreciate you giving us the opportunity to discuss this. Rather than telling you what makes us different, could I ask about your biggest challenges?"
+            ],
+            discovery: [
+              "That's a great point. Can you tell me more about what success looks like for this project from your perspective?",
+              "Help me understand the impact if this project doesn't go well - what are the stakes for your team?",
+              "What's driving the timeline for this decision? Are there external factors we should be aware of?"
+            ],
+            advisory: [
+              "Based on what you've shared, I see a few key areas where we can add value. Let me walk through my recommendations...",
+              "Given your constraints, here's what I would prioritize and why...",
+              "I've seen similar situations with other clients. Here's what typically works best in scenarios like yours..."
+            ],
+            closing: [
+              "I think we have a good foundation for moving forward. What questions do you have about next steps?",
+              "Based on our conversation, I'd recommend we start with a pilot engagement. Would that work for your timeline?",
+              "What would need to happen for you to feel confident about moving forward with us?"
+            ]
+          };
+          
+          const phaseResponses = responses[callPhase] || responses.opening;
+          return phaseResponses[Math.floor(Math.random() * phaseResponses.length)];
+        }
+
+        // Helper functions for conversation flow
+        function addUserMessage(message) {
+          const messageElement = document.createElement('div');
+          messageElement.className = 'message user';
+          messageElement.innerHTML = `
+            <div class="message-content">
+              <div>${message}</div>
+            </div>
+            <div class="message-avatar">
+              <i data-lucide="user" class="w-5 h-5"></i>
+            </div>
+          `;
+          conversationFlow.appendChild(messageElement);
+          lucide.createIcons();
+        }
+
+        function addAIMessage(message) {
+          const messageElement = document.createElement('div');
+          messageElement.className = 'message ai';
+          messageElement.innerHTML = `
+            <div class="message-avatar">
+              <i data-lucide="briefcase" class="w-5 h-5"></i>
+            </div>
+            <div class="message-content">
+              <div>${message}</div>
+            </div>
+          `;
+          conversationFlow.appendChild(messageElement);
+          lucide.createIcons();
+        }
+
+        // Back buttons and navigation
+        const backToOptionsBtn = document.getElementById('backToOptions');
+        if (backToOptionsBtn) {
+          backToOptionsBtn.addEventListener('click', () => {
+            uploadSection.classList.remove('active');
+            analysisOptions.forEach(opt => opt.classList.remove('selected'));
+            currentMode = null;
+          });
+        }
+
+        const backToOptionsFromPracticeBtn = document.getElementById('backToOptionsFromPractice');
+        if (backToOptionsFromPracticeBtn) {
+          backToOptionsFromPracticeBtn.addEventListener('click', () => {
+            practiceSection.classList.remove('active');
+            analysisOptions.forEach(opt => opt.classList.remove('selected'));
+            currentMode = null;
+          });
+        }
+
+        const backToScenariosBtn = document.getElementById('backToScenarios');
+        if (backToScenariosBtn) {
+          backToScenariosBtn.addEventListener('click', () => {
+            conversationContainer.style.display = 'none';
+            scenarioActions.style.display = 'flex';
+            conversationFlow.innerHTML = '';
+            callPhase = 'opening';
+          });
+        }
+
+        // File upload functionality
+        const chooseFileBtn = document.getElementById('chooseFileBtn');
+        if (chooseFileBtn) {
+          chooseFileBtn.addEventListener('click', () => {
+            document.getElementById('audioFile').click();
+          });
+        }
+
+        const audioFileInput = document.getElementById('audioFile');
+        if (audioFileInput) {
+          audioFileInput.addEventListener('change', (e) => {
+            if (e.target.files[0]) {
+              const analyzeUploadBtn = document.getElementById('analyzeUpload');
+              if (analyzeUploadBtn) {
+                analyzeUploadBtn.disabled = false;
+              }
+            }
+          });
+        }
+
+        // Ask discovery question helper
+        const askQuestionBtn = document.getElementById('askQuestion');
+        if (askQuestionBtn) {
+          askQuestionBtn.addEventListener('click', () => {
+            const discoveryQuestions = [
+              "What's the biggest challenge you're facing in this area right now?",
+              "How are you currently handling this, and what's not working?",
+              "What would success look like for you in an ideal scenario?",
+              "Who else is involved in this decision-making process?",
+              "What's driving the timeline for making this decision?"
+            ];
+            const question = discoveryQuestions[Math.floor(Math.random() * discoveryQuestions.length)];
+            addUserMessage(question);
+            
+            setTimeout(() => {
+              addAIMessage("That's a good question. Let me think about that...");
+            }, 1000);
+          });
+        }
+
+        // End call
+        if (endCallBtn) {
+          endCallBtn.addEventListener('click', () => {
+            // Create analysis results in the standard format
+            const analysisResults = {
+              success: true,
+              transcript: "Client call session completed - detailed analysis will be provided",
+              analysis: `Client Call Analysis\n\nScenario: ${selectedScenario}\nCall Phase: ${callPhase}\n\nThis was a practice client call session. Detailed analysis including relationship building, consultative approach, and trust-building metrics will be provided.`,
+              score: 85,
+              timestamp: new Date().toISOString(),
+              note: "Client call practice session"
+            };
+            
+            sessionStorage.setItem('analysisResults', JSON.stringify(analysisResults));
+            window.location.href = 'client-calls-analysis-results.html?type=client-calls&source=practice';
+          });
+        }
+
+        // Analyze upload
+        const analyzeUploadBtn = document.getElementById('analyzeUpload');
+        if (analyzeUploadBtn) {
+          analyzeUploadBtn.addEventListener('click', () => {
+            // Create analysis results for upload scenario
+            const analysisResults = {
+              success: true,
+              transcript: "Client call recording uploaded - analysis in progress",
+              analysis: `Client Call Analysis (Upload)\n\nFile uploaded for analysis. This client call will be evaluated for relationship building, consultative approach, trust-building metrics, and communication effectiveness.`,
+              score: 88,
+              timestamp: new Date().toISOString(),
+              note: "Client call upload analysis"
+            };
+            
+            sessionStorage.setItem('analysisResults', JSON.stringify(analysisResults));
+            window.location.href = 'client-calls-analysis-results.html?type=client-calls&source=upload';
+          });
+        }
+
+      // Recording functionality will be added later
+
+        // Initialize page
+        lucide.createIcons();
+        
+        // Final verification log
+        console.log('Client calls analysis page fully initialized');
+        console.log('Event listeners attached successfully');
+      }); // End DOMContentLoaded
+
+      // Initialize page immediately for icons
+      lucide.createIcons();
+    </script>
+
+    <!-- Analysis Framework Scripts -->
+    <!-- Note: analysis-frameworks.js and analysis-processor.js not found -->
+  </body>
+</html>

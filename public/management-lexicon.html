@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Management Professional Lexicon - 20 Essential Terms | Articulaition
+    </title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0a0e17;
+        min-height: 100vh;
+        color: white;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(34, 197, 94, 0.1) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(34, 197, 94, 0.08) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 50% 50%,
+            rgba(34, 197, 94, 0.05) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .main-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .term-card {
+        background: rgba(34, 197, 94, 0.1);
+        padding: 2rem;
+        border-radius: 1rem;
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .term-card:hover {
+        background: rgba(34, 197, 94, 0.15);
+        border-color: rgba(34, 197, 94, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .term-title {
+        color: #22c55e;
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      .term-definition {
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      .term-application {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+        font-style: italic;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+
+  <body class="auth-body">
+    <!-- Navigation -->
+    <nav
+      style="
+        background: rgba(15, 15, 15, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      "
+    >
+      <div
+        style="
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div style="display: flex; align-items: center; gap: 2rem">
+          <img
+            src="images/logo-header.svg"
+            alt="Articulaition"
+            style="height: 40px"
+          />
+          <span
+            style="
+              color: rgba(255, 255, 255, 0.6);
+              font-size: 0.9rem;
+              font-weight: 500;
+            "
+            >Management Professional Lexicon</span
+          >
+        </div>
+        <div style="display: flex; align-items: center; gap: 1.5rem">
+          <a
+            href="management-communication.html"
+            style="
+              background: linear-gradient(135deg, #22c55e, #16a34a);
+              color: white;
+              padding: 0.75rem 1.5rem;
+              border-radius: 0.5rem;
+              text-decoration: none;
+              font-weight: 600;
+              font-size: 0.9rem;
+              transition: all 0.3s ease;
+              box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
+            "
+            >← Back to Management Guide</a
+          >
+          <a
+            href="dashboard.html"
+            style="
+              color: rgba(255, 255, 255, 0.8);
+              text-decoration: none;
+              font-weight: 500;
+              transition: color 0.3s ease;
+              padding: 0.5rem 1rem;
+            "
+            >Dashboard</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main
+      class="main-content"
+      style="max-width: 1200px; margin: 0 auto; padding: 2rem"
+    >
+      <!-- Hero Section -->
+      <section style="text-align: center; margin-bottom: 4rem">
+        <div
+          style="
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            border-radius: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 2rem auto;
+            box-shadow: 0 8px 32px rgba(34, 197, 94, 0.3);
+          "
+        >
+          👥
+        </div>
+
+        <h1
+          style="
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          "
+        >
+          Management Professional Lexicon
+        </h1>
+
+        <p
+          style="
+            font-size: 1.25rem;
+            color: #22c55e;
+            font-weight: 600;
+            margin-bottom: 1rem;
+          "
+        >
+          20 Essential Terms for Leadership Communication
+        </p>
+
+        <p
+          style="
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+          "
+        >
+          Master the specialized vocabulary that empowers effective leadership,
+          team motivation, and organizational excellence.
+        </p>
+      </section>
+
+      <!-- Terms Grid -->
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+          gap: 2rem;
+          margin-bottom: 4rem;
+        "
+      >
+        <!-- Term 1 -->
+        <div class="term-card">
+          <h3 class="term-title">1. Emotional Intelligence (EQ)</h3>
+          <p class="term-definition">
+            The ability to recognize, understand, and manage both your own
+            emotions and those of others in professional interactions and
+            decision-making processes.
+          </p>
+          <p class="term-application">
+            Critical for effective leadership, conflict resolution, team
+            motivation, and creating positive work environments that drive
+            performance and engagement.
+          </p>
+        </div>
+
+        <!-- Term 2 -->
+        <div class="term-card">
+          <h3 class="term-title">2. Delegation</h3>
+          <p class="term-definition">
+            The strategic assignment of tasks and responsibilities to team
+            members while retaining accountability for outcomes and providing
+            necessary support and authority.
+          </p>
+          <p class="term-application">
+            Essential for scaling leadership impact, developing team
+            capabilities, increasing efficiency, and focusing on high-value
+            strategic activities.
+          </p>
+        </div>
+
+        <!-- Term 3 -->
+        <div class="term-card">
+          <h3 class="term-title">3. Performance Management</h3>
+          <p class="term-definition">
+            The ongoing process of setting expectations, monitoring progress,
+            providing feedback, and developing employees to achieve both
+            individual and organizational goals.
+          </p>
+          <p class="term-application">
+            Fundamental for maximizing team productivity, ensuring
+            accountability, supporting career development, and aligning
+            individual efforts with business objectives.
+          </p>
+        </div>
+
+        <!-- Term 4 -->
+        <div class="term-card">
+          <h3 class="term-title">4. Change Management</h3>
+          <p class="term-definition">
+            The structured approach to transitioning individuals, teams, and
+            organizations from current state to desired future state through
+            effective communication and engagement strategies.
+          </p>
+          <p class="term-application">
+            Critical for successful organizational transformations, technology
+            implementations, process improvements, and maintaining productivity
+            during periods of uncertainty.
+          </p>
+        </div>
+
+        <!-- Term 5 -->
+        <div class="term-card">
+          <h3 class="term-title">5. Stakeholder Management</h3>
+          <p class="term-definition">
+            The systematic identification, analysis, and engagement of
+            individuals or groups who can affect or are affected by
+            organizational decisions and initiatives.
+          </p>
+          <p class="term-application">
+            Essential for project success, building coalition support, managing
+            competing interests, and ensuring sustainable implementation of
+            strategic initiatives.
+          </p>
+        </div>
+
+        <!-- Term 6 -->
+        <div class="term-card">
+          <h3 class="term-title">6. Key Performance Indicators (KPIs)</h3>
+          <p class="term-definition">
+            Measurable values that demonstrate how effectively an organization,
+            team, or individual is achieving key business objectives and
+            strategic goals.
+          </p>
+          <p class="term-application">
+            Fundamental for goal setting, performance tracking, decision-making,
+            accountability, and communicating progress to stakeholders and team
+            members.
+          </p>
+        </div>
+
+        <!-- Term 7 -->
+        <div class="term-card">
+          <h3 class="term-title">7. Cross-Functional Collaboration</h3>
+          <p class="term-definition">
+            The coordination and cooperation between different departments,
+            teams, or functional areas to achieve shared objectives and leverage
+            diverse expertise.
+          </p>
+          <p class="term-application">
+            Critical for breaking down silos, accelerating innovation, improving
+            customer experience, and executing complex initiatives that require
+            multiple skill sets.
+          </p>
+        </div>
+
+        <!-- Term 8 -->
+        <div class="term-card">
+          <h3 class="term-title">8. Strategic Alignment</h3>
+          <p class="term-definition">
+            The process of ensuring that team activities, resources, and
+            decisions directly support and advance the organization's
+            overarching strategic objectives and vision.
+          </p>
+          <p class="term-application">
+            Essential for maximizing impact, avoiding resource waste,
+            maintaining focus during competing priorities, and demonstrating
+            value to senior leadership.
+          </p>
+        </div>
+
+        <!-- Term 9 -->
+        <div class="term-card">
+          <h3 class="term-title">9. Constructive Feedback</h3>
+          <p class="term-definition">
+            Specific, actionable, and supportive communication aimed at
+            improving performance, behavior, or outcomes while maintaining
+            positive working relationships.
+          </p>
+          <p class="term-application">
+            Vital for employee development, course correction, performance
+            improvement, building trust, and creating a culture of continuous
+            learning and growth.
+          </p>
+        </div>
+
+        <!-- Term 10 -->
+        <div class="term-card">
+          <h3 class="term-title">10. Team Dynamics</h3>
+          <p class="term-definition">
+            The psychological and behavioral patterns that emerge when team
+            members interact, including communication styles, decision-making
+            processes, and conflict resolution approaches.
+          </p>
+          <p class="term-application">
+            Critical for optimizing team performance, addressing dysfunction,
+            improving collaboration, and creating psychological safety that
+            enables high performance and innovation.
+          </p>
+        </div>
+
+        <!-- Term 11 -->
+        <div class="term-card">
+          <h3 class="term-title">11. Resource Allocation</h3>
+          <p class="term-definition">
+            The strategic distribution of available assets including budget,
+            personnel, time, and equipment to maximize value creation and
+            achieve organizational priorities.
+          </p>
+          <p class="term-application">
+            Essential for operational efficiency, strategic execution, managing
+            competing demands, and demonstrating stewardship of organizational
+            resources to leadership.
+          </p>
+        </div>
+
+        <!-- Term 12 -->
+        <div class="term-card">
+          <h3 class="term-title">12. Conflict Resolution</h3>
+          <p class="term-definition">
+            The process of addressing disagreements, tensions, or disputes
+            between team members through structured communication and
+            problem-solving approaches.
+          </p>
+          <p class="term-application">
+            Vital for maintaining productivity, preserving relationships,
+            preventing escalation, and creating learning opportunities that
+            strengthen team cohesion and trust.
+          </p>
+        </div>
+
+        <!-- Term 13 -->
+        <div class="term-card">
+          <h3 class="term-title">13. Succession Planning</h3>
+          <p class="term-definition">
+            The strategic process of identifying and developing internal talent
+            to fill key leadership positions and critical roles to ensure
+            business continuity.
+          </p>
+          <p class="term-application">
+            Critical for risk mitigation, talent retention, organizational
+            resilience, and ensuring sustainable growth despite leadership
+            transitions or unexpected departures.
+          </p>
+        </div>
+
+        <!-- Term 14 -->
+        <div class="term-card">
+          <h3 class="term-title">14. Employee Engagement</h3>
+          <p class="term-definition">
+            The emotional commitment and connection employees have to their
+            work, team, and organization that drives discretionary effort and
+            performance excellence.
+          </p>
+          <p class="term-application">
+            Fundamental for productivity, retention, customer satisfaction,
+            innovation, and creating competitive advantage through motivated and
+            committed workforce.
+          </p>
+        </div>
+
+        <!-- Term 15 -->
+        <div class="term-card">
+          <h3 class="term-title">15. Decision-Making Framework</h3>
+          <p class="term-definition">
+            A structured approach to evaluating options, considering stakeholder
+            input, and making choices that align with organizational values and
+            strategic objectives.
+          </p>
+          <p class="term-application">
+            Essential for consistent leadership, transparent processes,
+            stakeholder confidence, and ensuring decisions can be explained,
+            defended, and executed effectively.
+          </p>
+        </div>
+
+        <!-- Term 16 -->
+        <div class="term-card">
+          <h3 class="term-title">16. Organizational Culture</h3>
+          <p class="term-definition">
+            The shared values, beliefs, behaviors, and practices that define how
+            work gets done and how people interact within an organization.
+          </p>
+          <p class="term-application">
+            Critical for employee satisfaction, performance standards,
+            decision-making consistency, talent attraction, and creating
+            sustainable competitive advantage.
+          </p>
+        </div>
+
+        <!-- Term 17 -->
+        <div class="term-card">
+          <h3 class="term-title">17. Accountability</h3>
+          <p class="term-definition">
+            The acceptance of responsibility for actions, decisions, and
+            results, combined with the willingness to be answerable to
+            stakeholders for outcomes.
+          </p>
+          <p class="term-application">
+            Fundamental for trust building, performance standards, goal
+            achievement, organizational integrity, and creating a culture of
+            ownership and results.
+          </p>
+        </div>
+
+        <!-- Term 18 -->
+        <div class="term-card">
+          <h3 class="term-title">18. Coaching and Mentoring</h3>
+          <p class="term-definition">
+            The developmental process of providing guidance, support, and
+            knowledge transfer to help team members grow their capabilities and
+            advance their careers.
+          </p>
+          <p class="term-application">
+            Essential for talent development, knowledge transfer, succession
+            planning, employee engagement, and creating a culture of continuous
+            learning and growth.
+          </p>
+        </div>
+
+        <!-- Term 19 -->
+        <div class="term-card">
+          <h3 class="term-title">19. Risk Management</h3>
+          <p class="term-definition">
+            The systematic identification, assessment, and mitigation of
+            potential threats or uncertainties that could impact organizational
+            objectives or operations.
+          </p>
+          <p class="term-application">
+            Critical for strategic planning, operational continuity, stakeholder
+            confidence, regulatory compliance, and protecting organizational
+            assets and reputation.
+          </p>
+        </div>
+
+        <!-- Term 20 -->
+        <div class="term-card">
+          <h3 class="term-title">20. Leadership Presence</h3>
+          <p class="term-definition">
+            The ability to authentically connect with others in a way that
+            motivates, inspires confidence, and positively influences behavior
+            and performance.
+          </p>
+          <p class="term-application">
+            Essential for team motivation, stakeholder confidence,
+            organizational influence, change leadership, and creating the
+            credibility necessary for sustained leadership effectiveness.
+          </p>
+        </div>
+      </div>
+
+      <!-- Back Navigation -->
+      <div style="text-align: center; margin-top: 4rem">
+        <a
+          href="management-communication.html"
+          style="
+            display: inline-block;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
+          "
+          >← Back to Management Communication Guide</a
+        >
+      </div>
+    </main>
+
+    <script src="js/global-error-handler.js"></script>
+  </body>
+</html>

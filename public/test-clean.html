@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deep Conversation Analysis - Clean Test</title>
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Custom Styles -->
+    <style>
+      :root {
+        --primary-blue: #4a90e2;
+        --success-green: #10b981;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .upload-section, .ai-practice-section {
+        display: none;
+        background: var(--glass-bg);
+        border-radius: 24px;
+        padding: 3rem;
+        margin: 2rem 0;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .upload-section.active, .ai-practice-section.active {
+        display: block;
+      }
+
+      .analysis-option {
+        background: white;
+        border: 2px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 2rem;
+        margin: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .analysis-option:hover {
+        border-color: var(--primary-blue);
+        transform: translateY(-2px);
+      }
+
+      .analysis-option.selected {
+        border-color: var(--primary-blue);
+        background: #f0f7ff;
+      }
+
+      .scenario-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .scenario-type {
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px solid rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        padding: 2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .scenario-type:hover {
+        border-color: var(--primary-blue);
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-4xl font-bold text-center mb-8">🌟 Deep & Meaningful Conversation Analysis 🌟</h1>
+      
+      <!-- Analysis Options -->
+      <div class="analysis-options">
+        <div class="analysis-option" data-type="upload">
+          <h3 class="text-xl font-semibold mb-2">Upload Conversation</h3>
+          <p>Upload a recording of your meaningful conversation to discover how well you create emotional safety.</p>
+        </div>
+
+        <div class="analysis-option" data-type="practice">
+          <h3 class="text-xl font-semibold mb-2">AI Practice Scenarios</h3>
+          <p>Explore 6 different deep conversation scenarios to understand emotional depth and vulnerability.</p>
+        </div>
+      </div>
+
+      <!-- Upload Section -->
+      <div class="upload-section" id="uploadSection">
+        <h2 class="text-2xl font-bold mb-4">Upload Your Meaningful Conversation</h2>
+        <p>This is the upload section! It's working!</p>
+      </div>
+
+      <!-- Practice Section -->
+      <div class="ai-practice-section" id="practiceSection">
+        <h2 class="text-2xl font-bold mb-4">Choose Your Deep Conversation Scenario</h2>
+        
+        <div class="scenario-grid">
+          <div class="scenario-type" data-scenario="values-discussion">
+            <h3 class="text-lg font-semibold">Values & Beliefs</h3>
+            <p>Navigate the sacred territory of personal values and beliefs that shape who you are</p>
+          </div>
+
+          <div class="scenario-type" data-scenario="dreams-aspirations">
+            <h3 class="text-lg font-semibold">Dreams & Aspirations</h3>
+            <p>Open your heart about your deepest dreams and what truly sets your soul on fire</p>
+          </div>
+
+          <div class="scenario-type" data-scenario="life-challenges">
+            <h3 class="text-lg font-semibold">Life Challenges</h3>
+            <p>Share vulnerable stories of struggle, growth, and the wisdom found in hardship</p>
+          </div>
+
+          <div class="scenario-type" data-scenario="relationships-love">
+            <h3 class="text-lg font-semibold">Love & Connection</h3>
+            <p>Dive deep into what love means to you and how you create profound connections</p>
+          </div>
+
+          <div class="scenario-type" data-scenario="purpose-meaning">
+            <h3 class="text-lg font-semibold">Life's Purpose & Meaning</h3>
+            <p>Explore the big questions: your unique purpose and what gives life meaning</p>
+          </div>
+
+          <div class="scenario-type" data-scenario="fears-vulnerabilities">
+            <h3 class="text-lg font-semibold">Sacred Vulnerability</h3>
+            <p>Practice the courage to share your deepest fears and authentic self</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      alert('JavaScript is working!');
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        alert('DOMContentLoaded fired - setting up click handlers');
+        
+        const analysisOptions = document.querySelectorAll('.analysis-option');
+        const uploadSection = document.getElementById('uploadSection');
+        const practiceSection = document.getElementById('practiceSection');
+        
+        console.log('Found elements:', {
+          options: analysisOptions.length,
+          upload: uploadSection ? 'found' : 'missing',
+          practice: practiceSection ? 'found' : 'missing'
+        });
+        
+        analysisOptions.forEach(option => {
+          option.addEventListener('click', function() {
+            const type = this.dataset.type;
+            alert('Clicked: ' + type);
+            
+            // Remove selected class from all options
+            analysisOptions.forEach(opt => opt.classList.remove('selected'));
+            // Add selected class to clicked option
+            this.classList.add('selected');
+            
+            // Show/hide sections
+            if (type === 'upload') {
+              uploadSection.classList.add('active');
+              practiceSection.classList.remove('active');
+            } else if (type === 'practice') {
+              practiceSection.classList.add('active');
+              uploadSection.classList.remove('active');
+            }
+          });
+        });
+        
+        // Initialize Lucide icons
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+      });
+    </script>
+  </body>
+</html>

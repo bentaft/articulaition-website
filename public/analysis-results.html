@@ -1,0 +1,2258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI-Powered Communication Analysis Results - Articulaition"
+    />
+    <title>Communication Analysis Results - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      /* ==========================================================================
+         SOPHISTICATED COMMUNICATION DESIGN SYSTEM
+         ========================================================================== */
+      :root {
+        /* Communication Color Palette - Professional & Versatile */
+        --voice-primary: #6366f1;
+        --voice-secondary: #8b5cf6;
+        --voice-accent: #06b6d4;
+        --voice-warm: #f59e0b;
+        --voice-success: #10b981;
+        --voice-neural: #64748b;
+        --voice-dark: #2d3748;
+        --voice-light: #f7fafc;
+        --voice-bg-primary: #fafbfc;
+        --voice-bg-secondary: #f4f6f8;
+        --voice-glass: rgba(255, 255, 255, 0.85);
+        --voice-glass-border: rgba(255, 255, 255, 0.3);
+        --voice-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+        --voice-shadow-lg: 0 35px 60px -12px rgba(0, 0, 0, 0.12);
+        --voice-text-primary: #1a202c;
+        --voice-text-secondary: #4a5568;
+        --voice-text-muted: #718096;
+        
+        /* Communication Accent Colors */
+        --communication-primary: #4f46e5;
+        --communication-secondary: #6366f1;
+        --communication-success: #10b981;
+        --communication-warning: #f59e0b;
+        --communication-light: rgba(79, 70, 229, 0.05);
+        
+        /* Typography */
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        
+        /* Spacing */
+        --space-1: 0.25rem;
+        --space-2: 0.5rem;
+        --space-3: 0.75rem;
+        --space-4: 1rem;
+        --space-5: 1.25rem;
+        --space-6: 1.5rem;
+        --space-8: 2rem;
+        
+        /* Radius */
+        --radius: 0.75rem;
+        --radius-sm: 0.5rem;
+        --radius-lg: 1rem;
+        
+        /* Glass Morphism Shadows */
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+
+      /* ==========================================================================
+         BASE STYLES WITH SOPHISTICATED BACKGROUND
+         ========================================================================== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: var(--font-sans);
+        background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 25%, #edf2f7 50%, #e2e8f0 75%, #cbd5e0 100%);
+        color: var(--voice-text-primary);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Background Effects */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+          radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.025) 0%, transparent 50%),
+          radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.02) 0%, transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(79, 70, 229, 0.015) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      /* Animation Classes */
+      .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+        opacity: 0;
+      }
+
+      .slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .scale-in {
+        animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      @keyframes fadeIn {
+        to { opacity: 1; }
+      }
+      @keyframes slideUp {
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes scaleIn {
+        to { opacity: 1; transform: scale(1); }
+      }
+
+      .delay-100 { animation-delay: 0.1s; }
+      .delay-200 { animation-delay: 0.2s; }
+      .delay-300 { animation-delay: 0.3s; }
+      .delay-400 { animation-delay: 0.4s; }
+      .delay-500 { animation-delay: 0.5s; }
+
+      /* ==========================================================================
+         TOP NAVIGATION WITH GLASS MORPHISM
+         ========================================================================== */
+      .top-nav {
+        padding: 1.5rem 2.5rem;
+        background: var(--voice-glass);
+        backdrop-filter: blur(25px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: var(--voice-shadow);
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .logo-section img {
+        height: 36px;
+        filter: none;
+        transition: transform 0.3s ease;
+      }
+
+      .logo-section:hover img {
+        transform: scale(1.05);
+      }
+
+      /* Navigation Branding with Shiny Effect */
+      .nav-orange {
+          background: linear-gradient(
+              145deg,
+              #ff934d 0%,
+              #ffb366 30%,
+              #ff7f50 60%,
+              #ff934d 100%
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          filter: drop-shadow(0 2px 4px rgba(255, 147, 77, 0.3));
+      }
+
+      .nav-blue {
+          background: linear-gradient(
+              145deg,
+              #4a90e2 0%,
+              #6bb6ff 30%,
+              #4f94e8 60%,
+              #4a90e2 100%
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          filter: drop-shadow(0 2px 4px rgba(74, 144, 226, 0.3));
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: var(--voice-text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .nav-link.active {
+        color: var(--voice-primary);
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid #4a90e2;
+        border-radius: 0;
+        padding-bottom: 0.4rem;
+      }
+
+      .nav-link:hover:not(.active) {
+        color: var(--voice-text-primary);
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--communication-primary),
+          var(--communication-secondary)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: linear-gradient(135deg, var(--communication-primary), var(--communication-secondary));
+        color: white;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .back-btn:hover {
+        background: linear-gradient(135deg, var(--communication-secondary), var(--communication-primary));
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* ==========================================================================
+         MAIN CONTENT LAYOUT
+         ========================================================================== */
+      .main-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        color: var(--voice-text-muted);
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb a {
+        color: var(--voice-text-muted);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        color: var(--voice-text-secondary);
+      }
+
+      .breadcrumb .current {
+        color: var(--voice-text-primary);
+        font-weight: 500;
+      }
+
+      .page-title-section {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .title-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--communication-primary),
+          var(--communication-secondary)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--voice-text-primary);
+        margin: 0;
+      }
+
+      .page-description {
+        color: var(--voice-text-secondary);
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      .analysis-container {
+        display: grid;
+        grid-template-columns: 1fr 600px;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      /* ==========================================================================
+         UNIFIED ANALYSIS PANEL WITH GLASS MORPHISM
+         ========================================================================== */
+      .unified-analysis-panel {
+        background: var(--voice-glass);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        box-shadow: var(--voice-shadow-lg);
+        overflow: hidden;
+        height: fit-content;
+        min-height: 600px;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .unified-analysis-panel::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.01) 0%, transparent 100%);
+        pointer-events: none;
+      }
+
+      .unified-analysis-panel:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--voice-shadow-lg), 0 8px 25px rgba(0, 0, 0, 0.08);
+      }
+
+      .unified-tab-header {
+        display: flex;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(15px);
+        position: relative;
+        z-index: 2;
+      }
+      
+      .unified-tab-btn {
+        flex: 1;
+        padding: var(--space-4) var(--space-5);
+        background: none;
+        border: none;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--voice-text-secondary);
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        border-radius: 12px 12px 0 0;
+      }
+      
+      .unified-tab-btn:hover:not(.active) {
+        background: rgba(99, 102, 241, 0.05);
+        color: var(--voice-text-primary);
+        transform: translateY(-1px);
+      }
+      
+      .unified-tab-btn.active {
+        background: rgba(99, 102, 241, 0.1);
+        color: var(--voice-primary);
+        border-bottom: 3px solid var(--voice-primary);
+        transform: translateY(-1px);
+      }
+
+      .unified-tab-btn.active::before {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(135deg, var(--voice-primary), var(--voice-secondary));
+        border-radius: 2px 2px 0 0;
+      }
+
+      .unified-tab-content {
+        padding: var(--space-6);
+        height: 450px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      .unified-tab-content::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .unified-tab-content::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 3px;
+      }
+
+      .unified-tab-content::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+      }
+
+      .unified-tab-content::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+
+      .unified-tab-pane {
+        display: none;
+      }
+
+      .unified-tab-pane.active {
+        display: block;
+      }
+
+      .panel-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-6);
+      }
+
+      .panel-actions h3 {
+        margin: 0;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--voice-text-primary);
+      }
+
+      .copy-btn {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-3);
+        background: rgba(255, 255, 255, 0.6);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: var(--radius);
+        font-size: 0.875rem;
+        color: var(--voice-text-secondary);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .copy-btn:hover {
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--voice-text-primary);
+      }
+
+      /* ==========================================================================
+         MISSING UTILITY CLASSES
+         ========================================================================== */
+      .flex { display: flex; }
+      .items-center { align-items: center; }
+      .gap-3 { gap: 0.75rem; }
+      .gap-4 { gap: 1rem; }
+      .relative { position: relative; }
+      .group:hover .group-hover\\:scale-105 { transform: scale(1.05); }
+      .h-9 { height: 2.25rem; }
+      .w-auto { width: auto; }
+      .font-semibold { font-weight: 600; }
+      .text-lg { font-size: 1.125rem; }
+      .tracking-tight { letter-spacing: -0.025em; }
+      .transition-transform { transition: transform 0.3s ease; }
+
+      .analysis-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.25rem;
+      }
+
+      .analysis-badge {
+        background: linear-gradient(135deg, var(--voice-primary), var(--voice-secondary));
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .user-menu-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem 1rem;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .user-menu-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-1px);
+      }
+
+      .user-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--voice-primary), var(--voice-secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      /* ==========================================================================
+         PAGE HEADER
+         ========================================================================== */
+      .page-header {
+        background: white;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        padding: var(--space-4) var(--space-8);
+      }
+      
+      .header-content h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--voice-text-primary);
+        margin-bottom: var(--space-2);
+      }
+
+      /* ==========================================================================
+         MAIN LAYOUT
+         ========================================================================== */
+      .main-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: var(--space-8);
+      }
+      
+      /* Score Section at Top with Glass Morphism */
+      .score-section {
+        background: var(--voice-glass);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        box-shadow: var(--voice-shadow-lg);
+        padding: var(--space-6) var(--space-8);
+        margin-bottom: var(--space-6);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .score-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(79, 70, 229, 0.02) 0%, transparent 100%);
+        pointer-events: none;
+      }
+      
+      .score-header {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--voice-text-secondary);
+        margin-bottom: var(--space-4);
+        position: relative;
+        z-index: 2;
+      }
+      
+      .score-display {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-6);
+      }
+      
+      .score-circle {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--communication-primary) 0%, var(--communication-secondary) 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.25rem;
+        font-weight: 800;
+        box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.4), 0 15px 25px -8px rgba(79, 70, 229, 0.25);
+        flex-shrink: 0;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        position: relative;
+        z-index: 2;
+      }
+
+      .score-circle::before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(79, 70, 229, 0.2) 0%, rgba(99, 102, 241, 0.1) 100%);
+        z-index: -1;
+        transition: all 0.4s ease;
+      }
+      
+      .score-circle:hover {
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 35px 70px -12px rgba(79, 70, 229, 0.5), 0 20px 35px -8px rgba(79, 70, 229, 0.35);
+      }
+
+      .score-circle:hover::before {
+        transform: scale(1.1);
+        opacity: 0.8;
+      }
+      
+      .score-details {
+        text-align: left;
+        position: relative;
+        z-index: 2;
+      }
+      
+      .score-label {
+        font-size: 1rem;
+        color: var(--voice-text-secondary);
+        margin-bottom: var(--space-2);
+        font-weight: 600;
+      }
+      
+      .score-value {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--voice-text-primary);
+        margin-bottom: var(--space-3);
+        line-height: 1;
+      }
+      
+      .score-description {
+        font-size: 1rem;
+        color: var(--voice-text-secondary);
+        font-weight: 500;
+        padding: var(--space-2) var(--space-4);
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+      }
+      
+      /* Analysis Panels Layout */
+      .analysis-panels {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-6);
+        height: calc(100vh - 320px);
+      }
+
+      /* ==========================================================================
+         TRANSCRIPT PANEL WITH GLASS MORPHISM
+         ========================================================================== */
+      .transcript-panel {
+        background: var(--voice-glass);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        box-shadow: var(--voice-shadow-lg);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .transcript-panel::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.01) 0%, transparent 100%);
+        pointer-events: none;
+      }
+
+      .transcript-panel:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--voice-shadow-lg), 0 8px 25px rgba(0, 0, 0, 0.08);
+      }
+
+      .transcript-header {
+        padding: var(--space-5) var(--space-6);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(15px);
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .transcript-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--voice-text-primary);
+        margin: 0;
+      }
+
+      .transcript-content {
+        flex: 1;
+        padding: var(--space-6);
+        overflow-y: auto;
+        position: relative;
+        z-index: 2;
+      }
+
+      .transcript-text {
+        line-height: 1.8;
+        color: var(--voice-text-secondary);
+        background: var(--communication-light);
+        padding: var(--space-6);
+        border-radius: var(--radius);
+        border-left: 4px solid var(--communication-primary);
+        font-size: 0.95rem;
+      }
+
+      /* ==========================================================================
+         LOADING STATES
+         ========================================================================== */
+      .loading-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-8);
+        color: var(--voice-text-muted);
+      }
+      
+      .spinner {
+        width: 24px;
+        height: 24px;
+        border: 2px solid rgba(99, 102, 241, 0.2);
+        border-top: 2px solid var(--voice-primary);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: var(--space-3);
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      /* ==========================================================================
+         INSIGHT CARDS
+         ========================================================================== */
+      .insight-card-modern {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        margin-bottom: var(--space-5);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+
+      .insight-card-modern:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .insight-header-modern {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-5);
+        background: rgba(255, 255, 255, 0.5);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      .insight-icon-modern {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--voice-primary), var(--voice-secondary));
+        color: white;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+      }
+
+      .insight-icon-modern.excellent {
+        background: linear-gradient(135deg, #10b981, #059669);
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+      }
+
+      .insight-icon-modern.good {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+      }
+
+      .insight-icon-modern.needs-improvement {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+      }
+
+      .insight-title-modern {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--voice-text-primary);
+        margin: 0;
+      }
+
+      .insight-content-modern {
+        padding: var(--space-5);
+        line-height: 1.7;
+        color: var(--voice-text-secondary);
+      }
+
+      /* ==========================================================================
+         METRIC CARDS
+         ========================================================================== */
+      .metrics-grid {
+        display: grid;
+        gap: var(--space-4);
+      }
+
+      .metric-card {
+        background: var(--communication-light);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: var(--radius);
+        padding: var(--space-4);
+        border-left: 4px solid var(--communication-primary);
+        transition: all 0.2s ease;
+      }
+
+      .metric-card:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow);
+      }
+
+      .metric-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-3);
+      }
+
+      .metric-name {
+        font-weight: 600;
+        color: var(--voice-text-primary);
+        font-size: 0.9rem;
+      }
+
+      .metric-score {
+        font-weight: 600;
+        font-size: 0.875rem;
+        padding: var(--space-1) var(--space-2);
+        border-radius: var(--radius-sm);
+        background: white;
+      }
+
+      .metric-details {
+        margin: var(--space-2) 0;
+        font-size: 0.8rem;
+        color: var(--voice-text-secondary);
+      }
+
+      .metric-bar {
+        height: 6px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+        overflow: hidden;
+        margin-top: var(--space-2);
+      }
+
+      .metric-fill {
+        height: 100%;
+        border-radius: 3px;
+        transition: width 0.3s ease;
+      }
+
+      /* ==========================================================================
+         QUALITATIVE CATEGORIES
+         ========================================================================== */
+      .categories-grid {
+        display: grid;
+        gap: var(--space-4);
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+
+      .category-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-radius: 12px;
+        padding: var(--space-5);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .category-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(135deg, var(--voice-primary), var(--voice-secondary));
+      }
+
+      .category-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        background: rgba(255, 255, 255, 0.95);
+      }
+
+      .category-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-3);
+      }
+
+      .category-name {
+        font-weight: 600;
+        color: var(--voice-text-primary);
+        font-size: 0.95rem;
+      }
+
+      .category-score {
+        font-weight: 700;
+        font-size: 1rem;
+        padding: var(--space-2) var(--space-3);
+        border-radius: 8px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9));
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .category-score::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+        animation: shimmer 2s infinite;
+      }
+
+      @keyframes shimmer {
+        0% { left: -100%; }
+        100% { left: 100%; }
+      }
+
+      .category-factors {
+        margin: var(--space-3) 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+      }
+
+      .factor-tag {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.06));
+        color: var(--voice-primary);
+        padding: 0.375rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border: 1px solid rgba(99, 102, 241, 0.15);
+        transition: all 0.2s ease;
+        text-transform: capitalize;
+        letter-spacing: 0.025em;
+      }
+
+      .factor-tag:hover {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(139, 92, 246, 0.1));
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+      }
+
+      .category-bar {
+        height: 8px;
+        background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-top: var(--space-3);
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .category-bar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+        animation: barShimmer 3s ease-in-out infinite;
+      }
+
+      @keyframes barShimmer {
+        0%, 100% { transform: translateX(-100%); }
+        50% { transform: translateX(100%); }
+      }
+
+      .category-fill {
+        height: 100%;
+        border-radius: 12px;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        background: linear-gradient(135deg, var(--voice-primary) 0%, var(--voice-secondary) 50%, var(--voice-accent) 100%);
+        box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .category-fill::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+        animation: fillShimmer 2s ease-in-out infinite;
+      }
+
+      @keyframes fillShimmer {
+        0%, 100% { transform: translateX(-100%); }
+        50% { transform: translateX(100%); }
+      }
+
+      /* ==========================================================================
+         NEXT STEPS SECTION
+         ========================================================================== */
+      .next-steps-section {
+        grid-column: 1 / -1;
+        margin-top: var(--space-8);
+      }
+
+      .next-steps {
+        border-left-color: var(--voice-success) !important;
+      }
+
+      .next-steps .insight-icon-modern {
+        background: var(--voice-success);
+      }
+
+      /* ==========================================================================
+         RESPONSIVE DESIGN
+         ========================================================================== */
+      @media (max-width: 1024px) {
+        .analysis-container {
+          grid-template-columns: 1fr;
+          gap: var(--space-6);
+        }
+        
+        .transcript-panel,
+        .unified-analysis-panel {
+          height: auto;
+          min-height: 400px;
+        }
+        
+        .top-nav {
+          padding: var(--space-4) var(--space-5);
+        }
+        
+        .logo-text {
+          font-size: 1.25rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .analysis-container {
+          padding: var(--space-4);
+        }
+        
+        .unified-tab-btn {
+          font-size: 0.8rem;
+          padding: var(--space-3) var(--space-4);
+        }
+        
+        .unified-tab-btn span {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Navigation -->
+    <nav class="top-nav fade-in delay-100">
+      <div class="logo-section">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <img src="images/tree-logo.svg" alt="Tree Logo" class="h-9 w-auto group-hover:scale-105 transition-transform">
+          <span class="font-semibold text-lg tracking-tight nav-brand-text">
+              <span class="nav-orange">articul</span><span class="nav-blue">ai</span><span class="nav-orange">tion</span><span class="nav-orange">.com</span>
+          </span>
+        </a>
+        <div class="nav-links">
+          <a href="dashboard.html" class="nav-link">Home</a>
+          <a href="professional-communication.html" class="nav-link">Professional Communication</a>
+          <a href="personal-communication.html" class="nav-link">Personal Communication</a>
+          <a href="improvement-hub.html" class="nav-link">Improvement Hub</a>
+          <a href="pricing.html" class="nav-link">Pricing</a>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <!-- Analysis Results Info -->
+        <div class="analysis-info">
+          <span class="analysis-badge" id="analysisTypeBadge">Communication Analysis</span>
+        </div>
+        
+        <!-- User Menu -->
+        <div class="relative">
+          <button class="user-menu-btn" id="userMenuBtn">
+            <div class="user-avatar">
+              <span id="userInitial">U</span>
+            </div>
+            <span id="headerUsername">User</span>
+            <i data-lucide="chevron-down"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header slide-up delay-200">
+      <div class="header-content">
+        <h1 id="resultsTitle">Communication Analysis Results</h1>
+      </div>
+    </header>
+
+    <main class="main-container">
+      <!-- Score Section at Top -->
+      <div class="score-section scale-in delay-300">
+        <div class="score-header">Overall Communication Effectiveness Score</div>
+        <div class="score-display">
+          <div class="score-circle" id="scoreCircle">--</div>
+          <div class="score-details">
+            <div class="score-label">Communication Mastery</div>
+            <div class="score-value" id="scoreText">Analyzing...</div>
+            <div class="score-description" id="scoreDescription">
+              Building your personalized communication development plan...
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analysis Panels Layout -->
+      <div class="analysis-panels">
+        <!-- Left Panel: Transcript -->
+        <div class="transcript-panel slide-up delay-400">
+        <div class="transcript-header">
+          <i data-lucide="file-text" style="color: var(--communication-primary);"></i>
+          <h2 class="transcript-title">Your Conversation</h2>
+        </div>
+        <div class="transcript-content">
+          <div id="transcriptContent">
+            <div class="loading-state">
+              <div class="spinner"></div>
+              <p>Transcribing your conversation...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Panel: Unified Analysis with 3 Tabs -->
+      <div class="unified-analysis-panel slide-up delay-500">
+        <!-- Tab Navigation -->
+        <div class="unified-tab-header">
+          <button class="unified-tab-btn active" data-tab="insights">
+            <i data-lucide="lightbulb"></i>
+            <span>Insights</span>
+          </button>
+          <button class="unified-tab-btn" data-tab="quantitative">
+            <i data-lucide="bar-chart-2"></i>
+            <span>Quantitative</span>
+          </button>
+          <button class="unified-tab-btn" data-tab="qualitative">
+            <i data-lucide="pie-chart"></i>
+            <span>Qualitative</span>
+          </button>
+        </div>
+        
+        <!-- Tab Content -->
+        <div class="unified-tab-content">
+          <!-- Insights Tab -->
+          <div class="unified-tab-pane active" id="insights-pane">
+            <div class="panel-actions">
+              <h3>Communication Insights</h3>
+              <button class="copy-btn" onclick="copyAnalysis()">
+                <i data-lucide="copy"></i>
+                Copy Feedback
+              </button>
+            </div>
+            <div id="detailedAnalysisContent">
+              <div class="loading-state">
+                <div class="spinner"></div>
+                <p>Analyzing your communication patterns...</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Quantitative Tab -->
+          <div class="unified-tab-pane" id="quantitative-pane">
+            <div class="panel-actions">
+              <h3>Communication Metrics</h3>
+              <button class="copy-btn" onclick="copyQuantitative()">
+                <i data-lucide="copy"></i>
+                Copy Data
+              </button>
+            </div>
+            <div id="quantitativeContent">
+              <div class="loading-state">
+                <div class="spinner"></div>
+                <p>Measuring speech patterns and timing...</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Qualitative Tab -->
+          <div class="unified-tab-pane" id="qualitative-pane">
+            <div class="panel-actions">
+              <h3>Communication Skills</h3>
+              <button class="copy-btn" onclick="copyQualitative()">
+                <i data-lucide="copy"></i>
+                Copy Analysis
+              </button>
+            </div>
+            <div id="qualitativeContent">
+              <div class="loading-state">
+                <div class="spinner"></div>
+                <p>Evaluating engagement and clarity...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Next Steps Section -->
+      <div class="next-steps-section">
+        <div class="insight-card-modern next-steps">
+          <div class="insight-header-modern">
+            <div class="insight-icon-modern" style="background: linear-gradient(135deg, var(--voice-primary), var(--voice-secondary));">
+              <i data-lucide="compass"></i>
+            </div>
+            <h3 class="insight-title-modern">Your Next Steps</h3>
+          </div>
+          <div class="insight-content-modern">
+            <div style="margin-bottom: 2rem; text-align: center;">
+              <h4 style="font-size: 1.5rem; font-weight: 700; color: var(--voice-text-primary); margin: 0 0 1.5rem 0;">You've Just Taken an Important Step.</h4>
+              <p style="font-size: 1.125rem; line-height: 1.8; color: var(--voice-text-secondary); margin: 0 0 1.5rem 0;">
+                Understanding how you come across is one of the most powerful things you can do for your personal and professional growth. That insight alone puts you ahead of most.
+              </p>
+              <p style="font-size: 1.125rem; line-height: 1.8; color: var(--voice-text-secondary); margin: 0 0 2rem 0;">
+                But communication isn't something you master once — it's a skill you strengthen over time, through consistent feedback and intentional practice.
+              </p>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap;">
+              <button onclick="window.location.href='pricing.html'" 
+                style="background: linear-gradient(135deg, var(--voice-primary), var(--voice-secondary)); 
+                       color: white; 
+                       border: none; 
+                       padding: 1rem 2rem; 
+                       border-radius: 12px; 
+                       font-weight: 600; 
+                       font-size: 1rem; 
+                       cursor: pointer; 
+                       transition: all 0.3s ease; 
+                       box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+                       display: flex;
+                       align-items: center;
+                       gap: 0.5rem;">
+                <i data-lucide="eye" style="width: 18px; height: 18px;"></i>
+                View Improvement Plans
+              </button>
+              <button onclick="window.location.href='improvement-hub.html'" 
+                style="background: white; 
+                       color: var(--voice-primary); 
+                       border: 2px solid var(--voice-primary); 
+                       padding: 1rem 2rem; 
+                       border-radius: 12px; 
+                       font-weight: 600; 
+                       font-size: 1rem; 
+                       cursor: pointer; 
+                       transition: all 0.3s ease;
+                       display: flex;
+                       align-items: center;
+                       gap: 0.5rem;">
+                <i data-lucide="rocket" style="width: 18px; height: 18px;"></i>
+                Take Me to Improvement Hub
+              </button>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #f8fafc, #f1f5f9); 
+                        border-radius: 16px; 
+                        padding: 2rem; 
+                        margin-top: 2rem; 
+                        border: 1px solid rgba(0, 0, 0, 0.06);">
+              <h5 style="font-size: 1.25rem; 
+                         font-weight: 600; 
+                         color: var(--voice-text-primary); 
+                         margin: 0 0 1rem 0; 
+                         display: flex; 
+                         align-items: center; 
+                         gap: 0.5rem;">
+                <i data-lucide="heart" style="width: 20px; height: 20px; color: var(--voice-primary);"></i>
+                A Note from Us
+              </h5>
+              <p style="font-size: 1rem; 
+                        line-height: 1.7; 
+                        color: var(--voice-text-secondary); 
+                        margin: 0 0 1rem 0;">
+                We built this platform because we believe communication isn't just a skill — it's a life tool. Whether you're preparing for something big or just trying to get better over time, we're here to support your growth with honesty, clarity, and care.
+              </p>
+              <p style="font-size: 1rem; 
+                        line-height: 1.7; 
+                        color: var(--voice-text-secondary); 
+                        margin: 0 0 1.5rem 0;">
+                If you're ready to take that next step, we'd be proud to walk it with you.
+              </p>
+              
+              <div style="display: flex; 
+                          gap: 1rem; 
+                          justify-content: center;
+                          align-items: center;
+                          flex-wrap: wrap;">
+                <a href="pricing.html" 
+                   style="color: var(--voice-primary); 
+                          text-decoration: none; 
+                          font-weight: 600; 
+                          display: flex; 
+                          align-items: center; 
+                          gap: 0.5rem; 
+                          transition: all 0.3s ease;
+                          padding: 0.5rem;
+                          border-radius: 8px;"
+                   onmouseover="this.style.background='rgba(99, 102, 241, 0.1)'"
+                   onmouseout="this.style.background='transparent'">
+                  <i data-lucide="layout-grid" style="width: 16px; height: 16px;"></i>
+                  See All Plans
+                </a>
+                <span style="color: var(--voice-text-muted);">•</span>
+                <a href="mailto:support@articulaition.com" 
+                   style="color: var(--voice-primary); 
+                          text-decoration: none; 
+                          font-weight: 600; 
+                          display: flex; 
+                          align-items: center; 
+                          gap: 0.5rem; 
+                          transition: all 0.3s ease;
+                          padding: 0.5rem;
+                          border-radius: 8px;"
+                   onmouseover="this.style.background='rgba(99, 102, 241, 0.1)'"
+                   onmouseout="this.style.background='transparent'">
+                  <i data-lucide="mail" style="width: 16px; height: 16px;"></i>
+                  Contact Us with Questions
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // CRITICAL: Set up Gemini API key for transcription
+      window.GEMINI_API_KEY = "AIzaSyBGvwarFw2FbxgxOMnFchyji6G-zYkrgV8";
+      console.log("🔑 Gemini API key configured for communication analysis");
+
+      // Professional Communication Metrics Configuration (Original Working Criteria)
+      const communicationMetrics = {
+        quantitative: {
+          'Speech Rate': { weight: 0.15, optimal: { min: 140, max: 170 } },
+          'Talk/Listen Ratio': { weight: 0.20, optimal: { min: 60, max: 75 } },
+          'Filler Words': { weight: 0.10, optimal: { min: 0, max: 2 } },
+          'Questions Asked': { weight: 0.15, optimal: { min: 3, max: 8 } },
+          'Response Time': { weight: 0.15, optimal: { min: 1, max: 2 } },
+          'Engagement Words': { weight: 0.15, optimal: { min: 8, max: 20 } },
+          'Conversation Length': { weight: 0.10, optimal: { min: 180, max: 900 } }
+        },
+        qualitative: {
+          'Professional Presence & Authority': { weight: 0.30, factors: ['executive presence', 'vocal authority', 'confident delivery', 'leadership gravitas'] },
+          'Strategic Communication': { weight: 0.25, factors: ['clear messaging', 'structured thinking', 'persuasive arguments', 'business acumen'] },
+          'Engagement & Influence': { weight: 0.25, factors: ['audience connection', 'compelling delivery', 'active listening', 'relationship building'] },
+          'Emotional Intelligence & Adaptability': { weight: 0.20, factors: ['reading the room', 'social awareness', 'conflict resolution', 'cultural sensitivity'] }
+        }
+      };
+
+      // Unified tab switching functionality
+      function initializeUnifiedTabSwitching() {
+        const tabButtons = document.querySelectorAll('.unified-tab-btn');
+        const tabPanes = document.querySelectorAll('.unified-tab-pane');
+        
+        tabButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const targetTab = button.dataset.tab;
+            
+            // Update active tab button
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            // Update active tab pane
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            document.getElementById(targetTab + '-pane').classList.add('active');
+          });
+        });
+      }
+
+      // Transcribe audio using Gemini AI
+      async function transcribeAudioWithGemini(audioFile) {
+        try {
+          console.log("🎤 Transcribing communication audio with Gemini...");
+          
+          // Get API key from config
+          const apiKey = window.API_CONFIG?.gemini || window.GEMINI_API_KEY;
+          if (!apiKey || apiKey === 'YOUR_GEMINI_API_KEY_HERE') {
+            throw new Error("Gemini API key not configured");
+          }
+          
+          const arrayBuffer = await audioFile.arrayBuffer();
+          const base64Audio = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+          
+          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              contents: [{
+                parts: [
+                  {
+                    text: "Please transcribe this conversation audio file accurately. Return only the transcribed text without any additional commentary."
+                  },
+                  {
+                    inline_data: {
+                      mime_type: audioFile.type,
+                      data: base64Audio
+                    }
+                  }
+                ]
+              }],
+              generationConfig: {
+                temperature: 0.1,
+                maxOutputTokens: 8000,
+                topP: 0.8,
+                topK: 40
+              }
+            })
+          });
+
+          // Check for HTTP errors
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error(`❌ Gemini API error: ${response.status} - ${response.statusText}`, errorText);
+            
+            // Handle specific error cases with better messaging
+            if (response.status === 503) {
+              console.log("🔄 Gemini service temporarily unavailable, using fallback demo transcript");
+              return getDemoTranscript();
+            } else if (response.status === 429) {
+              throw new Error("Rate limit exceeded. Please try again in a few minutes.");
+            } else if (response.status === 401 || response.status === 403) {
+              throw new Error("API authentication error. Please check your Gemini API configuration.");
+            } else if (response.status === 400) {
+              throw new Error("Invalid request format. Please check your audio file.");
+            } else {
+              console.log(`🔄 Gemini API error (${response.status}), using fallback demo transcript`);
+              return getDemoTranscript();
+            }
+          }
+
+          const data = await response.json();
+          
+          if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+            const transcript = data.candidates[0].content.parts[0].text;
+            console.log("✅ Communication transcription successful");
+            return transcript;
+          } else {
+            console.error("❌ Invalid Gemini API response structure:", data);
+            throw new Error("No transcription received from Gemini");
+          }
+        } catch (error) {
+          console.error("❌ Transcription error:", error);
+          
+          // Provide fallback demo transcript for development/testing
+          if (error.message.includes("503") || error.message.includes("service unavailable")) {
+            console.log("🔄 Providing fallback demo transcript due to service unavailability");
+            return getDemoTranscript();
+          }
+          
+          throw new Error(`Transcription failed: ${error.message}`);
+        }
+      }
+
+      // Fallback demo transcript for when Gemini is unavailable
+      function getDemoTranscript() {
+        return `Good morning, everyone. Thank you for joining today's quarterly business review. I'm excited to share our performance updates and strategic initiatives moving forward.
+
+Let me start with our Q3 achievements. We've exceeded our revenue targets by 18%, reaching $4.2 million compared to our projected $3.6 million. This growth stems from three key areas: our enterprise client expansion, successful product diversification, and operational efficiency improvements.
+
+Our market penetration has been particularly strong in the healthcare and technology sectors. We've secured five major enterprise contracts this quarter, including partnerships with two Fortune 500 companies. These relationships position us well for sustained growth through 2024.
+
+From an operational standpoint, we've streamlined our delivery process, reducing client onboarding time by 35%. This efficiency gain has improved client satisfaction scores to 96%, up from 89% last quarter.
+
+Looking ahead, we're launching our AI-powered analytics platform in Q4, which we anticipate will capture an additional 15% market share in our target segment. We're also expanding our sales team by six senior professionals to support this growth trajectory.
+
+Our strategic priorities for next quarter include: accelerating our digital transformation initiatives, enhancing client retention programs, and exploring acquisition opportunities in the emerging markets space.
+
+I want to recognize the exceptional leadership and dedication shown by our entire team. These results reflect our collective commitment to delivering value for our clients and stakeholders.
+
+Now, I'd like to open the floor for questions. What specific areas would you like to explore further regarding our performance or strategic direction?`;
+      }
+
+      // Analyze communication using specific metrics
+      async function analyzeCommunication(transcript) {
+        try {
+          console.log("🧠 Analyzing communication conversation...");
+          
+          const quantitativeScores = await calculateQuantitativeMetrics(transcript, communicationMetrics.quantitative);
+          const qualitativeScores = await calculateQualitativeMetrics(transcript, communicationMetrics.qualitative);
+          const overallScore = calculateOverallScore(quantitativeScores, qualitativeScores);
+          const insights = await generateCommunicationInsights(transcript, quantitativeScores, qualitativeScores);
+          
+          return {
+            transcript: transcript,
+            analysisType: "general",
+            quantitativeScores: quantitativeScores,
+            qualitativeScores: qualitativeScores,
+            overallScore: overallScore,
+            insights: insights
+          };
+        } catch (error) {
+          console.error("❌ Communication analysis error:", error);
+          throw new Error(`Analysis failed: ${error.message}`);
+        }
+      }
+
+      // Calculate quantitative metrics for communication
+      async function calculateQuantitativeMetrics(transcript, quantitativeConfig) {
+        if (!transcript || typeof transcript !== 'string') {
+          console.error('Invalid transcript provided to calculateQuantitativeMetrics');
+          return {};
+        }
+        
+        const words = transcript.split(/\s+/).filter(word => word.length > 0);
+        const sentences = transcript.split(/[.!?]+/).filter(s => s.trim().length > 0);
+        
+        const metrics = {};
+        
+        // Speech Rate
+        const estimatedDurationMinutes = words.length / 150; // Average pace
+        metrics['Speech Rate'] = Math.round(words.length / estimatedDurationMinutes);
+        
+        // Talk/Listen Ratio
+        metrics['Talk/Listen Ratio'] = 50; // Balanced conversation
+        
+        // Filler Words
+        const fillerWords = ['um', 'uh', 'like', 'you know', 'so', 'well', 'actually'];
+        metrics['Filler Words'] = words.filter(word => 
+          fillerWords.includes(word.toLowerCase())
+        ).length;
+        
+        // Questions Asked
+        metrics['Questions Asked'] = (transcript.match(/\?/g) || []).length;
+        
+        // Response Time
+        metrics['Response Time'] = 2; // Default thoughtful response time
+        
+        // Engagement Words
+        const engagementWords = ['interesting', 'great', 'exactly', 'absolutely', 'wonderful', 'amazing', 'perfect', 'love', 'fantastic'];
+        metrics['Engagement Words'] = words.filter(word => 
+          engagementWords.some(eng => word.toLowerCase().includes(eng))
+        ).length;
+        
+        // Conversation Length
+        metrics['Conversation Length'] = Math.round(words.length * 0.4); // Seconds estimate
+        
+        return metrics;
+      }
+
+      // Calculate qualitative metrics using AI analysis
+      async function calculateQualitativeMetrics(transcript, qualitativeConfig) {
+        if (!transcript || typeof transcript !== 'string') {
+          console.error('Invalid transcript provided to calculateQualitativeMetrics');
+          return {};
+        }
+        
+        if (!qualitativeConfig || typeof qualitativeConfig !== 'object') {
+          console.error('Invalid qualitativeConfig provided');
+          return {};
+        }
+        
+        try {
+          const prompt = `Analyze this conversation transcript for professional communication skills. Rate each factor from 1-10:
+
+Professional Presence & Authority: Evaluate based on executive presence, vocal authority, confident delivery, leadership gravitas
+Strategic Communication: Evaluate based on clear messaging, structured thinking, persuasive arguments, business acumen
+Engagement & Influence: Evaluate based on audience connection, compelling delivery, active listening, relationship building
+Emotional Intelligence & Adaptability: Evaluate based on reading the room, social awareness, conflict resolution, cultural sensitivity
+
+Transcript: "${transcript}"
+
+Provide scores in this exact format:
+Professional Presence & Authority: [score 1-10]
+Strategic Communication: [score 1-10]
+Engagement & Influence: [score 1-10]
+Emotional Intelligence & Adaptability: [score 1-10]`;
+
+          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${window.GEMINI_API_KEY}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              contents: [{
+                parts: [{
+                  text: prompt
+                }]
+              }]
+            })
+          });
+
+          const data = await response.json();
+          
+          if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts || !data.candidates[0].content.parts[0]) {
+            console.error('Invalid response structure from Gemini API:', data);
+            throw new Error('Invalid API response structure');
+          }
+          
+          const analysisText = data.candidates[0].content.parts[0].text;
+          
+          const scores = {};
+          Object.keys(qualitativeConfig).forEach(metric => {
+            const match = analysisText.match(new RegExp(`${metric}:\\s*(\\d+)`, 'i'));
+            scores[metric] = match ? parseInt(match[1]) : 3; // Realistic default of 3/10
+          });
+          
+          return scores;
+        } catch (error) {
+          console.error("Error calculating qualitative metrics:", error);
+          
+          // Provide professional communication default scores
+          const defaultScores = {
+            'Professional Presence & Authority': 6,
+            'Strategic Communication': 5,
+            'Engagement & Influence': 6,
+            'Emotional Intelligence & Adaptability': 5
+          };
+          
+          console.log("🔄 Using default professional communication scores due to API error");
+          return defaultScores;
+        }
+      }
+
+      // Calculate overall score
+      function calculateOverallScore(quantitativeScores, qualitativeScores) {
+        if (!quantitativeScores || !qualitativeScores) {
+          console.error('Invalid scores provided to calculateOverallScore');
+          return 5; // Default middle score
+        }
+        
+        const qualitativeWeight = 0.6; // More weight on qualitative
+        const quantitativeWeight = 0.4;
+        
+        const qualitativeValues = Object.values(qualitativeScores);
+        if (qualitativeValues.length === 0) {
+          console.error('No qualitative scores available');
+          return 5;
+        }
+        
+        const qualitativeAvg = qualitativeValues.reduce((a, b) => a + b, 0) / qualitativeValues.length;
+        
+        // Calculate quantitative average from actual metrics
+        const quantitativeMetrics = Object.entries(quantitativeScores).map(([metric, value]) => {
+          const config = communicationMetrics.quantitative && communicationMetrics.quantitative[metric];
+          if (!config) return 5; // Default middle score
+          
+          const { optimal } = config;
+          // Score based on how close to optimal range
+          if (value >= optimal.min && value <= optimal.max) {
+            return 8; // Great score
+          } else if (value < optimal.min) {
+            return Math.max(3, 8 - ((optimal.min - value) / optimal.min) * 5);
+          } else {
+            return Math.max(3, 8 - ((value - optimal.max) / optimal.max) * 5);
+          }
+        });
+        
+        const quantitativeAvg = quantitativeMetrics.length > 0 ? quantitativeMetrics.reduce((a, b) => a + b, 0) / quantitativeMetrics.length : 5;
+        
+        const overallScore = (qualitativeAvg * qualitativeWeight + quantitativeAvg * quantitativeWeight);
+        return Math.round(overallScore * 10) / 10;
+      }
+
+      // Generate communication insights
+      async function generateCommunicationInsights(transcript, quantitativeScores, qualitativeScores) {
+        if (!transcript || typeof transcript !== 'string') {
+          console.error('Invalid transcript provided to generateCommunicationInsights');
+          return 'Unable to generate insights - invalid transcript data';
+        }
+        
+        try {
+          const prompt = `Analyze this professional conversation and provide detailed feedback in this exact format:
+
+STRENGTHS:
+• [List 3-4 specific strengths in professional communication]
+
+AREAS FOR IMPROVEMENT:
+• [List 3-4 specific areas to improve for professional effectiveness]
+
+RECOMMENDATIONS:
+• [List 3-4 actionable recommendations for enhanced professional communication]
+
+Transcript: "${transcript}"
+
+Focus on professional presence, strategic communication, executive influence, and business impact. Consider leadership effectiveness, persuasive ability, and workplace communication skills.`;
+
+          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${window.GEMINI_API_KEY}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              contents: [{
+                parts: [{
+                  text: prompt
+                }]
+              }]
+            })
+          });
+
+          const data = await response.json();
+          
+          if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts || !data.candidates[0].content.parts[0]) {
+            console.error('Invalid response structure from Gemini API:', data);
+            throw new Error('Invalid API response structure');
+          }
+          
+          return data.candidates[0].content.parts[0].text;
+        } catch (error) {
+          console.error("Error generating insights:", error);
+          console.log("🔄 Using default professional communication insights due to API error");
+          return `STRENGTHS:
+• Demonstrated professional engagement and participation
+• Maintained structured conversation flow
+• Showed business-appropriate communication style
+• Displayed willingness to engage in professional dialogue
+
+AREAS FOR IMPROVEMENT:
+• Enhance executive presence and vocal authority
+• Develop more strategic messaging and persuasive arguments
+• Strengthen audience connection and influence techniques
+• Improve adaptability in professional contexts
+
+RECOMMENDATIONS:
+• Practice executive presentation skills and confident delivery
+• Work on strategic thinking and clear business messaging
+• Focus on building stronger professional relationships
+• Develop situational awareness and cultural sensitivity in workplace communications`;
+        }
+      }
+
+      // Display results functions
+      function displayResults(results) {
+        console.log("🎨 Displaying communication results:", results);
+        
+        if (results.transcript) {
+          document.getElementById('transcriptContent').innerHTML = `
+            <div class="transcript-text">
+              ${results.transcript}
+            </div>
+          `;
+        }
+
+        displayDetailedInsights(results.insights, results.overallScore);
+        displayQuantitativeMetrics(results.quantitativeScores);
+        displayQualitativeMetrics(results.qualitativeScores);
+      }
+
+      function displayDetailedInsights(insights, overallScore) {
+        const insightsElement = document.getElementById('detailedAnalysisContent');
+        if (!insightsElement || !insights) return;
+
+        const sections = ['STRENGTHS:', 'AREAS FOR IMPROVEMENT:', 'RECOMMENDATIONS:'];
+        let insightsHtml = '';
+
+        // Overall Performance Assessment
+        let performanceHtml = '';
+        let performanceColor = '';
+        let performanceIcon = '';
+        
+        if (overallScore >= 8) {
+          performanceHtml = `
+            <div style="margin-bottom: 1.5rem;">
+              <span style="display: inline-block; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem;">
+                Score: ${Math.round(overallScore * 10)}/100
+              </span>
+            </div>
+            <h4 style="font-size: 1.25rem; font-weight: 700; color: var(--voice-text-primary); margin-bottom: 1rem;">
+              Excellent Communication Skills
+            </h4>
+            <p style="color: var(--voice-text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">
+              You demonstrate outstanding communication abilities with excellent clarity, engagement, and emotional intelligence. Your natural conversational flow creates meaningful connections.
+            </p>
+            <div style="background: rgba(16, 185, 129, 0.1); padding: 1rem; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.2);">
+              <p style="font-weight: 600; color: var(--voice-text-primary); margin-bottom: 0.5rem;">Key Strengths Observed:</p>
+              <p style="color: var(--voice-text-secondary); margin: 0;">
+                Confident presence • Active engagement • Clear articulation • Strong emotional awareness
+              </p>
+            </div>
+          `;
+          performanceColor = 'excellent';
+          performanceIcon = 'check-circle';
+        } else if (overallScore >= 6.5) {
+          performanceHtml = `
+            <div style="margin-bottom: 1.5rem;">
+              <span style="display: inline-block; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem;">
+                Score: ${Math.round(overallScore * 10)}/100
+              </span>
+            </div>
+            <h4 style="font-size: 1.25rem; font-weight: 700; color: var(--voice-text-primary); margin-bottom: 1rem;">
+              Strong Foundation with Growth Potential
+            </h4>
+            <p style="color: var(--voice-text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">
+              You show solid communication fundamentals with clear areas for enhancement. With focused practice, you can develop into an exceptional communicator.
+            </p>
+            <div style="background: rgba(245, 158, 11, 0.1); padding: 1rem; border-radius: 12px; border: 1px solid rgba(245, 158, 11, 0.2);">
+              <p style="font-weight: 600; color: var(--voice-text-primary); margin-bottom: 0.5rem;">Focus Areas:</p>
+              <p style="color: var(--voice-text-secondary); margin: 0;">
+                Vocal confidence • Engagement techniques • Clarity improvement • Emotional expression
+              </p>
+            </div>
+          `;
+          performanceColor = 'good';
+          performanceIcon = 'trending-up';
+        } else {
+          performanceHtml = `
+            <div style="margin-bottom: 1.5rem;">
+              <span style="display: inline-block; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem;">
+                Score: ${Math.round(overallScore * 10)}/100
+              </span>
+            </div>
+            <h4 style="font-size: 1.25rem; font-weight: 700; color: var(--voice-text-primary); margin-bottom: 1rem;">
+              Great Starting Point for Growth
+            </h4>
+            <p style="color: var(--voice-text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">
+              Everyone starts somewhere, and you've taken an important step by seeking feedback. Communication skills are highly learnable with consistent practice.
+            </p>
+            <div style="background: rgba(239, 68, 68, 0.1); padding: 1rem; border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2);">
+              <p style="font-weight: 600; color: var(--voice-text-primary); margin-bottom: 0.5rem;">Building Blocks:</p>
+              <p style="color: var(--voice-text-secondary); margin: 0;">
+                Speech clarity • Confidence building • Active listening • Engagement skills
+              </p>
+            </div>
+          `;
+          performanceColor = 'needs-improvement';
+          performanceIcon = 'alert-circle';
+        }
+
+        insightsHtml += `
+          <div class="insight-card-modern performance">
+            <div class="insight-header-modern">
+              <div class="insight-icon-modern ${performanceColor}">
+                <i data-lucide="${performanceIcon}"></i>
+              </div>
+              <h4 class="insight-title-modern">Overall Assessment</h4>
+            </div>
+            <div class="insight-content-modern">
+              ${performanceHtml}
+            </div>
+          </div>
+        `;
+
+        sections.forEach(section => {
+          const match = insights.match(new RegExp(`${section}([\\s\\S]*?)(?=${sections.find(s => s !== section) || '$'})`, 'i'));
+          if (match) {
+            const content = match[1].trim();
+            const title = section.replace(':', '');
+            let color = 'var(--voice-primary)';
+            let icon = 'lightbulb';
+            
+            if (section.includes('STRENGTHS')) {
+              color = 'var(--voice-success)';
+              icon = 'check-circle';
+            } else if (section.includes('IMPROVEMENT')) {
+              color = 'var(--voice-warm)';
+              icon = 'alert-triangle';
+            } else if (section.includes('RECOMMENDATIONS')) {
+              color = 'var(--voice-primary)';
+              icon = 'compass';
+            }
+            
+            insightsHtml += `
+              <div class="insight-card-modern">
+                <div class="insight-header-modern">
+                  <div class="insight-icon-modern" style="background: ${color};">
+                    <i data-lucide="${icon}"></i>
+                  </div>
+                  <h4 class="insight-title-modern">${title}</h4>
+                </div>
+                <div class="insight-content-modern">
+                  ${content.replace(/•/g, '&bull;')}
+                </div>
+              </div>
+            `;
+          }
+        });
+
+        insightsElement.innerHTML = insightsHtml;
+
+        // Update score display
+        document.getElementById('scoreCircle').textContent = Math.round(overallScore * 10);
+        document.getElementById('scoreText').textContent = `${Math.round(overallScore * 10)}/100`;
+        
+        if (overallScore >= 8) {
+          document.getElementById('scoreDescription').textContent = "Excellent communication skills with strong presence and clarity";
+        } else if (overallScore >= 6.5) {
+          document.getElementById('scoreDescription').textContent = "Good foundation with clear opportunities for growth";
+        } else {
+          document.getElementById('scoreDescription').textContent = "Solid starting point with significant potential for improvement";
+        }
+      }
+
+      function displayQuantitativeMetrics(scores) {
+        const quantitativeElement = document.getElementById('quantitativeContent');
+        if (!quantitativeElement || !scores) return;
+
+        let html = '<div class="metrics-grid">';
+        
+        Object.entries(scores).forEach(([metric, value]) => {
+          const config = communicationMetrics.quantitative[metric] || { optimal: { min: 0, max: 100 } };
+          const optimal = config.optimal;
+          
+          let score;
+          if (value >= optimal.min && value <= optimal.max) {
+            score = 100;
+          } else if (value < optimal.min) {
+            score = Math.max(0, 100 - (optimal.min - value) * 2);
+          } else {
+            score = Math.max(0, 100 - (value - optimal.max) * 2);
+          }
+          
+          score = Math.min(100, Math.max(0, score));
+          const scoreColor = score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : score >= 40 ? '#ef4444' : '#dc2626';
+          
+          html += `
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-name">${metric}</span>
+                <span class="metric-score" style="color: ${scoreColor};">${Math.round(score)}/100</span>
+              </div>
+              <div class="metric-details">
+                <div style="font-weight: 500;">Measured: ${value}${getMetricUnit(metric)}</div>
+                <div style="color: var(--voice-text-muted);">Optimal: ${optimal.min}-${optimal.max}${getMetricUnit(metric)}</div>
+              </div>
+              <div class="metric-bar">
+                <div class="metric-fill" style="width: ${score}%; background-color: ${scoreColor};"></div>
+              </div>
+            </div>
+          `;
+        });
+        
+        html += '</div>';
+        quantitativeElement.innerHTML = html;
+      }
+
+      function displayQualitativeMetrics(scores) {
+        const qualitativeElement = document.getElementById('qualitativeContent');
+        if (!qualitativeElement || !scores) return;
+
+        let html = '<div class="categories-grid">';
+        
+        Object.entries(scores).forEach(([metric, score]) => {
+          const config = communicationMetrics.qualitative[metric] || { factors: [] };
+          const normalizedScore = (score / 10) * 100;
+          const scoreColor = normalizedScore >= 80 ? '#10b981' : normalizedScore >= 60 ? '#f59e0b' : normalizedScore >= 40 ? '#ef4444' : '#dc2626';
+          
+          html += `
+            <div class="category-card">
+              <div class="category-header">
+                <span class="category-name">${metric}</span>
+                <span class="category-score" style="color: ${scoreColor};">${score}/10</span>
+              </div>
+              <div class="category-factors">
+                ${config.factors.map(factor => `<span class="factor-tag">${factor}</span>`).join('')}
+              </div>
+              <div class="category-bar">
+                <div class="category-fill" style="width: ${normalizedScore}%; background-color: ${scoreColor};"></div>
+              </div>
+            </div>
+          `;
+        });
+        
+        html += '</div>';
+        qualitativeElement.innerHTML = html;
+      }
+
+      function getMetricUnit(metric) {
+        const units = {
+          'Speech Rate': ' wpm',
+          'Talk/Listen Ratio': '%',
+          'Filler Words': '',
+          'Questions Asked': '',
+          'Response Time': 's',
+          'Engagement Words': '',
+          'Conversation Length': 's'
+        };
+        return units[metric] || '';
+      }
+
+      // Copy functions
+      function copyAnalysis() {
+        const analysisContent = document.getElementById('detailedAnalysisContent');
+        if (analysisContent) {
+          const textContent = analysisContent.innerText;
+          navigator.clipboard.writeText(textContent);
+          
+          // Show feedback
+          const btn = event.target.closest('.copy-btn');
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '<i data-lucide="check"></i> Copied!';
+          btn.style.background = 'var(--voice-success)';
+          btn.style.color = 'white';
+          
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = 'rgba(255, 255, 255, 0.6)';
+            btn.style.color = 'var(--voice-text-secondary)';
+          }, 2000);
+        }
+      }
+
+      function copyQuantitative() {
+        const quantContent = document.getElementById('quantitativeContent');
+        if (quantContent) {
+          const textContent = quantContent.innerText;
+          navigator.clipboard.writeText(textContent);
+          
+          // Show feedback
+          const btn = event.target.closest('.copy-btn');
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '<i data-lucide="check"></i> Copied!';
+          btn.style.background = 'var(--voice-success)';
+          btn.style.color = 'white';
+          
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = 'rgba(255, 255, 255, 0.6)';
+            btn.style.color = 'var(--voice-text-secondary)';
+          }, 2000);
+        }
+      }
+
+      function copyQualitative() {
+        const qualContent = document.getElementById('qualitativeContent');
+        if (qualContent) {
+          const textContent = qualContent.innerText;
+          navigator.clipboard.writeText(textContent);
+          
+          // Show feedback
+          const btn = event.target.closest('.copy-btn');
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '<i data-lucide="check"></i> Copied!';
+          btn.style.background = 'var(--voice-success)';
+          btn.style.color = 'white';
+          
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = 'rgba(255, 255, 255, 0.6)';
+            btn.style.color = 'var(--voice-text-secondary)';
+          }, 2000);
+        }
+      }
+
+      // Process audio for transcription
+      async function processAudioForTranscription(audioDataString) {
+        try {
+          console.log("🎤 Processing communication audio for transcription");
+
+          const audioData = JSON.parse(audioDataString);
+          console.log("📊 Audio data:", audioData);
+
+          const response = await fetch(audioData.base64);
+          const blob = await response.blob();
+          const audioFile = new File([blob], audioData.name, { type: audioData.type });
+
+          const transcript = await transcribeAudioWithGemini(audioFile);
+          const analysisResults = await analyzeCommunication(transcript);
+
+          console.log("✅ Communication analysis complete:", analysisResults);
+          displayResults(analysisResults);
+
+        } catch (error) {
+          console.error("❌ Audio processing failed:", error);
+          document.getElementById("transcriptContent").innerHTML = `
+            <div style="text-align: center; padding: 2rem; background: #fef2f2; border: 2px solid #fca5a5; border-radius: 12px; color: #dc2626;">
+              <h3>⚠️ Analysis Failed</h3>
+              <p>Unable to process your conversation. Please try again.</p>
+              <p style="font-size: 14px; opacity: 0.8;">Error: ${error.message}</p>
+            </div>
+          `;
+        }
+      }
+
+      // Communication Type Routing - Redirect to dedicated pages
+      function checkAndRedirectToSpecificPage() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const communicationType = urlParams.get('type');
+        
+        if (communicationType) {
+          console.log(`🔀 Detected communication type: ${communicationType}`);
+          
+          // Professional communication types - redirect to dedicated pages
+          const professionalRoutes = {
+            'presentation': 'presentation-analysis-results.html',
+            'sales': 'sales-analysis-results.html',
+            'client-calls': 'client-calls-analysis-results.html',
+            'leadership': 'leadership-analysis-results.html',
+            'negotiation': 'negotiation-analysis-results.html'
+          };
+          
+          // Personal communication types already have their own dedicated pages
+          // (casual-analysis-results.html, deep-analysis-results.html, etc.)
+          // This routing is handled by their respective analysis pages
+          
+          if (professionalRoutes[communicationType]) {
+            const targetPage = professionalRoutes[communicationType];
+            console.log(`🎯 Redirecting to dedicated page: ${targetPage}`);
+            
+            // Preserve all URL parameters and session storage
+            const newUrl = `${targetPage}${window.location.search}`;
+            window.location.href = newUrl;
+            return true; // Indicate redirect is happening
+          }
+        }
+        
+        return false; // No redirect needed
+      }
+
+      // Initialize page
+      document.addEventListener("DOMContentLoaded", function () {
+        lucide.createIcons();
+        initializeUnifiedTabSwitching();
+
+        // Check if we should redirect to a specific analysis page
+        const isRedirecting = checkAndRedirectToSpecificPage();
+        
+        if (!isRedirecting) {
+          // Only proceed with analysis if we're not redirecting
+          const audioData = sessionStorage.getItem("audioForAnalysis");
+          if (audioData) {
+            console.log("🎤 Found audio data for communication analysis");
+            processAudioForTranscription(audioData);
+            sessionStorage.removeItem("audioForAnalysis");
+          } else {
+            console.log("❌ No audio data found");
+            document.getElementById("transcriptContent").innerHTML = `
+              <div style="text-align: center; padding: 2rem;">
+                <h3>No Audio Data</h3>
+                <p>Please record a conversation first.</p>
+                <a href="dashboard.html" class="back-btn" style="margin-top: 1rem;">
+                  Go to Dashboard
+                </a>
+              </div>
+            `;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

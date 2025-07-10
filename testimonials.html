@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Stories - Articulaition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        /* Hero Section */
+        .testimonials-hero {
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.05) 0%, rgba(255, 147, 77, 0.05) 100%);
+            padding: var(--space-5xl) var(--space-xl);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(74, 144, 226, 0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-lg);
+            background: rgba(74, 144, 226, 0.1);
+            border: 1px solid rgba(74, 144, 226, 0.2);
+            border-radius: var(--radius-full);
+            color: var(--primary);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero-title {
+            font-size: var(--text-5xl);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--space-lg);
+            line-height: 1.2;
+        }
+
+        .hero-title .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: var(--text-xl);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: var(--space-3xl) var(--space-xl);
+            background: var(--bg-secondary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-xl);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: var(--space-xl);
+        }
+
+        .stat-number {
+            font-size: var(--text-4xl);
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .stat-label {
+            font-size: var(--text-base);
+            color: var(--text-secondary);
+        }
+
+        /* Featured Testimonial */
+        .featured-section {
+            padding: var(--space-4xl) var(--space-xl);
+            background: var(--bg-primary);
+        }
+
+        .featured-testimonial {
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.05) 0%, rgba(255, 147, 77, 0.05) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-3xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-testimonial::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 150px;
+            color: rgba(74, 144, 226, 0.1);
+            font-family: Georgia, serif;
+        }
+
+        .featured-quote {
+            font-size: var(--text-2xl);
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin-bottom: var(--space-2xl);
+            position: relative;
+            z-index: 1;
+        }
+
+        .featured-author {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--text-2xl);
+            font-weight: 600;
+        }
+
+        .author-info h4 {
+            font-size: var(--text-lg);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-xs);
+        }
+
+        .author-info p {
+            color: var(--text-secondary);
+            font-size: var(--text-base);
+        }
+
+        /* Testimonials Grid */
+        .testimonials-grid-section {
+            padding: var(--space-4xl) var(--space-xl);
+            background: var(--bg-secondary);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-3xl);
+        }
+
+        .section-title {
+            font-size: var(--text-3xl);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--space-md);
+        }
+
+        .enhanced-testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--space-xl);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .enhanced-testimonial-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enhanced-testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-lg);
+        }
+
+        .rating {
+            display: flex;
+            gap: var(--space-xs);
+        }
+
+        .star {
+            color: #FFD700;
+            font-size: var(--text-lg);
+        }
+
+        .use-case-badge {
+            background: rgba(74, 144, 226, 0.1);
+            color: var(--primary);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-full);
+            font-size: var(--text-xs);
+            font-weight: 500;
+        }
+
+        .quote-text {
+            font-size: var(--text-base);
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin-bottom: var(--space-xl);
+            font-style: italic;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .small-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .author-details h5 {
+            font-size: var(--text-base);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .author-details p {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: var(--space-5xl) var(--space-xl);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .cta-title {
+            font-size: var(--text-3xl);
+            font-weight: 700;
+            margin-bottom: var(--space-lg);
+        }
+
+        .cta-subtitle {
+            font-size: var(--text-lg);
+            margin-bottom: var(--space-2xl);
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: var(--space-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            padding: var(--space-md) var(--space-2xl);
+            font-size: var(--text-base);
+            font-weight: 600;
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .cta-button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: var(--text-3xl);
+            }
+
+            .featured-quote {
+                font-size: var(--text-xl);
+            }
+
+            .enhanced-testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .author-avatar {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav-wrapper">
+            <a href="index.html" class="nav-logo" aria-label="Articulaition home">
+                <span>Articulaition</span>
+            </a>
+            
+            <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="nav-toggle-line"></span>
+                <span class="nav-toggle-line"></span>
+                <span class="nav-toggle-line"></span>
+            </button>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html#features" class="nav-link">Features</a></li>
+                <li class="nav-item"><a href="index.html#how-it-works" class="nav-link">How it Works</a></li>
+                <li class="nav-item"><a href="index.html#pricing" class="nav-link">Pricing</a></li>
+                <li class="nav-item"><a href="testimonials.html" class="nav-link">Success Stories</a></li>
+                <li class="nav-item nav-item-cta">
+                    <a href="signup.html" class="btn btn-primary btn-sm">Get Started</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="testimonials-hero">
+        <div class="hero-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <span>Customer Stories</span>
+        </div>
+        <h1 class="hero-title">
+            What Our Users Say<br>
+            <span class="gradient-text">Success stories from professionals like you</span>
+        </h1>
+        <p class="hero-subtitle">
+            Discover how Articulaition is transforming communication skills across industries
+        </p>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">10,000+</div>
+                <div class="stat-label">Active Users</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">4.8/5</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">92%</div>
+                <div class="stat-label">Improved Communication</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Enterprise Clients</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Testimonial -->
+    <section class="featured-section">
+        <div class="featured-testimonial">
+            <p class="featured-quote">
+                "Articulaition has been a game-changer for our entire leadership team. The AI-powered feedback helped me identify speech patterns I wasn't even aware of. Within weeks, I noticed a significant improvement in how my presentations were received. Our team's communication scores improved by 40%, and client satisfaction went through the roof."
+            </p>
+            <div class="featured-author">
+                <div class="author-avatar">JH</div>
+                <div class="author-info">
+                    <h4>Jennifer Harrison</h4>
+                    <p>CEO, TechVentures Inc. • Enterprise Customer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Grid -->
+    <section class="testimonials-grid-section">
+        <div class="section-header">
+            <h2 class="section-title">Stories from Every Industry</h2>
+            <p class="hero-subtitle">See how professionals are advancing their careers with better communication</p>
+        </div>
+
+        <div class="enhanced-testimonials-grid">
+            <!-- Sales Professional -->
+            <div class="enhanced-testimonial-card">
+                <div class="card-header">
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <span class="use-case-badge">Sales</span>
+                </div>
+                <p class="quote-text">
+                    "My closing rate improved by 35% after using Articulaition for just one month. The real-time feedback during practice sessions helped me eliminate filler words and speak with more confidence."
+                </p>
+                <div class="card-footer">
+                    <div class="small-avatar">MR</div>
+                    <div class="author-details">
+                        <h5>Michael Rodriguez</h5>
+                        <p>Senior Sales Manager, CloudTech</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Healthcare Professional -->
+            <div class="enhanced-testimonial-card">
+                <div class="card-header">
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <span class="use-case-badge">Healthcare</span>
+                </div>
+                <p class="quote-text">
+                    "As a doctor, clear communication with patients is crucial. Articulaition helped me simplify complex medical terms and improve my bedside manner. Patient satisfaction scores increased significantly."
+                </p>
+                <div class="card-footer">
+                    <div class="small-avatar">DP</div>
+                    <div class="author-details">
+                        <h5>Dr. Priya Patel</h5>
+                        <p>Cardiologist, Metro Health System</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teacher -->
+            <div class="enhanced-testimonial-card">
+                <div class="card-header">
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <span class="use-case-badge">Education</span>
+                </div>
+                <p class="quote-text">
+                    "The pace analysis feature transformed my teaching style. I learned to vary my speaking speed and use pauses effectively. My students are more engaged, and test scores have improved."
+                </p>
+                <div class="card-footer">
+                    <div class="small-avatar">RJ</div>
+                    <div class="author-details">
+                        <h5>Robert Johnson</h5>
+                        <p>High School Teacher, Lincoln Academy</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Startup Founder -->
+            <div class="enhanced-testimonial-card">
+                <div class="card-header">
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <span class="use-case-badge">Startup</span>
+                </div>
+                <p class="quote-text">
+                    "Pitching to investors used to terrify me. Articulaition's practice mode helped me nail my delivery. We closed our Series A after improving my pitch with the platform's feedback."
+                </p>
+                <div class="card-footer">
+                    <div class="small-avatar">ET</div>
+                    <div class="author-details">
+                        <h5>Emma Thompson</h5>
+                        <p>Founder & CEO, GreenTech Solutions</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lawyer -->
+            <div class="enhanced-testimonial-card">
+                <div class="card-header">
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <span class="use-case-badge">Legal</span>
+                </div>
+                <p class="quote-text">
+                    "Courtroom presence is everything. The tone analysis helped me understand how to convey authority while remaining approachable. I've won more cases since using Articulaition."
+                </p>
+                <div class="card-footer">
+                    <div class="small-avatar">AC</div>
+                    <div class="author-details">
+                        <h5>Amanda Chen</h5>
+                        <p>Senior Partner, Chen & Associates</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marketing Professional -->
+            <div class="enhanced-testimonial-card">
+                <div class="card-header">
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <span class="use-case-badge">Marketing</span>
+                </div>
+                <p class="quote-text">
+                    "Presenting campaign ideas to C-suite executives was my biggest challenge. The confidence metrics and body language tips transformed my delivery. I got promoted within 6 months."
+                </p>
+                <div class="card-footer">
+                    <div class="small-avatar">DW</div>
+                    <div class="author-details">
+                        <h5>David Wilson</h5>
+                        <p>VP of Marketing, BrandForce</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Engineer -->
+            <div class="enhanced-testimonial-card">
+                <div class="card-header">
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <span class="use-case-badge">Tech</span>
+                </div>
+                <p class="quote-text">
+                    "Technical presentations were my weakness. Articulaition helped me explain complex concepts simply and engage non-technical stakeholders. It's been career-changing."
+                </p>
+                <div class="card-footer">
+                    <div class="small-avatar">SK</div>
+                    <div class="author-details">
+                        <h5>Samantha Kim</h5>
+                        <p>Lead Engineer, DataFlow Systems</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HR Professional -->
+            <div class="enhanced-testimonial-card">
+                <div class="card-header">
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <span class="use-case-badge">HR</span>
+                </div>
+                <p class="quote-text">
+                    "Delivering difficult feedback and conducting interviews requires finesse. The emotion detection feature helped me maintain the right tone. Employee engagement scores are at an all-time high."
+                </p>
+                <div class="card-footer">
+                    <div class="small-avatar">JM</div>
+                    <div class="author-details">
+                        <h5>James Martinez</h5>
+                        <p>Director of HR, Global Corp</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Consultant -->
+            <div class="enhanced-testimonial-card">
+                <div class="card-header">
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <span class="use-case-badge">Consulting</span>
+                </div>
+                <p class="quote-text">
+                    "Client presentations are my bread and butter. The personalized coaching helped me develop a more executive presence. I've landed three major contracts since starting with Articulaition."
+                </p>
+                <div class="card-footer">
+                    <div class="small-avatar">LB</div>
+                    <div class="author-details">
+                        <h5>Lisa Brown</h5>
+                        <p>Senior Consultant, Strategic Advisors</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2 class="cta-title">Ready to Transform Your Communication?</h2>
+        <p class="cta-subtitle">Join thousands of professionals advancing their careers with Articulaition</p>
+        <div class="cta-buttons">
+            <a href="signup.html" class="cta-button cta-button-primary">Start Free Trial</a>
+            <a href="index.html#pricing" class="cta-button cta-button-secondary">View Pricing</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="footer-title">Articulaition</h3>
+                <p class="footer-description">Transform your communication skills with AI-powered speech analysis.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="testimonials.html">Success Stories</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Articulaition. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/navigation.js"></script>
+</body>
+</html>

@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI-Powered Negotiation & Conflict Resolution Analysis - Articulaition"
+    />
+    <title>Negotiation & Conflict Resolution Analysis - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --primary-blue: #4a90e2;
+        --success-green: #10b981;
+        --client-teal: #0891b2;
+        --relationship-purple: #7c3aed;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --bg-primary: #fafbfc;
+        --bg-secondary: #f4f6f8;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Background Effects */
+      .dashboard-container {
+        background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 100%);
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .dashboard-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(124, 58, 237, 0.03) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(74, 144, 226, 0.025) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(255, 147, 77, 0.02) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(74, 144, 226, 0.015) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Animation Classes */
+      .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+        opacity: 0;
+      }
+
+      .slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .scale-in {
+        animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes scaleIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-500 {
+        animation-delay: 0.5s;
+      }
+
+      /* Header Styling */
+      .main-header {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .logo-section img {
+        height: 32px;
+        width: auto;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--text-primary);
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--relationship-purple),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        color: var(--text-secondary);
+      }
+
+      .breadcrumb .current {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      /* Page Title Section */
+      .page-title-section {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .title-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--relationship-purple),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .page-description {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* Analysis Options */
+      .analysis-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .analysis-option {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.06);
+        border-radius: 24px;
+        padding: 2.5rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        text-align: center;
+        position: relative;
+      }
+
+      .analysis-option:hover {
+        transform: translateY(-4px);
+        border-color: var(--relationship-purple);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .analysis-option.selected {
+        border-color: var(--relationship-purple);
+        background: rgba(124, 58, 237, 0.05);
+      }
+
+      .option-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        border-radius: 20px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .analysis-option:hover .option-icon {
+        transform: scale(1.1);
+      }
+
+      .option-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-features {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .features-list {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      /* Upload Section */
+      .upload-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .upload-section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .section-subtitle {
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+
+      .upload-center {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-option-single {
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px dashed rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 3rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .upload-option-single:hover {
+        border-color: var(--relationship-purple);
+        background: rgba(124, 58, 237, 0.02);
+      }
+
+      .file-selected {
+        margin-top: 1.5rem;
+        background: rgba(124, 58, 237, 0.05);
+        border: 2px solid rgba(124, 58, 237, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .file-selected .file-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--relationship-purple);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .file-selected .file-details {
+        flex: 1;
+        text-align: left;
+      }
+
+      .file-selected .file-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+
+      .file-selected .file-size {
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+      }
+
+      .file-selected .remove-file {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .file-selected .remove-file:hover {
+        background: rgba(74, 144, 226, 0.1);
+        color: #ef4444;
+      }
+
+      .upload-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 1rem;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--relationship-purple),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .upload-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .upload-button {
+        background: var(--relationship-purple);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .upload-button:hover {
+        background: var(--relationship-purple);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* AI Practice Section */
+      .ai-practice-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .ai-practice-section.active {
+        display: block;
+      }
+
+      .scenario-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .scenario-type {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        padding: 2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .scenario-type:hover {
+        transform: translateY(-2px);
+        border-color: var(--relationship-purple);
+        box-shadow: var(--shadow-md);
+      }
+
+      .scenario-type.selected {
+        border-color: var(--relationship-purple);
+        background: rgba(124, 58, 237, 0.05);
+      }
+
+      .scenario-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 1rem;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--relationship-purple),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .scenario-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .scenario-description {
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+        position: relative;
+        z-index: 2;
+        font-weight: 500;
+      }
+
+      /* Conversation Container */
+      .conversation-container {
+        margin-top: 3rem;
+      }
+
+      .scenario-intro {
+        background: rgba(124, 58, 237, 0.05);
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .scenario-intro .scenario-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--relationship-purple);
+        margin-bottom: 1rem;
+      }
+
+      .scenario-text {
+        color: var(--text-primary);
+        line-height: 1.6;
+      }
+
+      .conversation-flow {
+        min-height: 200px;
+        margin-bottom: 2rem;
+      }
+
+      .message {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        align-items: flex-start;
+      }
+
+      .message.user {
+        flex-direction: row-reverse;
+      }
+
+      .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--relationship-purple),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        flex-shrink: 0;
+      }
+
+      .message.user .message-avatar {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+      }
+
+      .message-content {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-radius: 16px;
+        padding: 1rem 1.5rem;
+        max-width: 70%;
+        line-height: 1.5;
+      }
+
+      .message.user .message-content {
+        background: rgba(124, 58, 237, 0.1);
+        border-color: rgba(124, 58, 237, 0.2);
+      }
+
+      /* Audio Captured Styles */
+      .audio-captured {
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .audio-captured-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 16px;
+        font-weight: 600;
+        box-shadow: var(--shadow-md);
+        animation: slideInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes slideInScale {
+        0% {
+          opacity: 0;
+          transform: translateY(20px) scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .primary-button {
+        background: linear-gradient(135deg, #4a90e2, #7c3aed) !important;
+        color: white !important;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .primary-button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .primary-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .secondary-button {
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--text-primary);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .secondary-button:hover {
+        background: white;
+        border-color: var(--relationship-purple);
+        transform: translateY(-1px);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 2rem 1rem;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .analysis-options,
+        .scenario-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .analysis-option {
+          padding: 2rem;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+
+        .message-content {
+          max-width: 85%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="main-header fade-in">
+        <nav class="header-nav">
+          <div class="logo-section">
+            <img src="images/logo-header.svg" alt="Articulaition.com" />
+          </div>
+          <div class="nav-links">
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="professional-communication.html" class="nav-link"
+              >Professional</a
+            >
+            <a href="personal-communication.html" class="nav-link">Personal</a>
+          </div>
+          <div class="user-menu">
+            <div class="user-avatar">JD</div>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb slide-up delay-100">
+          <a href="dashboard.html">Dashboard</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <a href="professional-communication.html">Professional</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <span class="current">Negotiation Analysis</span>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title-section slide-up delay-200">
+          <div class="title-with-icon">
+            <div class="title-icon">
+              <i data-lucide="handshake" class="w-6 h-6"></i>
+            </div>
+            <h1 class="page-title">
+              Negotiation & Conflict Resolution Analysis
+            </h1>
+          </div>
+          <p class="page-description">
+            Navigate complex negotiations and resolve conflicts—develop
+            strategic communication for deals, disputes, and difficult
+            conversations.
+          </p>
+        </div>
+
+        <!-- Analysis Options -->
+        <div class="analysis-options">
+          <!-- Upload Existing Recording -->
+          <div class="analysis-option scale-in delay-300" data-type="upload">
+            <div class="option-icon">
+              <i data-lucide="upload" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">Upload Negotiation Recording</h3>
+            <p class="option-description">
+              Upload a recording of your negotiation, conflict resolution, or
+              strategic discussion for analysis.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Persuasion tactics • Compromise strategies • Emotional
+                intelligence • Win-win identification
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Practice Session -->
+          <div class="analysis-option scale-in delay-400" data-type="practice">
+            <div class="option-icon">
+              <i data-lucide="balance" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">AI Negotiation Simulation</h3>
+            <p class="option-description">
+              Practice with our AI that simulates challenging negotiation
+              scenarios and difficult counterparts.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Strategic simulations • Difficult counterparts • Multi-party
+                negotiations • High-stakes scenarios
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+          <h2 class="section-title">Upload Your Negotiation Recording</h2>
+          <p class="section-subtitle">
+            Upload an audio file of your negotiation or conflict resolution
+            session
+          </p>
+
+          <div class="upload-center">
+            <div class="upload-option-single" id="fileUpload">
+              <div class="upload-icon">
+                <i data-lucide="folder" class="w-6 h-6"></i>
+              </div>
+              <div class="upload-title">Choose File</div>
+              <div class="upload-description">
+                Select an audio file from your device (MP3, M4A, WAV)
+              </div>
+              <button class="upload-button" id="chooseFileBtn">
+                <i data-lucide="upload" class="w-4 h-4"></i>
+                Select File
+              </button>
+              <input
+                type="file"
+                id="audioFile"
+                accept=".mp3,.m4a,.wav"
+                hidden
+              />
+
+              <div
+                class="file-selected"
+                id="fileSelected"
+                style="display: none"
+              >
+                <div class="file-icon">
+                  <i data-lucide="file-audio" class="w-5 h-5"></i>
+                </div>
+                <div class="file-details">
+                  <div class="file-name" id="fileName">negotiation.mp3</div>
+                  <div class="file-size" id="fileSize">2.4 MB</div>
+                </div>
+                <button class="remove-file" id="removeFile">
+                  <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="secondary-button" id="backToOptions">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="primary-button" id="analyzeUpload" disabled>
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              Analyze Recording
+            </button>
+          </div>
+        </div>
+
+        <!-- AI Practice Section -->
+        <div class="ai-practice-section" id="practiceSection">
+          <h2 class="section-title">Choose Negotiation Scenario</h2>
+          <p class="section-subtitle">
+            Select the type of negotiation or conflict situation you'd like to
+            practice
+          </p>
+
+          <div class="scenario-grid">
+            <div class="scenario-type" data-scenario="contract">
+              <div class="scenario-icon">
+                <i data-lucide="file-text" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Contract Negotiation</div>
+              <div class="scenario-description">
+                High-stakes business contract with budget constraints and tight
+                deadlines
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="salary">
+              <div class="scenario-icon">
+                <i data-lucide="dollar-sign" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Salary Negotiation</div>
+              <div class="scenario-description">
+                Navigate compensation discussions with strategic positioning
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="vendor">
+              <div class="scenario-icon">
+                <i data-lucide="truck" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Vendor Negotiation</div>
+              <div class="scenario-description">
+                Strategic supplier discussions focusing on cost, quality, and
+                delivery
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="dispute">
+              <div class="scenario-icon">
+                <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Dispute Resolution</div>
+              <div class="scenario-description">
+                Resolve conflicts between parties with competing interests
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="partnership">
+              <div class="scenario-icon">
+                <i data-lucide="handshake" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Partnership Agreement</div>
+              <div class="scenario-description">
+                Navigate complex partnership terms and equity discussions
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="international">
+              <div class="scenario-icon">
+                <i data-lucide="globe" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">International Deal</div>
+              <div class="scenario-description">
+                Cross-cultural negotiation with regulatory and cultural
+                considerations
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="conversation-container"
+            id="conversationContainer"
+            style="display: none"
+          >
+            <!-- Scenario Introduction -->
+            <div class="scenario-intro">
+              <div class="scenario-title">
+                <i data-lucide="handshake" class="w-5 h-5 inline mr-2"></i>
+                <span id="scenarioTitle">Contract Negotiation</span>
+              </div>
+              <div class="scenario-text" id="scenarioText">
+                You're negotiating a major service contract. The client wants
+                significant cost reductions while maintaining service levels.
+                Find a win-win solution.
+              </div>
+            </div>
+
+            <!-- Conversation Flow -->
+            <div class="conversation-flow" id="conversationFlow">
+              <!-- Messages will be inserted here -->
+            </div>
+
+            <div class="action-buttons">
+              <button class="secondary-button" id="backToScenarios">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Scenarios
+              </button>
+              <button
+                class="secondary-button"
+                id="recordButton"
+                style="display: none"
+              >
+                <i data-lucide="mic" class="w-4 h-4"></i>
+                Record Response
+              </button>
+              <button
+                class="primary-button"
+                id="endConversation"
+                style="display: none"
+              >
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                Submit for Analysis
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons" id="scenarioActions">
+            <button class="secondary-button" id="backToOptionsFromPractice">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="secondary-button" id="changeScenario">
+              <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+              Change Scenario
+            </button>
+            <button class="primary-button" id="startPractice" disabled>
+              <i data-lucide="play" class="w-4 h-4"></i>
+              Start Negotiation Practice
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <!-- API Configuration - Copy api-config-template.js to api-config.js and add your keys -->
+    <script src="js/api-config.js"></script>
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Initialize AI engines
+      let aiEngine = null;
+      let geminiEngine = null;
+
+      try {
+        aiEngine = new AIConversationEngine();
+        console.log("AI Conversation Engine initialized");
+      } catch (error) {
+        console.warn("AI Conversation Engine not available:", error);
+      }
+
+      try {
+        geminiEngine = new GeminiAIEngine();
+        console.log(
+          "Gemini AI Engine initialized:",
+          geminiEngine.isConfigured() ? "Configured" : "Not configured"
+        );
+      } catch (error) {
+        console.warn("Gemini AI Engine not available:", error);
+      }
+
+      // Negotiation-specific scenarios
+      const presentationScenarios = {
+        contract: {
+          title: "Business Contract Negotiation",
+          description:
+            "You're negotiating a major service contract worth $500K annually. The client wants 20% cost reduction while maintaining current service levels.",
+          objections: [
+            "Thanks for coming in today. I'll be direct - we love working with you, but your proposal is significantly higher than our other options. We need to see at least a 20% reduction to make this work. What can you do for us?",
+            "I understand you want to maintain quality, but we've found other vendors who can deliver similar results at a much lower cost.",
+            "Our budget constraints are real. If we can't find middle ground on pricing, we'll have to consider other options.",
+            "We've been loyal customers for years. Can't you show us some flexibility on the pricing structure?",
+          ],
+        },
+        salary: {
+          title: "Salary Negotiation Discussion",
+          description:
+            "You're negotiating your compensation package. You want a 15% increase but the company has budget constraints.",
+          objections: [
+            "I appreciate you bringing this up. I know you've been doing good work, but I have to be honest - budgets are tight this year. A 15% increase is quite substantial. Help me understand your reasoning here.",
+            "While your performance has been solid, this increase would put you significantly above the market rate for your role.",
+            "I'd love to help, but I need to be fair to the entire team. How would I justify this increase to others in similar positions?",
+            "The company is going through some financial challenges right now. Can we explore other forms of compensation or benefits?",
+          ],
+        },
+        vendor: {
+          title: "Strategic Vendor Negotiation",
+          description:
+            "You're negotiating with a key supplier who wants to increase prices due to rising costs. You need to maintain current pricing.",
+          objections: [
+            "I understand you want to keep costs down, but our raw material costs have increased 30% this year. We simply can't continue at current pricing. We need at least a 15% increase to maintain quality.",
+            "We've been absorbing these cost increases for months, but it's not sustainable. Our margins are being squeezed to the breaking point.",
+            "If we can't reach an agreement on pricing, we may need to reconsider our partnership. We have other customers willing to pay fair market rates.",
+            "Look, we value this relationship, but business is business. These cost increases are industry-wide, not just us.",
+          ],
+        },
+        dispute: {
+          title: "Business Dispute Resolution",
+          description:
+            "Two departments are in conflict over resource allocation. You need to mediate and find a fair solution.",
+          objections: [
+            "I'm frustrated because marketing keeps getting priority for everything while our engineering needs are ignored. We're the ones actually building the product, but we can't get the resources we need.",
+            "Every time there's a budget decision, marketing wins. It's like our technical requirements don't matter.",
+            "I've been asking for additional developers for months, but instead, the budget goes to marketing campaigns. How is that supposed to help us deliver quality products?",
+            "The problem is systemic. Marketing has better relationships with leadership, so their requests always get approved first.",
+          ],
+        },
+        partnership: {
+          title: "Partnership Agreement Negotiation",
+          description:
+            "You're discussing equity and responsibilities in a new business partnership. Stakes are high and trust needs to be built.",
+          objections: [
+            "I've been thinking about our partnership structure. Given that I'm bringing more initial capital and have the industry connections, I think a 60-40 split makes more sense than 50-50. What are your thoughts?",
+            "I appreciate your technical expertise, but the financial risk I'm taking is substantial. I need the equity split to reflect that.",
+            "Looking at what each of us brings to the table, I think we need to be realistic about the value contribution. My network and funding should count for something.",
+            "I want this partnership to work, but I also need to protect my investment. The equity structure has to make business sense.",
+          ],
+        },
+        international: {
+          title: "International Deal Negotiation",
+          description:
+            "You're negotiating with an international partner. Cultural differences and regulatory requirements add complexity.",
+          objections: [
+            "We appreciate your proposal, but in our market, these terms would be very difficult to accept. The compliance requirements here are quite different, and we need much more flexibility in the payment terms.",
+            "Your approach works well in the US market, but our regulatory environment is much more complex. We need significant modifications to make this viable.",
+            "The cultural expectations around business relationships are different here. We need time to build trust before committing to these terms.",
+            "Currency fluctuations and local tax implications make your current proposal quite risky for us. Can we discuss risk-sharing mechanisms?",
+          ],
+        },
+      };
+
+      // State management
+      let currentMode = null;
+      let selectedScenario = null;
+      let conversationHistory = [];
+      let isRecording = false;
+      let mediaRecorder = null;
+      let audioChunks = [];
+      let recordedAudioBlob = null;
+
+      // DOM elements
+      const analysisOptions = document.querySelectorAll(".analysis-option");
+      const uploadSection = document.getElementById("uploadSection");
+      const practiceSection = document.getElementById("practiceSection");
+      const scenarioTypes = document.querySelectorAll(".scenario-type");
+      const conversationContainer = document.getElementById(
+        "conversationContainer"
+      );
+      const conversationFlow = document.getElementById("conversationFlow");
+      const startPracticeBtn = document.getElementById("startPractice");
+      const backToScenariosBtn = document.getElementById("backToScenarios");
+      const endConversationBtn = document.getElementById("endConversation");
+      const recordBtn = document.getElementById("recordButton");
+      const scenarioActionsDiv = document.getElementById("scenarioActions");
+      const changeScenarioBtn = document.getElementById("changeScenario");
+
+      // Analysis option selection
+      analysisOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+          option.classList.add("selected");
+          currentMode = option.dataset.type;
+
+          if (currentMode === "upload") {
+            uploadSection.classList.add("active");
+            practiceSection.classList.remove("active");
+          } else if (currentMode === "practice") {
+            practiceSection.classList.add("active");
+            uploadSection.classList.remove("active");
+          }
+        });
+      });
+
+      // Scenario selection
+      scenarioTypes.forEach((scenario) => {
+        scenario.addEventListener("click", () => {
+          scenarioTypes.forEach((s) => s.classList.remove("selected"));
+          scenario.classList.add("selected");
+          selectedScenario = scenario.dataset.scenario;
+          startPracticeBtn.disabled = false;
+        });
+      });
+
+      // Start practice session
+      startPracticeBtn.addEventListener("click", () => {
+        if (selectedScenario) {
+          initializePracticeSession(selectedScenario);
+          conversationContainer.style.display = "block";
+          scenarioActionsDiv.style.display = "none";
+          document.querySelector(".scenario-grid").style.display = "none";
+          document.querySelector("#practiceSection h2").style.display = "none";
+          document.querySelector(
+            "#practiceSection .section-subtitle"
+          ).style.display = "none";
+        }
+      });
+
+      // Change Scenario button
+      changeScenarioBtn.addEventListener("click", async () => {
+        if (!selectedScenario) {
+          alert("Please select a scenario first");
+          return;
+        }
+
+        // Update button state to show loading
+        changeScenarioBtn.disabled = true;
+        changeScenarioBtn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Generating...';
+
+        try {
+          // Get the current scenario information
+          const currentScenario = presentationScenarios[selectedScenario];
+          
+          // Use GeminiAIEngine to generate a new scenario
+          if (geminiEngine && geminiEngine.generateScenario) {
+            const newScenarioDescription = await geminiEngine.generateScenario(selectedScenario, currentScenario.title);
+            
+            // Update the scenario description with the new one
+            presentationScenarios[selectedScenario].description = newScenarioDescription;
+            
+            // Update the display if we're already in the selected scenario
+            const scenarioTextElement = document.getElementById("scenarioText");
+            if (scenarioTextElement) {
+              scenarioTextElement.textContent = newScenarioDescription;
+            }
+            
+            console.log("Generated new scenario:", newScenarioDescription);
+          } else {
+            console.warn("GeminiAI engine not available, using fallback");
+            // Fallback: Generate a simple variation
+            const fallbackScenarios = {
+              "contract": "You're negotiating a service contract with a potential client. They want to reduce the scope but maintain the same timeline, while you need to ensure profitability and quality. Both parties are motivated to reach an agreement, but key terms need to be worked out.",
+              "salary": "You're negotiating your salary during a performance review. Your manager acknowledges your strong performance but cites budget constraints. You need to make a compelling case for your compensation while maintaining a positive working relationship.",
+              "vendor": "You're negotiating with a key vendor whose prices have increased significantly. You need to maintain the relationship while controlling costs. They're facing their own cost pressures but value your long-term partnership.",
+              "dispute": "You're mediating a dispute between two departments over resource allocation. Both sides have valid concerns and competing priorities. The resolution needs to be fair and sustainable for the organization.",
+              "partnership": "You're negotiating a strategic partnership with another company. Both parties see mutual benefits, but there are concerns about intellectual property, revenue sharing, and market territory. The negotiation needs to address these concerns while preserving the partnership opportunity.",
+              "international": "You're negotiating an international business deal with cultural and regulatory considerations. There are language barriers, different business practices, and complex legal requirements. Success requires patience and cultural sensitivity."
+            };
+            
+            const newDescription = fallbackScenarios[selectedScenario] || currentScenario.description;
+            presentationScenarios[selectedScenario].description = newDescription;
+            
+            const scenarioTextElement = document.getElementById("scenarioText");
+            if (scenarioTextElement) {
+              scenarioTextElement.textContent = newDescription;
+            }
+          }
+          
+          // Success feedback
+          changeScenarioBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> Updated!';
+          setTimeout(() => {
+            changeScenarioBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-4 h-4"></i> Change Scenario';
+            changeScenarioBtn.disabled = false;
+          }, 2000);
+          
+        } catch (error) {
+          console.error("Error generating new scenario:", error);
+          alert("Failed to generate new scenario. Please try again.");
+          
+          // Reset button state
+          changeScenarioBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-4 h-4"></i> Change Scenario';
+          changeScenarioBtn.disabled = false;
+        }
+      });
+
+      async function initializePracticeSession(scenarioKey) {
+        const scenarioInfo = presentationScenarios[scenarioKey];
+        document.getElementById("scenarioTitle").textContent =
+          scenarioInfo.title;
+        document.getElementById("scenarioText").textContent =
+          scenarioInfo.description;
+
+        // Clear previous conversation
+        conversationFlow.innerHTML = "";
+        conversationHistory = [];
+
+        // Generate initial AI message
+        setTimeout(async () => {
+          let initialPrompt = "";
+
+          // Try to use Gemini AI for dynamic prompt generation
+          if (geminiEngine && geminiEngine.isConfigured()) {
+            try {
+              // Set scenario context for Gemini
+              geminiEngine.setScenarioContext(
+                scenarioKey,
+                scenarioInfo.title,
+                scenarioInfo.description,
+                'professional'
+              );
+
+              // Generate dynamic initial prompt
+              initialPrompt = await geminiEngine.generateInitialPrompt();
+              console.log(
+                "Generated dynamic prompt via Gemini:",
+                initialPrompt
+              );
+            } catch (error) {
+              console.warn(
+                "Gemini prompt generation failed, using fallback:",
+                error
+              );
+              // Fallback to static prompt
+              initialPrompt =
+                scenarioInfo.objections[
+                  Math.floor(Math.random() * scenarioInfo.objections.length)
+                ];
+            }
+          } else {
+            // Fallback to static prompt when Gemini is not configured
+            console.log("Gemini not configured, using static prompt");
+            initialPrompt =
+              scenarioInfo.objections[
+                Math.floor(Math.random() * scenarioInfo.objections.length)
+              ];
+          }
+
+          addAIMessage(initialPrompt);
+          recordBtn.style.display = "inline-flex";
+          endConversationBtn.style.display = "inline-flex";
+        }, 1000);
+      }
+
+      // Back to scenarios button
+      backToScenariosBtn.addEventListener("click", () => {
+        conversationContainer.style.display = "none";
+        scenarioActionsDiv.style.display = "flex";
+        document.querySelector(".scenario-grid").style.display = "grid";
+        document.querySelector("#practiceSection h2").style.display = "block";
+        document.querySelector(
+          "#practiceSection .section-subtitle"
+        ).style.display = "block";
+        resetPracticeSession();
+      });
+
+      function resetPracticeSession() {
+        scenarioTypes.forEach((s) => s.classList.remove("selected"));
+        selectedScenario = null;
+        startPracticeBtn.disabled = true;
+        conversationFlow.innerHTML = "";
+        conversationHistory = [];
+        recordBtn.style.display = "none";
+        endConversationBtn.style.display = "none";
+
+        // Reset recording state
+        isRecording = false;
+        recordedAudioBlob = null;
+        audioChunks = [];
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+        }
+      }
+
+      // Back to options buttons
+      document.getElementById("backToOptions").addEventListener("click", () => {
+        uploadSection.classList.remove("active");
+        analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+        currentMode = null;
+      });
+
+      document
+        .getElementById("backToOptionsFromPractice")
+        .addEventListener("click", () => {
+          practiceSection.classList.remove("active");
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+          currentMode = null;
+
+          // Reset scenario selection view
+          conversationContainer.style.display = "none";
+          scenarioActionsDiv.style.display = "flex";
+          document.querySelector(".scenario-grid").style.display = "grid";
+          document.querySelector("#practiceSection h2").style.display = "block";
+          document.querySelector(
+            "#practiceSection .section-subtitle"
+          ).style.display = "block";
+
+          resetPracticeSession();
+        });
+
+      // File upload functionality
+      document.getElementById("chooseFileBtn").addEventListener("click", () => {
+        document.getElementById("audioFile").click();
+      });
+
+      document.getElementById("audioFile").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          // Show file details
+          document.getElementById("fileName").textContent = file.name;
+          document.getElementById("fileSize").textContent =
+            (file.size / (1024 * 1024)).toFixed(1) + " MB";
+          document.getElementById("fileSelected").style.display = "flex";
+          document.getElementById("analyzeUpload").disabled = false;
+        }
+      });
+
+      document.getElementById("removeFile").addEventListener("click", () => {
+        document.getElementById("audioFile").value = "";
+        document.getElementById("fileSelected").style.display = "none";
+        document.getElementById("analyzeUpload").disabled = true;
+      });
+
+      // Recording functionality
+      recordBtn.addEventListener("click", () => {
+        if (!isRecording) {
+          startRecording();
+        } else {
+          stopRecording();
+        }
+      });
+
+      async function startRecording() {
+        try {
+          // Request microphone access
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+          });
+
+          // Clear previous audio chunks
+          audioChunks = [];
+
+          // Create MediaRecorder
+          mediaRecorder = new MediaRecorder(stream);
+
+          // Handle data available event
+          mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+              audioChunks.push(event.data);
+            }
+          };
+
+          // Handle recording stop event
+          mediaRecorder.onstop = () => {
+            // Create blob from chunks
+            recordedAudioBlob = new Blob(audioChunks, { type: "audio/webm" });
+
+            // Stop all tracks to release microphone
+            stream.getTracks().forEach((track) => track.stop());
+
+            // Add captured audio message to conversation
+            addAudioCapturedMessage();
+            console.log(
+              "Recording stopped and audio captured",
+              recordedAudioBlob
+            );
+          };
+
+          // Start recording
+          mediaRecorder.start();
+          isRecording = true;
+
+          // Update UI
+          recordBtn.innerHTML =
+            '<i data-lucide="square" class="w-4 h-4"></i> Stop Recording';
+          recordBtn.style.background = "#ef4444";
+          recordBtn.style.borderColor = "#ef4444";
+          recordBtn.style.color = "white";
+          lucide.createIcons();
+
+          console.log("Recording started...");
+        } catch (error) {
+          console.error("Error starting recording:", error);
+          alert(
+            "Unable to access microphone. Please ensure you have given permission."
+          );
+        }
+      }
+
+      function stopRecording() {
+        if (mediaRecorder && isRecording) {
+          mediaRecorder.stop();
+          isRecording = false;
+
+          // Update UI
+          recordBtn.innerHTML =
+            '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+          recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+          recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+          recordBtn.style.color = "var(--text-primary)";
+          lucide.createIcons();
+        }
+      }
+
+      function addUserMessage(message) {
+        const messageElement = document.createElement("div");
+        messageElement.className = "message user";
+        messageElement.innerHTML = `
+          <div class="message-content">
+            <div>${message}</div>
+          </div>
+          <div class="message-avatar">
+            <i data-lucide="user" class="w-5 h-5"></i>
+          </div>
+        `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        conversationHistory.push({
+          type: "user",
+          message: message,
+          timestamp: Date.now(),
+        });
+      }
+
+      function addAIMessage(message) {
+        const messageElement = document.createElement("div");
+        messageElement.className = "message ai";
+        messageElement.innerHTML = `
+          <div class="message-avatar">
+            <i data-lucide="briefcase" class="w-5 h-5"></i>
+          </div>
+          <div class="message-content">
+            <div>${message}</div>
+          </div>
+        `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        conversationHistory.push({
+          type: "ai",
+          message: message,
+          timestamp: Date.now(),
+        });
+      }
+
+      function addAudioCapturedMessage() {
+        const messageElement = document.createElement("div");
+        messageElement.className = "audio-captured";
+        messageElement.innerHTML = `
+          <div class="audio-captured-box">
+            <i data-lucide="check-circle" class="w-5 h-5"></i>
+            <span>Audio Captured Successfully</span>
+          </div>
+        `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        // Add both the audio captured message and a user response entry
+        conversationHistory.push({
+          type: "audio-captured",
+          message: "Audio Captured Successfully",
+          timestamp: Date.now(),
+        });
+
+        // Also add a user response entry for analysis
+        conversationHistory.push({
+          type: "user",
+          message: "User provided audio response to the scenario",
+          timestamp: Date.now(),
+        });
+
+        // Audio captured - stop here and wait for user to submit for analysis
+        console.log("Audio captured - waiting for user to submit for analysis");
+
+        // Show end conversation button
+        endConversationBtn.style.display = "inline-flex";
+        recordBtn.style.display = "none";
+      }
+
+      // Generate AI follow-up response
+      async function generateAIResponse() {
+        let followUpPrompt = "";
+
+        // Try to use Gemini AI for dynamic follow-up generation
+        if (geminiEngine && geminiEngine.isConfigured()) {
+          try {
+            // Generate dynamic follow-up based on conversation history
+            followUpPrompt = await geminiEngine.generateFollowUpPrompt(
+              "User recorded response",
+              conversationHistory
+            );
+            console.log(
+              "Generated dynamic follow-up via Gemini:",
+              followUpPrompt
+            );
+          } catch (error) {
+            console.warn(
+              "Gemini follow-up generation failed, using fallback:",
+              error
+            );
+            // Fallback to static follow-up
+            followUpPrompt = getFallbackFollowUp();
+          }
+        } else {
+          // Fallback to static follow-up when Gemini is not configured
+          console.log("Gemini not configured, using static follow-up");
+          followUpPrompt = getFallbackFollowUp();
+        }
+
+        if (followUpPrompt) {
+          addAIMessage(followUpPrompt);
+        }
+      }
+
+      // Fallback follow-up responses for negotiation scenarios
+      function getFallbackFollowUp() {
+        const followUps = [
+          "I see your point, but we still have some concerns about the terms you've proposed.",
+          "That's reasonable, but we need to find a way to make this work within our budget constraints.",
+          "I understand your position, but we have other stakeholders who need to be satisfied as well.",
+          "Okay, but what guarantees can you provide that these terms will actually be met?",
+          "I appreciate your flexibility, but we may need to explore some alternative approaches.",
+        ];
+
+        return followUps[Math.floor(Math.random() * followUps.length)];
+      }
+
+      // End conversation and analyze
+      endConversationBtn.addEventListener("click", async () => {
+        // Update button state
+        endConversationBtn.disabled = true;
+        endConversationBtn.innerHTML =
+          '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing Conversation...';
+
+        try {
+          // Check if we have recorded audio to pass to analysis page
+          if (recordedAudioBlob && recordedAudioBlob.size > 0) {
+            // Audio available, passing to analysis page
+
+            // Convert blob to base64 for storage
+            const reader = new FileReader();
+            reader.onloadend = function () {
+              const audioData = {
+                base64: reader.result,
+                type: recordedAudioBlob.type,
+                size: recordedAudioBlob.size,
+                name: "negotiation-practice-recording.webm",
+                timestamp: new Date().toISOString(),
+                analysisType: "negotiation",
+                source: "practice",
+              };
+
+              // Storing audio data for analysis page
+
+              // Store audio data for analysis page
+              sessionStorage.setItem(
+                "audioForAnalysis",
+                JSON.stringify(audioData)
+              );
+
+              // Also store minimal results data
+              const basicResults = {
+                hasAudio: true,
+                audioStored: true,
+                timestamp: new Date().toISOString(),
+                analysisType: "negotiation",
+                source: "practice",
+                note: "Audio file stored - transcription will be done on results page",
+              };
+
+              sessionStorage.setItem(
+                "analysisResults",
+                JSON.stringify(basicResults)
+              );
+
+              // Audio data stored successfully, redirecting
+
+              window.location.href =
+                "negotiation-analysis-results.html?type=negotiation&source=practice";
+            };
+
+            reader.readAsDataURL(recordedAudioBlob);
+          } else if (geminiEngine && geminiEngine.isConfigured()) {
+            // No audio, analyzing conversation text
+            const analysisResults = await geminiEngine.analyzePracticeSession(
+              conversationHistory,
+              "negotiation"
+            );
+
+            // Store results and redirect
+            sessionStorage.setItem(
+              "analysisResults",
+              JSON.stringify(analysisResults)
+            );
+            window.location.href =
+              "negotiation-analysis-results.html?type=negotiation&source=practice";
+          } else {
+            // Fallback analysis if Gemini is not available
+            const fallbackResults = {
+              success: true,
+              analysis: `## Negotiation Practice Analysis
+
+**Communication Effectiveness**: 7/10
+Your negotiation approach showed good professional tone and clear position statements.
+
+**Negotiation Strategy**: 6/10  
+You presented your position well but could strengthen your approach with more strategic questioning and collaborative language.
+
+**Persuasion Techniques**: 7/10
+Good use of logical arguments. Consider incorporating more value-based reasoning and win-win framing.
+
+**Areas for Improvement**:
+- Ask more probing questions to understand the other party's interests
+- Use collaborative language that builds rapport
+- Present multiple options to create flexibility
+
+**Strengths Demonstrated**:
+- Maintained professional negotiation demeanor
+- Clearly articulated your position and requirements
+- Showed understanding of mutual benefit principles
+
+**Overall Score**: 20/30
+
+Continue practicing negotiation scenarios to build confidence in complex deal-making situations.`,
+              conversationHistory: conversationHistory,
+              scenarioInfo: {
+                title: "Negotiation Practice",
+                description: "Negotiation communication practice",
+              },
+              timestamp: Date.now(),
+            };
+
+            // Store fallback results and redirect
+            sessionStorage.setItem(
+              "analysisResults",
+              JSON.stringify(fallbackResults)
+            );
+            window.location.href =
+              "negotiation-analysis-results.html?type=negotiation&source=practice";
+          }
+        } catch (error) {
+          console.error("Analysis error:", error);
+
+          // Show error message
+          endConversationBtn.innerHTML =
+            '<i data-lucide="alert-circle" class="w-4 h-4"></i> Analysis Failed';
+          setTimeout(() => {
+            endConversationBtn.innerHTML =
+              '<i data-lucide="check-circle" class="w-4 h-4"></i> Submit for Analysis';
+            endConversationBtn.disabled = false;
+          }, 3000);
+        }
+      });
+
+      // Analyze upload
+      document
+        .getElementById("analyzeUpload")
+        .addEventListener("click", async () => {
+          const audioFile = document.getElementById("audioFile");
+          if (!audioFile.files[0]) {
+            alert("Please select a file first");
+            return;
+          }
+
+          // Update button state
+          const analyzeBtn = document.getElementById("analyzeUpload");
+          analyzeBtn.disabled = true;
+          analyzeBtn.innerHTML =
+            '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+
+          try {
+            // Use SimpleAnalysis
+            const processor = new SimpleAnalysis();
+            const results = await processor.analyzeAudio(
+              audioFile.files[0],
+              "negotiation"
+            );
+
+            // Store results and redirect
+            sessionStorage.setItem("analysisResults", JSON.stringify(results));
+            window.location.href =
+              "negotiation-analysis-results.html?type=negotiation&source=upload";
+          } catch (error) {
+            console.error("Analysis failed:", error);
+            alert(
+              "Analysis failed. Please check your Gemini API configuration."
+            );
+            analyzeBtn.disabled = false;
+            analyzeBtn.innerHTML =
+              '<i data-lucide="zap" class="w-4 h-4"></i> Analyze Recording';
+          }
+        });
+
+      // Initialize page
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI-Powered Storytelling Analysis - Articulaition"
+    />
+    <title>Storytelling & Narrative Analysis - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Analysis System -->
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --primary-blue: #4a90e2;
+        --success-green: #10b981;
+        --client-teal: #0891b2;
+        --relationship-purple: #7c3aed;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --bg-primary: #fafbfc;
+        --bg-secondary: #f4f6f8;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Background Effects */
+      .dashboard-container {
+        background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 100%);
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .dashboard-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(74, 144, 226, 0.03) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(74, 144, 226, 0.025) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(16, 185, 129, 0.02) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(245, 158, 11, 0.015) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Animation Classes */
+      .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+        opacity: 0;
+      }
+
+      .slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .scale-in {
+        animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes scaleIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-500 {
+        animation-delay: 0.5s;
+      }
+
+      /* Header Styling */
+      .main-header {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .logo-section img {
+        height: 32px;
+        width: auto;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--text-primary);
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        color: var(--text-secondary);
+      }
+
+      .breadcrumb .current {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      /* Page Title Section */
+      .page-title-section {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .title-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .page-description {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* Analysis Options Grid */
+      .analysis-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .analysis-option {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.06);
+        border-radius: 24px;
+        padding: 2.5rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .analysis-option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .analysis-option:hover {
+        transform: translateY(-8px);
+        border-color: rgba(74, 144, 226, 0.3);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .analysis-option:hover::before {
+        opacity: 1;
+      }
+
+      .analysis-option.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-4px);
+      }
+
+      .option-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        border-radius: 20px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .analysis-option:hover .option-icon {
+        transform: scale(1.1);
+      }
+
+      .option-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-features {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .features-list {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      /* Upload Section */
+      .upload-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .upload-section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-subtitle {
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-center {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-option-single {
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px dashed rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 3rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .upload-option-single:hover {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.02);
+      }
+
+      .file-selected {
+        margin-top: 1.5rem;
+        background: rgba(16, 185, 129, 0.05);
+        border: 2px solid rgba(16, 185, 129, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .file-selected .file-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--success-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .file-selected .file-details {
+        flex: 1;
+        text-align: left;
+      }
+
+      .file-selected .file-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+
+      .file-selected .file-size {
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+      }
+
+      .file-selected .remove-file {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .file-selected .remove-file:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+
+      .upload-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1rem;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .upload-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .upload-button {
+        background: var(--primary-blue);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .upload-button:hover {
+        background: var(--relationship-purple);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* AI Practice Section */
+      .ai-practice-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .ai-practice-section.active {
+        display: block;
+      }
+
+      /* Scenario Grid */
+      .scenario-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .scenario-type {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-type:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary-blue);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .scenario-type.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-2px);
+      }
+
+      .scenario-type::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .scenario-type:hover::before,
+      .scenario-type.selected::before {
+        opacity: 1;
+      }
+
+      .scenario-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 1.5rem;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .scenario-type:hover .scenario-icon {
+        transform: scale(1.1);
+      }
+
+      .scenario-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-description {
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+        position: relative;
+        z-index: 2;
+        font-weight: 500;
+      }
+
+      /* Conversation Interface */
+      .conversation-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .scenario-intro {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        padding: 2rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-intro::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>')
+          repeat;
+        opacity: 0.3;
+      }
+
+      .scenario-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        position: relative;
+        z-index: 2;
+      }
+
+      .conversation-flow {
+        space-y: 1.5rem;
+      }
+
+      .message {
+        display: flex;
+        margin-bottom: 1.5rem;
+      }
+
+      .message.ai {
+        justify-content: flex-start;
+      }
+
+      .message.user {
+        justify-content: flex-end;
+      }
+
+      .message-content {
+        max-width: 80%;
+        padding: 1.25rem 1.5rem;
+        border-radius: 20px;
+        position: relative;
+      }
+
+      .message.ai .message-content {
+        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-bottom-left-radius: 8px;
+      }
+
+      .message.user .message-content {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        border-bottom-right-radius: 8px;
+      }
+
+      .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 1rem;
+        flex-shrink: 0;
+      }
+
+      .message.ai .message-avatar {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        order: -1;
+      }
+
+      .message.user .message-avatar {
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+      }
+
+      /* Audio Captured Message */
+      .audio-captured {
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .audio-captured-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 16px;
+        font-weight: 600;
+        box-shadow: var(--shadow-md);
+        animation: slideInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes slideInScale {
+        0% {
+          opacity: 0;
+          transform: translateY(20px) scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .primary-button {
+        background: linear-gradient(135deg, #4a90e2, #7c3aed) !important;
+        color: white !important;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .primary-button:hover:not(:disabled) {
+        background: linear-gradient(135deg, #7c3aed, #4a90e2) !important;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .primary-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .secondary-button {
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--text-primary);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .secondary-button:hover {
+        background: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Ensure record button is clickable */
+      #recordButton {
+        pointer-events: auto !important;
+        z-index: 100;
+        position: relative;
+      }
+
+      /* Enhanced Scenario and Conversation Sections */
+      .enhanced-scenario-section,
+      .enhanced-conversation-section {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        border: 1px solid rgba(74, 144, 226, 0.1);
+        padding: 0;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+      }
+
+      .enhanced-scenario-section:hover,
+      .enhanced-conversation-section:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .scenario-header,
+      .conversation-header {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--relationship-purple) 100%);
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .conversation-header {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      }
+
+      .scenario-icon-small {
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .conversation-icon {
+        font-size: 1.5rem;
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .scenario-header h3,
+      .conversation-header h3 {
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      .scenario-content {
+        padding: 24px;
+      }
+
+      .scenario-content p {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .scenario-context p {
+        margin: 0 0 20px 0;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+        padding: 16px;
+        background: rgba(74, 144, 226, 0.04);
+        border-radius: 12px;
+        border-left: 4px solid var(--primary-blue);
+      }
+
+      .conversation-starter {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .starter-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .starter-icon {
+        font-size: 1.2rem;
+      }
+
+      .starter-text {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .conversation-starter p {
+        margin: 0;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+        font-style: italic;
+        position: relative;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .conversation-starter p::before {
+        content: '"';
+        position: absolute;
+        top: -4px;
+        left: 0;
+        font-size: 2rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        font-family: serif;
+      }
+
+      .conversation-starter p::after {
+        content: '"';
+        position: absolute;
+        bottom: -12px;
+        right: 0;
+        font-size: 2rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        font-family: serif;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 2rem 1rem;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .analysis-options {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .analysis-option {
+          padding: 2rem;
+        }
+
+        .option-icon {
+          width: 64px;
+          height: 64px;
+        }
+
+        .scenario-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+
+        .message-content {
+          max-width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="main-header fade-in">
+        <nav class="header-nav">
+          <div class="logo-section">
+            <img src="images/logo-header.svg" alt="Articulaition.com" />
+          </div>
+          <div class="nav-links">
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="professional-communication.html" class="nav-link"
+              >Professional</a
+            >
+            <a href="personal-communication.html" class="nav-link">Personal</a>
+          </div>
+          <div class="user-menu">
+            <div class="user-avatar">JD</div>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb slide-up delay-100">
+          <a href="dashboard.html">Dashboard</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <a href="personal-communication.html">Personal</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <span class="current">Storytelling Analysis</span>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title-section slide-up delay-200">
+          <div class="title-with-icon">
+            <div class="title-icon">
+              <i data-lucide="book-open" class="w-6 h-6"></i>
+            </div>
+            <h1 class="page-title">Storytelling & Sharing Mastery</h1>
+          </div>
+          <p class="page-description">
+            Transform ordinary experiences into captivating stories that connect, inspire, and leave lasting impressions.
+            Master the art of personal narrative and authentic sharing.
+          </p>
+        </div>
+
+        <!-- Analysis Options -->
+        <div class="analysis-options">
+          <!-- Upload Existing Recording -->
+          <div class="analysis-option scale-in delay-300" data-type="upload">
+            <div class="option-icon">
+              <i data-lucide="upload" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">Upload Your Story</h3>
+            <p class="option-description">
+              Share a recording of your personal story to discover how effectively you
+              captivate listeners, create emotional connection, and leave lasting impact.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Narrative flow • Emotional resonance • Authenticity •
+                Listener engagement • Story impact
+              </div>
+            </div>
+          </div>
+
+          <!-- Scenario Information -->
+          <div class="analysis-option scale-in delay-400 disabled" data-type="info">
+            <div class="option-icon">
+              <i data-lucide="info" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">Storytelling Scenarios Available</h3>
+            <p class="option-description">
+              Learn about compelling personal story types and understand narrative techniques that connect and resonate with audiences.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Personal experiences • Emotional storytelling • Authentic sharing •
+                Audience connection principles
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+          <h2 class="section-title">Upload Your Story</h2>
+          <p class="section-subtitle">
+            Upload an audio or video file of your storytelling for detailed
+            analysis
+          </p>
+
+          <div class="upload-center">
+            <div class="upload-option-single" id="fileUpload">
+              <div class="upload-icon">
+                <i data-lucide="folder" class="w-6 h-6"></i>
+              </div>
+              <div class="upload-title">Choose File</div>
+              <div class="upload-description">
+                Select an audio or video file from your device (MP3, M4A, WAV,
+                MP4, MOV)
+              </div>
+              <button class="upload-button" id="chooseFileBtn">
+                <i data-lucide="upload" class="w-4 h-4"></i>
+                Select File
+              </button>
+              <input
+                type="file"
+                id="audioFile"
+                accept=".mp3,.m4a,.wav,.mp4,.mov"
+                hidden
+              />
+
+              <div
+                class="file-selected"
+                id="fileSelected"
+                style="display: none"
+              >
+                <div class="file-icon">
+                  <i data-lucide="file-audio" class="w-5 h-5"></i>
+                </div>
+                <div class="file-details">
+                  <div class="file-name" id="fileName">story.mp4</div>
+                  <div class="file-size" id="fileSize">2.4 MB</div>
+                </div>
+                <button class="remove-file" id="removeFile">
+                  <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="secondary-button" id="backToOptions">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="primary-button" id="analyzeUpload" disabled>
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              Analyze Recording
+            </button>
+          </div>
+        </div>
+
+        <!-- Practice Information Section -->
+        <div class="ai-practice-section" id="practiceSection">
+          <h2 class="section-title">Storytelling Scenarios</h2>
+          <p class="section-subtitle">
+            Learn about different storytelling scenarios and narrative techniques
+          </p>
+
+          <!-- Scenario Selection Grid -->
+          <div class="scenario-grid">
+            <div class="scenario-type" data-scenario="personal-stories">
+              <div class="scenario-icon">
+                <i data-lucide="user" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Personal Stories</div>
+              <div class="scenario-description">
+                Share meaningful personal experiences and life lessons
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="funny-stories">
+              <div class="scenario-icon">
+                <i data-lucide="smile" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Humorous Stories</div>
+              <div class="scenario-description">
+                Master the art of comedic timing and funny storytelling
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="inspirational-story">
+              <div class="scenario-icon">
+                <i data-lucide="heart" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Inspirational Stories</div>
+              <div class="scenario-description">
+                Craft uplifting narratives that motivate and inspire
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="childhood-memories">
+              <div class="scenario-icon">
+                <i data-lucide="baby" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Childhood Memories</div>
+              <div class="scenario-description">
+                Share nostalgic stories from your childhood experiences
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="life-lessons">
+              <div class="scenario-icon">
+                <i data-lucide="lightbulb" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Life Lessons</div>
+              <div class="scenario-description">
+                Tell stories that highlight important life lessons
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="conversation-container"
+            id="conversationContainer"
+            style="display: none"
+          >
+            <!-- Scenario Introduction -->
+            <div class="scenario-intro">
+              <div class="scenario-title">
+                <i data-lucide="book-open" class="w-5 h-5 inline mr-2"></i>
+                <span id="scenarioTitle">Storytelling Scenario</span>
+              </div>
+              <div class="scenario-text" id="scenarioText">
+                Practice your storytelling skills in this scenario.
+              </div>
+            </div>
+
+            <!-- Combined Scenario & Conversation Starter -->
+            <div class="scenario-details" id="scenarioDetails">
+              <div class="enhanced-scenario-section">
+                <div class="scenario-header">
+                  <div class="scenario-icon-small">
+                    <i data-lucide="play-circle" class="w-4 h-4"></i>
+                  </div>
+                  <h3>Your Practice Scenario</h3>
+                </div>
+                <div class="scenario-content">
+                  <div class="scenario-context">
+                    <p id="scenarioContext">Scenario details will appear here.</p>
+                  </div>
+                  <div class="conversation-starter" id="conversationPrompt" style="display: none;">
+                    <div class="starter-label">
+                      <span class="starter-icon">💬</span>
+                      <span class="starter-text">What do you say?</span>
+                    </div>
+                    <p id="conversationPromptText">Generating conversation prompt...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Conversation Flow -->
+            <div class="conversation-flow" id="conversationFlow">
+              <!-- AI messages will be dynamically inserted here -->
+            </div>
+
+            <div class="action-buttons">
+              <button class="secondary-button" id="backToScenarios">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Scenarios
+              </button>
+              <button class="secondary-button" id="newStarter">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                New Starter
+              </button>
+              <button class="secondary-button" id="recordButton">
+                <i data-lucide="mic" class="w-4 h-4"></i>
+                Record Response
+              </button>
+              <button class="primary-button" id="submitForAnalysis">
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                Submit for Analysis
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons" id="scenarioActions">
+            <button class="secondary-button" id="backToOptionsFromPractice">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <!-- API Configuration - Copy api-config-template.js to api-config.js and add your keys -->
+    <script src="js/api-config.js"></script>
+    <!-- Note: gemini-ai-engine.js and simple-analysis.js already included in head -->
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Initialize Gemini AI Engine
+      const aiEngine = new GeminiAIEngine();
+      // Make it globally available
+      window.geminiEngine = aiEngine;
+
+      // Storytelling scenarios
+      const storytellingScenarios = {
+        "personal-stories": {
+          title: "Personal Stories",
+          description:
+            "Sharing meaningful life experiences and personal journeys that reveal character, growth, and authentic self-expression.",
+          whatWeLookFor:
+            "Storytelling is humanity's oldest form of connection and wisdom transfer. It allows us to share experiences, teach lessons, and create emotional bonds that transcend simple facts, making us memorable and helping others learn from our journeys.",
+        },
+        "funny-stories": {
+          title: "Humorous Stories",
+          description:
+            "Delivering entertaining and amusing tales that bring joy, laughter, and levity to social interactions.",
+          whatWeLookFor:
+            "Storytelling is humanity's oldest form of connection and wisdom transfer. It allows us to share experiences, teach lessons, and create emotional bonds that transcend simple facts, making us memorable and helping others learn from our journeys.",
+        },
+        "inspirational-story": {
+          title: "Inspirational Stories",
+          description:
+            "Sharing uplifting narratives of resilience, triumph, and hope that motivate and encourage others through difficult times.",
+          whatWeLookFor:
+            "Storytelling is humanity's oldest form of connection and wisdom transfer. It allows us to share experiences, teach lessons, and create emotional bonds that transcend simple facts, making us memorable and helping others learn from our journeys.",
+        },
+        "childhood-memories": {
+          title: "Childhood Memories",
+          description:
+            "Recounting formative childhood experiences that shaped personality, values, and life perspective in relatable ways.",
+          whatWeLookFor:
+            "Storytelling is humanity's oldest form of connection and wisdom transfer. It allows us to share experiences, teach lessons, and create emotional bonds that transcend simple facts, making us memorable and helping others learn from our journeys.",
+        },
+        "life-lessons": {
+          title: "Life Lessons",
+          description:
+            "Conveying wisdom and important life insights through stories that teach valuable lessons and guide others' growth.",
+          whatWeLookFor:
+            "Storytelling is humanity's oldest form of connection and wisdom transfer. It allows us to share experiences, teach lessons, and create emotional bonds that transcend simple facts, making us memorable and helping others learn from our journeys.",
+        },
+      };
+
+      // State management
+      let currentMode = null;
+      let selectedScenario = null;
+      let conversationHistory = [];
+      let conversationCount = 0;
+      let isRecording = false;
+      let mediaRecorder = null;
+      let audioChunks = [];
+      let recordedAudioBlob = null;
+
+      // DOM elements
+      const analysisOptions = document.querySelectorAll(".analysis-option");
+      const uploadSection = document.getElementById("uploadSection");
+      const practiceSection = document.getElementById("practiceSection");
+      const scenarioTypes = document.querySelectorAll(".scenario-type");
+      const conversationContainer = document.getElementById(
+        "conversationContainer"
+      );
+      const conversationFlow = document.getElementById("conversationFlow");
+      const backToScenariosBtn = document.getElementById("backToScenarios");
+      const submitBtn = document.getElementById("submitForAnalysis");
+      const recordBtn = document.getElementById("recordButton");
+      const scenarioActionsDiv = document.getElementById("scenarioActions");
+
+      // Analysis option selection
+      analysisOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+          option.classList.add("selected");
+          currentMode = option.dataset.type;
+
+          if (currentMode === "upload") {
+            uploadSection.classList.add("active");
+            practiceSection.classList.remove("active");
+          } else if (currentMode === "practice") {
+            practiceSection.classList.add("active");
+            uploadSection.classList.remove("active");
+          }
+        });
+      });
+
+      // Scenario selection - auto-start when clicked
+      let currentScenarioType = null;
+      
+      scenarioTypes.forEach((scenario) => {
+        scenario.addEventListener("click", () => {
+          const scenarioType = scenario.dataset.scenario;
+          currentScenarioType = scenarioType;
+          startConversationPractice(scenarioType);
+        });
+      });
+
+      // AI-generated scenario function
+      async function generateAIScenario(scenarioKey) {
+        const scenario = storytellingScenarios[scenarioKey];
+        if (!scenario) return "You are sharing a meaningful story from your life.";
+        
+        try {
+          // Check if Gemini is configured
+          if (!window.geminiEngine || !window.geminiEngine.isConfigured()) {
+            console.warn('Gemini API not configured, using fallback');
+            return getFallbackScenario(scenarioKey);
+          }
+          
+          const prompt = `Generate a specific, realistic scenario for storytelling practice: ${scenario.title}
+
+Create a single, specific scenario that puts the user in a realistic moment where they would naturally share this type of story.
+
+Format: Start with "You are at..." or "You notice..." or "You see..." and describe a specific situation.
+
+Examples:
+- For personal stories: "You are at a dinner party and someone asks about your most memorable travel experience."
+- For funny stories: "You are with friends sharing stories about childhood adventures."
+- For inspirational stories: "You are at a networking event and someone wants to hear about your career journey."
+
+Generate one specific scenario for ${scenario.title}. Keep it realistic and relatable, 1-2 sentences maximum.`;
+
+          const response = await window.geminiEngine.callGeminiAPI(prompt);
+          return response.trim();
+        } catch (error) {
+          console.error('Error generating AI scenario:', error);
+          return getFallbackScenario(scenarioKey);
+        }
+      }
+
+      // Fallback scenarios for when AI is unavailable
+      function getFallbackScenario(scenarioKey) {
+        const fallbacks = {
+          'personal-stories': 'You are at a dinner party and someone asks about your most memorable travel experience.',
+          'funny-stories': 'You are with friends sharing stories about childhood adventures and mishaps.',
+          'inspirational-story': 'You are at a networking event and someone wants to hear about your career journey.',
+          'childhood-memories': 'You are at a family gathering and relatives are sharing favorite childhood memories.',
+          'life-lessons': 'You are mentoring someone and want to share an important life lesson through a story.'
+        };
+        return fallbacks[scenarioKey] || 'You are sharing a meaningful story from your life.';
+      }
+
+      // AI-generated storytelling conversation starter function
+      async function generateAIConversationStarter(scenarioKey, context) {
+        const scenario = storytellingScenarios[scenarioKey];
+        if (!scenario) return "Let me tell you about a time when...";
+        
+        try {
+          // Check if Gemini is configured
+          if (!window.geminiEngine || !window.geminiEngine.isConfigured()) {
+            console.warn('Gemini API not configured, using fallback');
+            const scenarioData = getStorytellingScenarioData(scenarioKey);
+            return scenarioData.starters[Math.floor(Math.random() * scenarioData.starters.length)];
+          }
+          
+          const prompt = `Generate a compelling story starter for: ${scenario.title}
+
+Context: ${context}
+
+Create a single story opening that:
+- Captures attention immediately
+- Sets up an interesting narrative hook
+- Feels natural and conversational
+- Makes the listener want to hear more
+
+Examples of good story starters:
+- "So there I was, completely lost in the middle of Tokyo with no phone battery..."
+- "I never thought I'd be the type of person to quit my job on a Tuesday, but..."
+- "This is the story of how I accidentally became a local celebrity in my hometown..."
+
+Generate one compelling story starter for ${scenario.title}. Make it engaging and specific.`;
+
+          const response = await window.geminiEngine.callGeminiAPI(prompt);
+          return response.trim();
+        } catch (error) {
+          console.error('Error generating AI conversation starter:', error);
+          // Fallback to random pre-written starter
+          const scenarioData = getStorytellingScenarioData(scenarioKey);
+          return scenarioData.starters[Math.floor(Math.random() * scenarioData.starters.length)];
+        }
+      }
+
+      // Storytelling scenario data
+      function getStorytellingScenarioData(scenarioType) {
+        const scenarioData = {
+          'personal-stories': {
+            contexts: [
+              'You are at a small gathering where people are sharing meaningful personal stories about moments that changed their lives.',
+              'You are with close friends who are opening up about their most formative experiences and life lessons.',
+              'You are in a conversation where someone just shared a vulnerable story and now the group is looking to you to share something personal.',
+              'You are at a dinner party where the conversation has turned to meaningful life experiences and personal growth stories.',
+              'You are with people who appreciate authentic storytelling and want to hear about your real experiences.',
+              'You are in an intimate setting where people are sharing stories that reveal who they really are.',
+              'You are practicing how to share personal experiences in a way that connects with others and creates emotional resonance.'
+            ],
+            starters: [
+              'I had this moment a few years ago that completely changed how I see myself. I was...',
+              'There was this time when everything I thought I knew about myself was challenged. Let me tell you what happened...',
+              'I learned something profound about resilience when I went through this really difficult period. Here\'s what happened...',
+              'I never thought I was the type of person who could handle something like this, but then life tested me in a way I never expected...',
+              'There was this moment when I realized I had been living my life based on someone else\'s expectations, not my own. It started when...',
+              'I want to share a story about a time when I had to choose between what was easy and what was right. The situation was...',
+              'This is a story about how I discovered something about myself that I never knew existed. I was in a situation where...',
+              'I\'ll never forget the day I realized that my biggest weakness could actually become my greatest strength. It happened when...',
+              'Let me tell you about a time when I had to overcome my deepest fear. I was facing a situation where...'
+            ]
+          },
+          'funny-stories': {
+            contexts: [
+              'You are with friends who are sharing their most embarrassing and hilarious moments from their past.',
+              'You are in a lighthearted conversation where everyone is trying to top each other with funny stories.',
+              'You are at a party where people are sharing stories about their most awkward moments and laughing about them.',
+              'You are with a group that appreciates self-deprecating humor and funny stories about life\'s mishaps.',
+              'You are telling stories about times when everything went wrong but you can laugh about it now.',
+              'You are practicing how to tell funny stories that make people laugh while also being relatable.',
+              'You are sharing moments when you learned to laugh at yourself and not take life too seriously.'
+            ],
+            starters: [
+              'Okay, so this is the story of how I became the person everyone at work still talks about, and not in a good way. It was a Tuesday morning and I thought I was being so professional when...',
+              'I need to tell you about the most embarrassing thing that ever happened to me, because now I can finally laugh about it. Picture this: I\'m trying to impress someone and...',
+              'This is the story of how I learned that confidence and competence are two very different things. I was so sure I could handle this situation, but then...',
+              'Let me share the moment when I realized that adult life is just winging it and hoping nobody notices. I was in this important meeting and...',
+              'I want to tell you about the day I discovered that my phone had been autocorrecting my professional emails in the most inappropriate ways for months...',
+              'This is about the time I tried to be smooth and sophisticated and ended up being the opposite of both. The situation was...',
+              'I\'ll never live down the day I misunderstood a simple instruction and ended up in the most ridiculous situation you can imagine...',
+              'Let me tell you about my most epic fail, which at the time was mortifying but now makes the best story. I was trying to...',
+              'This is the story of how I accidentally became the star of someone else\'s "you won\'t believe what happened" story. It started when I...'
+            ]
+          },
+          'inspirational-story': {
+            contexts: [
+              'You are talking to someone who is going through a difficult time and could use encouragement and hope.',
+              'You are sharing stories about overcoming challenges and finding strength in difficult situations.',
+              'You are in a conversation about resilience and how people can rise above their circumstances.',
+              'You are with people who are discussing personal growth and the experiences that shaped them for the better.',
+              'You are sharing a story that demonstrates how setbacks can become comebacks with the right mindset.',
+              'You are practicing how to tell stories that inspire others while being authentic about your own struggles.',
+              'You are telling stories about times when you found hope and strength in unexpected places.'
+            ],
+            starters: [
+              'I want to share a story about a time when I felt like giving up, but something inside me refused to quit. I was facing...',
+              'This is about the darkest period of my life and how I found light in the most unexpected place. I was going through...',
+              'Let me tell you about the day I realized that my biggest obstacle was actually preparing me for my greatest opportunity. I was struggling with...',
+              'I learned that sometimes the thing we think will break us is actually the thing that makes us stronger. Here\'s what happened to me...',
+              'This is the story of how I discovered that rock bottom can actually be the solid foundation you need to rebuild your life. I was at a point where...',
+              'I want to share how I learned that courage isn\'t the absence of fear, but acting despite the fear. I was in a situation where...',
+              'Let me tell you about the person who changed my life simply by believing in me when I didn\'t believe in myself. I was going through...',
+              'This is about the moment I realized that my struggles weren\'t happening to me, they were happening for me. I was dealing with...',
+              'I\'ll never forget the day I learned that our greatest victories often come disguised as our worst defeats. I was facing...'
+            ]
+          },
+          'childhood-memories': {
+            contexts: [
+              'You are sharing formative childhood experiences that shaped who you became as an adult.',
+              'You are with people who are reminiscing about childhood memories and the lessons they learned growing up.',
+              'You are in a conversation about childhood experiences that seemed small at the time but had a big impact.',
+              'You are sharing stories about the moments in childhood when you first understood something important about the world.',
+              'You are telling stories about childhood adventures, friendships, and the innocence of youth.',
+              'You are practicing how to tell childhood stories that reveal character and connect with others\' experiences.',
+              'You are sharing memories that demonstrate how childhood experiences influence adult perspectives and values.'
+            ],
+            starters: [
+              'I was probably seven years old when I learned my first real lesson about fairness. I was playing with my friends and...',
+              'There was this summer when I was a kid that taught me more about friendship than I realized at the time. My best friend and I...',
+              'I want to share a story about the day I first understood that adults don\'t have all the answers. I was in fourth grade and...',
+              'This is about the childhood moment when I first felt truly proud of myself. I was scared to try something new, but...',
+              'Let me tell you about the day I learned that sometimes the best adventures happen in your own backyard. I was bored one summer afternoon and...',
+              'I\'ll never forget the moment in childhood when I realized that being different wasn\'t something to hide. I was in a situation where...',
+              'This is the story of how I learned about empathy as a kid, even though I didn\'t know that\'s what it was called. There was this kid at school who...',
+              'I want to share the childhood memory that taught me the importance of standing up for what\'s right. I was witnessing something unfair and...',
+              'Let me tell you about the day I discovered that my imagination was more powerful than I ever realized. I was feeling lonely and...'
+            ]
+          },
+          'life-lessons': {
+            contexts: [
+              'You are mentoring someone and want to share wisdom through a story that taught you an important life lesson.',
+              'You are in a conversation about life lessons and the experiences that taught you valuable truths.',
+              'You are sharing stories about mistakes that became learning opportunities and shaped your character.',
+              'You are with people who are discussing the wisdom that comes from experience and the lessons life teaches us.',
+              'You are telling stories about moments when you gained clarity about what really matters in life.',
+              'You are practicing how to share life lessons through storytelling in a way that doesn\'t sound preachy.',
+              'You are sharing stories about times when you learned something important about yourself, others, or life in general.'
+            ],
+            starters: [
+              'I learned one of the most important lessons of my life the hard way. I was so focused on being right that I forgot to be kind, and it cost me...',
+              'This is about the time I realized that success without integrity is just failure wearing a nice suit. I was faced with a choice between...',
+              'Let me share the story of how I learned that comparison is the thief of joy. I was constantly measuring myself against others until...',
+              'I want to tell you about the day I discovered that the things I was afraid of losing were actually holding me back from what I truly wanted. I was clinging to...',
+              'This is the story of how I learned that forgiveness is not about the other person, it\'s about freeing yourself. I was carrying this anger for years until...',
+              'I\'ll never forget the moment I realized that perfection is the enemy of progress. I was so worried about doing something perfectly that I wasn\'t doing anything at all...',
+              'Let me tell you about the experience that taught me that authenticity is more attractive than perfection. I was trying so hard to be what I thought people wanted...',
+              'This is about the time I learned that courage is not the absence of fear, but feeling the fear and doing it anyway. I was terrified to...',
+              'I want to share how I discovered that the most important relationship you\'ll ever have is the one with yourself. I was seeking validation from everyone except...'
+            ]
+          }
+        };
+        
+        return scenarioData[scenarioType] || { contexts: ['You are sharing a meaningful story from your life.'], starters: ['Let me tell you about a time when...'] };
+      }
+
+      // Start conversation practice - show scenario info
+      async function startConversationPractice(scenarioKey) {
+        const scenario = storytellingScenarios[scenarioKey];
+        if (!scenario) return;
+        
+        // Store current scenario for "New Starter" button
+        currentScenarioType = scenarioKey;
+        
+        // Update UI with proper format
+        document.getElementById("scenarioTitle").textContent = scenario.title;
+        document.getElementById("scenarioText").textContent = scenario.description;
+        
+        // Generate AI scenario context
+        const aiScenario = await generateAIScenario(scenarioKey);
+        document.getElementById("scenarioContext").textContent = aiScenario;
+        
+        // Update conversation prompt with loading state
+        const conversationPromptElement = document.getElementById("conversationPromptText");
+        if (conversationPromptElement) {
+          conversationPromptElement.textContent = "Generating story starter...";
+          conversationPromptElement.style.fontStyle = "italic";
+          
+          // Generate AI conversation starter
+          const aiStarter = await generateAIConversationStarter(scenarioKey, aiScenario);
+          conversationPromptElement.textContent = aiStarter;
+          conversationPromptElement.style.fontStyle = "normal";
+        }
+
+        // Hide scenario grid and show scenario details
+        document.querySelector(".scenario-grid").style.display = "none";
+        document.querySelector("#practiceSection h2").style.display = "none";
+        document.querySelector(
+          "#practiceSection .section-subtitle"
+        ).style.display = "none";
+        scenarioActionsDiv.style.display = "none";
+        conversationContainer.style.display = "block";
+        
+        // Show scenario details and conversation prompt
+        document.getElementById("scenarioDetails").style.display = "block";
+        document.getElementById("conversationPrompt").style.display = "block";
+      }
+
+      // Analysis function for storytelling
+      async function analyzeConversation(audioBlob, analysisType) {
+        console.log('Starting storytelling analysis...', analysisType);
+        
+        // Convert blob to file for analysis
+        const audioFile = new File([audioBlob], 'recording.webm', { type: audioBlob.type });
+        
+        try {
+          // Initialize analysis system
+          const simpleAnalysis = new SimpleAnalysis();
+          
+          // Get transcript from audio
+          console.log('Transcribing audio...');
+          const analysisResult = await simpleAnalysis.analyzeAudio(audioFile, 'storytelling');
+          
+          return {
+            ...analysisResult,
+            analysisType: analysisType,
+            timestamp: Date.now(),
+            status: 'analyzed'
+          };
+          
+        } catch (error) {
+          console.error('Analysis error:', error);
+          
+          // Return error result with audio preserved
+          return {
+            audioBlob: audioBlob,
+            audioFile: audioFile,
+            analysisType: analysisType,
+            timestamp: Date.now(),
+            status: 'error',
+            error: error.message,
+            transcript: 'Error transcribing audio. Please try again.'
+          };
+        }
+      }
+
+      // Recording functionality
+      recordBtn.addEventListener("click", async () => {
+        if (!isRecording) {
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
+            
+            mediaRecorder.ondataavailable = (event) => {
+              audioChunks.push(event.data);
+            };
+            
+            mediaRecorder.onstop = () => {
+              recordedAudioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+              stream.getTracks().forEach(track => track.stop());
+            };
+            
+            mediaRecorder.start();
+            isRecording = true;
+            
+            // Update button UI
+            recordBtn.innerHTML = '<i data-lucide="stop-circle" class="w-4 h-4"></i> Stop Recording';
+            recordBtn.style.background = "#ef4444";
+            recordBtn.style.borderColor = "#ef4444";
+            recordBtn.style.color = "white";
+            lucide.createIcons();
+          } catch (error) {
+            console.error('Error accessing microphone:', error);
+            alert('Unable to access microphone. Please check your permissions.');
+          }
+        } else {
+          // Stop recording
+          if (mediaRecorder && mediaRecorder.state !== "inactive") {
+            mediaRecorder.stop();
+            isRecording = false;
+            
+            // Update button UI
+            recordBtn.innerHTML = '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+            recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+            recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+            recordBtn.style.color = "var(--text-primary)";
+            lucide.createIcons();
+          }
+        }
+      });
+
+      // Submit for analysis
+      submitBtn.addEventListener("click", async () => {
+        if (!recordedAudioBlob) {
+          alert('Please record your response first.');
+          return;
+        }
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+        lucide.createIcons();
+
+        try {
+          // Prepare audio data for personal communication analysis
+          console.log("🔄 Preparing audio for storytelling analysis...");
+          
+          // Convert blob to base64 for transfer
+          const reader = new FileReader();
+          reader.onloadend = function() {
+            const base64Audio = reader.result;
+            
+            // Prepare audio data object
+            const audioData = {
+              base64: base64Audio,
+              size: recordedAudioBlob.size,
+              type: recordedAudioBlob.type,
+              name: "storytelling.webm",
+              analysisType: "storytelling"
+            };
+
+            console.log("📱 Storing audio data for analysis:", audioData.name, audioData.analysisType);
+
+            // Store audio data for the analysis page
+            sessionStorage.setItem("audioForAnalysis", JSON.stringify(audioData));
+            
+            // Redirect to storytelling analysis results page
+            window.location.href = "storytelling-analysis-results.html";
+          };
+          
+          reader.readAsDataURL(recordedAudioBlob);
+        } catch (error) {
+          console.error('Analysis error:', error);
+          alert('Error analyzing conversation. Please try again.');
+          
+          // Reset button
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4"></i> Submit for Analysis';
+          lucide.createIcons();
+        }
+      });
+
+      // Back to scenarios button
+      backToScenariosBtn.addEventListener("click", () => {
+        conversationContainer.style.display = "none";
+        scenarioActionsDiv.style.display = "flex";
+        document.querySelector(".scenario-grid").style.display = "grid";
+        document.querySelector("#practiceSection h2").style.display = "block";
+        document.querySelector(
+          "#practiceSection .section-subtitle"
+        ).style.display = "block";
+        resetPracticeSession();
+      });
+      
+      // New Starter button functionality
+      const newStarterBtn = document.getElementById('newStarter');
+      if (newStarterBtn) {
+        newStarterBtn.addEventListener('click', async function() {
+          if (currentScenarioType) {
+            // Show loading state for scenario
+            const scenarioContextElement = document.getElementById("scenarioContext");
+            scenarioContextElement.textContent = "Generating new scenario...";
+            scenarioContextElement.style.fontStyle = "italic";
+            
+            // Show loading state for starter
+            const conversationPromptElement = document.getElementById("conversationPromptText");
+            if (conversationPromptElement) {
+              conversationPromptElement.textContent = "Generating new story starter...";
+              conversationPromptElement.style.fontStyle = "italic";
+            }
+            
+            // Add animation to show the change
+            const scenarioDetailsElement = document.getElementById('scenarioDetails');
+            if (scenarioDetailsElement) {
+              scenarioDetailsElement.style.opacity = '0.7';
+              setTimeout(() => {
+                scenarioDetailsElement.style.opacity = '1';
+              }, 300);
+            }
+            
+            try {
+              // Generate new AI scenario
+              const newAIScenario = await generateAIScenario(currentScenarioType);
+              
+              // Update the displayed content
+              scenarioContextElement.textContent = newAIScenario;
+              scenarioContextElement.style.fontStyle = "normal";
+              
+              if (conversationPromptElement) {
+                // Generate new AI conversation starter
+                const aiStarter = await generateAIConversationStarter(currentScenarioType, newAIScenario);
+                conversationPromptElement.textContent = aiStarter;
+                conversationPromptElement.style.fontStyle = "normal";
+              }
+            } catch (error) {
+              console.error('Error generating new content:', error);
+              // Fallback to pre-written content
+              const fallbackScenario = getFallbackScenario(currentScenarioType);
+              const scenarioData = getStorytellingScenarioData(currentScenarioType);
+              const randomStarter = scenarioData.starters[Math.floor(Math.random() * scenarioData.starters.length)];
+              
+              scenarioContextElement.textContent = fallbackScenario;
+              scenarioContextElement.style.fontStyle = "normal";
+              
+              if (conversationPromptElement) {
+                conversationPromptElement.textContent = randomStarter;
+                conversationPromptElement.style.fontStyle = "normal";
+              }
+            }
+          }
+        });
+      }
+
+      // Reset practice session
+      function resetPracticeSession() {
+        scenarioTypes.forEach((s) => s.classList.remove("selected"));
+        selectedScenario = null;
+        conversationFlow.innerHTML = "";
+        conversationHistory = [];
+        conversationCount = 0;
+        submitBtn.style.display = "none";
+        recordBtn.style.display = "none";
+
+        // Reset recording state
+        isRecording = false;
+        recordedAudioBlob = null;
+        audioChunks = [];
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+        }
+
+        // Reset record button UI
+        recordBtn.innerHTML =
+          '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+        recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+        recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+        recordBtn.style.color = "var(--text-primary)";
+        lucide.createIcons();
+      }
+
+      // Back to options buttons
+      document.getElementById("backToOptions").addEventListener("click", () => {
+        uploadSection.classList.remove("active");
+        analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+        currentMode = null;
+      });
+
+      document
+        .getElementById("backToOptionsFromPractice")
+        .addEventListener("click", () => {
+          practiceSection.classList.remove("active");
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+          currentMode = null;
+
+          // Reset scenario selection view
+          conversationContainer.style.display = "none";
+          scenarioActionsDiv.style.display = "flex";
+          document.querySelector(".scenario-grid").style.display = "grid";
+          document.querySelector("#practiceSection h2").style.display = "block";
+          document.querySelector(
+            "#practiceSection .section-subtitle"
+          ).style.display = "block";
+
+          resetPracticeSession();
+        });
+
+      // File upload functionality
+      document.getElementById("chooseFileBtn").addEventListener("click", () => {
+        document.getElementById("audioFile").click();
+      });
+
+      document.getElementById("audioFile").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          // Show file details
+          document.getElementById("fileName").textContent = file.name;
+          document.getElementById("fileSize").textContent =
+            (file.size / (1024 * 1024)).toFixed(1) + " MB";
+          document.getElementById("fileSelected").style.display = "flex";
+          document.getElementById("analyzeUpload").disabled = false;
+        }
+      });
+
+      // Remove file functionality
+      document.getElementById("removeFile").addEventListener("click", () => {
+        document.getElementById("audioFile").value = "";
+        document.getElementById("fileSelected").style.display = "none";
+        document.getElementById("analyzeUpload").disabled = true;
+      });
+
+      // Analyze upload button
+      document
+        .getElementById("analyzeUpload")
+        .addEventListener("click", async () => {
+          const audioFile = document.getElementById("audioFile");
+          if (!audioFile.files[0]) {
+            alert("Please select a file first");
+            return;
+          }
+
+          // Update button state
+          const analyzeBtn = document.getElementById("analyzeUpload");
+          analyzeBtn.disabled = true;
+          analyzeBtn.innerHTML =
+            '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+
+          try {
+            // Use the analysis processor
+            const processor = new SimpleAnalysis();
+            const results = await processor.analyzeAudio(
+              audioFile.files[0],
+              "storytelling"
+            );
+
+            // Store results and redirect
+            sessionStorage.setItem("analysisResults", JSON.stringify(results));
+            window.location.href =
+              "storytelling-analysis-results.html?type=storytelling&source=upload";
+          } catch (error) {
+            console.error("Analysis failed:", error);
+            alert("Analysis failed. Please try again.");
+            analyzeBtn.disabled = false;
+            analyzeBtn.innerHTML =
+              '<i data-lucide="zap" class="w-4 h-4"></i> Analyze Recording';
+          }
+        });
+
+      // AI conversation analysis functionality removed
+
+      // AI conversation and recording functionality removed for personal communication analysis
+
+      // Initialize analysis system
+      let analysisProcessor = null;
+      try {
+        analysisProcessor = new SimpleAnalysis();
+        console.log("✅ SimpleAnalysis system initialized successfully");
+      } catch (error) {
+        console.error("❌ Failed to initialize analysis system:", error);
+      }
+    </script>
+  </body>
+</html>

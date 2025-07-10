@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Analysis Validation Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .test-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #4a90e2;
+        }
+        .status {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .success {
+            color: #10b981;
+        }
+        .error {
+            color: #ef4444;
+        }
+        .warning {
+            color: #f59e0b;
+        }
+        .test-button {
+            padding: 12px 24px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        .test-button:hover {
+            background-color: #357abd;
+        }
+        .test-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .log {
+            background: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Professional Analysis Validation Test</h1>
+    <p>This page validates that all professional analysis pages and their routing are working correctly.</p>
+    
+    <div class="test-container">
+        <h2>Quick Tests</h2>
+        <button class="test-button" onclick="testFileExists()">Test File Existence</button>
+        <button class="test-button" onclick="testRouting()">Test Routing</button>
+        <button class="test-button" onclick="testJavaScript()">Test JavaScript</button>
+        <button class="test-button" onclick="runAllTests()">Run All Tests</button>
+        <button class="test-button" onclick="clearResults()">Clear Results</button>
+    </div>
+    
+    <div class="test-container">
+        <h2>Test Results</h2>
+        <div id="testResults"></div>
+    </div>
+    
+    <div class="test-container">
+        <h2>Test Log</h2>
+        <div id="testLog" class="log"></div>
+    </div>
+    
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('testLog');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.textContent += `[${timestamp}] ${message}\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        function clearResults() {
+            document.getElementById('testResults').innerHTML = '';
+            document.getElementById('testLog').textContent = '';
+        }
+        
+        async function testFileExists() {
+            log('Starting file existence test...');
+            const testResults = document.getElementById('testResults');
+            
+            const files = [
+                // Analysis pages
+                { name: 'Presentation Analysis', url: 'presentation-analysis.html', type: 'analysis' },
+                { name: 'Sales Analysis', url: 'sales-analysis.html', type: 'analysis' },
+                { name: 'Negotiation Analysis', url: 'negotiation-analysis.html', type: 'analysis' },
+                { name: 'Leadership Analysis', url: 'leadership-analysis.html', type: 'analysis' },
+                { name: 'Client Calls Analysis', url: 'client-calls-analysis.html', type: 'analysis' },
+                // Results pages
+                { name: 'Presentation Results', url: 'presentation-analysis-results.html', type: 'results' },
+                { name: 'Sales Results', url: 'sales-analysis-results.html', type: 'results' },
+                { name: 'Negotiation Results', url: 'negotiation-analysis-results.html', type: 'results' },
+                { name: 'Leadership Results', url: 'leadership-analysis-results.html', type: 'results' },
+                { name: 'Client Calls Results', url: 'client-calls-analysis-results.html', type: 'results' },
+                // JavaScript files
+                { name: 'Gemini AI Engine', url: 'js/gemini-ai-engine.js', type: 'js' },
+                { name: 'Simple Analysis', url: 'js/simple-analysis.js', type: 'js' },
+                { name: 'API Config', url: 'js/api-config.js', type: 'js' }
+            ];
+            
+            let results = '<div class="test-grid">';
+            
+            for (const file of files) {
+                log(`Testing ${file.name}...`);
+                try {
+                    const response = await fetch(file.url, { method: 'HEAD' });
+                    if (response.ok) {
+                        results += `<div class="test-item">
+                            <strong>${file.name}</strong> (${file.type})
+                            <div class="status success">✅ File exists and accessible</div>
+                        </div>`;
+                        log(`✅ ${file.name}: OK`);
+                    } else {
+                        results += `<div class="test-item">
+                            <strong>${file.name}</strong> (${file.type})
+                            <div class="status error">❌ HTTP ${response.status}</div>
+                        </div>`;
+                        log(`❌ ${file.name}: HTTP ${response.status}`);
+                    }
+                } catch (error) {
+                    results += `<div class="test-item">
+                        <strong>${file.name}</strong> (${file.type})
+                        <div class="status error">❌ Network error</div>
+                    </div>`;
+                    log(`❌ ${file.name}: Network error - ${error.message}`);
+                }
+            }
+            
+            results += '</div>';
+            testResults.innerHTML = results;
+            log('File existence test completed');
+        }
+        
+        async function testRouting() {
+            log('Starting routing test...');
+            const testResults = document.getElementById('testResults');
+            
+            const routes = [
+                { name: 'Presentation Analysis → Results', analysis: 'presentation-analysis.html', results: 'presentation-analysis-results.html' },
+                { name: 'Sales Analysis → Results', analysis: 'sales-analysis.html', results: 'sales-analysis-results.html' },
+                { name: 'Negotiation Analysis → Results', analysis: 'negotiation-analysis.html', results: 'negotiation-analysis-results.html' },
+                { name: 'Leadership Analysis → Results', analysis: 'leadership-analysis.html', results: 'leadership-analysis-results.html' },
+                { name: 'Client Calls Analysis → Results', analysis: 'client-calls-analysis.html', results: 'client-calls-analysis-results.html' }
+            ];
+            
+            let results = '<div class="test-grid">';
+            
+            for (const route of routes) {
+                log(`Testing routing for ${route.name}...`);
+                try {
+                    // Test analysis page
+                    const analysisResponse = await fetch(route.analysis, { method: 'HEAD' });
+                    const resultsResponse = await fetch(route.results, { method: 'HEAD' });
+                    
+                    if (analysisResponse.ok && resultsResponse.ok) {
+                        results += `<div class="test-item">
+                            <strong>${route.name}</strong>
+                            <div class="status success">✅ Both pages accessible</div>
+                        </div>`;
+                        log(`✅ ${route.name}: Both pages OK`);
+                    } else {
+                        results += `<div class="test-item">
+                            <strong>${route.name}</strong>
+                            <div class="status error">❌ Analysis: ${analysisResponse.status}, Results: ${resultsResponse.status}</div>
+                        </div>`;
+                        log(`❌ ${route.name}: Analysis: ${analysisResponse.status}, Results: ${resultsResponse.status}`);
+                    }
+                } catch (error) {
+                    results += `<div class="test-item">
+                        <strong>${route.name}</strong>
+                        <div class="status error">❌ Network error</div>
+                    </div>`;
+                    log(`❌ ${route.name}: Network error - ${error.message}`);
+                }
+            }
+            
+            results += '</div>';
+            testResults.innerHTML = results;
+            log('Routing test completed');
+        }
+        
+        async function testJavaScript() {
+            log('Starting JavaScript test...');
+            const testResults = document.getElementById('testResults');
+            
+            const jsFiles = [
+                'js/gemini-ai-engine.js',
+                'js/simple-analysis.js',
+                'js/api-config.js',
+                'js/supabase-config.js'
+            ];
+            
+            let results = '<div class="test-grid">';
+            
+            for (const jsFile of jsFiles) {
+                log(`Testing ${jsFile}...`);
+                try {
+                    const response = await fetch(jsFile);
+                    if (response.ok) {
+                        const content = await response.text();
+                        const hasErrors = content.includes('Error') || content.includes('error') || content.includes('ERROR');
+                        const hasConfig = content.includes('config') || content.includes('Config') || content.includes('CONFIG');
+                        
+                        results += `<div class="test-item">
+                            <strong>${jsFile}</strong>
+                            <div class="status success">✅ File loaded (${Math.round(content.length/1024)}KB)</div>
+                            ${hasConfig ? '<div class="status warning">⚠️ Contains config</div>' : ''}
+                        </div>`;
+                        log(`✅ ${jsFile}: Loaded ${Math.round(content.length/1024)}KB`);
+                    } else {
+                        results += `<div class="test-item">
+                            <strong>${jsFile}</strong>
+                            <div class="status error">❌ HTTP ${response.status}</div>
+                        </div>`;
+                        log(`❌ ${jsFile}: HTTP ${response.status}`);
+                    }
+                } catch (error) {
+                    results += `<div class="test-item">
+                        <strong>${jsFile}</strong>
+                        <div class="status error">❌ Network error</div>
+                    </div>`;
+                    log(`❌ ${jsFile}: Network error - ${error.message}`);
+                }
+            }
+            
+            results += '</div>';
+            testResults.innerHTML = results;
+            log('JavaScript test completed');
+        }
+        
+        async function runAllTests() {
+            log('Running all tests...');
+            const buttons = document.querySelectorAll('.test-button');
+            buttons.forEach(btn => btn.disabled = true);
+            
+            await testFileExists();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await testRouting();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await testJavaScript();
+            
+            buttons.forEach(btn => btn.disabled = false);
+            log('All tests completed!');
+        }
+        
+        // Run a basic test on page load
+        window.onload = function() {
+            log('Page loaded, ready for testing');
+            testFileExists();
+        };
+    </script>
+</body>
+</html>

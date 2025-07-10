@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI-Powered Conflict Resolution Analysis - Articulaition"
+    />
+    <title>Conflict Resolution & Difficult Conversations - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Analysis System -->
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --primary-blue: #4a90e2;
+        --success-green: #10b981;
+        --client-teal: #0891b2;
+        --relationship-purple: #7c3aed;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --bg-primary: #fafbfc;
+        --bg-secondary: #f4f6f8;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Background Effects */
+      .dashboard-container {
+        background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 100%);
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .dashboard-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(74, 144, 226, 0.03) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(74, 144, 226, 0.025) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(16, 185, 129, 0.02) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(124, 58, 237, 0.015) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Advanced Animations */
+      .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+        opacity: 0;
+      }
+      .slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      .slide-right {
+        animation: slideRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      .scale-in {
+        animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes slideRight {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      @keyframes scaleIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-500 {
+        animation-delay: 0.5s;
+      }
+      .delay-600 {
+        animation-delay: 0.6s;
+      }
+
+      /* Header Styles */
+      .header {
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+      }
+
+      .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+      }
+
+      .logo img {
+        height: 32px;
+        width: auto;
+      }
+
+      .brand-text {
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+
+      .brand-articul {
+        background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .brand-ai {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .brand-tion {
+        background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .header-nav {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .nav-link {
+        color: #64748b;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+
+      .nav-link:hover {
+        color: #1e293b;
+        background: rgba(74, 144, 226, 0.05);
+      }
+
+      .nav-link.active {
+        color: var(--voice-primary);
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid #4a90e2;
+        border-radius: 0;
+        padding-bottom: 0.4rem;
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem 1rem;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .user-menu:hover {
+        background: #f1f5f9;
+        border-color: #cbd5e1;
+      }
+
+      .user-avatar {
+        width: 32px;
+        height: 32px;
+        background: #4a90e2;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      .user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1px;
+      }
+
+      .user-name {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #1e293b;
+        line-height: 1.2;
+      }
+
+      .user-plan {
+        font-size: 0.75rem;
+        color: #64748b;
+        font-weight: 400;
+        line-height: 1.2;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        padding: 1.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: #64748b;
+      }
+
+      .breadcrumb a {
+        color: #64748b;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .breadcrumb a:hover {
+        color: #4a90e2;
+      }
+
+      .breadcrumb-separator {
+        color: #94a3b8;
+      }
+
+      /* Page Title Section */
+      .page-title-section {
+        padding: 2rem 0 3rem;
+        text-align: center;
+      }
+
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .page-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #4a90e2 0%, #7c3aed 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a202c;
+        margin: 0;
+        line-height: 1.2;
+      }
+
+      .page-description {
+        font-size: 1.125rem;
+        color: #4a5568;
+        line-height: 1.6;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Analysis Options Section */
+      .analysis-section {
+        padding: 2rem 0 4rem;
+      }
+
+      /* Analysis Options Grid */
+      .analysis-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .analysis-option {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.06);
+        border-radius: 24px;
+        padding: 2.5rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .analysis-option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .analysis-option:hover {
+        transform: translateY(-8px);
+        border-color: rgba(74, 144, 226, 0.3);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .analysis-option:hover::before {
+        opacity: 1;
+      }
+
+      .analysis-option.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-4px);
+      }
+
+      .option-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        border-radius: 20px;
+        background: linear-gradient(135deg, var(--primary-blue), var(--relationship-purple));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+        box-shadow: 0 8px 20px rgba(74, 144, 226, 0.25);
+      }
+
+      .analysis-option:hover .option-icon {
+        transform: scale(1.1);
+      }
+
+      .option-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-features {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .features-list {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      /* Upload Section */
+      .upload-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .upload-section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-subtitle {
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-center {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-option-single {
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px dashed rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 3rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .upload-option-single:hover {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.02);
+      }
+
+      .file-selected {
+        margin-top: 1.5rem;
+        background: rgba(16, 185, 129, 0.05);
+        border: 2px solid rgba(16, 185, 129, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .file-selected .file-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--success-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .file-selected .file-details {
+        flex: 1;
+        text-align: left;
+      }
+
+      .file-selected .file-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+
+      .file-selected .file-size {
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+      }
+
+      .file-selected .remove-file {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .file-selected .remove-file:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+
+      .upload-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1rem;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary-blue), var(--relationship-purple));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        box-shadow: 0 8px 20px rgba(74, 144, 226, 0.25);
+      }
+
+      .upload-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .upload-button {
+        background: var(--primary-blue);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .upload-button:hover {
+        background: var(--relationship-purple);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* AI Practice Section */
+      .ai-practice-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .ai-practice-section.active {
+        display: block;
+      }
+
+      /* Scenario Grid */
+      .scenario-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .scenario-type {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-type:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary-blue);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .scenario-type.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-2px);
+      }
+
+      .scenario-type::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .scenario-type:hover::before,
+      .scenario-type.selected::before {
+        opacity: 1;
+      }
+
+      .scenario-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 1.5rem;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary-blue), var(--relationship-purple));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+        box-shadow: 0 8px 20px rgba(74, 144, 226, 0.25);
+      }
+
+      .scenario-type:hover .scenario-icon {
+        transform: scale(1.1);
+      }
+
+      .scenario-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Conversation Interface */
+      .conversation-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .scenario-intro {
+        background: linear-gradient(135deg, var(--primary-blue), var(--relationship-purple));
+        color: white;
+        padding: 2rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-intro::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>')
+          repeat;
+        opacity: 0.3;
+      }
+
+      .scenario-intro .scenario-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        position: relative;
+        z-index: 2;
+      }
+
+      .conversation-flow {
+        space-y: 1.5rem;
+      }
+
+      .message {
+        display: flex;
+        margin-bottom: 1.5rem;
+      }
+
+      .message.ai {
+        justify-content: flex-start;
+      }
+
+      .message.user {
+        justify-content: flex-end;
+      }
+
+      .message-content {
+        max-width: 80%;
+        padding: 1.25rem 1.5rem;
+        border-radius: 20px;
+        position: relative;
+      }
+
+      .message.ai .message-content {
+        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-bottom-left-radius: 8px;
+      }
+
+      .message.user .message-content {
+        background: linear-gradient(135deg, var(--primary-blue), var(--relationship-purple));
+        color: white;
+        border-bottom-right-radius: 8px;
+      }
+
+      .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 1rem;
+        flex-shrink: 0;
+      }
+
+      .message.ai .message-avatar {
+        background: linear-gradient(135deg, var(--primary-blue), var(--relationship-purple));
+        color: white;
+        order: -1;
+      }
+
+      .message.user .message-avatar {
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+      }
+
+      /* Audio Captured Message */
+      .audio-captured {
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .audio-captured-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 16px;
+        font-weight: 600;
+        box-shadow: var(--shadow-md);
+        animation: slideInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes slideInScale {
+        0% {
+          opacity: 0;
+          transform: translateY(20px) scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .primary-button {
+        background: linear-gradient(135deg, #4a90e2, #7c3aed);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .primary-button:hover:not(:disabled) {
+        background: linear-gradient(135deg, #7c3aed, #4a90e2);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .primary-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .secondary-button {
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--text-primary);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .secondary-button:hover {
+        background: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .header-content {
+          padding: 0 1rem;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .main-content {
+          padding: 0 1rem;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .analysis-options {
+          grid-template-columns: 1fr;
+        }
+
+        .scenario-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .title-with-icon {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+
+      /* Enhanced Scenario and Conversation Sections */
+      .enhanced-scenario-section,
+      .enhanced-conversation-section {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        border: 1px solid rgba(74, 144, 226, 0.1);
+        padding: 0;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+      }
+
+      .enhanced-scenario-section:hover,
+      .enhanced-conversation-section:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .scenario-header,
+      .conversation-header {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--relationship-purple) 100%);
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .conversation-header {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      }
+
+      .scenario-icon-small {
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .conversation-icon {
+        font-size: 1.5rem;
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .scenario-header h3,
+      .conversation-header h3 {
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      .scenario-content {
+        padding: 24px;
+      }
+
+      .scenario-content p {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .scenario-context p {
+        margin: 0 0 20px 0;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+        padding: 16px;
+        background: rgba(74, 144, 226, 0.04);
+        border-radius: 12px;
+        border-left: 4px solid var(--primary-blue);
+      }
+
+      .conversation-starter {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .starter-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .starter-icon {
+        font-size: 1.2rem;
+      }
+
+      .starter-text {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .conversation-starter p {
+        margin: 0;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+        font-style: italic;
+        position: relative;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .conversation-starter p::before {
+        content: '"';
+        position: absolute;
+        top: -4px;
+        left: 0;
+        font-size: 2rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        font-family: serif;
+      }
+
+      .conversation-starter p::after {
+        content: '"';
+        position: absolute;
+        bottom: -12px;
+        right: 0;
+        font-size: 2rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        font-family: serif;
+      }
+
+      /* Utility Classes */
+      .hidden {
+        display: none !important;
+      }
+
+      .flex {
+        display: flex;
+      }
+
+      .items-center {
+        align-items: center;
+      }
+
+      .gap-4 {
+        gap: 1rem;
+      }
+
+      .relative {
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <a href="index.html" class="logo">
+            <img src="images/tree-logo.svg" alt="Articulaition Logo" />
+            <span class="brand-text">
+              <span class="brand-articul">articul</span>
+              <span class="brand-ai">ai</span>
+              <span class="brand-tion">tion</span>
+              <span class="brand-tion">.com</span>
+            </span>
+          </a>
+
+          <nav class="header-nav">
+            <div class="nav-links">
+              <a href="dashboard.html" class="nav-link">Dashboard</a>
+              <a href="professional-communication.html" class="nav-link">Professional</a>
+              <a href="personal-communication.html" class="nav-link active">Personal</a>
+              <a href="improvement-hub.html" class="nav-link">Improvement</a>
+              <a href="pricing.html" class="nav-link">Pricing</a>
+            </div>
+
+            <div class="user-menu">
+              <div class="user-avatar">
+                <span>U</span>
+              </div>
+              <div class="user-info">
+                <div class="user-name">User Account</div>
+                <div class="user-plan">Free Plan</div>
+              </div>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb fade-in">
+          <a href="dashboard.html">Dashboard</a>
+          <span class="breadcrumb-separator">›</span>
+          <a href="personal-communication.html">Personal Communication</a>
+          <span class="breadcrumb-separator">›</span>
+          <span>Conflict Resolution</span>
+        </nav>
+
+        <!-- Page Title Section -->
+        <section class="page-title-section">
+          <div class="title-with-icon slide-up delay-100">
+            <div class="page-icon">
+              <i data-lucide="handshake" class="w-8 h-8"></i>
+            </div>
+            <div>
+              <h1 class="page-title">Conflict Resolution & Difficult Conversations</h1>
+            </div>
+          </div>
+          <p class="page-description slide-up delay-200">
+            Master challenging conversations with AI-powered practice sessions. Learn de-escalation techniques, diplomatic communication, and effective problem-solving strategies.
+          </p>
+        </section>
+
+        <!-- Analysis Options Section -->
+        <section class="analysis-section">
+          <!-- Analysis Options -->
+          <div class="analysis-options">
+            <!-- Upload Existing Recording -->
+            <div class="analysis-option scale-in delay-300" data-type="upload" id="uploadOption">
+              <div class="option-icon">
+                <i data-lucide="upload" class="w-8 h-8"></i>
+              </div>
+              <h3 class="option-title">Upload Difficult Conversation</h3>
+              <p class="option-description">
+                Upload an existing difficult conversation or conflict situation for analysis focused on de-escalation, problem-solving, and diplomatic communication.
+              </p>
+              <div class="option-features">
+                <div class="features-list">
+                  De-escalation assessment • Conflict management skills • Diplomatic tone analysis • Problem-solving effectiveness
+                </div>
+              </div>
+            </div>
+
+            <!-- Scenario Information -->
+            <div class="analysis-option scale-in delay-400 disabled" data-type="info" id="practiceOption">
+              <div class="option-icon">
+                <i data-lucide="info" class="w-8 h-8"></i>
+              </div>
+              <h3 class="option-title">Conflict Resolution Scenarios Available</h3>
+              <p class="option-description">
+                Learn about challenging scenarios and understand de-escalation techniques and diplomatic communication strategies.
+              </p>
+              <div class="option-features">
+                <div class="features-list">
+                  Conflict scenarios • De-escalation techniques • Diplomatic communication • Problem-solving principles
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upload Section -->
+          <div class="upload-section" id="uploadSection">
+            <h2 class="section-title">Upload Your Difficult Conversation</h2>
+            <p class="section-subtitle">
+              Upload an audio or video file of your difficult conversation for detailed conflict resolution analysis
+            </p>
+
+            <div class="upload-center">
+              <div class="upload-option-single" id="fileUpload">
+                <div class="upload-icon">
+                  <i data-lucide="file-audio" class="w-8 h-8"></i>
+                </div>
+                <div class="upload-title">Choose File</div>
+                <div class="upload-description">
+                  Select an audio or video file from your device (MP3, M4A, WAV, MP4, MOV)
+                </div>
+                <button class="upload-button" id="chooseFileBtn">
+                  <i data-lucide="upload" class="w-4 h-4"></i>
+                  Select File
+                </button>
+                <input type="file" id="audioFile" accept=".mp3,.m4a,.wav,.mp4,.mov" hidden />
+
+                <div class="file-selected" id="fileSelected" style="display: none">
+                  <div class="file-icon">
+                    <i data-lucide="file-audio" class="w-5 h-5"></i>
+                  </div>
+                  <div class="file-details">
+                    <div class="file-name" id="fileName">conversation.mp3</div>
+                    <div class="file-size" id="fileSize">1.2 MB</div>
+                  </div>
+                  <button class="remove-file" id="removeFile">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="action-buttons">
+              <button class="secondary-button" id="backToOptions">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Options
+              </button>
+              <button class="primary-button" id="analyzeUpload" disabled>
+                <i data-lucide="zap" class="w-4 h-4"></i>
+                Analyze Recording
+              </button>
+            </div>
+          </div>
+
+          <!-- Practice Information Section -->
+          <div class="ai-practice-section" id="practiceSection">
+            <h2 class="section-title">Conflict Resolution Scenarios</h2>
+            <p class="section-subtitle">
+              Learn about specific areas of conflict resolution and communication strategies
+            </p>
+
+            <!-- Scenario Grid -->
+            <div class="scenario-grid">
+              <div class="scenario-type" data-scenario="family-disputes">
+                <div class="scenario-icon">
+                  <i data-lucide="home" class="w-6 h-6"></i>
+                </div>
+                <div class="scenario-title">Family Disputes</div>
+                <div class="scenario-description">Navigate family disagreements, generational conflicts, and emotionally charged discussions</div>
+              </div>
+
+              <div class="scenario-type" data-scenario="romantic-conflicts">
+                <div class="scenario-icon">
+                  <i data-lucide="heart" class="w-6 h-6"></i>
+                </div>
+                <div class="scenario-title">Romantic Conflicts</div>
+                <div class="scenario-description">Address relationship arguments, unmet needs, and partnership disagreements</div>
+              </div>
+
+              <div class="scenario-type" data-scenario="friendship-boundaries">
+                <div class="scenario-icon">
+                  <i data-lucide="users" class="w-6 h-6"></i>
+                </div>
+                <div class="scenario-title">Friendship Boundaries</div>
+                <div class="scenario-description">Handle friendship conflicts, social group drama, and setting healthy limits</div>
+              </div>
+
+              <div class="scenario-type" data-scenario="living-arrangements">
+                <div class="scenario-icon">
+                  <i data-lucide="key" class="w-6 h-6"></i>
+                </div>
+                <div class="scenario-title">Living Arrangements</div>
+                <div class="scenario-description">Resolve roommate disputes, shared responsibility conflicts, and household tensions</div>
+              </div>
+
+              <div class="scenario-type" data-scenario="difficult-conversations">
+                <div class="scenario-icon">
+                  <i data-lucide="message-circle" class="w-6 h-6"></i>
+                </div>
+                <div class="scenario-title">Difficult Conversations</div>
+                <div class="scenario-description">Practice delivering hard feedback, addressing uncomfortable topics, and tough discussions</div>
+              </div>
+
+              <div class="scenario-type" data-scenario="personal-boundaries">
+                <div class="scenario-icon">
+                  <i data-lucide="shield" class="w-6 h-6"></i>
+                </div>
+                <div class="scenario-title">Personal Boundaries</div>
+                <div class="scenario-description">Learn to communicate limits, maintain boundaries, and handle boundary violations</div>
+              </div>
+            </div>
+
+            <div class="conversation-container" id="conversationContainer" style="display: none">
+              <!-- Scenario Introduction -->
+              <div class="scenario-intro">
+                <div class="scenario-title">
+                  <i data-lucide="message-circle" class="w-5 h-5 inline mr-2"></i>
+                  <span id="scenarioTitle">Conflict Resolution Practice</span>
+                </div>
+                <div class="scenario-text" id="scenarioText">
+                  Practice your conflict resolution skills in this scenario.
+                </div>
+              </div>
+
+              <!-- Combined Scenario & Conversation Starter -->
+              <div class="scenario-details" id="scenarioDetails">
+                <div class="enhanced-scenario-section">
+                  <div class="scenario-header">
+                    <div class="scenario-icon-small">
+                      <i data-lucide="play-circle" class="w-4 h-4"></i>
+                    </div>
+                    <h3>Your Practice Scenario</h3>
+                  </div>
+                  <div class="scenario-content">
+                    <div class="scenario-context">
+                      <p id="scenarioContext">Scenario details will appear here.</p>
+                    </div>
+                    <div class="conversation-starter" id="conversationPrompt" style="display: none;">
+                      <p id="conversationPromptText">Generating conversation prompt...</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-buttons">
+                <button class="secondary-button" id="backToScenarios">
+                  <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                  Back to Scenarios
+                </button>
+                <button class="secondary-button" id="newStarter">
+                  <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                  New Starter
+                </button>
+                <button class="secondary-button" id="recordButton">
+                  <i data-lucide="mic" class="w-4 h-4"></i>
+                  Record Response
+                </button>
+                <button class="primary-button" id="submitForAnalysis">
+                  <i data-lucide="check-circle" class="w-4 h-4"></i>
+                  Submit for Analysis
+                </button>
+              </div>
+            </div>
+
+            <div class="action-buttons" id="scenarioActions">
+              <button class="secondary-button" id="backToPracticeBtn">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Options
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // AI features disabled for personal communication analysis
+
+      // Conflict resolution scenarios
+      const conflictScenarios = {
+        "family-disputes": {
+          title: "Family Dispute Resolution",
+          description:
+            "Navigate family disagreements, generational conflicts, and emotional family dynamics with care and understanding.",
+          whatWeLookFor:
+            "Conflict resolution skills are essential for maintaining healthy relationships and personal well-being. These abilities help us navigate disagreements constructively, preserve important bonds, and create solutions that work for everyone involved.",
+        },
+        "romantic-conflicts": {
+          title: "Romantic Relationship Conflict",
+          description:
+            "Handle disagreements with your partner, resolve intimacy issues, and strengthen your romantic bond through difficult conversations.",
+          whatWeLookFor:
+            "Conflict resolution skills are essential for maintaining healthy relationships and personal well-being. These abilities help us navigate disagreements constructively, preserve important bonds, and create solutions that work for everyone involved.",
+        },
+        "friendship-boundaries": {
+          title: "Friendship Boundary Conflict",
+          description:
+            "Address boundary violations, communication issues, and conflicts that arise in close friendships while preserving the relationship.",
+          whatWeLookFor:
+            "Conflict resolution skills are essential for maintaining healthy relationships and personal well-being. These abilities help us navigate disagreements constructively, preserve important bonds, and create solutions that work for everyone involved.",
+        },
+        "living-arrangements": {
+          title: "Roommate/Living Situation Conflict",
+          description:
+            "Resolve household disputes, sharing disagreements, and living arrangement conflicts with roommates or family members.",
+          whatWeLookFor:
+            "Conflict resolution skills are essential for maintaining healthy relationships and personal well-being. These abilities help us navigate disagreements constructively, preserve important bonds, and create solutions that work for everyone involved.",
+        },
+        "difficult-conversations": {
+          title: "Difficult Conversation Practice",
+          description:
+            "Practice approaching sensitive topics, delivering difficult news, and having conversations you've been avoiding.",
+          whatWeLookFor:
+            "Conflict resolution skills are essential for maintaining healthy relationships and personal well-being. These abilities help us navigate disagreements constructively, preserve important bonds, and create solutions that work for everyone involved.",
+        },
+        "personal-boundaries": {
+          title: "Personal Boundary Setting",
+          description:
+            "Learn to communicate limits, maintain boundaries, and handle boundary violations in personal relationships.",
+          whatWeLookFor:
+            "Conflict resolution skills are essential for maintaining healthy relationships and personal well-being. These abilities help us navigate disagreements constructively, preserve important bonds, and create solutions that work for everyone involved.",
+        },
+      };
+
+      // State management
+      let currentMode = null;
+      let selectedScenario = null;
+      let conversationHistory = [];
+      let conversationCount = 0;
+
+      // DOM elements
+      const analysisOptions = document.querySelectorAll(".analysis-option");
+      const uploadOption = document.getElementById('uploadOption');
+      const practiceOption = document.getElementById('practiceOption');
+      const uploadSection = document.getElementById('uploadSection');
+      const practiceSection = document.getElementById('practiceSection');
+      const backToPracticeBtn = document.getElementById('backToPracticeBtn');
+      const scenarioTypes = document.querySelectorAll(".scenario-type");
+      const conversationContainer = document.getElementById("conversationContainer");
+      const backToScenariosBtn = document.getElementById("backToScenarios");
+      const scenarioActionsDiv = document.getElementById("scenarioActions");
+      const recordBtn = document.getElementById("recordButton");
+      const submitBtn = document.getElementById("submitForAnalysis");
+      
+      // Recording variables
+      let isRecording = false;
+      let mediaRecorder = null;
+      let recordedAudioBlob = null;
+      let audioChunks = [];
+      
+      // Handle upload option selection
+      uploadOption.addEventListener('click', () => {
+        uploadOption.classList.add('selected');
+        practiceOption.classList.remove('selected');
+        uploadSection.style.display = 'block';
+        practiceSection.style.display = 'none';
+      });
+
+      // Handle practice option selection
+      practiceOption.addEventListener('click', () => {
+        practiceOption.classList.add('selected');
+        uploadOption.classList.remove('selected');
+        practiceSection.style.display = 'block';
+        uploadSection.style.display = 'none';
+      });
+
+      // Handle back to practice button
+      backToPracticeBtn.addEventListener('click', () => {
+        practiceSection.style.display = 'none';
+        uploadSection.style.display = 'none';
+        practiceOption.classList.remove('selected');
+        uploadOption.classList.remove('selected');
+      });
+
+      // Back to options button
+      document.getElementById('backToOptions').addEventListener('click', () => {
+        uploadSection.style.display = 'none';
+        practiceSection.style.display = 'none';
+        uploadOption.classList.remove('selected');
+        practiceOption.classList.remove('selected');
+      });
+
+      // Scenario selection - auto-start when clicked
+      let currentScenarioType = null;
+      
+      scenarioTypes.forEach((scenario) => {
+        scenario.addEventListener("click", () => {
+          const scenarioType = scenario.dataset.scenario;
+          currentScenarioType = scenarioType;
+          startConversationPractice(scenarioType);
+        });
+      });
+
+      // AI-generated conflict resolution conversation starter function
+      async function generateAIConversationStarter(scenarioKey, context) {
+        const scenario = conflictScenarios[scenarioKey];
+        if (!scenario) return "I'd like to talk about what happened and work through this together.";
+        
+        try {
+          // Check if Gemini is configured
+          if (!window.geminiEngine || !window.geminiEngine.isConfigured()) {
+            console.warn('Gemini API not configured, using fallback');
+            const scenarioData = getConflictResolutionScenarioData(scenarioKey);
+            return scenarioData.starters[Math.floor(Math.random() * scenarioData.starters.length)];
+          }
+          
+          const prompt = `Generate 5 different simple scenarios for: ${scenario.title}
+
+Context: ${context}
+
+Create 5 brief, realistic scenarios from the user's perspective, each with variety within the topic. Keep them simple and relatable.
+
+Format each as a single sentence starting with "You notice..." or "You see..." or "You overhear..."
+
+Examples for conflict resolution scenarios:
+- You notice your roommate seems upset about something that happened yesterday.
+- You see your friend has been avoiding you since your disagreement last week.
+- You overhear your colleague complaining about the project you're both working on.
+- You notice your partner seems distant after your argument this morning.
+- You see that your family member is still hurt about what happened at dinner.
+
+Generate 5 different scenarios within the topic. Keep each short and realistic.`;
+
+          const response = await window.geminiEngine.callGeminiAPI(prompt);
+          
+          // Parse the response to get multiple scenarios and pick one randomly
+          const scenarios = response.trim().split('\n').filter(line => line.trim().startsWith('-') || line.trim().startsWith('•') || line.trim().match(/^\d+\./));
+          if (scenarios.length > 0) {
+            const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+            // Clean up the scenario text (remove bullet points, numbers, etc.)
+            return randomScenario.replace(/^[-•\d.\s]+/, '').trim();
+          }
+          
+          return response.trim();
+        } catch (error) {
+          console.error('Error generating AI conversation starter:', error);
+          // Fallback to random pre-written starter
+          const scenarioData = getConflictResolutionScenarioData(scenarioKey);
+          return scenarioData.starters[Math.floor(Math.random() * scenarioData.starters.length)];
+        }
+      }
+
+      // Conflict resolution scenario data
+      function getConflictResolutionScenarioData(scenarioType) {
+        const scenarioData = {
+          'family-disputes': {
+            contexts: [
+              'Your parents are pressuring you to attend a family gathering you don\'t want to go to, and the conversation is getting heated.',
+              'Your sibling borrowed money from you months ago and keeps making excuses when you ask about repayment.',
+              'Your parent just criticized your parenting choices in front of your children, and you need to address it calmly.',
+              'Your family is arguing about caring for an aging grandparent, and everyone has different opinions about what\'s best.',
+              'Your brother made a hurtful comment about your life choices at dinner, and the table went silent.',
+              'Your mother keeps giving unsolicited advice about your relationship, and it\'s straining your bond with her.',
+              'Your teenage child just told you they hate you during an argument about curfew, and you need to de-escalate.',
+              'Your sister revealed something personal you told her in confidence to other family members.'
+            ],
+            starters: [
+              "I've been thinking about our conversation the other day, and I realize I may have hurt your feelings. Can we talk about it?",
+              "I love you and I hate that there's tension between us. Can we work through this together?",
+              "I know we see things differently, but you're important to me. How can we find some common ground?",
+              "I've been reflecting on what you said, and I think I understand your perspective better now. Can we start fresh?",
+              "I miss how close we used to be. What can I do to help repair our relationship?",
+              "I realize I may have been defensive earlier. I want to listen to your side and work this out.",
+              "I know we both care about our family. How can we handle this disagreement without hurting each other?",
+              "I've been thinking about what's most important here, and it's our relationship. Can we talk about how to move forward?"
+            ]
+          },
+          'romantic-conflicts': {
+            contexts: [
+              'Your partner forgot about your anniversary dinner reservations and made other plans with friends instead.',
+              'You discovered your partner has been texting their ex, and you\'re feeling hurt and confused about how to bring it up.',
+              'Your partner criticized your appearance in front of their friends, and you need to address how it made you feel.',
+              'You and your partner had a big fight about money, and now they\'re giving you the silent treatment.',
+              'Your partner promised to help with household chores but continues to leave everything for you to do.',
+              'You caught your partner in a lie about where they were last night, and trust feels broken.',
+              'Your partner made a major decision without consulting you, and you feel shut out of the relationship.',
+              'You and your partner have different ideas about your future together, and the conversation keeps getting heated.'
+            ],
+            starters: [
+              "I love you, and I want to work through this together. Can we talk about what happened and how we're both feeling?",
+              "I've been thinking about our argument, and I realize I may have been wrong. Can we discuss this calmly?",
+              "I care about us too much to let this create distance. How can we understand each other better?",
+              "I know we're both hurting right now. What can I do to help us feel connected again?",
+              "I want to make sure you feel heard and valued. Can you help me understand your perspective?",
+              "I realize I may have reacted poorly. I'm sorry, and I want to make things right between us.",
+              "I love how honest we can be with each other. Let's work through this like the team we are.",
+              "I've been thinking about what you need from me. Can we talk about how to meet each other's needs better?"
+            ]
+          },
+          'friendship-boundaries': {
+            contexts: [
+              'Your best friend keeps canceling plans at the last minute, and you\'re tired of rearranging your schedule for them.',
+              'Your friend made a joke about your insecurities in front of a group, and everyone laughed except you.',
+              'Your friend borrowed your car and returned it with a scratch, but they haven\'t mentioned it or offered to pay for repairs.',
+              'Your friend keeps venting about their problems but never asks how you\'re doing or listens when you try to share.',
+              'Your friend invited everyone except you to a gathering, and you found out through social media.',
+              'Your friend keeps pressuring you to lend them money even though you\'ve said no multiple times.',
+              'Your friend shared something personal you told them in confidence with others in your friend group.',
+              'Your friend has been flirting with someone you\'re dating, and you need to address the boundary crossing.'
+            ],
+            starters: [
+              "I value our friendship so much, and I want to talk about something that's been on my mind. Can we discuss it?",
+              "I've been feeling a bit uncomfortable about [situation], and I'd love to work through it with you.",
+              "I care about you as a friend, but I need to be honest about something that's been bothering me.",
+              "I know we're both good people, and I think there might be a misunderstanding I'd like to clear up.",
+              "I miss how easy things used to be between us. Can we talk about what's been different lately?",
+              "I want to make sure we're both happy in our friendship. Can we discuss some boundaries that might help?",
+              "I've been thinking about our friendship, and I realize I may need to communicate my needs better.",
+              "I love that we can be honest with each other. There's something I'd like to discuss with you."
+            ]
+          },
+          'living-arrangements': {
+            contexts: [
+              'Your roommate keeps leaving dirty dishes in the sink for days, and the kitchen is starting to smell.',
+              'Your roommate had a loud party last night without asking, and you couldn\'t sleep because of the noise.',
+              'Your roommate\'s significant other has been staying over every night for weeks, essentially living there rent-free.',
+              'Your roommate ate your food from the fridge again, and this is the third time this month.',
+              'Your roommate hasn\'t paid their share of utilities in two months, and you\'re tired of covering for them.',
+              'Your roommate keeps using your expensive toiletries without asking, and you need to address it.',
+              'Your roommate brings dates over at all hours without warning, making you feel uncomfortable in your own home.',
+              'Your roommate promised to clean the bathroom this week but it\'s been two weeks and it\'s getting disgusting.'
+            ],
+            starters: [
+              "I wanted to talk about our living situation because I think we can make it work better for everyone.",
+              "I've been thinking about how we can make our home environment more comfortable for all of us.",
+              "I care about our living arrangement working well. Can we discuss some household things that are on my mind?",
+              "I want to address something that's been bothering me, but I want to do it in a way that works for both of us.",
+              "I think we're both trying to be good roommates. Can we talk about how to make that easier?",
+              "I'd love to find a solution that makes everyone happy. Can we discuss some household logistics?",
+              "I want to make sure we're both comfortable here. There are a few things I'd like to talk through.",
+              "I think clear communication will help us live together better. Can we discuss some expectations?"
+            ]
+          },
+          'difficult-conversations': {
+            contexts: [
+              'You need to tell your friend that their drinking has become a problem and you\'re worried about them.',
+              'You have to let your friend know that their constant negativity is affecting your mental health.',
+              'You need to tell your family member that you can\'t lend them money anymore because they never pay you back.',
+              'You have to address your friend\'s racist comment that made you uncomfortable at dinner.',
+              'You need to tell your loved one that their treatment of you in public embarrasses and hurts you.',
+              'You have to have a conversation about your friend\'s hygiene issues that are affecting your friendship.',
+              'You need to tell someone close to you that their lies are damaging your trust in them.',
+              'You have to address your family member\'s inappropriate behavior toward your children.'
+            ],
+            starters: [
+              "I've been thinking about something important that I'd like to discuss with you. Do you have some time to talk?",
+              "I care about you, which is why I want to have this conversation even though it feels difficult.",
+              "I want to talk about something that's been on my mind. I'm hoping we can discuss it openly.",
+              "I have something I need to share with you, and I want to do it in a way that's respectful and caring.",
+              "I've been avoiding this conversation, but I think it's important for us to talk about it.",
+              "I want to be honest with you about something because I value our relationship.",
+              "I know this might be hard to hear, but I think it's important that we discuss it.",
+              "I've been thinking about how to approach this topic with you because I care about how you feel."
+            ]
+          },
+          'personal-boundaries': {
+            contexts: [
+              'Your colleague keeps asking personal questions about your relationship status and won\'t take hints to stop.',
+              'Your friend keeps showing up at your house unannounced, and you need alone time but don\'t want to hurt their feelings.',
+              'Your family member keeps criticizing your weight and appearance despite you asking them to stop.',
+              'Your friend keeps borrowing things without asking and sometimes doesn\'t return them.',
+              'Your relative keeps making comments about your life choices that make you feel judged and defensive.',
+              'Your friend keeps trying to set you up with people after you\'ve told them you\'re not interested in dating.',
+              'Your neighbor keeps asking you to do favors for them, and you feel taken advantage of.',
+              'Your acquaintance keeps making inappropriate jokes that make you uncomfortable, and you need to address it.'
+            ],
+            starters: [
+              "I want to talk about something that's important to me. I need to establish some boundaries in our relationship.",
+              "I care about you, which is why I want to be clear about what I need to feel comfortable.",
+              "I've been thinking about our interactions, and I realize I need to communicate my boundaries more clearly.",
+              "I want to maintain a good relationship with you, and I think being clear about my limits will help.",
+              "I need to be honest about something that's been making me uncomfortable. Can we talk about it?",
+              "I value our relationship, and I think setting some boundaries will actually make it healthier.",
+              "I want to address something that's been on my mind because I believe honesty strengthens relationships.",
+              "I care about both of us feeling respected, so I want to talk about some boundaries that are important to me."
+            ]
+          }
+        };
+        
+        return scenarioData[scenarioType] || { contexts: ['You are having a conflict resolution conversation.'], starters: ['I\'d like to talk about what happened and work through this together.'] };
+      }
+
+      // Start conversation practice - show scenario info
+      async function startConversationPractice(scenarioKey) {
+        const scenario = conflictScenarios[scenarioKey];
+        if (!scenario) return;
+        
+        // Store current scenario for "New Starter" button
+        currentScenarioType = scenarioKey;
+        
+        // Get scenario data with contexts
+        const scenarioData = getConflictResolutionScenarioData(scenarioKey);
+        
+        // Randomly select context
+        const randomContext = scenarioData.contexts[Math.floor(Math.random() * scenarioData.contexts.length)];
+
+        // Update UI with proper format
+        document.getElementById("scenarioTitle").textContent = scenario.title;
+        document.getElementById("scenarioText").textContent = scenario.description;
+        // Take only the first sentence of the context
+        const firstSentence = randomContext.split('.')[0] + '.';
+        document.getElementById("scenarioContext").textContent = firstSentence;
+        
+        // Update conversation prompt with loading state
+        const conversationPromptElement = document.getElementById("conversationPromptText");
+        if (conversationPromptElement) {
+          conversationPromptElement.textContent = "Generating conversation starter...";
+          conversationPromptElement.style.fontStyle = "italic";
+          
+          // Remove AI conversation starter
+          conversationPromptElement.style.display = 'none';
+        }
+
+        // Hide scenario grid and show scenario details
+        document.querySelector(".scenario-grid").style.display = "none";
+        document.querySelector("#practiceSection h2").style.display = "none";
+        document.querySelector(
+          "#practiceSection .section-subtitle"
+        ).style.display = "none";
+        scenarioActionsDiv.style.display = "none";
+        conversationContainer.style.display = "block";
+        
+        // Show scenario details only (no conversation prompt)
+        document.getElementById("scenarioDetails").style.display = "block";
+        document.getElementById("conversationPrompt").style.display = "none";
+      }
+
+      // Back to scenarios button
+      backToScenariosBtn.addEventListener("click", () => {
+        conversationContainer.style.display = "none";
+        scenarioActionsDiv.style.display = "flex";
+        document.querySelector(".scenario-grid").style.display = "grid";
+        document.querySelector("#practiceSection h2").style.display = "block";
+        document.querySelector(
+          "#practiceSection .section-subtitle"
+        ).style.display = "block";
+        resetPracticeSession();
+      });
+      
+      // New Starter button functionality
+      const newStarterBtn = document.getElementById('newStarter');
+      if (newStarterBtn) {
+        newStarterBtn.addEventListener('click', async function() {
+          if (currentScenarioType) {
+            // Get new random context
+            const scenarioData = getConflictResolutionScenarioData(currentScenarioType);
+            const randomContext = scenarioData.contexts[Math.floor(Math.random() * scenarioData.contexts.length)];
+            
+            // Update the displayed content
+            // Take only the first sentence of the context
+        const firstSentence = randomContext.split('.')[0] + '.';
+        document.getElementById("scenarioContext").textContent = firstSentence;
+            const conversationPromptElement = document.getElementById("conversationPromptText");
+            if (conversationPromptElement) {
+              // Show loading state
+              conversationPromptElement.textContent = "Generating new conversation starter...";
+              conversationPromptElement.style.fontStyle = "italic";
+              
+              // Add subtle animation to show the change
+              const promptElement = document.getElementById('conversationPrompt');
+              if (promptElement) {
+                promptElement.style.opacity = '0.5';
+                setTimeout(() => {
+                  promptElement.style.opacity = '1';
+                }, 200);
+              }
+              
+              try {
+                // Generate new AI conversation starter
+                const aiStarter = await generateAIConversationStarter(currentScenarioType, randomContext);
+                conversationPromptElement.textContent = aiStarter;
+              } catch (error) {
+                console.error('Error generating new starter:', error);
+                // Fallback to pre-written starter
+                const randomStarter = scenarioData.starters[Math.floor(Math.random() * scenarioData.starters.length)];
+                conversationPromptElement.textContent = randomStarter;
+              }
+            }
+          }
+        });
+      }
+
+      // Reset practice session
+      function resetPracticeSession() {
+        scenarioTypes.forEach((s) => s.classList.remove("selected"));
+        selectedScenario = null;
+        currentScenarioType = null;
+      }
+
+      // Analysis option selection
+      analysisOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+          option.classList.add("selected");
+          currentMode = option.dataset.type;
+
+          if (currentMode === "upload") {
+            uploadSection.classList.add("active");
+            practiceSection.classList.remove("active");
+          } else if (currentMode === "practice") {
+            practiceSection.classList.add("active");
+            uploadSection.classList.remove("active");
+          }
+        });
+      });
+
+
+      // Back to options buttons
+      document.getElementById("backToOptions").addEventListener("click", () => {
+        uploadSection.classList.remove("active");
+        analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+        currentMode = null;
+      });
+
+      document.getElementById("backToPracticeBtn").addEventListener("click", () => {
+        practiceSection.classList.remove("active");
+        analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+        currentMode = null;
+
+        // Reset scenario selection view
+        conversationContainer.style.display = "none";
+        scenarioActionsDiv.style.display = "flex";
+        document.querySelector(".scenario-grid").style.display = "grid";
+        document.querySelector("#practiceSection h2").style.display = "block";
+        document.querySelector("#practiceSection .section-subtitle").style.display = "block";
+
+        resetPracticeSession();
+      });
+
+      // Recording functionality
+      recordBtn.addEventListener("click", async () => {
+        if (!isRecording) {
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
+            
+            mediaRecorder.ondataavailable = (event) => {
+              audioChunks.push(event.data);
+            };
+            
+            mediaRecorder.onstop = () => {
+              recordedAudioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+              stream.getTracks().forEach(track => track.stop());
+            };
+            
+            mediaRecorder.start();
+            isRecording = true;
+            
+            // Update button UI
+            recordBtn.innerHTML = '<i data-lucide="stop-circle" class="w-4 h-4"></i> Stop Recording';
+            recordBtn.style.background = "#ef4444";
+            recordBtn.style.borderColor = "#ef4444";
+            recordBtn.style.color = "white";
+            lucide.createIcons();
+          } catch (error) {
+            console.error('Error accessing microphone:', error);
+            alert('Unable to access microphone. Please check your permissions.');
+          }
+        } else {
+          // Stop recording
+          if (mediaRecorder && mediaRecorder.state !== "inactive") {
+            mediaRecorder.stop();
+            isRecording = false;
+            
+            // Update button UI
+            recordBtn.innerHTML = '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+            recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+            recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+            recordBtn.style.color = "var(--text-primary)";
+            lucide.createIcons();
+          }
+        }
+      });
+
+      // Submit for analysis
+      submitBtn.addEventListener("click", async () => {
+        if (!recordedAudioBlob) {
+          alert('Please record your response first.');
+          return;
+        }
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+        lucide.createIcons();
+
+        try {
+          // Prepare audio data for personal communication analysis
+          console.log("🔄 Preparing audio for conflict resolution analysis...");
+          
+          // Convert blob to base64 for transfer
+          const reader = new FileReader();
+          reader.onloadend = function() {
+            const base64Audio = reader.result;
+            
+            // Prepare audio data object
+            const audioData = {
+              base64: base64Audio,
+              size: recordedAudioBlob.size,
+              type: recordedAudioBlob.type,
+              name: "conflict-resolution.webm",
+              analysisType: "conflict"
+            };
+
+            console.log("📱 Storing audio data for analysis:", audioData.name, audioData.analysisType);
+
+            // Store audio data for the analysis page
+            sessionStorage.setItem("audioForAnalysis", JSON.stringify(audioData));
+            
+            // Redirect to conflict resolution analysis results page
+            window.location.href = "conflict-analysis-results.html";
+          };
+          
+          reader.readAsDataURL(recordedAudioBlob);
+        } catch (error) {
+          console.error('Analysis error:', error);
+          alert('Error analyzing conversation. Please try again.');
+          
+          // Reset button
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4"></i> Submit for Analysis';
+          lucide.createIcons();
+        }
+      });
+
+      // Analysis function for conflict resolution communication
+      async function analyzeConversation(audioBlob, analysisType) {
+        console.log('Starting conflict resolution communication analysis...', analysisType);
+        
+        // Convert blob to file for analysis
+        const audioFile = new File([audioBlob], 'recording.webm', { type: audioBlob.type });
+        
+        try {
+          // Initialize analysis system
+          const simpleAnalysis = new SimpleAnalysis();
+          
+          // Get transcript from audio
+          console.log('Transcribing audio...');
+          const analysisResult = await simpleAnalysis.analyzeAudio(audioFile, 'conflict-resolution');
+          
+          return {
+            ...analysisResult,
+            analysisType: analysisType,
+            timestamp: Date.now(),
+            status: 'analyzed'
+          };
+          
+        } catch (error) {
+          console.error('Analysis error:', error);
+          
+          // Return error result with audio preserved
+          return {
+            audioBlob: audioBlob,
+            audioFile: audioFile,
+            analysisType: analysisType,
+            timestamp: Date.now(),
+            status: 'error',
+            error: error.message,
+            transcript: 'Error transcribing audio. Please try again.'
+          };
+        }
+      }
+
+      // File upload functionality
+      document.getElementById('chooseFileBtn').addEventListener('click', () => {
+        document.getElementById('audioFile').click();
+      });
+
+      document.getElementById('audioFile').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          // Show file details
+          document.getElementById('fileName').textContent = file.name;
+          document.getElementById('fileSize').textContent = (file.size / (1024 * 1024)).toFixed(1) + ' MB';
+          document.getElementById('fileSelected').style.display = 'flex';
+          document.getElementById('analyzeUpload').disabled = false;
+        }
+      });
+
+      // Remove file functionality
+      document.getElementById('removeFile').addEventListener('click', () => {
+        document.getElementById('audioFile').value = '';
+        document.getElementById('fileSelected').style.display = 'none';
+        document.getElementById('analyzeUpload').disabled = true;
+      });
+
+      // Analyze upload button
+      document.getElementById('analyzeUpload').addEventListener('click', async () => {
+        const audioFile = document.getElementById('audioFile');
+        if (!audioFile.files[0]) {
+          alert('Please select a file first');
+          return;
+        }
+
+        // Update button state
+        const analyzeBtn = document.getElementById('analyzeUpload');
+        analyzeBtn.disabled = true;
+        analyzeBtn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+
+        try {
+          // Use the analysis processor
+          const processor = new SimpleAnalysis();
+          const results = await processor.analyzeAudio(audioFile.files[0], 'conflict-resolution');
+
+          // Store results and redirect
+          sessionStorage.setItem('analysisResults', JSON.stringify(results));
+          window.location.href = 'conflict-analysis-results.html?type=conflict-resolution&source=upload';
+        } catch (error) {
+          console.error('Analysis failed:', error);
+          alert('Analysis failed. Please try again.');
+          analyzeBtn.disabled = false;
+          analyzeBtn.innerHTML = '<i data-lucide="zap" class="w-4 h-4"></i> Analyze Recording';
+        }
+      });
+
+      // Initialize analysis system
+      let analysisProcessor = null;
+      try {
+        analysisProcessor = new SimpleAnalysis();
+        console.log('✅ SimpleAnalysis system initialized successfully');
+      } catch (error) {
+        console.error('❌ Failed to initialize analysis system:', error);
+      }
+
+      // AI features enabled for conflict resolution analysis
+    </script>
+  </body>
+</html>

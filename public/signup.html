@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Articulaition - Create Your Account</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-bg {
+      background: linear-gradient(135deg, #ff934d 0%, #4a90e2 100%);
+    }
+    .glass-effect {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .floating-animation {
+      animation: floating 6s ease-in-out infinite;
+    }
+    @keyframes floating {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    .slide-in {
+      animation: slideIn 0.8s ease-out;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .pulse-slow {
+      animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    .orange-gradient {
+      background: linear-gradient(145deg, #ff934d 0%, #ffb366 30%, #ff7f50 60%, #ff934d 100%);
+    }
+    .blue-gradient {
+      background: linear-gradient(145deg, #4a90e2 0%, #6bb6ff 30%, #4f94e8 60%, #4a90e2 100%);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center space-x-2">
+          <img src="images/logo-header.svg" alt="Articulaition.com" class="h-8 w-auto">
+        </div>
+        <a href="index.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+          Back to home
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-16 min-h-screen flex">
+    <!-- Left Panel - Form -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12">
+      <div class="w-full max-w-md slide-in">
+        <div class="text-center mb-8">
+          <h1 class="text-3xl font-semibold tracking-tight text-gray-900 mb-3">Join Articulaition today</h1>
+          <p class="text-gray-600">Create your account and start transforming your communication skills</p>
+        </div>
+
+        <!-- Social Login -->
+        <div class="space-y-3 mb-6">
+          <button id="googleSignup" class="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 group">
+            <svg class="w-5 h-5" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"></path>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"></path>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"></path>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"></path>
+            </svg>
+            <span class="font-medium text-gray-700 group-hover:text-gray-900">Continue with Google</span>
+          </button>
+        </div>
+
+        <div class="relative mb-6">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-4 bg-gray-50 text-gray-500">or continue with email</span>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form class="space-y-5" id="signupForm">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First name</label>
+              <input type="text" id="firstName" name="firstName" required class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all duration-200">
+            </div>
+            <div>
+              <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last name</label>
+              <input type="text" id="lastName" name="lastName" required class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all duration-200">
+            </div>
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email address</label>
+            <div class="relative">
+              <input type="email" id="email" name="email" required class="w-full px-3 py-2.5 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all duration-200">
+              <i data-lucide="mail" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+            </div>
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+            <div class="relative">
+              <input type="password" id="password" name="password" required class="w-full px-3 py-2.5 pl-10 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all duration-200">
+              <i data-lucide="lock" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+              <button type="button" id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <div class="mt-2 space-y-1">
+              <div class="flex items-center text-xs text-gray-500">
+                <div id="lengthCheck" class="w-2 h-2 rounded-full bg-gray-300 mr-2"></div>
+                At least 8 characters
+              </div>
+              <div class="flex items-center text-xs text-gray-500">
+                <div id="numberCheck" class="w-2 h-2 rounded-full bg-gray-300 mr-2"></div>
+                Contains a number
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <div class="flex items-center h-5">
+              <input id="terms" name="terms" type="checkbox" required class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 focus:ring-2">
+            </div>
+            <label for="terms" class="ml-3 text-sm text-gray-600">
+              I agree to the <a href="#" class="text-orange-600 hover:text-orange-500 font-medium">Terms of Service</a> and <a href="#" class="text-orange-600 hover:text-orange-500 font-medium">Privacy Policy</a>
+            </label>
+          </div>
+
+          <button type="submit" class="w-full py-3 px-4 orange-gradient text-white rounded-lg font-medium hover:shadow-lg focus:ring-4 focus:ring-orange-300 transition-all duration-200 transform hover:scale-[1.02]">
+            Create your account
+          </button>
+        </form>
+
+        <p class="text-center mt-6 text-sm text-gray-600">
+          Already have an account? <a href="login.html" class="text-orange-600 font-medium hover:text-orange-500">Sign in</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Right Panel - Hero -->
+    <div class="hidden lg:flex lg:w-1/2 gradient-bg items-center justify-center p-12 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-20 left-20 w-32 h-32 bg-white rounded-full floating-animation"></div>
+        <div class="absolute bottom-40 right-20 w-24 h-24 bg-white rounded-full floating-animation" style="animation-delay: -2s;"></div>
+        <div class="absolute top-1/2 left-10 w-16 h-16 bg-white rounded-full floating-animation" style="animation-delay: -4s;"></div>
+      </div>
+      
+      <div class="max-w-lg text-white relative z-10">
+        <div class="mb-8">
+          <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-6 pulse-slow">
+            <i data-lucide="mic" class="w-8 h-8 text-white"></i>
+          </div>
+          <h2 class="text-4xl font-semibold tracking-tight mb-4">Transform your communication</h2>
+          <p class="text-xl text-white/80 leading-relaxed">Join thousands of professionals who have improved their speaking skills with our AI-powered coaching platform.</p>
+        </div>
+        
+        <div class="space-y-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+              <i data-lucide="check" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="text-white/90">Real-time speech analysis</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+              <i data-lucide="check" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="text-white/90">Personalized coaching feedback</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+              <i data-lucide="check" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="text-white/90">Track your progress over time</span>
+          </div>
+        </div>
+        
+        <div class="mt-8 glass-effect rounded-xl p-4">
+          <div class="flex items-center space-x-3 mb-3">
+            <div class="flex -space-x-2">
+              <div class="w-8 h-8 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full border-2 border-white"></div>
+              <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full border-2 border-white"></div>
+              <div class="w-8 h-8 bg-gradient-to-r from-green-400 to-blue-400 rounded-full border-2 border-white"></div>
+            </div>
+            <div class="text-white/90 text-sm font-medium">Sarah, Mike, and Alex just joined</div>
+          </div>
+          <div class="text-white/70 text-sm">Be part of our growing community</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Password toggle
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      const password = document.getElementById('password');
+      const icon = this.querySelector('i');
+      
+      if (password.type === 'password') {
+        password.type = 'text';
+        icon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        password.type = 'password';
+        icon.setAttribute('data-lucide', 'eye');
+      }
+      lucide.createIcons();
+    });
+
+    // Password validation
+    document.getElementById('password').addEventListener('input', function() {
+      const password = this.value;
+      const lengthCheck = document.getElementById('lengthCheck');
+      const numberCheck = document.getElementById('numberCheck');
+      
+      if (password.length >= 8) {
+        lengthCheck.classList.remove('bg-gray-300');
+        lengthCheck.classList.add('bg-green-500');
+      } else {
+        lengthCheck.classList.remove('bg-green-500');
+        lengthCheck.classList.add('bg-gray-300');
+      }
+      
+      if (/\d/.test(password)) {
+        numberCheck.classList.remove('bg-gray-300');
+        numberCheck.classList.add('bg-green-500');
+      } else {
+        numberCheck.classList.remove('bg-green-500');
+        numberCheck.classList.add('bg-gray-300');
+      }
+    });
+
+    // Google signup
+    document.getElementById('googleSignup').addEventListener('click', function() {
+      if (typeof supabase !== 'undefined' && supabase.auth) {
+        supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: window.location.origin + '/dashboard.html'
+          }
+        });
+      } else {
+        alert('Social login is not available. Please use email signup.');
+      }
+    });
+
+    // Form submission
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const button = this.querySelector('button[type="submit"]');
+      const originalText = button.textContent;
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      
+      button.textContent = 'Creating account...';
+      button.disabled = true;
+      
+      if (typeof supabase !== 'undefined' && supabase.auth) {
+        supabase.auth.signUp({
+          email: email,
+          password: password,
+          options: {
+            data: {
+              first_name: firstName,
+              last_name: lastName,
+              full_name: `${firstName} ${lastName}`
+            },
+            emailRedirectTo: window.location.origin + '/dashboard.html'
+          }
+        }).then(({ data, error }) => {
+          if (error) {
+            console.error('Signup error:', error);
+            alert('Error creating account: ' + error.message);
+          } else if (data.user) {
+            if (data.user.email_confirmed_at) {
+              alert('Account created successfully! Redirecting...');
+              window.location.href = 'dashboard.html';
+            } else {
+              alert('Account created successfully! Please check your email to confirm your account.');
+            }
+          }
+        }).catch((error) => {
+          console.error('Signup error:', error);
+          alert('Error creating account: ' + error.message);
+        }).finally(() => {
+          button.textContent = originalText;
+          button.disabled = false;
+        });
+      } else {
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.disabled = false;
+          alert('Account created successfully! (Demo)');
+          window.location.href = 'dashboard.html';
+        }, 2000);
+      }
+    });
+  </script>
+</body>
+</html>

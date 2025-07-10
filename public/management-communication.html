@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Management Communication - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0a0e17;
+        min-height: 100vh;
+        color: white;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(16, 185, 129, 0.1) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(16, 185, 129, 0.08) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 50% 50%,
+            rgba(16, 185, 129, 0.05) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .main-content {
+        position: relative;
+        z-index: 2;
+      }
+    </style>
+  </head>
+
+  <body class="auth-body">
+    <!-- Navigation -->
+    <nav
+      style="
+        background: rgba(15, 15, 15, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      "
+    >
+      <div
+        style="
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div style="display: flex; align-items: center; gap: 2rem">
+          <img
+            src="images/logo-header.svg"
+            alt="Articulaition"
+            style="height: 40px"
+          />
+          <span
+            style="
+              color: rgba(255, 255, 255, 0.6);
+              font-size: 0.9rem;
+              font-weight: 500;
+            "
+            >Professional Communication Mastery</span
+          >
+        </div>
+        <div style="display: flex; align-items: center; gap: 1.5rem">
+          <a
+            href="improvement-hub-dashboard.html"
+            style="
+              background: linear-gradient(135deg, #10b981, #059669);
+              color: white;
+              padding: 0.75rem 1.5rem;
+              border-radius: 0.5rem;
+              text-decoration: none;
+              font-weight: 600;
+              font-size: 0.9rem;
+              transition: all 0.3s ease;
+              box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+            "
+            >← Back to Improvement Hub</a
+          >
+          <a
+            href="dashboard.html"
+            style="
+              color: rgba(255, 255, 255, 0.8);
+              text-decoration: none;
+              font-weight: 500;
+              transition: color 0.3s ease;
+              padding: 0.5rem 1rem;
+            "
+            >Dashboard</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main
+      class="main-content"
+      style="max-width: 1200px; margin: 0 auto; padding: 2rem"
+    >
+      <!-- Hero Section -->
+      <section style="text-align: center; margin-bottom: 4rem">
+        <div
+          style="
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 2rem auto;
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
+          "
+        >
+          👥
+        </div>
+
+        <h1
+          style="
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          "
+        >
+          Management Communication
+        </h1>
+
+        <p
+          style="
+            font-size: 1.25rem;
+            color: #10b981;
+            font-weight: 600;
+            margin-bottom: 1rem;
+          "
+        >
+          Leadership Through Clear & Inspiring Communication
+        </p>
+
+        <p
+          style="
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+          "
+        >
+          Master the art of leading through communication. Learn to delegate
+          effectively, provide constructive feedback, and motivate teams to
+          achieve exceptional results.
+        </p>
+      </section>
+
+      <!-- Content Sections -->
+      <div style="display: grid; gap: 3rem">
+        <!-- Introduction Section -->
+        <section
+          style="
+            background: linear-gradient(
+              145deg,
+              rgba(255, 255, 255, 0.08),
+              rgba(255, 255, 255, 0.03)
+            );
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+          "
+        >
+          <div
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 4px;
+              background: linear-gradient(90deg, #10b981, #059669);
+              border-radius: 1.5rem 1.5rem 0 0;
+            "
+          ></div>
+
+          <h2
+            style="
+              font-size: 2rem;
+              font-weight: 700;
+              color: white;
+              margin-bottom: 1.5rem;
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+            "
+          >
+            <span
+              style="
+                background: linear-gradient(135deg, #10b981, #059669);
+                padding: 0.5rem;
+                border-radius: 0.75rem;
+                font-size: 1.5rem;
+              "
+              >🎯</span
+            >
+            The Leadership Communication Landscape
+          </h2>
+
+          <div
+            style="
+              color: rgba(255, 255, 255, 0.95);
+              font-size: 1.1rem;
+              line-height: 1.8;
+              space-y: 1.5rem;
+            "
+          >
+            <p style="margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95)">
+              Management communication is the cornerstone of organizational
+              success. It encompasses the strategic and tactical use of
+              communication to inspire, direct, and coordinate teams toward
+              achieving business objectives. In today's complex business
+              environment, managers must communicate across multiple dimensions:
+              upward to executives, downward to direct reports, laterally to
+              peers, and externally to clients and stakeholders.
+            </p>
+
+            <p style="margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95)">
+              The modern manager faces unprecedented challenges: leading remote
+              and hybrid teams, navigating cultural diversity, managing change,
+              and maintaining engagement in an era of information overload.
+              Effective management communication requires the ability to
+              translate high-level strategy into actionable tasks, provide clear
+              direction while empowering autonomy, and create psychological
+              safety that encourages innovation and honest feedback.
+            </p>
+
+            <div
+              style="
+                background: rgba(16, 185, 129, 0.1);
+                border-left: 4px solid #10b981;
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+                margin: 2rem 0;
+              "
+            >
+              <h3
+                style="color: #10b981; font-weight: 600; margin-bottom: 0.75rem"
+              >
+                Leadership Imperative
+              </h3>
+              <p
+                style="
+                  margin: 0;
+                  font-style: italic;
+                  color: rgba(255, 255, 255, 0.95);
+                "
+              >
+                "Research consistently shows that the quality of management
+                communication directly correlates with employee engagement,
+                retention, and performance. Poor communication from leadership
+                is cited as one of the top reasons employees leave
+                organizations."
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Professional Lexicon Section -->
+        <section
+          style="
+            background: linear-gradient(
+              145deg,
+              rgba(255, 255, 255, 0.08),
+              rgba(255, 255, 255, 0.03)
+            );
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+          "
+        >
+          <div
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 4px;
+              background: linear-gradient(90deg, #06b6d4, #0891b2);
+              border-radius: 1.5rem 1.5rem 0 0;
+            "
+          ></div>
+
+          <h2
+            style="
+              font-size: 2rem;
+              font-weight: 700;
+              color: white;
+              margin-bottom: 1.5rem;
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+            "
+          >
+            <span
+              style="
+                background: linear-gradient(135deg, #06b6d4, #0891b2);
+                padding: 0.5rem;
+                border-radius: 0.75rem;
+                font-size: 1.5rem;
+              "
+              >📚</span
+            >
+            Professional Lexicon: 20 Essential Terms
+          </h2>
+
+          <p
+            style="
+              color: rgba(255, 255, 255, 0.95);
+              font-size: 1.1rem;
+              line-height: 1.8;
+              margin-bottom: 2rem;
+            "
+          >
+            Mastery of management terminology enables precise communication
+            about leadership concepts, organizational dynamics, and performance
+            management strategies.
+          </p>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+              gap: 1.5rem;
+            "
+          >
+            <!-- Term Cards -->
+            <div
+              style="
+                background: rgba(6, 182, 212, 0.1);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(6, 182, 212, 0.2);
+              "
+            >
+              <h4
+                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
+              >
+                Delegation
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 0.9rem;
+                  margin-bottom: 0.75rem;
+                "
+              >
+                The process of assigning responsibility and authority to
+                subordinates to complete specific tasks or projects while
+                maintaining accountability for results.
+              </p>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 0.8rem;
+                  font-style: italic;
+                "
+              >
+                Effective delegation requires clear communication of
+                expectations, deadlines, resources, and success criteria.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(6, 182, 212, 0.1);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(6, 182, 212, 0.2);
+              "
+            >
+              <h4
+                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
+              >
+                Performance Management
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 0.9rem;
+                  margin-bottom: 0.75rem;
+                "
+              >
+                The ongoing process of communicating expectations, monitoring
+                progress, providing feedback, and evaluating employee
+                performance to drive improvement and achievement.
+              </p>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 0.8rem;
+                  font-style: italic;
+                "
+              >
+                Involves regular one-on-ones, goal setting, performance reviews,
+                and development planning conversations.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(6, 182, 212, 0.1);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(6, 182, 212, 0.2);
+              "
+            >
+              <h4
+                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
+              >
+                Change Management
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 0.9rem;
+                  margin-bottom: 0.75rem;
+                "
+              >
+                The structured approach to transitioning individuals, teams, and
+                organizations from current state to desired future state through
+                effective communication and stakeholder engagement.
+              </p>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 0.8rem;
+                  font-style: italic;
+                "
+              >
+                Requires transparent communication about the reasons for change,
+                expected benefits, and impact on team members.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(6, 182, 212, 0.1);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(6, 182, 212, 0.2);
+              "
+            >
+              <h4
+                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
+              >
+                360-Degree Feedback
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 0.9rem;
+                  margin-bottom: 0.75rem;
+                "
+              >
+                A feedback process where an individual receives input about
+                their performance from multiple sources: supervisors, peers,
+                direct reports, and sometimes external stakeholders.
+              </p>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 0.8rem;
+                  font-style: italic;
+                "
+              >
+                Provides comprehensive insight into leadership effectiveness and
+                communication impact across all levels.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(6, 182, 212, 0.1);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(6, 182, 212, 0.2);
+              "
+            >
+              <h4
+                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
+              >
+                Psychological Safety
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 0.9rem;
+                  margin-bottom: 0.75rem;
+                "
+              >
+                A team climate where individuals feel safe to speak up, share
+                ideas, ask questions, and admit mistakes without fear of
+                negative consequences.
+              </p>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 0.8rem;
+                  font-style: italic;
+                "
+              >
+                Created through consistent, respectful communication that
+                encourages open dialogue and learning from failures.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(6, 182, 212, 0.1);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(6, 182, 212, 0.2);
+              "
+            >
+              <h4
+                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
+              >
+                Servant Leadership
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 0.9rem;
+                  margin-bottom: 0.75rem;
+                "
+              >
+                A leadership philosophy where the primary goal is to serve
+                others, empowering and developing team members to reach their
+                highest potential.
+              </p>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 0.8rem;
+                  font-style: italic;
+                "
+              >
+                Emphasizes listening, empathy, and supporting team member growth
+                through coaching-style communication.
+              </p>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 2rem">
+            <button
+              style="
+                background: linear-gradient(135deg, #06b6d4, #0891b2);
+                color: white;
+                border: none;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.5rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+              "
+              onclick="alert('Complete lexicon with all 20 terms available in full course')"
+            >
+              View All 20 Terms →
+            </button>
+          </div>
+        </section>
+
+        <!-- Communication Pillars Section -->
+        <section
+          style="
+            background: linear-gradient(
+              145deg,
+              rgba(255, 255, 255, 0.08),
+              rgba(255, 255, 255, 0.03)
+            );
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+          "
+        >
+          <div
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 4px;
+              background: linear-gradient(90deg, #8b5cf6, #a855f7);
+              border-radius: 1.5rem 1.5rem 0 0;
+            "
+          ></div>
+
+          <h2
+            style="
+              font-size: 2rem;
+              font-weight: 700;
+              color: white;
+              margin-bottom: 1.5rem;
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+            "
+          >
+            <span
+              style="
+                background: linear-gradient(135deg, #8b5cf6, #a855f7);
+                padding: 0.5rem;
+                border-radius: 0.75rem;
+                font-size: 1.5rem;
+              "
+              >🏗️</span
+            >
+            The 10 Pillars of Effective Communication
+          </h2>
+
+          <p
+            style="
+              color: rgba(255, 255, 255, 0.95);
+              font-size: 1.1rem;
+              line-height: 1.8;
+              margin-bottom: 2rem;
+            "
+          >
+            Exceptional management communication is built upon ten foundational
+            pillars that enable leaders to inspire, guide, and empower their
+            teams to achieve extraordinary results.
+          </p>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+              gap: 2rem;
+            "
+          >
+            <div
+              style="
+                background: rgba(139, 92, 246, 0.1);
+                padding: 2rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(139, 92, 246, 0.2);
+              "
+            >
+              <h3
+                style="
+                  color: #a855f7;
+                  font-weight: 600;
+                  margin-bottom: 1rem;
+                  font-size: 1.2rem;
+                "
+              >
+                Clear Vision and Purpose Communication
+              </h3>
+              <p
+                style="color: rgba(255, 255, 255, 0.95); margin-bottom: 0.75rem"
+              >
+                Exceptional managers articulate the "why" behind work. They
+                consistently communicate the organization's mission, vision, and
+                strategic objectives in ways that help team members understand
+                how their individual contributions connect to larger purposes.
+              </p>
+              <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem">
+                This pillar transforms routine tasks into meaningful work by
+                providing context and fostering intrinsic motivation.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(139, 92, 246, 0.1);
+                padding: 2rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(139, 92, 246, 0.2);
+              "
+            >
+              <h3
+                style="
+                  color: #a855f7;
+                  font-weight: 600;
+                  margin-bottom: 1rem;
+                  font-size: 1.2rem;
+                "
+              >
+                Active Listening and Empathy
+              </h3>
+              <p
+                style="color: rgba(255, 255, 255, 0.95); margin-bottom: 0.75rem"
+              >
+                Great managers are exceptional listeners who create space for
+                team members to share ideas, concerns, and feedback. They
+                practice empathy by seeking to understand different perspectives
+                and responding to both the content and emotion of
+                communications.
+              </p>
+              <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem">
+                This builds trust, demonstrates respect, and creates
+                psychological safety that encourages open communication.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(139, 92, 246, 0.1);
+                padding: 2rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(139, 92, 246, 0.2);
+              "
+            >
+              <h3
+                style="
+                  color: #a855f7;
+                  font-weight: 600;
+                  margin-bottom: 1rem;
+                  font-size: 1.2rem;
+                "
+              >
+                Constructive Feedback and Recognition
+              </h3>
+              <p
+                style="color: rgba(255, 255, 255, 0.95); margin-bottom: 0.75rem"
+              >
+                Effective managers master the art of providing feedback that
+                drives improvement while maintaining motivation. They balance
+                recognition of achievements with specific, actionable guidance
+                for growth areas.
+              </p>
+              <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem">
+                Feedback is timely, specific, and focused on behaviors and
+                outcomes rather than personal characteristics.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(139, 92, 246, 0.1);
+                padding: 2rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(139, 92, 246, 0.2);
+              "
+            >
+              <h3
+                style="
+                  color: #a855f7;
+                  font-weight: 600;
+                  margin-bottom: 1rem;
+                  font-size: 1.2rem;
+                "
+              >
+                Adaptive Communication Styles
+              </h3>
+              <p
+                style="color: rgba(255, 255, 255, 0.95); margin-bottom: 0.75rem"
+              >
+                Exceptional managers recognize that different team members
+                require different communication approaches. They adapt their
+                style based on individual preferences, experience levels, and
+                situational contexts.
+              </p>
+              <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem">
+                This includes adjusting directness, detail level, frequency, and
+                channels based on what works best for each team member.
+              </p>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 2rem">
+            <button
+              style="
+                background: linear-gradient(135deg, #8b5cf6, #a855f7);
+                color: white;
+                border: none;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.5rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+              "
+              onclick="alert('Complete 10-pillar framework available in full course')"
+            >
+              Explore All 10 Pillars →
+            </button>
+          </div>
+        </section>
+
+        <!-- Key Statistics -->
+        <section
+          style="
+            background: linear-gradient(
+              145deg,
+              rgba(255, 255, 255, 0.08),
+              rgba(255, 255, 255, 0.03)
+            );
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+          "
+        >
+          <h2
+            style="
+              font-size: 2rem;
+              font-weight: 700;
+              color: white;
+              margin-bottom: 2rem;
+              text-align: center;
+            "
+          >
+            Management Communication Impact
+          </h2>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              gap: 1.5rem;
+              margin-top: 2rem;
+            "
+          >
+            <div style="text-align: center; padding: 1.5rem">
+              <div
+                style="
+                  font-size: 2.5rem;
+                  margin-bottom: 1rem;
+                  background: linear-gradient(135deg, #10b981, #059669);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                  font-weight: 800;
+                "
+              >
+                67%
+              </div>
+              <p style="color: rgba(255, 255, 255, 0.8); font-weight: 600">
+                higher engagement with effective manager communication
+              </p>
+            </div>
+
+            <div style="text-align: center; padding: 1.5rem">
+              <div
+                style="
+                  font-size: 2.5rem;
+                  margin-bottom: 1rem;
+                  background: linear-gradient(135deg, #06b6d4, #0891b2);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                  font-weight: 800;
+                "
+              >
+                70%
+              </div>
+              <p style="color: rgba(255, 255, 255, 0.8); font-weight: 600">
+                of employees quit due to poor management communication
+              </p>
+            </div>
+
+            <div style="text-align: center; padding: 1.5rem">
+              <div
+                style="
+                  font-size: 2.5rem;
+                  margin-bottom: 1rem;
+                  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                  font-weight: 800;
+                "
+              >
+                40%
+              </div>
+              <p style="color: rgba(255, 255, 255, 0.8); font-weight: 600">
+                increase in team performance with strong leadership
+                communication
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Back to Improvement Hub -->
+      <div style="text-align: center; margin-top: 4rem">
+        <a
+          href="improvement-hub-dashboard.html"
+          style="
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+          "
+          >← Back to Improvement Hub</a
+        >
+      </div>
+    </main>
+
+    <script src="js/utils.js"></script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<svg viewBox="0 0 800 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .orange-text { fill: #FF934D; }
+      .blue-text { fill: #4A90E2; }
+      .logo-text {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-weight: 700;
+        font-size: 48px;
+        letter-spacing: -0.02em;
+      }
+    </style>
+  </defs>
+  
+  <!-- Main text -->
+  <text x="0" y="60" class="logo-text">
+    <tspan class="orange-text">articul</tspan><tspan class="blue-text">ai</tspan><tspan class="orange-text">tion.com</tspan>
+  </text>
+</svg>

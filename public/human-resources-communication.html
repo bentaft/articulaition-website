@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Human Resources Communication - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0a0e17;
+        min-height: 100vh;
+        color: white;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(236, 72, 153, 0.1) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(236, 72, 153, 0.08) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 50% 50%,
+            rgba(236, 72, 153, 0.05) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .main-content {
+        position: relative;
+        z-index: 2;
+      }
+    </style>
+  </head>
+
+  <body class="auth-body">
+    <!-- Navigation -->
+    <nav
+      style="
+        background: rgba(15, 15, 15, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      "
+    >
+      <div
+        style="
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div style="display: flex; align-items: center; gap: 2rem">
+          <img
+            src="images/logo-header.svg"
+            alt="Articulaition"
+            style="height: 40px"
+          />
+          <span
+            style="
+              color: rgba(255, 255, 255, 0.6);
+              font-size: 0.9rem;
+              font-weight: 500;
+            "
+            >Professional Communication Mastery</span
+          >
+        </div>
+        <div style="display: flex; align-items: center; gap: 1.5rem">
+          <a
+            href="improvement-hub-dashboard.html"
+            style="
+              background: linear-gradient(135deg, #ec4899, #db2777);
+              color: white;
+              padding: 0.75rem 1.5rem;
+              border-radius: 0.5rem;
+              text-decoration: none;
+              font-weight: 600;
+              font-size: 0.9rem;
+              transition: all 0.3s ease;
+              box-shadow: 0 4px 16px rgba(236, 72, 153, 0.3);
+            "
+            >← Back to Improvement Hub</a
+          >
+          <a
+            href="dashboard.html"
+            style="
+              color: rgba(255, 255, 255, 0.8);
+              text-decoration: none;
+              font-weight: 500;
+              transition: color 0.3s ease;
+              padding: 0.5rem 1rem;
+            "
+            >Dashboard</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main
+      class="main-content"
+      style="max-width: 1200px; margin: 0 auto; padding: 2rem"
+    >
+      <!-- Hero Section -->
+      <section style="text-align: center; margin-bottom: 4rem">
+        <div
+          style="
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            border-radius: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 2rem auto;
+            box-shadow: 0 8px 32px rgba(236, 72, 153, 0.3);
+          "
+        >
+          👤
+        </div>
+
+        <h1
+          style="
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          "
+        >
+          Human Resources Communication
+        </h1>
+
+        <p
+          style="
+            font-size: 1.25rem;
+            color: #ec4899;
+            font-weight: 600;
+            margin-bottom: 1rem;
+          "
+        >
+          Empowering People Through Compassionate Communication
+        </p>
+
+        <p
+          style="
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+          "
+        >
+          Master the human side of business communication. Learn to navigate
+          sensitive conversations, facilitate organizational change, and build
+          inclusive cultures through empathetic and strategic communication.
+        </p>
+      </section>
+
+      <!-- Content Sections -->
+      <div style="display: grid; gap: 3rem">
+        <!-- Introduction Section -->
+        <section
+          style="
+            background: linear-gradient(
+              145deg,
+              rgba(255, 255, 255, 0.08),
+              rgba(255, 255, 255, 0.03)
+            );
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+          "
+        >
+          <div
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 4px;
+              background: linear-gradient(90deg, #ec4899, #db2777);
+              border-radius: 1.5rem 1.5rem 0 0;
+            "
+          ></div>
+
+          <h2
+            style="
+              font-size: 2rem;
+              font-weight: 700;
+              color: white;
+              margin-bottom: 1.5rem;
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+            "
+          >
+            <span
+              style="
+                background: linear-gradient(135deg, #ec4899, #db2777);
+                padding: 0.5rem;
+                border-radius: 0.75rem;
+                font-size: 1.5rem;
+              "
+              >🤝</span
+            >
+            The Human Resources Communication Landscape
+          </h2>
+
+          <div
+            style="
+              color: rgba(255, 255, 255, 0.95);
+              font-size: 1.1rem;
+              line-height: 1.8;
+              space-y: 1.5rem;
+            "
+          >
+            <p style="margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95)">
+              Human Resources communication sits at the intersection of business
+              strategy and human psychology. HR professionals serve as the voice
+              of the organization to employees and the voice of employees to
+              leadership. This dual role requires exceptional communication
+              skills to navigate complex interpersonal dynamics, legal
+              requirements, and organizational objectives.
+            </p>
+
+            <p style="margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95)">
+              The modern HR landscape demands professionals who can facilitate
+              difficult conversations with empathy, communicate policy changes
+              with clarity, mediate conflicts with neutrality, and drive
+              cultural transformation through inclusive dialogue. Success in HR
+              communication requires the ability to be both strategically minded
+              and genuinely caring, balancing business needs with human dignity.
+            </p>
+
+            <div
+              style="
+                background: rgba(236, 72, 153, 0.1);
+                border-left: 4px solid #ec4899;
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+                margin: 2rem 0;
+              "
+            >
+              <h3
+                style="color: #ec4899; font-weight: 600; margin-bottom: 0.75rem"
+              >
+                Core Challenge
+              </h3>
+              <p
+                style="
+                  margin: 0;
+                  font-style: italic;
+                  color: rgba(255, 255, 255, 0.95);
+                "
+              >
+                "HR professionals must communicate across all levels of the
+                organization while maintaining trust, confidentiality, and
+                fairness. Every conversation has the potential to significantly
+                impact an individual's career and well-being."
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Professional Lexicon Section -->
+        <section
+          style="
+            background: linear-gradient(
+              145deg,
+              rgba(255, 255, 255, 0.08),
+              rgba(255, 255, 255, 0.03)
+            );
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+          "
+        >
+          <div
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 4px;
+              background: linear-gradient(90deg, #06b6d4, #0891b2);
+              border-radius: 1.5rem 1.5rem 0 0;
+            "
+          ></div>
+
+          <h2
+            style="
+              font-size: 2rem;
+              font-weight: 700;
+              color: white;
+              margin-bottom: 1.5rem;
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+            "
+          >
+            <span
+              style="
+                background: linear-gradient(135deg, #06b6d4, #0891b2);
+                padding: 0.5rem;
+                border-radius: 0.75rem;
+                font-size: 1.5rem;
+              "
+              >📚</span
+            >
+            Professional Lexicon: 20 Essential Terms
+          </h2>
+
+          <p
+            style="
+              color: rgba(255, 255, 255, 0.95);
+              font-size: 1.1rem;
+              line-height: 1.8;
+              margin-bottom: 2rem;
+            "
+          >
+            Mastery of HR terminology enables precise communication about
+            employee relations, organizational development, and workplace
+            dynamics while ensuring legal compliance.
+          </p>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+              gap: 1.5rem;
+            "
+          >
+            <!-- Term Cards -->
+            <div
+              style="
+                background: rgba(6, 182, 212, 0.1);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(6, 182, 212, 0.2);
+              "
+            >
+              <h4
+                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
+              >
+                Employee Engagement
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 0.9rem;
+                  margin-bottom: 0.75rem;
+                "
+              >
+                The emotional commitment an employee has to their organization
+                and its goals, resulting in discretionary effort and improved
+                performance.
+              </p>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 0.8rem;
+                  font-style: italic;
+                "
+              >
+                Measured through surveys and metrics, requiring clear
+                communication of expectations, recognition, and development
+                opportunities.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(6, 182, 212, 0.1);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(6, 182, 212, 0.2);
+              "
+            >
+              <h4
+                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
+              >
+                Progressive Discipline
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 0.9rem;
+                  margin-bottom: 0.75rem;
+                "
+              >
+                A structured approach to addressing employee performance or
+                behavioral issues through escalating consequences designed to
+                encourage improvement.
+              </p>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 0.8rem;
+                  font-style: italic;
+                "
+              >
+                Requires careful documentation and consistent communication of
+                expectations, consequences, and improvement opportunities.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(6, 182, 212, 0.1);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(6, 182, 212, 0.2);
+              "
+            >
+              <h4
+                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
+              >
+                Diversity, Equity & Inclusion (DEI)
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 0.9rem;
+                  margin-bottom: 0.75rem;
+                "
+              >
+                Organizational efforts to create a workplace where all
+                individuals feel valued, respected, and have equal opportunities
+                regardless of their background or identity.
+              </p>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 0.8rem;
+                  font-style: italic;
+                "
+              >
+                Requires sensitive communication about differences, biases, and
+                systemic barriers while promoting inclusive behaviors.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(6, 182, 212, 0.1);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(6, 182, 212, 0.2);
+              "
+            >
+              <h4
+                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
+              >
+                Exit Interview
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 0.9rem;
+                  margin-bottom: 0.75rem;
+                "
+              >
+                A structured conversation with departing employees to gather
+                feedback about their experience, reasons for leaving, and
+                suggestions for improvement.
+              </p>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 0.8rem;
+                  font-style: italic;
+                "
+              >
+                Requires skilled questioning and active listening to obtain
+                honest feedback while maintaining professional relationships.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(6, 182, 212, 0.1);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(6, 182, 212, 0.2);
+              "
+            >
+              <h4
+                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
+              >
+                Conflict Resolution
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 0.9rem;
+                  margin-bottom: 0.75rem;
+                "
+              >
+                The process of facilitating the peaceful resolution of disputes
+                between employees, teams, or departments through mediation and
+                problem-solving techniques.
+              </p>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 0.8rem;
+                  font-style: italic;
+                "
+              >
+                Requires neutrality, active listening, and the ability to help
+                parties find mutually acceptable solutions.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(6, 182, 212, 0.1);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(6, 182, 212, 0.2);
+              "
+            >
+              <h4
+                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
+              >
+                Succession Planning
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 0.9rem;
+                  margin-bottom: 0.75rem;
+                "
+              >
+                The strategic process of identifying and developing employees to
+                fill key leadership positions when they become vacant.
+              </p>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 0.8rem;
+                  font-style: italic;
+                "
+              >
+                Involves transparent communication about career paths,
+                development opportunities, and organizational needs.
+              </p>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 2rem">
+            <button
+              style="
+                background: linear-gradient(135deg, #06b6d4, #0891b2);
+                color: white;
+                border: none;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.5rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+              "
+              onclick="alert('Complete lexicon with all 20 terms available in full course')"
+            >
+              View All 20 Terms →
+            </button>
+          </div>
+        </section>
+
+        <!-- Communication Pillars Section -->
+        <section
+          style="
+            background: linear-gradient(
+              145deg,
+              rgba(255, 255, 255, 0.08),
+              rgba(255, 255, 255, 0.03)
+            );
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+          "
+        >
+          <div
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 4px;
+              background: linear-gradient(90deg, #8b5cf6, #a855f7);
+              border-radius: 1.5rem 1.5rem 0 0;
+            "
+          ></div>
+
+          <h2
+            style="
+              font-size: 2rem;
+              font-weight: 700;
+              color: white;
+              margin-bottom: 1.5rem;
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+            "
+          >
+            <span
+              style="
+                background: linear-gradient(135deg, #8b5cf6, #a855f7);
+                padding: 0.5rem;
+                border-radius: 0.75rem;
+                font-size: 1.5rem;
+              "
+              >🏗️</span
+            >
+            The 10 Pillars of Effective Communication
+          </h2>
+
+          <p
+            style="
+              color: rgba(255, 255, 255, 0.95);
+              font-size: 1.1rem;
+              line-height: 1.8;
+              margin-bottom: 2rem;
+            "
+          >
+            Excellence in HR communication is built upon ten foundational
+            pillars that enable professionals to navigate the complex human
+            dynamics of organizational life with empathy, clarity, and strategic
+            purpose.
+          </p>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+              gap: 2rem;
+            "
+          >
+            <div
+              style="
+                background: rgba(139, 92, 246, 0.1);
+                padding: 2rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(139, 92, 246, 0.2);
+              "
+            >
+              <h3
+                style="
+                  color: #a855f7;
+                  font-weight: 600;
+                  margin-bottom: 1rem;
+                  font-size: 1.2rem;
+                "
+              >
+                Empathetic Active Listening
+              </h3>
+              <p
+                style="color: rgba(255, 255, 255, 0.95); margin-bottom: 0.75rem"
+              >
+                The foundation of HR communication is the ability to listen not
+                just to words, but to emotions, concerns, and unspoken needs.
+                This involves creating safe spaces for honest dialogue and
+                demonstrating genuine care for employee well-being.
+              </p>
+              <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem">
+                Empathetic listening builds trust and enables HR professionals
+                to understand the full context of workplace issues.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(139, 92, 246, 0.1);
+                padding: 2rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(139, 92, 246, 0.2);
+              "
+            >
+              <h3
+                style="
+                  color: #a855f7;
+                  font-weight: 600;
+                  margin-bottom: 1rem;
+                  font-size: 1.2rem;
+                "
+              >
+                Difficult Conversation Facilitation
+              </h3>
+              <p
+                style="color: rgba(255, 255, 255, 0.95); margin-bottom: 0.75rem"
+              >
+                Mastery in navigating sensitive discussions about performance,
+                conduct, layoffs, or conflicts. This requires preparing
+                thoroughly, remaining calm under pressure, and guiding
+                conversations toward constructive outcomes.
+              </p>
+              <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem">
+                Effective facilitation protects both the organization and
+                individuals while maintaining dignity and respect.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(139, 92, 246, 0.1);
+                padding: 2rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(139, 92, 246, 0.2);
+              "
+            >
+              <h3
+                style="
+                  color: #a855f7;
+                  font-weight: 600;
+                  margin-bottom: 1rem;
+                  font-size: 1.2rem;
+                "
+              >
+                Transparent Policy Communication
+              </h3>
+              <p
+                style="color: rgba(255, 255, 255, 0.95); margin-bottom: 0.75rem"
+              >
+                The ability to explain complex policies, procedures, and legal
+                requirements in clear, understandable language. This includes
+                communicating the reasoning behind policies and their impact on
+                employees.
+              </p>
+              <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem">
+                Clear policy communication reduces confusion, ensures
+                compliance, and builds trust in organizational fairness.
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(139, 92, 246, 0.1);
+                padding: 2rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(139, 92, 246, 0.2);
+              "
+            >
+              <h3
+                style="
+                  color: #a855f7;
+                  font-weight: 600;
+                  margin-bottom: 1rem;
+                  font-size: 1.2rem;
+                "
+              >
+                Cultural Sensitivity and Inclusion
+              </h3>
+              <p
+                style="color: rgba(255, 255, 255, 0.95); margin-bottom: 0.75rem"
+              >
+                The ability to communicate effectively across diverse
+                backgrounds, recognizing and respecting different perspectives,
+                experiences, and communication styles. This includes addressing
+                bias and promoting inclusive practices.
+              </p>
+              <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem">
+                Inclusive communication creates belonging and ensures all
+                employees feel valued and heard.
+              </p>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 2rem">
+            <button
+              style="
+                background: linear-gradient(135deg, #8b5cf6, #a855f7);
+                color: white;
+                border: none;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.5rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+              "
+              onclick="alert('Complete 10-pillar framework available in full course')"
+            >
+              Explore All 10 Pillars →
+            </button>
+          </div>
+        </section>
+
+        <!-- Key Statistics -->
+        <section
+          style="
+            background: linear-gradient(
+              145deg,
+              rgba(255, 255, 255, 0.08),
+              rgba(255, 255, 255, 0.03)
+            );
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+          "
+        >
+          <h2
+            style="
+              font-size: 2rem;
+              font-weight: 700;
+              color: white;
+              margin-bottom: 2rem;
+              text-align: center;
+            "
+          >
+            HR Communication Impact
+          </h2>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              gap: 1.5rem;
+              margin-top: 2rem;
+            "
+          >
+            <div style="text-align: center; padding: 1.5rem">
+              <div
+                style="
+                  font-size: 2.5rem;
+                  margin-bottom: 1rem;
+                  background: linear-gradient(135deg, #ec4899, #db2777);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                  font-weight: 800;
+                "
+              >
+                82%
+              </div>
+              <p style="color: rgba(255, 255, 255, 0.8); font-weight: 600">
+                of employees value clear communication from HR above all other
+                factors
+              </p>
+            </div>
+
+            <div style="text-align: center; padding: 1.5rem">
+              <div
+                style="
+                  font-size: 2.5rem;
+                  margin-bottom: 1rem;
+                  background: linear-gradient(135deg, #06b6d4, #0891b2);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                  font-weight: 800;
+                "
+              >
+                67%
+              </div>
+              <p style="color: rgba(255, 255, 255, 0.8); font-weight: 600">
+                reduction in workplace conflicts with effective HR communication
+              </p>
+            </div>
+
+            <div style="text-align: center; padding: 1.5rem">
+              <div
+                style="
+                  font-size: 2.5rem;
+                  margin-bottom: 1rem;
+                  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                  font-weight: 800;
+                "
+              >
+                45%
+              </div>
+              <p style="color: rgba(255, 255, 255, 0.8); font-weight: 600">
+                higher employee satisfaction with transparent HR communication
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Back to Improvement Hub -->
+      <div style="text-align: center; margin-top: 4rem">
+        <a
+          href="improvement-hub-dashboard.html"
+          style="
+            display: inline-block;
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(236, 72, 153, 0.3);
+          "
+          >← Back to Improvement Hub</a
+        >
+      </div>
+    </main>
+
+    <script src="js/utils.js"></script>
+  </body>
+</html>

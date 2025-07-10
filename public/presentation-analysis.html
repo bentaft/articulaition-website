@@ -1,0 +1,2455 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI-Powered Presentation Analysis - Articulaition"
+    />
+    <title>Presentation & Pitches Analysis - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Analysis System -->
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --primary-blue: #4a90e2;
+        --success-green: #10b981;
+        --client-teal: #0891b2;
+        --relationship-purple: #7c3aed;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --bg-primary: #fafbfc;
+        --bg-secondary: #f4f6f8;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Background Effects */
+      .dashboard-container {
+        background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 100%);
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .dashboard-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(74, 144, 226, 0.03) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(74, 144, 226, 0.025) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(16, 185, 129, 0.02) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(245, 158, 11, 0.015) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Animation Classes */
+      .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+        opacity: 0;
+      }
+
+      .slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .scale-in {
+        animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes scaleIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-500 {
+        animation-delay: 0.5s;
+      }
+
+      /* Header Styling */
+      .main-header {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .logo-section img {
+        height: 32px;
+        width: auto;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--text-primary);
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        color: var(--text-secondary);
+      }
+
+      .breadcrumb .current {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      /* Page Title Section */
+      .page-title-section {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .title-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .page-description {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* Analysis Options Grid */
+      .analysis-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .analysis-option {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.06);
+        border-radius: 24px;
+        padding: 2.5rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .analysis-option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .analysis-option:hover {
+        transform: translateY(-8px);
+        border-color: rgba(74, 144, 226, 0.3);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .analysis-option:hover::before {
+        opacity: 1;
+      }
+
+      .analysis-option.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-4px);
+      }
+
+      .option-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        border-radius: 20px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .analysis-option:hover .option-icon {
+        transform: scale(1.1);
+      }
+
+      .option-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-features {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .features-list {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      /* Upload Section */
+      .upload-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .upload-section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-subtitle {
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-center {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-option-single {
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px dashed rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 3rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .upload-option-single:hover {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.02);
+      }
+
+      .file-selected {
+        margin-top: 1.5rem;
+        background: rgba(16, 185, 129, 0.05);
+        border: 2px solid rgba(16, 185, 129, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .file-selected .file-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--success-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .file-selected .file-details {
+        flex: 1;
+        text-align: left;
+      }
+
+      .file-selected .file-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+
+      .file-selected .file-size {
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+      }
+
+      .file-selected .remove-file {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .file-selected .remove-file:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+
+      .upload-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1rem;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .upload-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .upload-button {
+        background: var(--primary-blue);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .upload-button:hover {
+        background: var(--relationship-purple);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* AI Practice Section */
+      .ai-practice-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .ai-practice-section.active {
+        display: block;
+      }
+
+      /* Scenario Grid */
+      .scenario-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .scenario-type {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.95),
+          rgba(255, 255, 255, 0.85)
+        );
+        backdrop-filter: blur(30px);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-radius: 16px;
+        padding: 1.75rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        min-height: 160px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .scenario-type:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary-blue);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.98),
+          rgba(255, 255, 255, 0.95)
+        );
+      }
+
+      .scenario-type.selected {
+        border-color: var(--primary-blue);
+        background: linear-gradient(
+          135deg,
+          rgba(74, 144, 226, 0.08),
+          rgba(74, 144, 226, 0.04)
+        );
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(74, 144, 226, 0.15);
+      }
+
+      .scenario-type::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .scenario-type:hover::before,
+      .scenario-type.selected::before {
+        opacity: 1;
+      }
+
+      .scenario-icon {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 1.25rem;
+        border-radius: 14px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 20px rgba(74, 144, 226, 0.25);
+      }
+
+      .scenario-type:hover .scenario-icon {
+        transform: scale(1.05);
+      }
+
+      .scenario-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+        position: relative;
+        z-index: 2;
+        line-height: 1.3;
+      }
+
+      .scenario-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+        position: relative;
+        z-index: 2;
+        font-weight: 400;
+        max-width: 240px;
+        margin: 0 auto;
+        opacity: 0.9;
+      }
+
+      /* Conversation Interface */
+      .conversation-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .scenario-intro {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        padding: 2rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-intro::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>')
+          repeat;
+        opacity: 0.3;
+      }
+
+      .scenario-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        position: relative;
+        z-index: 2;
+      }
+
+      .conversation-flow {
+        space-y: 1.5rem;
+      }
+
+      .message {
+        display: flex;
+        margin-bottom: 1.5rem;
+      }
+
+      .message.ai {
+        justify-content: flex-start;
+      }
+
+      .message.user {
+        justify-content: flex-end;
+      }
+
+      .message-content {
+        max-width: 80%;
+        padding: 1.25rem 1.5rem;
+        border-radius: 20px;
+        position: relative;
+      }
+
+      .message.ai .message-content {
+        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-bottom-left-radius: 8px;
+      }
+
+      .message.user .message-content {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        border-bottom-right-radius: 8px;
+      }
+
+      .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 1rem;
+        flex-shrink: 0;
+      }
+
+      .message.ai .message-avatar {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        order: -1;
+      }
+
+      .message.user .message-avatar {
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+      }
+
+      /* Audio Captured Message */
+      .audio-captured {
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .audio-captured-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 16px;
+        font-weight: 600;
+        box-shadow: var(--shadow-md);
+        animation: slideInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes slideInScale {
+        0% {
+          opacity: 0;
+          transform: translateY(20px) scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .primary-button {
+        background: linear-gradient(135deg, #4a90e2, #7c3aed) !important;
+        color: white !important;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .primary-button:hover:not(:disabled) {
+        background: linear-gradient(135deg, #7c3aed, #4a90e2) !important;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .primary-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .secondary-button {
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--text-primary);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .secondary-button:hover {
+        background: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Ensure record button is clickable */
+      #recordButton {
+        pointer-events: auto !important;
+        z-index: 100;
+        position: relative;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 2rem 1rem;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .analysis-options {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .analysis-option {
+          padding: 2rem;
+        }
+
+        .option-icon {
+          width: 64px;
+          height: 64px;
+        }
+
+        .scenario-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+
+        .message-content {
+          max-width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="main-header fade-in">
+        <nav class="header-nav">
+          <div class="logo-section">
+            <img src="images/logo-header.svg" alt="Articulaition.com" />
+          </div>
+          <div class="nav-links">
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="professional-communication.html" class="nav-link"
+              >Professional</a
+            >
+            <a href="personal-communication.html" class="nav-link">Personal</a>
+          </div>
+          <div class="user-menu">
+            <div class="user-avatar">JD</div>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb slide-up delay-100">
+          <a href="dashboard.html">Dashboard</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <span class="current">Presentation Analysis</span>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title-section slide-up delay-200">
+          <div class="title-with-icon">
+            <div class="title-icon">
+              <i data-lucide="presentation" class="w-6 h-6"></i>
+            </div>
+            <h1 class="page-title">Presentation & Pitches Analysis</h1>
+          </div>
+          <p class="page-description">
+            Master the art of compelling presentations with AI-powered practice
+            sessions and detailed analysis. Perfect your delivery, engagement,
+            and impact for any audience.
+          </p>
+        </div>
+
+        <!-- Analysis Options -->
+        <div class="analysis-options">
+          <!-- Upload Existing Recording -->
+          <div class="analysis-option scale-in delay-300" data-type="upload">
+            <div class="option-icon">
+              <i data-lucide="upload" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">Upload Presentation</h3>
+            <p class="option-description">
+              Upload an existing presentation, pitch, or speech for detailed
+              analysis and feedback.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Delivery analysis • Pacing insights • Engagement metrics •
+                Clarity assessment
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Practice Session -->
+          <div class="analysis-option scale-in delay-400" data-type="practice">
+            <div class="option-icon">
+              <i data-lucide="users" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">AI Audience Practice</h3>
+            <p class="option-description">
+              Practice with our AI that simulates different audience types,
+              questions, and challenging scenarios.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Virtual audience • Real-time Q&A • Difficult questions •
+                Engagement challenges
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+          <h2 class="section-title">Upload Your Presentation</h2>
+          <p class="section-subtitle">
+            Upload an audio or video file of your presentation for detailed
+            analysis
+          </p>
+
+          <div class="upload-center">
+            <div class="upload-option-single" id="fileUpload">
+              <div class="upload-icon">
+                <i data-lucide="folder" class="w-6 h-6"></i>
+              </div>
+              <div class="upload-title">Choose File</div>
+              <div class="upload-description">
+                Select an audio or video file from your device (MP3, M4A, WAV,
+                MP4, MOV)
+              </div>
+              <button class="upload-button" id="chooseFileBtn">
+                <i data-lucide="upload" class="w-4 h-4"></i>
+                Select File
+              </button>
+              <input
+                type="file"
+                id="audioFile"
+                accept=".mp3,.m4a,.wav,.mp4,.mov"
+                hidden
+              />
+
+              <div
+                class="file-selected"
+                id="fileSelected"
+                style="display: none"
+              >
+                <div class="file-icon">
+                  <i data-lucide="file-audio" class="w-5 h-5"></i>
+                </div>
+                <div class="file-details">
+                  <div class="file-name" id="fileName">presentation.mp4</div>
+                  <div class="file-size" id="fileSize">2.4 MB</div>
+                </div>
+                <button class="remove-file" id="removeFile">
+                  <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="secondary-button" id="backToOptions">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="primary-button" id="analyzeUpload" disabled>
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              Analyze Recording
+            </button>
+          </div>
+        </div>
+
+        <!-- AI Practice Section -->
+        <div class="ai-practice-section" id="practiceSection">
+          <h2
+            class="section-title"
+            style="
+              text-align: center;
+              margin-bottom: 1rem;
+              font-size: 2.5rem;
+              font-weight: 700;
+              background: linear-gradient(
+                135deg,
+                var(--primary-blue),
+                var(--relationship-purple)
+              );
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+            "
+          >
+            Choose Your Presentation Scenario
+          </h2>
+          <p
+            class="section-subtitle"
+            style="
+              text-align: center;
+              font-size: 1.125rem;
+              color: var(--text-primary);
+              margin-bottom: 3rem;
+              font-weight: 500;
+              opacity: 0.9;
+            "
+          >
+            Select a presentation scenario to practice with our AI audience
+          </p>
+
+          <!-- Scenario Selection Grid -->
+          <div class="scenario-grid">
+            <div class="scenario-type" data-scenario="boardroom">
+              <div class="scenario-icon">
+                <i data-lucide="briefcase" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Board Meeting</div>
+              <div class="scenario-description">
+                Practice delivering executive presentations to board members
+                with data-driven insights and strategic recommendations
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="conference">
+              <div class="scenario-icon">
+                <i data-lucide="users" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Conference Presentation</div>
+              <div class="scenario-description">
+                Practice delivering engaging keynote presentations to large
+                audiences with clear takeaways and interactive elements
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="client-pitch">
+              <div class="scenario-icon">
+                <i data-lucide="handshake" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Client Pitch</div>
+              <div class="scenario-description">
+                Practice persuasive client presentations focused on value
+                proposition, competitive differentiation, and expected outcomes
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="team-update">
+              <div class="scenario-icon">
+                <i data-lucide="monitor" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Team Update</div>
+              <div class="scenario-description">
+                Practice clear internal presentations covering project status,
+                challenges, next steps, and resource needs
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="investor">
+              <div class="scenario-icon">
+                <i data-lucide="trending-up" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Investor Pitch</div>
+              <div class="scenario-description">
+                Practice compelling investor presentations covering market
+                opportunity, business model, traction, and funding needs
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="product-launch">
+              <div class="scenario-icon">
+                <i data-lucide="rocket" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Product Launch</div>
+              <div class="scenario-description">
+                Practice product unveiling presentations that explain features,
+                target audience, and problem-solving benefits
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="conversation-container"
+            id="conversationContainer"
+            style="display: none"
+          >
+            <!-- Scenario Introduction -->
+            <div class="scenario-intro">
+              <div class="scenario-title">
+                <i data-lucide="presentation" class="w-5 h-5 inline mr-2"></i>
+                <span id="scenarioTitle">Presentation Scenario</span>
+              </div>
+              <div class="scenario-text" id="scenarioText">
+                Practice your presentation skills in this scenario.
+              </div>
+            </div>
+
+            <!-- Conversation Flow -->
+            <div class="conversation-flow" id="conversationFlow">
+              <!-- AI messages will be dynamically inserted here -->
+            </div>
+
+            <div class="action-buttons">
+              <button class="secondary-button" id="backToScenarios">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Scenarios
+              </button>
+              <button class="secondary-button" id="changeScenarioConversation">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                Change Scenario
+              </button>
+              <button
+                class="secondary-button"
+                id="recordButton"
+                style="display: none"
+              >
+                <i data-lucide="mic" class="w-4 h-4"></i>
+                Record Response
+              </button>
+              <button
+                class="primary-button"
+                id="endConversation"
+                style="display: none"
+              >
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                Submit for Analysis
+              </button>
+            </div>
+          </div>
+
+
+          <div class="action-buttons" id="scenarioActions">
+            <button class="secondary-button" id="backToOptionsFromPractice">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="secondary-button" id="changeScenario">
+              <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+              Change Scenario
+            </button>
+            <button class="primary-button" id="startPractice" disabled>
+              <i data-lucide="play" class="w-4 h-4"></i>
+              Start Presentation Practice
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <!-- API Configuration - Copy api-config-template.js to api-config.js and add your keys -->
+    <script src="js/api-config.js"></script>
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Initialize Gemini AI engine
+      let geminiEngine = null;
+      try {
+        geminiEngine = new GeminiAIEngine();
+        console.log(
+          "Gemini AI Engine initialized:",
+          geminiEngine.isConfigured() ? "Configured" : "Not configured"
+        );
+      } catch (error) {
+        console.warn("Gemini AI Engine not available:", error);
+      }
+
+      // Presentation-specific scenarios
+      const presentationScenarios = {
+        boardroom: {
+          title: "Board Meeting Presentation",
+          description:
+            "A formal business setting where the speaker presents key updates—financials, performance metrics, and strategic plans—to board members and executives. Tone is professional and confident. Focus is on data, clarity, and decision-making impact. Expect high-level questions and a need for clear justification.",
+          initialMessage:
+            "Good morning. We've reviewed the pre-read materials and are looking forward to your presentation. Please proceed when you're ready.",
+          objections: [
+            "Good morning. We've reviewed the pre-read materials and are looking forward to your presentation. Please proceed when you're ready.",
+            "Thank you for joining us today. We're looking forward to your presentation. Please proceed when you're ready.",
+            "Good morning everyone. Thank you for joining us today. We're looking forward to your presentation. Please proceed when you're ready.",
+          ],
+        },
+        conference: {
+          title: "Conference Presentation",
+          description:
+            "A keynote speaking scenario at a professional conference. The audience is engaged and interested in learning. Expect thoughtful questions and discussion about your topic. Balance expertise with accessibility.",
+          initialMessage:
+            "Welcome to our session. The audience is excited to hear your insights on this topic. You have the floor.",
+          objections: [
+            "Welcome to our session. The audience is excited to hear your insights on this topic. You have the floor.",
+            "Thank you for joining us at this conference. We're excited to hear your presentation. Please begin when you're ready.",
+            "Good afternoon everyone. We're excited to have you present to our conference attendees today. The floor is yours.",
+          ],
+        },
+        "client-pitch": {
+          title: "Client Pitch Presentation",
+          description:
+            "You're pitching your product or service to a potential client. They're evaluating multiple vendors.",
+          initialMessage:
+            "Thanks for coming in to present today. We're evaluating several options, so we're keen to understand your approach.",
+          objections: [
+            "Thanks for coming in to present today. We're evaluating several options, so we're keen to understand your approach.",
+            "We appreciate you taking the time to present to us today. We're looking forward to understanding your approach.",
+            "Thank you for this opportunity. We're interested in seeing your approach and hearing your perspective.",
+          ],
+        },
+        "team-update": {
+          title: "Team Update Presentation",
+          description:
+            "An internal team meeting where you're providing project updates. Keep it collaborative and transparent. Address challenges honestly and seek input from the team.",
+          initialMessage:
+            "Good morning team. We're looking forward to your update. Please walk us through where things stand.",
+          objections: [
+            "Good morning team. We're looking forward to your update. Please walk us through where things stand.",
+            "Thanks for gathering everyone together. We're eager to hear about the progress.",
+            "Great to have the team together. Please share your update on where things stand.",
+          ],
+        },
+        investor: {
+          title: "Investor Pitch Presentation",
+          description:
+            "A high-stakes pitch to potential investors. Focus on market opportunity, traction, and vision. Be prepared for tough questions about financials, competition, and scalability.",
+          initialMessage:
+            "Thank you for taking the time to meet with us today. We're interested in learning about your business.",
+          objections: [
+            "Thank you for taking the time to meet with us today. We're interested in learning about your business.",
+            "We appreciate the opportunity to hear your pitch. Please tell us about your company.",
+            "Thank you for coming in. We're looking forward to learning about your venture.",
+          ],
+        },
+        "product-launch": {
+          title: "Product Launch Presentation",
+          description:
+            "An internal product unveiling to stakeholders and beta testers. Build excitement while being clear about features and benefits. Balance enthusiasm with realistic expectations.",
+          initialMessage:
+            "We're all excited to hear about this new initiative. Please walk us through what you've built.",
+          objections: [
+            "We're all excited to hear about this new initiative. Please walk us through what you've built.",
+            "Thank you for bringing us together for this unveiling. We're eager to see what's new.",
+            "Great to have everyone here. Please show us what you've been working on.",
+          ],
+        },
+      };
+
+      // State management
+      let currentMode = null;
+      let selectedScenario = null;
+      let conversationHistory = [];
+      let conversationCount = 0;
+      let isRecording = false;
+      let mediaRecorder = null;
+      let audioChunks = [];
+      let recordedAudioBlob = null;
+
+      // DOM elements
+      const analysisOptions = document.querySelectorAll(".analysis-option");
+      const uploadSection = document.getElementById("uploadSection");
+      const practiceSection = document.getElementById("practiceSection");
+      const scenarioTypes = document.querySelectorAll(".scenario-type");
+      const conversationContainer = document.getElementById(
+        "conversationContainer"
+      );
+      const conversationFlow = document.getElementById("conversationFlow");
+      const startPracticeBtn = document.getElementById("startPractice");
+      const backToScenariosBtn = document.getElementById("backToScenarios");
+      const endConversationBtn = document.getElementById("endConversation");
+      const recordBtn = document.getElementById("recordButton");
+      const scenarioActionsDiv = document.getElementById("scenarioActions");
+      const changeScenarioBtn = document.getElementById("changeScenario");
+      const changeScenarioConversationBtn = document.getElementById(
+        "changeScenarioConversation"
+      );
+
+      // Debug DOM elements
+      console.log("DOM elements loaded:");
+      console.log("- recordBtn:", recordBtn);
+      console.log("- conversationFlow:", conversationFlow);
+      console.log("- endConversationBtn:", endConversationBtn);
+
+      // Analysis option selection
+      analysisOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+          option.classList.add("selected");
+          currentMode = option.dataset.type;
+
+          if (currentMode === "upload") {
+            uploadSection.classList.add("active");
+            practiceSection.classList.remove("active");
+          } else if (currentMode === "practice") {
+            practiceSection.classList.add("active");
+            uploadSection.classList.remove("active");
+          }
+        });
+      });
+
+      // Scenario selection
+      scenarioTypes.forEach((scenario) => {
+        scenario.addEventListener("click", () => {
+          scenarioTypes.forEach((s) => s.classList.remove("selected"));
+          scenario.classList.add("selected");
+          selectedScenario = scenario.dataset.scenario;
+          startPracticeBtn.disabled = false;
+        });
+      });
+
+
+      // Start practice button
+      startPracticeBtn.addEventListener("click", () => {
+        if (selectedScenario) {
+          initializePracticeSession(selectedScenario);
+          conversationContainer.style.display = "block";
+          scenarioActionsDiv.style.display = "none";
+          document.querySelector(".scenario-grid").style.display = "none";
+          document.querySelector("#practiceSection h2").style.display = "none";
+          document.querySelector(
+            "#practiceSection .section-subtitle"
+          ).style.display = "none";
+        }
+      });
+
+      // Change Scenario button
+      changeScenarioBtn.addEventListener("click", async () => {
+        if (!selectedScenario) {
+          alert("Please select a scenario first");
+          return;
+        }
+
+        // Update button state to show loading
+        changeScenarioBtn.disabled = true;
+        changeScenarioBtn.innerHTML =
+          '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Generating...';
+
+        try {
+          // Get the current scenario information
+          const currentScenario = presentationScenarios[selectedScenario];
+
+          // Use GeminiAIEngine to generate a new scenario
+          if (geminiEngine && geminiEngine.generateScenario) {
+            const newScenarioDescription = await geminiEngine.generateScenario(
+              selectedScenario,
+              currentScenario.title
+            );
+
+            // Keep the card description the same, but use new scenario for Gemini context
+            // Don't update the presentationScenarios description - keep the general framework
+
+            // Update the display if we're already in the selected scenario
+            const scenarioTextElement = document.getElementById("scenarioText");
+            if (scenarioTextElement) {
+              scenarioTextElement.textContent = newScenarioDescription;
+            }
+
+            console.log("Generated new scenario:", newScenarioDescription);
+          } else {
+            console.warn("GeminiAI engine not available, using fallback");
+            // Fallback: Generate a simple variation
+            const fallbackScenarios = {
+              boardroom:
+                "You are presenting quarterly results to the board of directors. The company has faced some challenges this quarter, but there are also significant opportunities ahead. Present a balanced view with clear action items.",
+              conference:
+                "You're delivering a keynote presentation at a major industry conference. Your audience includes competitors, partners, and potential clients. Share insights that establish your expertise without revealing sensitive information.",
+              "client-pitch":
+                "You're pitching to a potential enterprise client who has been using a competitor's solution for years. They're evaluating options due to recent service issues. Present your solution's unique advantages.",
+              "team-update":
+                "You're presenting to your team about upcoming organizational changes that will affect everyone's roles. Some team members are concerned about job security. Address their concerns while maintaining morale.",
+              investor:
+                "You're presenting to potential Series B investors. Your company has shown steady growth but faces increasing competition. Demonstrate your market position and growth strategy.",
+              "product-launch":
+                "You're unveiling a new product that represents a significant pivot for your company. Stakeholders have mixed feelings about the direction. Present the strategic rationale and market opportunity.",
+            };
+
+            const newDescription =
+              fallbackScenarios[selectedScenario] ||
+              "A challenging presentation scenario awaits you.";
+            // Don't update the presentationScenarios description - keep the general framework
+
+            // DON'T update the display - keep the original framework description
+            // The scenarioText should always show the general framework, not the specific scenario
+          }
+
+          // Success feedback
+          changeScenarioBtn.innerHTML =
+            '<i data-lucide="check" class="w-4 h-4"></i> Updated!';
+          setTimeout(() => {
+            changeScenarioBtn.innerHTML =
+              '<i data-lucide="refresh-cw" class="w-4 h-4"></i> Change Scenario';
+            changeScenarioBtn.disabled = false;
+          }, 2000);
+        } catch (error) {
+          console.error("Error generating new scenario:", error);
+          alert("Failed to generate new scenario. Please try again.");
+
+          // Reset button state
+          changeScenarioBtn.innerHTML =
+            '<i data-lucide="refresh-cw" class="w-4 h-4"></i> Change Scenario';
+          changeScenarioBtn.disabled = false;
+        }
+      });
+
+      // Change Scenario button in conversation interface
+      changeScenarioConversationBtn.addEventListener("click", async () => {
+        if (!selectedScenario) {
+          alert("Please select a scenario first");
+          return;
+        }
+
+        // Update button state to show loading
+        changeScenarioConversationBtn.disabled = true;
+        changeScenarioConversationBtn.innerHTML =
+          '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Generating...';
+
+        try {
+          // Get the current scenario information
+          const currentScenario = presentationScenarios[selectedScenario];
+
+          // Use GeminiAIEngine to generate a new scenario
+          if (geminiEngine && geminiEngine.generateScenario) {
+            const newScenarioDescription = await geminiEngine.generateScenario(
+              selectedScenario,
+              currentScenario.title
+            );
+
+            // Keep the card description the same, but use new scenario for Gemini context
+            // Don't update the presentationScenarios description - keep the general framework
+
+            // DON'T update the display - keep the original framework description
+            // The scenarioText should always show the general framework, not the specific scenario
+
+            // Clear existing conversation and restart with new scenario
+            conversationFlow.innerHTML = "";
+            conversationHistory = [];
+            conversationCount = 0;
+
+            // Generate new initial AI message
+            setTimeout(async () => {
+              try {
+                // Set new scenario context for Gemini
+                geminiEngine.setScenarioContext(
+                  selectedScenario,
+                  currentScenario.title,
+                  newScenarioDescription,
+                  "professional"
+                );
+
+                // Generate dynamic initial prompt
+                const initialPrompt =
+                  await geminiEngine.generateInitialPrompt();
+                addAIMessage(initialPrompt);
+                recordBtn.style.display = "inline-flex";
+                endConversationBtn.style.display = "inline-flex";
+              } catch (error) {
+                console.warn(
+                  "Gemini prompt generation failed, using fallback:",
+                  error
+                );
+                // Fallback to static prompt
+                const fallbackPrompt =
+                  currentScenario.objections[
+                    Math.floor(
+                      Math.random() * currentScenario.objections.length
+                    )
+                  ];
+                addAIMessage(fallbackPrompt);
+                recordBtn.style.display = "inline-flex";
+                endConversationBtn.style.display = "inline-flex";
+              }
+            }, 1000);
+
+            console.log("Generated new scenario:", newScenarioDescription);
+          } else {
+            console.warn("GeminiAI engine not available, using fallback");
+            // Fallback: Generate a simple variation
+            const fallbackScenarios = {
+              boardroom:
+                "You are presenting quarterly results to the board of directors. The company has faced some challenges this quarter, but there are also significant opportunities ahead. Present a balanced view with clear action items.",
+              conference:
+                "You're delivering a keynote presentation at a major industry conference. Your audience includes competitors, partners, and potential clients. Share insights that establish your expertise without revealing sensitive information.",
+              "client-pitch":
+                "You're pitching to a potential enterprise client who has been using a competitor's solution for years. They're evaluating options due to recent service issues. Present your solution's unique advantages.",
+              "team-update":
+                "You're presenting to your team about upcoming organizational changes that will affect everyone's roles. Some team members are concerned about job security. Address their concerns while maintaining morale.",
+              investor:
+                "You're presenting to potential Series B investors. Your company has shown steady growth but faces increasing competition. Demonstrate your market position and growth strategy.",
+              "product-launch":
+                "You're unveiling a new product that represents a significant pivot for your company. Stakeholders have mixed feelings about the direction. Present the strategic rationale and market opportunity.",
+            };
+
+            const newDescription =
+              fallbackScenarios[selectedScenario] ||
+              "A challenging presentation scenario awaits you.";
+            // Don't update the presentationScenarios description - keep the general framework
+
+            // DON'T update the display - keep the original framework description
+            // The scenarioText should always show the general framework, not the specific scenario
+
+            // Clear existing conversation and restart with new scenario
+            conversationFlow.innerHTML = "";
+            conversationHistory = [];
+            conversationCount = 0;
+
+            // Generate new initial AI message with fallback
+            setTimeout(() => {
+              const fallbackPrompt =
+                currentScenario.objections[
+                  Math.floor(Math.random() * currentScenario.objections.length)
+                ];
+              addAIMessage(fallbackPrompt);
+              recordBtn.style.display = "inline-flex";
+              endConversationBtn.style.display = "inline-flex";
+            }, 1000);
+          }
+
+          // Success feedback
+          changeScenarioConversationBtn.innerHTML =
+            '<i data-lucide="check" class="w-4 h-4"></i> Updated!';
+          setTimeout(() => {
+            changeScenarioConversationBtn.innerHTML =
+              '<i data-lucide="refresh-cw" class="w-4 h-4"></i> Change Scenario';
+            changeScenarioConversationBtn.disabled = false;
+          }, 2000);
+        } catch (error) {
+          console.error("Error generating new scenario:", error);
+          alert("Failed to generate new scenario. Please try again.");
+
+          // Reset button state
+          changeScenarioConversationBtn.innerHTML =
+            '<i data-lucide="refresh-cw" class="w-4 h-4"></i> Change Scenario';
+          changeScenarioConversationBtn.disabled = false;
+        }
+      });
+
+      // Initialize practice session
+      function initializePracticeSession(scenarioKey) {
+        const scenarioInfo = presentationScenarios[scenarioKey];
+        document.getElementById("scenarioTitle").textContent =
+          scenarioInfo.title;
+        document.getElementById("scenarioText").textContent =
+          scenarioInfo.description;
+
+        // Clear previous conversation
+        conversationFlow.innerHTML = "";
+        conversationHistory = [];
+
+        // Generate initial AI message
+        setTimeout(async () => {
+          let initialPrompt = "";
+
+          // Try to use Gemini AI for dynamic prompt generation
+          if (geminiEngine && geminiEngine.isConfigured()) {
+            try {
+              // Set scenario context for Gemini
+              geminiEngine.setScenarioContext(
+                scenarioKey,
+                scenarioInfo.title,
+                scenarioInfo.description,
+                "professional"
+              );
+
+              // Generate dynamic initial prompt
+              initialPrompt = await geminiEngine.generateInitialPrompt();
+              console.log(
+                "Generated dynamic prompt via Gemini:",
+                initialPrompt
+              );
+            } catch (error) {
+              console.warn(
+                "Gemini prompt generation failed, using fallback:",
+                error
+              );
+              // Fallback to static prompt
+              initialPrompt =
+                scenarioInfo.objections[
+                  Math.floor(Math.random() * scenarioInfo.objections.length)
+                ];
+            }
+          } else {
+            // Fallback to static prompt when Gemini is not configured
+            console.log("Gemini not configured, using static prompt");
+            initialPrompt =
+              scenarioInfo.objections[
+                Math.floor(Math.random() * scenarioInfo.objections.length)
+              ];
+          }
+
+          addAIMessage(initialPrompt);
+          recordBtn.style.display = "inline-flex";
+          endConversationBtn.style.display = "inline-flex";
+        }, 1000);
+      }
+
+      // Back to scenarios button
+      backToScenariosBtn.addEventListener("click", () => {
+        conversationContainer.style.display = "none";
+        scenarioActionsDiv.style.display = "flex";
+        document.querySelector(".scenario-grid").style.display = "grid";
+        document.querySelector("#practiceSection h2").style.display = "block";
+        document.querySelector(
+          "#practiceSection .section-subtitle"
+        ).style.display = "block";
+        resetPracticeSession();
+      });
+
+      // Reset practice session
+      function resetPracticeSession() {
+        scenarioTypes.forEach((s) => s.classList.remove("selected"));
+        selectedScenario = null;
+        startPracticeBtn.disabled = true;
+        conversationFlow.innerHTML = "";
+        conversationHistory = [];
+        conversationCount = 0;
+        endConversationBtn.style.display = "none";
+        recordBtn.style.display = "none";
+
+        // Reset recording state
+        isRecording = false;
+        recordedAudioBlob = null;
+        audioChunks = [];
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+        }
+
+        // Reset record button UI
+        recordBtn.innerHTML =
+          '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+        recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+        recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+        recordBtn.style.color = "var(--text-primary)";
+        lucide.createIcons();
+      }
+
+      // Back to options buttons
+      document.getElementById("backToOptions").addEventListener("click", () => {
+        uploadSection.classList.remove("active");
+        analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+        currentMode = null;
+      });
+
+      document
+        .getElementById("backToOptionsFromPractice")
+        .addEventListener("click", () => {
+          practiceSection.classList.remove("active");
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+          currentMode = null;
+
+          // Reset scenario selection view
+          conversationContainer.style.display = "none";
+          scenarioActionsDiv.style.display = "flex";
+          document.querySelector(".scenario-grid").style.display = "grid";
+          document.querySelector("#practiceSection h2").style.display = "block";
+          document.querySelector(
+            "#practiceSection .section-subtitle"
+          ).style.display = "block";
+
+          resetPracticeSession();
+        });
+
+      // File upload functionality
+      document.getElementById("chooseFileBtn").addEventListener("click", () => {
+        document.getElementById("audioFile").click();
+      });
+
+      document.getElementById("audioFile").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          // Show file details
+          document.getElementById("fileName").textContent = file.name;
+          document.getElementById("fileSize").textContent =
+            (file.size / (1024 * 1024)).toFixed(1) + " MB";
+          document.getElementById("fileSelected").style.display = "flex";
+          document.getElementById("analyzeUpload").disabled = false;
+        }
+      });
+
+      // Remove file functionality
+      document.getElementById("removeFile").addEventListener("click", () => {
+        document.getElementById("audioFile").value = "";
+        document.getElementById("fileSelected").style.display = "none";
+        document.getElementById("analyzeUpload").disabled = true;
+      });
+
+      // Analyze upload button
+      document
+        .getElementById("analyzeUpload")
+        .addEventListener("click", async () => {
+          const audioFile = document.getElementById("audioFile");
+          if (!audioFile.files[0]) {
+            alert("Please select a file first");
+            return;
+          }
+
+          // Update button state
+          const analyzeBtn = document.getElementById("analyzeUpload");
+          analyzeBtn.disabled = true;
+          analyzeBtn.innerHTML =
+            '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+
+          try {
+            // Use the analysis processor
+            const processor = new SimpleAnalysis();
+            const results = await processor.analyzeAudio(
+              audioFile.files[0],
+              "presentation"
+            );
+
+            // Store results and redirect to dedicated presentation results page
+            sessionStorage.setItem("analysisResults", JSON.stringify(results));
+            window.location.href =
+              "presentation-analysis-results.html?type=presentation&source=upload";
+          } catch (error) {
+            console.error("Analysis failed:", error);
+            alert("Analysis failed. Please try again.");
+            analyzeBtn.disabled = false;
+            analyzeBtn.innerHTML =
+              '<i data-lucide="zap" class="w-4 h-4"></i> Analyze Recording';
+          }
+        });
+
+      // End conversation and analyze
+      endConversationBtn.addEventListener("click", async () => {
+        // Update button state
+        endConversationBtn.disabled = true;
+        endConversationBtn.innerHTML =
+          '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing Conversation...';
+
+        try {
+          // Check if we have recorded audio to pass to analysis page
+          if (recordedAudioBlob && recordedAudioBlob.size > 0) {
+            // Audio available, passing to analysis page
+
+            // Convert blob to base64 for storage
+            const reader = new FileReader();
+            reader.onloadend = function () {
+              const audioData = {
+                base64: reader.result,
+                type: recordedAudioBlob.type,
+                size: recordedAudioBlob.size,
+                name: "practice-recording.webm",
+                timestamp: new Date().toISOString(),
+                analysisType: "presentation",
+                source: "practice",
+              };
+
+              // Storing audio data for analysis page
+
+              // Store audio data for analysis page
+              sessionStorage.setItem(
+                "audioForAnalysis",
+                JSON.stringify(audioData)
+              );
+
+              // Also store minimal results data
+              const basicResults = {
+                hasAudio: true,
+                audioStored: true,
+                timestamp: new Date().toISOString(),
+                analysisType: "presentation",
+                source: "practice",
+                note: "Audio file stored - transcription will be done on results page",
+              };
+
+              sessionStorage.setItem(
+                "analysisResults",
+                JSON.stringify(basicResults)
+              );
+
+              // Audio data stored successfully, redirecting
+
+              window.location.href =
+                "presentation-analysis-results.html?type=presentation&source=practice";
+            };
+
+            reader.readAsDataURL(recordedAudioBlob);
+          } else if (geminiEngine && geminiEngine.isConfigured()) {
+            // No audio, analyzing conversation text
+            const analysisResults = await geminiEngine.analyzePracticeSession(
+              conversationHistory,
+              "presentation"
+            );
+
+            // Store results and redirect
+            sessionStorage.setItem(
+              "analysisResults",
+              JSON.stringify(analysisResults)
+            );
+            window.location.href =
+              "presentation-analysis-results.html?type=presentation&source=practice";
+          } else {
+            // Fallback analysis if Gemini is not available
+            const fallbackResults = {
+              success: true,
+              analysis: `## Presentation Practice Session Analysis
+
+**Communication Effectiveness**: 7/10
+Your presentation showed good structure and professional delivery. You engaged with the audience questions appropriately.
+
+**Content Organization**: 6/10  
+You covered the key points but could strengthen your narrative flow and use more compelling storytelling.
+
+**Audience Engagement**: 7/10
+Good interaction with questions and concerns. Consider asking more engaging questions to involve your audience.
+
+**Areas for Improvement**:
+- Use more specific examples and case studies to support your points
+- Practice smoother transitions between topics
+- Incorporate more visual storytelling elements
+
+**Strengths Demonstrated**:
+- Maintained professional confidence throughout
+- Addressed concerns directly and honestly
+- Showed good subject matter expertise
+
+**Overall Score**: 20/30
+
+Keep practicing! Focus on making your content more engaging through stories and interactive elements.`,
+              conversationHistory: conversationHistory,
+              scenarioInfo: presentationScenarios[selectedScenario],
+              timestamp: Date.now(),
+            };
+
+            sessionStorage.setItem(
+              "analysisResults",
+              JSON.stringify(fallbackResults)
+            );
+            window.location.href =
+              "presentation-analysis-results.html?type=presentation&source=practice";
+          }
+        } catch (error) {
+          console.error("Conversation analysis failed:", error);
+          alert("Analysis failed. Please try again.");
+          endConversationBtn.disabled = false;
+          endConversationBtn.innerHTML =
+            '<i data-lucide="check-circle" class="w-4 h-4"></i> Submit for Analysis';
+        }
+      });
+
+      // Generate AI follow-up response
+      async function generateAIResponse() {
+        let followUpPrompt = "";
+
+        // Try to use Gemini AI for dynamic follow-up generation
+        if (geminiEngine && geminiEngine.isConfigured()) {
+          try {
+            // Generate dynamic follow-up based on conversation history
+            followUpPrompt = await geminiEngine.generateFollowUpPrompt(
+              "User recorded response",
+              conversationHistory
+            );
+            console.log(
+              "Generated dynamic follow-up via Gemini:",
+              followUpPrompt
+            );
+          } catch (error) {
+            console.warn(
+              "Gemini follow-up generation failed, using fallback:",
+              error
+            );
+            // Fallback to static follow-up
+            followUpPrompt = getFallbackFollowUp();
+          }
+        } else {
+          // Fallback to static follow-up when Gemini is not configured
+          console.log("Gemini not configured, using static follow-up");
+          followUpPrompt = getFallbackFollowUp();
+        }
+
+        if (followUpPrompt) {
+          addAIMessage(followUpPrompt);
+
+          // Add to conversation history
+          conversationHistory.push({
+            type: "ai",
+            message: followUpPrompt,
+            timestamp: Date.now(),
+          });
+
+          // Re-enable recording for next response
+          recordBtn.style.display = "inline-flex";
+          endConversationBtn.style.display = "inline-flex";
+        }
+      }
+
+      // Fallback follow-up responses for presentation scenarios
+      function getFallbackFollowUp() {
+        const followUps = [
+          "That's an interesting perspective. Can you elaborate on how you'd implement that strategy?",
+          "I appreciate that point. What specific metrics would you use to measure success?",
+          "Good question. How do you think this would impact our current workflow?",
+          "That's a valid concern. What would be your biggest worry about moving forward?",
+          "I understand your position. Can you tell me more about your approach?",
+          "Interesting insight. How would you address potential challenges with this approach?",
+          "That makes sense. What additional information would help you feel more confident?",
+          "I hear you. What would need to happen for this to be a priority for your team?",
+          "Good point. How do you see this fitting into your current priorities?",
+          "That's thoughtful. What questions do you have about moving forward?",
+        ];
+
+        return followUps[Math.floor(Math.random() * followUps.length)];
+      }
+
+
+      function addUserMessage(message) {
+        const messageElement = document.createElement("div");
+        messageElement.className = "message user";
+        messageElement.innerHTML = `
+          <div class="message-content">
+            <div>${message}</div>
+          </div>
+          <div class="message-avatar">
+            <i data-lucide="user" class="w-5 h-5"></i>
+          </div>
+        `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        conversationHistory.push({
+          type: "user",
+          message: message,
+          timestamp: Date.now(),
+        });
+      }
+
+      function addAIMessage(message) {
+        const messageElement = document.createElement("div");
+        messageElement.className = "message ai";
+        messageElement.innerHTML = `
+          <div class="message-avatar">
+            <i data-lucide="brain" class="w-5 h-5"></i>
+          </div>
+          <div class="message-content">
+            <div>${message}</div>
+          </div>
+        `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        conversationHistory.push({
+          type: "ai",
+          message: message,
+          timestamp: Date.now(),
+        });
+      }
+
+      // Audio recording functionality
+      if (recordBtn) {
+        // Setting up record button event listener
+        recordBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          // Record button clicked
+          if (!isRecording) {
+            startRecording();
+          } else {
+            stopRecording();
+          }
+        });
+      } else {
+        console.error(
+          'Record button not found! Element with ID "recordButton" does not exist'
+        );
+      }
+
+      async function startRecording() {
+        // Starting recording
+        try {
+          // Check if getUserMedia is supported
+          if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            throw new Error("getUserMedia not supported in this browser");
+          }
+
+          // Requesting microphone access
+          // Request microphone access
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+              echoCancellation: true,
+              noiseSuppression: true,
+              sampleRate: 44100,
+            },
+          });
+
+          // Microphone access granted
+
+          // Clear previous audio chunks
+          audioChunks = [];
+
+          // Create MediaRecorder with better compatibility
+          const options = { mimeType: "audio/webm" };
+          if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+            options.mimeType = "audio/mp4";
+            if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+              options.mimeType = "";
+            }
+          }
+
+          mediaRecorder = new MediaRecorder(stream, options);
+          // MediaRecorder created
+
+          // Handle data available event
+          mediaRecorder.ondataavailable = (event) => {
+            // Recording data available
+            if (event.data.size > 0) {
+              audioChunks.push(event.data);
+            }
+          };
+
+          // Handle recording stop event
+          mediaRecorder.onstop = () => {
+            console.log(
+              "Recording stopped, processing audio chunks:",
+              audioChunks.length
+            );
+            // Create blob from chunks
+            recordedAudioBlob = new Blob(audioChunks, {
+              type: mediaRecorder.mimeType || "audio/webm",
+            });
+
+            // Stop all tracks to release microphone
+            stream.getTracks().forEach((track) => track.stop());
+
+            // Add captured audio message to conversation
+            addAudioCapturedMessage();
+            console.log(
+              "Recording stopped and audio captured, blob size:",
+              recordedAudioBlob.size
+            );
+          };
+
+          // Handle errors
+          mediaRecorder.onerror = (event) => {
+            console.error("MediaRecorder error:", event.error);
+          };
+
+          // Start recording
+          mediaRecorder.start(1000); // Collect data every second
+          isRecording = true;
+
+          // Update UI
+          recordBtn.innerHTML =
+            '<i data-lucide="square" class="w-4 h-4"></i> Stop Recording';
+          recordBtn.style.background = "#ef4444 !important";
+          recordBtn.style.borderColor = "#ef4444 !important";
+          recordBtn.style.color = "white !important";
+          lucide.createIcons();
+
+          // Recording started successfully
+        } catch (error) {
+          console.error("Error starting recording:", error);
+          isRecording = false;
+
+          let errorMessage = "Unable to access microphone. ";
+          if (error.name === "NotAllowedError") {
+            errorMessage += "Please allow microphone access and try again.";
+          } else if (error.name === "NotFoundError") {
+            errorMessage +=
+              "No microphone found. Please connect a microphone and try again.";
+          } else {
+            errorMessage += error.message;
+          }
+
+          alert(errorMessage);
+        }
+      }
+
+      function stopRecording() {
+        console.log(
+          "stopRecording called, mediaRecorder state:",
+          mediaRecorder?.state,
+          "isRecording:",
+          isRecording
+        );
+        if (mediaRecorder && isRecording) {
+          mediaRecorder.stop();
+          isRecording = false;
+
+          // Update UI
+          recordBtn.innerHTML =
+            '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+          recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+          recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+          recordBtn.style.color = "var(--text-primary)";
+          lucide.createIcons();
+
+          console.log("Recording stopped successfully");
+        } else {
+          console.warn(
+            "Cannot stop recording: mediaRecorder=",
+            mediaRecorder,
+            "isRecording=",
+            isRecording
+          );
+        }
+      }
+
+      function addAudioCapturedMessage() {
+        console.log(
+          "addAudioCapturedMessage called, conversation count:",
+          conversationCount
+        );
+        const messageElement = document.createElement("div");
+        messageElement.className = "audio-captured";
+        messageElement.innerHTML = `
+          <div class="audio-captured-box">
+            <i data-lucide="check-circle" class="w-5 h-5"></i>
+            <span>Audio Captured Successfully - Ready for Transcription</span>
+          </div>
+        `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        conversationHistory.push({
+          type: "audio-captured",
+          message: "Audio Captured Successfully - Ready for Transcription",
+          timestamp: Date.now(),
+        });
+
+        // Increase conversation count but NO AI follow-up
+        conversationCount++;
+        console.log("Conversation count incremented to:", conversationCount);
+        console.log(
+          "🚫 AI follow-up disabled - no more responses after user input"
+        );
+
+        // Skip transcription preview - go directly to analysis results
+
+        // Always show end conversation button after audio is captured
+        endConversationBtn.style.display = "inline-flex";
+        recordBtn.style.display = "none";
+      }
+
+      // Show transcription preview
+      async function showTranscriptionPreview() {
+        try {
+          console.log("🔄 Sending to Gemini for transcription...");
+
+          const processor = new SimpleAnalysis();
+          const audioFile = new File([recordedAudioBlob], "preview.webm", {
+            type: recordedAudioBlob.type,
+          });
+
+          const transcript = await processor.getTranscript(audioFile);
+          console.log("✅ TRANSCRIPTION SUCCESS:", transcript);
+
+          // Determine if this is a demo transcript
+          const isDemo =
+            transcript.includes("CRM system") ||
+            transcript.includes("demo") ||
+            transcript.includes("Network issue");
+          const headerText = isDemo
+            ? "Demo Transcription (Network Issue):"
+            : "Transcription Preview:";
+          const headerColor = isDemo ? "#f59e0b" : "#6366f1";
+
+          // Show transcription in conversation
+          const transcriptElement = document.createElement("div");
+          transcriptElement.className = "transcription-preview";
+          transcriptElement.innerHTML = `
+            <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 12px; padding: 1rem; margin: 1rem 0;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: ${headerColor}; font-weight: 600;">
+                <i data-lucide="file-text" style="width: 16px; height: 16px;"></i>
+                <span>${headerText}</span>
+              </div>
+              <div style="color: #374151; font-style: italic;">"${transcript}"</div>
+              ${
+                isDemo
+                  ? '<div style="color: #6b7280; font-size: 12px; margin-top: 0.5rem;">Note: Using demo transcript due to network connectivity issues with Gemini API</div>'
+                  : ""
+              }
+            </div>
+          `;
+          conversationFlow.appendChild(transcriptElement);
+          lucide.createIcons();
+        } catch (error) {
+          console.error("Transcription preview failed:", error);
+
+          // Show error message
+          const errorElement = document.createElement("div");
+          errorElement.className = "transcription-error";
+          errorElement.innerHTML = `
+            <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 1rem; margin: 1rem 0;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #ef4444; font-weight: 600;">
+                <i data-lucide="alert-circle" style="width: 16px; height: 16px;"></i>
+                <span>Transcription Failed</span>
+              </div>
+              <div style="color: #374151; font-size: 14px;">Network connectivity issue. Your audio is saved and will be processed during final analysis.</div>
+            </div>
+          `;
+          conversationFlow.appendChild(errorElement);
+          lucide.createIcons();
+        }
+      }
+
+      // Initialize analysis system
+      let analysisProcessor = null;
+      try {
+        analysisProcessor = new SimpleAnalysis();
+        console.log("✅ SimpleAnalysis system initialized successfully");
+        console.log("Processor instance:", analysisProcessor);
+      } catch (error) {
+        console.error("❌ Failed to initialize analysis system:", error);
+        console.error("Error details:", error.stack);
+      }
+
+      // Process recorded audio for analysis
+      async function processRecordedAudio() {
+        if (!recordedAudioBlob) {
+          alert("No audio recording found. Please record your response first.");
+          return;
+        }
+
+        if (!analysisProcessor) {
+          console.log("Initializing analysis system...");
+          analysisProcessor = new SimpleAnalysis();
+        }
+
+        try {
+          // Show loading state
+          const endBtn = document.getElementById("endConversation");
+          const originalText = endBtn.innerHTML;
+          endBtn.innerHTML =
+            '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Processing...';
+          endBtn.disabled = true;
+          lucide.createIcons();
+
+          // Convert blob to file for processing
+          const audioFile = new File(
+            [recordedAudioBlob],
+            "presentation-recording.webm",
+            {
+              type: recordedAudioBlob.type,
+            }
+          );
+
+          // Use SimpleAnalysis
+          const analysisResult = await analysisProcessor.analyzeAudio(
+            audioFile,
+            "presentation"
+          );
+
+          if (analysisResult.success) {
+            // Store results for analysis page
+            sessionStorage.setItem(
+              "analysisResults",
+              JSON.stringify(analysisResult)
+            );
+
+            // Navigate to results page
+            window.location.href =
+              "presentation-analysis-results.html?type=presentation&source=practice";
+          } else {
+            throw new Error(analysisResult.error || "Analysis failed");
+          }
+        } catch (error) {
+          console.error("Analysis processing error:", error);
+          alert(
+            `Failed to process analysis: ${error.message}\n\nPlease check your Gemini API configuration.`
+          );
+
+          // Restore button
+          endBtn.innerHTML = originalText;
+          endBtn.disabled = false;
+          lucide.createIcons();
+        }
+      }
+
+      // Event handlers
+      document.addEventListener("DOMContentLoaded", function () {
+        // Submit for Analysis button
+        const endConversationBtn = document.getElementById("endConversation");
+        if (endConversationBtn) {
+          endConversationBtn.addEventListener("click", processRecordedAudio);
+        }
+
+        // File upload analysis
+        const analyzeUploadBtn = document.getElementById("analyzeUpload");
+        if (analyzeUploadBtn) {
+          analyzeUploadBtn.addEventListener("click", async function () {
+            const audioFile = document.getElementById("audioFile").files[0];
+            if (!audioFile) {
+              alert("Please select an audio file first.");
+              return;
+            }
+
+            if (!analysisProcessor) {
+              console.log("Initializing analysis system...");
+              analysisProcessor = new SimpleAnalysis();
+            }
+
+            try {
+              // Show loading state
+              const originalText = this.innerHTML;
+              this.innerHTML =
+                '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Processing...';
+              this.disabled = true;
+              lucide.createIcons();
+
+              // Use SimpleAnalysis directly with the file
+              const analysisResult = await analysisProcessor.analyzeAudio(
+                audioFile,
+                "presentation"
+              );
+
+              if (analysisResult.success) {
+                sessionStorage.setItem(
+                  "analysisResults",
+                  JSON.stringify(analysisResult)
+                );
+                window.location.href =
+                  "presentation-analysis-results.html?type=presentation&source=upload";
+              } else {
+                throw new Error(analysisResult.error || "Analysis failed");
+              }
+            } catch (error) {
+              console.error("File analysis error:", error);
+              console.error("Error stack:", error.stack);
+
+              alert(
+                `Failed to analyze file: ${error.message}\n\nPlease check the browser console for details.`
+              );
+
+              // Restore button
+              this.innerHTML = originalText;
+              this.disabled = false;
+              lucide.createIcons();
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

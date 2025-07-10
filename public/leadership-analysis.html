@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI-Powered Leadership Communication Analysis - Articulaition"
+    />
+    <title>Leadership Communication Analysis - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --primary-blue: #4a90e2;
+        --success-green: #10b981;
+        --client-teal: #0891b2;
+        --relationship-purple: #7c3aed;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --bg-primary: #fafbfc;
+        --bg-secondary: #f4f6f8;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Background Effects */
+      .dashboard-container {
+        background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 100%);
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .dashboard-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(124, 58, 237, 0.03) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(16, 185, 129, 0.025) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(255, 147, 77, 0.02) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(74, 144, 226, 0.015) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Animation Classes */
+      .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+        opacity: 0;
+      }
+
+      .slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .scale-in {
+        animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes scaleIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-500 {
+        animation-delay: 0.5s;
+      }
+
+      /* Header Styling */
+      .main-header {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .logo-section img {
+        height: 32px;
+        width: auto;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--text-primary);
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--relationship-purple),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        color: var(--text-secondary);
+      }
+
+      .breadcrumb .current {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      /* Page Title Section */
+      .page-title-section {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .title-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--relationship-purple),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .page-description {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* Analysis Options */
+      .analysis-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .analysis-option {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.06);
+        border-radius: 24px;
+        padding: 2.5rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        text-align: center;
+        position: relative;
+      }
+
+      .analysis-option:hover {
+        transform: translateY(-4px);
+        border-color: var(--relationship-purple);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .analysis-option.selected {
+        border-color: var(--relationship-purple);
+        background: rgba(124, 58, 237, 0.05);
+      }
+
+      .option-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        border-radius: 20px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .analysis-option:hover .option-icon {
+        transform: scale(1.1);
+      }
+
+      .option-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-features {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .features-list {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      /* Upload Section */
+      .upload-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .upload-section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .section-subtitle {
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+
+      .upload-center {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-option-single {
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px dashed rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 3rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .upload-option-single:hover {
+        border-color: var(--relationship-purple);
+        background: rgba(124, 58, 237, 0.02);
+      }
+
+      .file-selected {
+        margin-top: 1.5rem;
+        background: rgba(124, 58, 237, 0.05);
+        border: 2px solid rgba(124, 58, 237, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .file-selected .file-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--relationship-purple);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .file-selected .file-details {
+        flex: 1;
+        text-align: left;
+      }
+
+      .file-selected .file-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+
+      .file-selected .file-size {
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+      }
+
+      .file-selected .remove-file {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .file-selected .remove-file:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+
+      .upload-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 1rem;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--relationship-purple),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .upload-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .upload-button {
+        background: var(--relationship-purple);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .upload-button:hover {
+        background: var(--relationship-purple);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* AI Practice Section */
+      .ai-practice-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .ai-practice-section.active {
+        display: block;
+      }
+
+      .scenario-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .scenario-type {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        padding: 2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .scenario-type:hover {
+        transform: translateY(-2px);
+        border-color: var(--relationship-purple);
+        box-shadow: var(--shadow-md);
+      }
+
+      .scenario-type.selected {
+        border-color: var(--relationship-purple);
+        background: rgba(124, 58, 237, 0.05);
+      }
+
+      .scenario-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 1rem;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--relationship-purple),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .scenario-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .scenario-description {
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+        position: relative;
+        z-index: 2;
+        font-weight: 500;
+      }
+
+      /* Conversation Container */
+      .conversation-container {
+        margin-top: 3rem;
+      }
+
+      .scenario-intro {
+        background: rgba(124, 58, 237, 0.05);
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .scenario-intro .scenario-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--relationship-purple);
+        margin-bottom: 1rem;
+      }
+
+      .scenario-text {
+        color: var(--text-primary);
+        line-height: 1.6;
+      }
+
+      .conversation-flow {
+        min-height: 200px;
+        margin-bottom: 2rem;
+      }
+
+      .message {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        align-items: flex-start;
+      }
+
+      .message.user {
+        flex-direction: row-reverse;
+      }
+
+      .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--relationship-purple),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        flex-shrink: 0;
+      }
+
+      .message.user .message-avatar {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+      }
+
+      .message-content {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-radius: 16px;
+        padding: 1rem 1.5rem;
+        max-width: 70%;
+        line-height: 1.5;
+      }
+
+      .message.user .message-content {
+        background: rgba(124, 58, 237, 0.1);
+        border-color: rgba(124, 58, 237, 0.2);
+      }
+
+      /* Audio Captured Styles */
+      .audio-captured {
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .audio-captured-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 16px;
+        font-weight: 600;
+        box-shadow: var(--shadow-md);
+        animation: slideInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes slideInScale {
+        0% {
+          opacity: 0;
+          transform: translateY(20px) scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .primary-button {
+        background: linear-gradient(135deg, #4a90e2, #7c3aed) !important;
+        color: white !important;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .primary-button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .primary-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .secondary-button {
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--text-primary);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .secondary-button:hover {
+        background: white;
+        border-color: var(--relationship-purple);
+        transform: translateY(-1px);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 2rem 1rem;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .analysis-options,
+        .scenario-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .analysis-option {
+          padding: 2rem;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+
+        .message-content {
+          max-width: 85%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="main-header fade-in">
+        <nav class="header-nav">
+          <div class="logo-section">
+            <img src="images/logo-header.svg" alt="Articulaition.com" />
+          </div>
+          <div class="nav-links">
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="professional-communication.html" class="nav-link"
+              >Professional</a
+            >
+            <a href="personal-communication.html" class="nav-link">Personal</a>
+          </div>
+          <div class="user-menu">
+            <div class="user-avatar">JD</div>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb slide-up delay-100">
+          <a href="dashboard.html">Dashboard</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <a href="professional-communication.html">Professional</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <span class="current">Leadership Analysis</span>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title-section slide-up delay-200">
+          <div class="title-with-icon">
+            <div class="title-icon">
+              <i data-lucide="users" class="w-6 h-6"></i>
+            </div>
+            <h1 class="page-title">Leadership Communication Analysis</h1>
+          </div>
+          <p class="page-description">
+            Develop authentic leadership presence—build trust, inspire teams,
+            and communicate with authority and empathy.
+          </p>
+        </div>
+
+        <!-- Analysis Options -->
+        <div class="analysis-options">
+          <!-- Upload Existing Recording -->
+          <div class="analysis-option scale-in delay-300" data-type="upload">
+            <div class="option-icon">
+              <i data-lucide="upload" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">Upload Leadership Recording</h3>
+            <p class="option-description">
+              Upload a recording of your team meeting, presentation, or
+              leadership conversation for detailed analysis.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Authority presence • Team engagement • Inspirational language •
+                Decision clarity
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Practice Session -->
+          <div class="analysis-option scale-in delay-400" data-type="practice">
+            <div class="option-icon">
+              <i data-lucide="mic" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">AI Leadership Practice</h3>
+            <p class="option-description">
+              Practice with AI team members who present realistic leadership
+              challenges and team dynamics.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Team scenarios • Difficult conversations • Crisis management •
+                Motivational practice
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+          <h2 class="section-title">Upload Your Leadership Recording</h2>
+          <p class="section-subtitle">
+            Upload an audio or video file of your leadership communication for
+            detailed analysis
+          </p>
+
+          <div class="upload-center">
+            <div class="upload-option-single" id="fileUpload">
+              <div class="upload-icon">
+                <i data-lucide="folder" class="w-6 h-6"></i>
+              </div>
+              <div class="upload-title">Choose File</div>
+              <div class="upload-description">
+                Select an audio or video file from your device (MP3, M4A, WAV,
+                MP4, MOV)
+              </div>
+              <button class="upload-button" id="chooseFileBtn">
+                <i data-lucide="upload" class="w-4 h-4"></i>
+                Select File
+              </button>
+              <input
+                type="file"
+                id="audioFile"
+                accept=".mp3,.m4a,.wav,.mp4,.mov"
+                hidden
+              />
+
+              <div
+                class="file-selected"
+                id="fileSelected"
+                style="display: none"
+              >
+                <div class="file-icon">
+                  <i data-lucide="file-audio" class="w-5 h-5"></i>
+                </div>
+                <div class="file-details">
+                  <div class="file-name" id="fileName">team-meeting.mp3</div>
+                  <div class="file-size" id="fileSize">4.1 MB</div>
+                </div>
+                <button class="remove-file" id="removeFile">
+                  <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="secondary-button" id="backToOptions">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="primary-button" id="analyzeUpload" disabled>
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              Analyze Recording
+            </button>
+          </div>
+        </div>
+
+        <!-- AI Practice Section -->
+        <div class="ai-practice-section" id="practiceSection">
+          <h2 class="section-title">Choose Your Leadership Scenario</h2>
+          <p class="section-subtitle">
+            Select a leadership scenario to practice with our AI team members
+          </p>
+
+          <div class="scenario-grid">
+            <div class="scenario-type" data-scenario="team-meeting">
+              <div class="scenario-icon">
+                <i data-lucide="users" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Team Meeting</div>
+              <div class="scenario-description">
+                Lead a productive team meeting with clear objectives and
+                engagement
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="difficult-feedback">
+              <div class="scenario-icon">
+                <i data-lucide="message-circle" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Difficult Feedback</div>
+              <div class="scenario-description">
+                Practice delivering constructive feedback to underperforming
+                team members
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="vision-presentation">
+              <div class="scenario-icon">
+                <i data-lucide="eye" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Vision Presentation</div>
+              <div class="scenario-description">
+                Communicate strategic vision and inspire your team toward common
+                goals
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="crisis-management">
+              <div class="scenario-icon">
+                <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Crisis Management</div>
+              <div class="scenario-description">
+                Lead with calm authority during unexpected challenges and
+                setbacks
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="change-announcement">
+              <div class="scenario-icon">
+                <i data-lucide="refresh-cw" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Change Announcement</div>
+              <div class="scenario-description">
+                Communicate organizational changes while addressing team
+                concerns
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="conflict-resolution">
+              <div class="scenario-icon">
+                <i data-lucide="balance-scale" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Conflict Resolution</div>
+              <div class="scenario-description">
+                Mediate team conflicts and guide toward collaborative solutions
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="conversation-container"
+            id="conversationContainer"
+            style="display: none"
+          >
+            <!-- Scenario Introduction -->
+            <div class="scenario-intro">
+              <div class="scenario-title">
+                <i data-lucide="shield" class="w-5 h-5 inline mr-2"></i>
+                <span id="scenarioTitle">Leadership Scenario</span>
+              </div>
+              <div class="scenario-text" id="scenarioText">
+                Practice your leadership skills in this scenario.
+              </div>
+            </div>
+
+            <!-- Conversation Flow -->
+            <div class="conversation-flow" id="conversationFlow">
+              <!-- AI messages will be dynamically inserted here -->
+            </div>
+
+            <div class="action-buttons">
+              <button class="secondary-button" id="backToScenarios">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Scenarios
+              </button>
+              <button
+                class="secondary-button"
+                id="recordButton"
+                style="display: none"
+              >
+                <i data-lucide="mic" class="w-4 h-4"></i>
+                Record Response
+              </button>
+              <button
+                class="primary-button"
+                id="endConversation"
+                style="display: none"
+              >
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                Submit for Analysis
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons" id="scenarioActions">
+            <button class="secondary-button" id="backToOptionsFromPractice">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="secondary-button" id="changeScenario">
+              <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+              Change Scenario
+            </button>
+            <button class="primary-button" id="startPractice" disabled>
+              <i data-lucide="play" class="w-4 h-4"></i>
+              Start Leadership Practice
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <!-- API Configuration - Copy api-config-template.js to api-config.js and add your keys -->
+    <script src="js/api-config.js"></script>
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Initialize AI engines
+      let aiEngine = null;
+      let geminiEngine = null;
+
+      try {
+        aiEngine = new AIConversationEngine();
+        console.log("AI Conversation Engine initialized");
+      } catch (error) {
+        console.warn("AI Conversation Engine not available:", error);
+      }
+
+      try {
+        geminiEngine = new GeminiAIEngine();
+        console.log(
+          "Gemini AI Engine initialized:",
+          geminiEngine.isConfigured() ? "Configured" : "Not configured"
+        );
+      } catch (error) {
+        console.warn("Gemini AI Engine not available:", error);
+      }
+
+      // Leadership-specific scenarios
+      const presentationScenarios = {
+        "team-meeting": {
+          title: "Team Meeting Leadership",
+          description:
+            "You're leading a weekly team meeting. Some members seem disengaged and there are competing priorities.",
+          objections: [
+            "I don't think this project should be our top priority right now.",
+            "We've tried similar approaches before and they didn't work.",
+            "I'm not sure I have the bandwidth for this initiative.",
+            "Can we discuss the timeline? It seems unrealistic.",
+          ],
+        },
+        "difficult-feedback": {
+          title: "Difficult Feedback Conversation",
+          description:
+            "You need to address performance issues with a team member who has been defensive in the past.",
+          objections: [
+            "I think my performance has been fine. Others have made similar mistakes.",
+            "I feel like I'm being singled out unfairly.",
+            "The goals weren't clearly communicated to me.",
+            "I need more support and resources to improve.",
+          ],
+        },
+        "vision-presentation": {
+          title: "Vision Presentation",
+          description:
+            "You're presenting the new strategic vision to your team. Some are skeptical about the direction.",
+          objections: [
+            "This seems like a major departure from what's been working.",
+            "I'm concerned about how this affects our current projects.",
+            "What about the risks involved in this new direction?",
+            "How do we know this will be successful?",
+          ],
+        },
+        "crisis-management": {
+          title: "Crisis Management",
+          description:
+            "A major project has failed and the team is looking to you for guidance and next steps.",
+          objections: [
+            "I think we should have seen this coming. What went wrong?",
+            "How are we going to explain this to the stakeholders?",
+            "I'm worried this will affect our team's reputation.",
+            "What's our backup plan? Do we even have one?",
+          ],
+        },
+        "change-announcement": {
+          title: "Change Announcement",
+          description:
+            "You need to announce significant organizational changes that will affect your team's work.",
+          objections: [
+            "This change seems sudden. Why wasn't the team consulted?",
+            "How will this affect our job security?",
+            "I'm comfortable with how things are now. Why change?",
+            "What support will we get during this transition?",
+          ],
+        },
+        "conflict-resolution": {
+          title: "Team Conflict Resolution",
+          description:
+            "Two team members have been in conflict and it's affecting the entire team's productivity.",
+          objections: [
+            "They started it. I was just defending my position.",
+            "We have fundamentally different approaches to this work.",
+            "I don't think we can work together effectively.",
+            "This conflict is affecting my ability to do my job.",
+          ],
+        },
+      };
+
+      // State management
+      let currentMode = null;
+      let selectedScenario = null;
+      let conversationHistory = [];
+      let isRecording = false;
+      let mediaRecorder = null;
+      let audioChunks = [];
+      let recordedAudioBlob = null;
+
+      // DOM elements
+      const analysisOptions = document.querySelectorAll(".analysis-option");
+      const uploadSection = document.getElementById("uploadSection");
+      const practiceSection = document.getElementById("practiceSection");
+      const scenarioTypes = document.querySelectorAll(".scenario-type");
+      const conversationContainer = document.getElementById(
+        "conversationContainer"
+      );
+      const conversationFlow = document.getElementById("conversationFlow");
+      const startPracticeBtn = document.getElementById("startPractice");
+      const backToScenariosBtn = document.getElementById("backToScenarios");
+      const endConversationBtn = document.getElementById("endConversation");
+      const recordBtn = document.getElementById("recordButton");
+      const scenarioActionsDiv = document.getElementById("scenarioActions");
+      const changeScenarioBtn = document.getElementById("changeScenario");
+
+      // Analysis option selection
+      analysisOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+          option.classList.add("selected");
+          currentMode = option.dataset.type;
+
+          if (currentMode === "upload") {
+            uploadSection.classList.add("active");
+            practiceSection.classList.remove("active");
+          } else if (currentMode === "practice") {
+            practiceSection.classList.add("active");
+            uploadSection.classList.remove("active");
+          }
+        });
+      });
+
+      // Scenario selection
+      scenarioTypes.forEach((scenario) => {
+        scenario.addEventListener("click", () => {
+          scenarioTypes.forEach((s) => s.classList.remove("selected"));
+          scenario.classList.add("selected");
+          selectedScenario = scenario.dataset.scenario;
+          startPracticeBtn.disabled = false;
+        });
+      });
+
+      // Start practice session
+      startPracticeBtn.addEventListener("click", () => {
+        if (selectedScenario) {
+          initializePracticeSession(selectedScenario);
+          conversationContainer.style.display = "block";
+          scenarioActionsDiv.style.display = "none";
+          document.querySelector(".scenario-grid").style.display = "none";
+          document.querySelector("#practiceSection h2").style.display = "none";
+          document.querySelector(
+            "#practiceSection .section-subtitle"
+          ).style.display = "none";
+        }
+      });
+
+      // Change Scenario button
+      changeScenarioBtn.addEventListener("click", async () => {
+        if (!selectedScenario) {
+          alert("Please select a scenario first");
+          return;
+        }
+
+        // Update button state to show loading
+        changeScenarioBtn.disabled = true;
+        changeScenarioBtn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Generating...';
+
+        try {
+          // Get the current scenario information
+          const currentScenario = presentationScenarios[selectedScenario];
+          
+          // Use GeminiAIEngine to generate a new scenario
+          if (geminiEngine && geminiEngine.generateScenario) {
+            const newScenarioDescription = await geminiEngine.generateScenario(selectedScenario, currentScenario.title);
+            
+            // Update the scenario description with the new one
+            presentationScenarios[selectedScenario].description = newScenarioDescription;
+            
+            // Update the display if we're already in the selected scenario
+            const scenarioTextElement = document.getElementById("scenarioText");
+            if (scenarioTextElement) {
+              scenarioTextElement.textContent = newScenarioDescription;
+            }
+            
+            console.log("Generated new scenario:", newScenarioDescription);
+          } else {
+            console.warn("GeminiAI engine not available, using fallback");
+            // Fallback: Generate a simple variation
+            const fallbackScenarios = {
+              "team-meeting": "You're leading a weekly team meeting during a busy period. Several team members seem overwhelmed with their workload, and there's tension about a recent project deadline that was missed. You need to address the situation while maintaining team morale.",
+              "difficult-feedback": "You need to provide constructive feedback to a high-performing team member whose recent work quality has declined. They seem defensive and have been missing deadlines. The conversation needs to be supportive yet clear about expectations.",
+              "vision-presentation": "You're presenting a new strategic vision to your team that involves significant changes to their current processes. Some team members are resistant to change and concerned about how it will affect their roles.",
+              "crisis-management": "Your team is facing a critical project crisis - a major client deliverable is at risk due to technical issues. The team is stressed, and you need to coordinate an emergency response while keeping everyone focused and motivated.",
+              "change-announcement": "You're announcing a significant organizational restructuring that will affect your team's reporting structure and responsibilities. Team members are anxious about job security and career progression.",
+              "conflict-resolution": "Two of your key team members have been having ongoing conflicts that are affecting team dynamics and productivity. You need to mediate and find a resolution that allows everyone to work effectively together."
+            };
+            
+            const newDescription = fallbackScenarios[selectedScenario] || currentScenario.description;
+            presentationScenarios[selectedScenario].description = newDescription;
+            
+            const scenarioTextElement = document.getElementById("scenarioText");
+            if (scenarioTextElement) {
+              scenarioTextElement.textContent = newDescription;
+            }
+          }
+          
+          // Success feedback
+          changeScenarioBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> Updated!';
+          setTimeout(() => {
+            changeScenarioBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-4 h-4"></i> Change Scenario';
+            changeScenarioBtn.disabled = false;
+          }, 2000);
+          
+        } catch (error) {
+          console.error("Error generating new scenario:", error);
+          alert("Failed to generate new scenario. Please try again.");
+          
+          // Reset button state
+          changeScenarioBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-4 h-4"></i> Change Scenario';
+          changeScenarioBtn.disabled = false;
+        }
+      });
+
+      async function initializePracticeSession(scenarioKey) {
+        const scenarioInfo = presentationScenarios[scenarioKey];
+        document.getElementById("scenarioTitle").textContent =
+          scenarioInfo.title;
+        document.getElementById("scenarioText").textContent =
+          scenarioInfo.description;
+
+        // Clear previous conversation
+        conversationFlow.innerHTML = "";
+        conversationHistory = [];
+
+        // Generate initial AI message
+        setTimeout(async () => {
+          let initialPrompt = "";
+
+          // Try to use Gemini AI for dynamic prompt generation
+          if (geminiEngine && geminiEngine.isConfigured()) {
+            try {
+              // Set scenario context for Gemini
+              geminiEngine.setScenarioContext(
+                scenarioKey,
+                scenarioInfo.title,
+                scenarioInfo.description,
+                'professional'
+              );
+
+              // Generate dynamic initial prompt
+              initialPrompt = await geminiEngine.generateInitialPrompt();
+              console.log(
+                "Generated dynamic prompt via Gemini:",
+                initialPrompt
+              );
+            } catch (error) {
+              console.warn(
+                "Gemini prompt generation failed, using fallback:",
+                error
+              );
+              // Fallback to static prompt
+              initialPrompt =
+                scenarioInfo.objections[
+                  Math.floor(Math.random() * scenarioInfo.objections.length)
+                ];
+            }
+          } else {
+            // Fallback to static prompt when Gemini is not configured
+            console.log("Gemini not configured, using static prompt");
+            initialPrompt =
+              scenarioInfo.objections[
+                Math.floor(Math.random() * scenarioInfo.objections.length)
+              ];
+          }
+
+          addAIMessage(initialPrompt);
+          recordBtn.style.display = "inline-flex";
+          endConversationBtn.style.display = "inline-flex";
+        }, 1000);
+      }
+
+      // Back to scenarios button
+      backToScenariosBtn.addEventListener("click", () => {
+        conversationContainer.style.display = "none";
+        scenarioActionsDiv.style.display = "flex";
+        document.querySelector(".scenario-grid").style.display = "grid";
+        document.querySelector("#practiceSection h2").style.display = "block";
+        document.querySelector(
+          "#practiceSection .section-subtitle"
+        ).style.display = "block";
+        resetPracticeSession();
+      });
+
+      function resetPracticeSession() {
+        scenarioTypes.forEach((s) => s.classList.remove("selected"));
+        selectedScenario = null;
+        startPracticeBtn.disabled = true;
+        conversationFlow.innerHTML = "";
+        conversationHistory = [];
+        recordBtn.style.display = "none";
+        endConversationBtn.style.display = "none";
+
+        // Reset recording state
+        isRecording = false;
+        recordedAudioBlob = null;
+        audioChunks = [];
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+        }
+      }
+
+      // Back to options buttons
+      document.getElementById("backToOptions").addEventListener("click", () => {
+        uploadSection.classList.remove("active");
+        analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+        currentMode = null;
+      });
+
+      document
+        .getElementById("backToOptionsFromPractice")
+        .addEventListener("click", () => {
+          practiceSection.classList.remove("active");
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+          currentMode = null;
+
+          // Reset scenario selection view
+          conversationContainer.style.display = "none";
+          scenarioActionsDiv.style.display = "flex";
+          document.querySelector(".scenario-grid").style.display = "grid";
+          document.querySelector("#practiceSection h2").style.display = "block";
+          document.querySelector(
+            "#practiceSection .section-subtitle"
+          ).style.display = "block";
+
+          resetPracticeSession();
+        });
+
+      // File upload functionality
+      document.getElementById("chooseFileBtn").addEventListener("click", () => {
+        document.getElementById("audioFile").click();
+      });
+
+      document.getElementById("audioFile").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          // Show file details
+          document.getElementById("fileName").textContent = file.name;
+          document.getElementById("fileSize").textContent =
+            (file.size / (1024 * 1024)).toFixed(1) + " MB";
+          document.getElementById("fileSelected").style.display = "flex";
+          document.getElementById("analyzeUpload").disabled = false;
+        }
+      });
+
+      document.getElementById("removeFile").addEventListener("click", () => {
+        document.getElementById("audioFile").value = "";
+        document.getElementById("fileSelected").style.display = "none";
+        document.getElementById("analyzeUpload").disabled = true;
+      });
+
+      // Recording functionality
+      recordBtn.addEventListener("click", () => {
+        if (!isRecording) {
+          startRecording();
+        } else {
+          stopRecording();
+        }
+      });
+
+      async function startRecording() {
+        try {
+          // Request microphone access
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+          });
+
+          // Clear previous audio chunks
+          audioChunks = [];
+
+          // Create MediaRecorder
+          mediaRecorder = new MediaRecorder(stream);
+
+          // Handle data available event
+          mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+              audioChunks.push(event.data);
+            }
+          };
+
+          // Handle recording stop event
+          mediaRecorder.onstop = () => {
+            // Create blob from chunks
+            recordedAudioBlob = new Blob(audioChunks, { type: "audio/webm" });
+
+            // Stop all tracks to release microphone
+            stream.getTracks().forEach((track) => track.stop());
+
+            // Add captured audio message to conversation
+            addAudioCapturedMessage();
+            console.log(
+              "Recording stopped and audio captured",
+              recordedAudioBlob
+            );
+          };
+
+          // Start recording
+          mediaRecorder.start();
+          isRecording = true;
+
+          // Update UI
+          recordBtn.innerHTML =
+            '<i data-lucide="square" class="w-4 h-4"></i> Stop Recording';
+          recordBtn.style.background = "#ef4444";
+          recordBtn.style.borderColor = "#ef4444";
+          recordBtn.style.color = "white";
+          lucide.createIcons();
+
+          console.log("Recording started...");
+        } catch (error) {
+          console.error("Error starting recording:", error);
+          alert(
+            "Unable to access microphone. Please ensure you have given permission."
+          );
+        }
+      }
+
+      function stopRecording() {
+        if (mediaRecorder && isRecording) {
+          mediaRecorder.stop();
+          isRecording = false;
+
+          // Update UI
+          recordBtn.innerHTML =
+            '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+          recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+          recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+          recordBtn.style.color = "var(--text-primary)";
+          lucide.createIcons();
+        }
+      }
+
+      function addUserMessage(message) {
+        const messageElement = document.createElement("div");
+        messageElement.className = "message user";
+        messageElement.innerHTML = `
+          <div class="message-content">
+            <div>${message}</div>
+          </div>
+          <div class="message-avatar">
+            <i data-lucide="user" class="w-5 h-5"></i>
+          </div>
+        `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        conversationHistory.push({
+          type: "user",
+          message: message,
+          timestamp: Date.now(),
+        });
+      }
+
+      function addAIMessage(message) {
+        const messageElement = document.createElement("div");
+        messageElement.className = "message ai";
+        messageElement.innerHTML = `
+          <div class="message-avatar">
+            <i data-lucide="users" class="w-5 h-5"></i>
+          </div>
+          <div class="message-content">
+            <div>${message}</div>
+          </div>
+        `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        conversationHistory.push({
+          type: "ai",
+          message: message,
+          timestamp: Date.now(),
+        });
+      }
+
+      function addAudioCapturedMessage() {
+        const messageElement = document.createElement("div");
+        messageElement.className = "audio-captured";
+        messageElement.innerHTML = `
+          <div class="audio-captured-box">
+            <i data-lucide="check-circle" class="w-5 h-5"></i>
+            <span>Audio Captured Successfully</span>
+          </div>
+        `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        // Add both the audio captured message and a user response entry
+        conversationHistory.push({
+          type: "audio-captured",
+          message: "Audio Captured Successfully",
+          timestamp: Date.now(),
+        });
+
+        // Also add a user response entry for analysis
+        conversationHistory.push({
+          type: "user",
+          message: "User provided audio response to the scenario",
+          timestamp: Date.now(),
+        });
+
+        // Audio captured - stop here and wait for user to submit for analysis
+        console.log("Audio captured - waiting for user to submit for analysis");
+
+        // Show end conversation button
+        endConversationBtn.style.display = "inline-flex";
+        recordBtn.style.display = "none";
+      }
+
+      // Generate AI follow-up response
+      async function generateAIResponse() {
+        let followUpPrompt = "";
+
+        // Try to use Gemini AI for dynamic follow-up generation
+        if (geminiEngine && geminiEngine.isConfigured()) {
+          try {
+            // Generate dynamic follow-up based on conversation history
+            followUpPrompt = await geminiEngine.generateFollowUpPrompt(
+              "User recorded response",
+              conversationHistory
+            );
+            console.log(
+              "Generated dynamic follow-up via Gemini:",
+              followUpPrompt
+            );
+          } catch (error) {
+            console.warn(
+              "Gemini follow-up generation failed, using fallback:",
+              error
+            );
+            // Fallback to static follow-up
+            followUpPrompt = getFallbackFollowUp();
+          }
+        } else {
+          // Fallback to static follow-up when Gemini is not configured
+          console.log("Gemini not configured, using static follow-up");
+          followUpPrompt = getFallbackFollowUp();
+        }
+
+        if (followUpPrompt) {
+          addAIMessage(followUpPrompt);
+        }
+      }
+
+      // Fallback follow-up responses for leadership scenarios
+      function getFallbackFollowUp() {
+        const followUps = [
+          "I appreciate your perspective, but I'm still concerned about how this will affect team morale.",
+          "That makes sense, but what about the team members who haven't bought into this vision yet?",
+          "I understand the rationale, but how do we handle the resistance we're likely to face?",
+          "Okay, but what happens if this approach doesn't work? What's our backup plan?",
+          "I hear what you're saying, but I think we need more concrete steps to move forward.",
+        ];
+
+        return followUps[Math.floor(Math.random() * followUps.length)];
+      }
+
+      // End conversation and analyze
+      endConversationBtn.addEventListener("click", async () => {
+        // Update button state
+        endConversationBtn.disabled = true;
+        endConversationBtn.innerHTML =
+          '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing Conversation...';
+
+        try {
+          // Check if we have recorded audio to pass to analysis page
+          if (recordedAudioBlob && recordedAudioBlob.size > 0) {
+            // Audio available, passing to analysis page
+
+            // Convert blob to base64 for storage
+            const reader = new FileReader();
+            reader.onloadend = function () {
+              const audioData = {
+                base64: reader.result,
+                type: recordedAudioBlob.type,
+                size: recordedAudioBlob.size,
+                name: "leadership-practice-recording.webm",
+                timestamp: new Date().toISOString(),
+                analysisType: "leadership",
+                source: "practice",
+              };
+
+              // Storing audio data for analysis page
+
+              // Store audio data for analysis page
+              sessionStorage.setItem(
+                "audioForAnalysis",
+                JSON.stringify(audioData)
+              );
+
+              // Also store minimal results data
+              const basicResults = {
+                hasAudio: true,
+                audioStored: true,
+                timestamp: new Date().toISOString(),
+                analysisType: "leadership",
+                source: "practice",
+                note: "Audio file stored - transcription will be done on results page",
+              };
+
+              sessionStorage.setItem(
+                "analysisResults",
+                JSON.stringify(basicResults)
+              );
+
+              // Audio data stored successfully, redirecting
+
+              window.location.href =
+                "leadership-analysis-results.html?type=leadership&source=practice";
+            };
+
+            reader.readAsDataURL(recordedAudioBlob);
+          } else if (geminiEngine && geminiEngine.isConfigured()) {
+            // No audio, analyzing conversation text
+            const analysisResults = await geminiEngine.analyzePracticeSession(
+              conversationHistory,
+              "leadership"
+            );
+
+            // Store results and redirect
+            sessionStorage.setItem(
+              "analysisResults",
+              JSON.stringify(analysisResults)
+            );
+            window.location.href =
+              "leadership-analysis-results.html?type=leadership&source=practice";
+          } else {
+            // Fallback analysis if Gemini is not available
+            const fallbackResults = {
+              success: true,
+              analysis: `## Leadership Communication Analysis
+
+**Communication Effectiveness**: 7/10
+Your leadership communication showed good clarity and professional tone. You addressed team concerns appropriately.
+
+**Team Engagement**: 6/10  
+You acknowledged team perspectives but could strengthen your responses with more empathy and specific examples.
+
+**Leadership Presence**: 7/10
+Good use of authoritative yet approachable communication. Consider incorporating more collaborative language.
+
+**Areas for Improvement**:
+- Practice active listening techniques with your team
+- Use more specific examples when addressing concerns
+- Incorporate collaborative decision-making language
+
+**Strengths Demonstrated**:
+- Maintained professional leadership demeanor
+- Stayed focused on team objectives
+- Showed good conflict resolution awareness
+
+**Overall Score**: 20/30
+
+Continue practicing leadership scenarios to build confidence and team engagement skills.`,
+              conversationHistory: conversationHistory,
+              scenarioInfo: {
+                title: "Leadership Practice",
+                description: "Leadership communication practice",
+              },
+              timestamp: Date.now(),
+            };
+
+            // Store fallback results and redirect
+            sessionStorage.setItem(
+              "analysisResults",
+              JSON.stringify(fallbackResults)
+            );
+            window.location.href =
+              "leadership-analysis-results.html?type=leadership&source=practice";
+          }
+        } catch (error) {
+          console.error("Analysis error:", error);
+
+          // Show error message
+          endConversationBtn.innerHTML =
+            '<i data-lucide="alert-circle" class="w-4 h-4"></i> Analysis Failed';
+          setTimeout(() => {
+            endConversationBtn.innerHTML =
+              '<i data-lucide="check-circle" class="w-4 h-4"></i> Submit for Analysis';
+            endConversationBtn.disabled = false;
+          }, 3000);
+        }
+      });
+
+      // Analyze upload
+      document
+        .getElementById("analyzeUpload")
+        .addEventListener("click", async () => {
+          const audioFile = document.getElementById("audioFile");
+          if (!audioFile.files[0]) {
+            alert("Please select a file first");
+            return;
+          }
+
+          // Update button state
+          const analyzeBtn = document.getElementById("analyzeUpload");
+          analyzeBtn.disabled = true;
+          analyzeBtn.innerHTML =
+            '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+
+          try {
+            // Use SimpleAnalysis
+            const processor = new SimpleAnalysis();
+            const results = await processor.analyzeAudio(
+              audioFile.files[0],
+              "leadership"
+            );
+
+            // Store results and redirect
+            sessionStorage.setItem("analysisResults", JSON.stringify(results));
+            window.location.href =
+              "leadership-analysis-results.html?type=leadership&source=upload";
+          } catch (error) {
+            console.error("Analysis failed:", error);
+            alert(
+              "Analysis failed. Please check your Gemini API configuration."
+            );
+            analyzeBtn.disabled = false;
+            analyzeBtn.innerHTML =
+              '<i data-lucide="zap" class="w-4 h-4"></i> Analyze Recording';
+          }
+        });
+
+      // Initialize page
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

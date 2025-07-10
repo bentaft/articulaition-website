@@ -1,0 +1,3105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI-Powered Casual Conversation Analysis - Articulaition"
+    />
+    <title>Casual & Social Conversation Analysis - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Analysis System -->
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --primary-blue: #4a90e2;
+        --success-green: #10b981;
+        --client-teal: #0891b2;
+        --relationship-purple: #7c3aed;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --bg-primary: #fafbfc;
+        --bg-secondary: #f4f6f8;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Background Effects */
+      .dashboard-container {
+        background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 100%);
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .dashboard-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(74, 144, 226, 0.03) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(74, 144, 226, 0.025) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(16, 185, 129, 0.02) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(245, 158, 11, 0.015) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Animation Classes */
+      .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+        opacity: 0;
+      }
+
+      .slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .scale-in {
+        animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes scaleIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-500 {
+        animation-delay: 0.5s;
+      }
+
+      /* Header Styling */
+      .main-header {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .logo-section img {
+        height: 32px;
+        width: auto;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--text-primary);
+      }
+
+      .nav-link.active {
+        color: var(--voice-primary);
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid #4a90e2;
+        border-radius: 0;
+        padding-bottom: 0.4rem;
+      }
+
+      /* Navigation Branding with Shiny Effect */
+      .nav-orange {
+        color: #f59e0b;
+        font-weight: 700;
+      }
+
+      .nav-blue {
+        color: #3b82f6;
+        font-weight: 700;
+      }
+
+      /* Glass Effect */
+      .glass-intense {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        color: var(--text-secondary);
+      }
+
+      .breadcrumb .current {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      /* Page Title Section */
+      .page-title-section {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .title-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .page-description {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* Analysis Options Grid */
+      .analysis-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .analysis-option {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.06);
+        border-radius: 24px;
+        padding: 2.5rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .analysis-option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .analysis-option:hover {
+        transform: translateY(-8px);
+        border-color: rgba(74, 144, 226, 0.3);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .analysis-option:hover::before {
+        opacity: 1;
+      }
+
+      .analysis-option.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-4px);
+      }
+
+      .option-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        border-radius: 20px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .analysis-option:hover .option-icon {
+        transform: scale(1.1);
+      }
+
+      .option-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-features {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .features-list {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      /* Upload Section */
+      .upload-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .upload-section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-subtitle {
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-center {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-option-single {
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px dashed rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 3rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .upload-option-single:hover {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.02);
+      }
+
+      .file-selected {
+        margin-top: 1.5rem;
+        background: rgba(16, 185, 129, 0.05);
+        border: 2px solid rgba(16, 185, 129, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .file-selected .file-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--success-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .file-selected .file-details {
+        flex: 1;
+        text-align: left;
+      }
+
+      .file-selected .file-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+
+      .file-selected .file-size {
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+      }
+
+      .file-selected .remove-file {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .file-selected .remove-file:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+
+      .upload-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1rem;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .upload-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .upload-button {
+        background: var(--primary-blue);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .upload-button:hover {
+        background: var(--relationship-purple);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* AI Practice Section */
+      .ai-practice-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .ai-practice-section.active {
+        display: block;
+      }
+
+      /* Scenario Grid */
+      .scenario-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .scenario-type {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-type:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary-blue);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .scenario-type.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-2px);
+      }
+
+      .scenario-type::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .scenario-type:hover::before,
+      .scenario-type.selected::before {
+        opacity: 1;
+      }
+
+      .scenario-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 1.5rem;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .scenario-type:hover .scenario-icon {
+        transform: scale(1.1);
+      }
+
+      .scenario-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-description {
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+        position: relative;
+        z-index: 2;
+        font-weight: 500;
+      }
+
+      /* Scenario Details */
+      .scenario-details {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px 0;
+      }
+
+      .scenario-section {
+        margin-bottom: 30px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-left: 4px solid var(--primary-blue);
+      }
+
+      .scenario-section h3 {
+        color: var(--primary-blue);
+      }
+
+      /* Enhanced Combined Scenario Section */
+      .enhanced-scenario-section {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        border: 1px solid rgba(74, 144, 226, 0.1);
+        padding: 0;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+      }
+
+      .enhanced-scenario-section:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .scenario-header {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--relationship-purple) 100%);
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .scenario-icon-small {
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .scenario-header h3 {
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      .scenario-content {
+        padding: 24px;
+      }
+
+      .scenario-context p {
+        margin: 0 0 20px 0;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+        padding: 16px;
+        background: rgba(74, 144, 226, 0.04);
+        border-radius: 12px;
+        border-left: 4px solid var(--primary-blue);
+      }
+
+      .conversation-starter {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .starter-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .starter-icon {
+        font-size: 1.2rem;
+      }
+
+      .starter-text {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .conversation-starter p {
+        margin: 0;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+        font-style: italic;
+        position: relative;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .conversation-starter p::before {
+        content: '"';
+        position: absolute;
+        top: -4px;
+        left: 0;
+        font-size: 2rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        font-family: serif;
+      }
+
+      .conversation-starter p::after {
+        content: '"';
+        position: absolute;
+        bottom: -12px;
+        right: 0;
+        font-size: 2rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        font-family: serif;
+      }
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .scenario-section p {
+        color: var(--text-primary);
+        line-height: 1.6;
+        margin-bottom: 0;
+      }
+
+      .scenario-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .scenario-section li {
+        color: var(--text-primary);
+        line-height: 1.6;
+        margin-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+      }
+
+      .scenario-section li:before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--primary-blue);
+        font-weight: bold;
+      }
+
+      /* Conversation Interface */
+      .conversation-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .scenario-intro {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        padding: 2rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-intro::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>')
+          repeat;
+        opacity: 0.3;
+      }
+
+      .scenario-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        position: relative;
+        z-index: 2;
+      }
+
+      .conversation-flow {
+        space-y: 1.5rem;
+      }
+
+      .message {
+        display: flex;
+        margin-bottom: 1.5rem;
+      }
+
+      .message.ai {
+        justify-content: flex-start;
+      }
+
+      .message.user {
+        justify-content: flex-end;
+      }
+
+      .message-content {
+        max-width: 80%;
+        padding: 1.25rem 1.5rem;
+        border-radius: 20px;
+        position: relative;
+      }
+
+      .message.ai .message-content {
+        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-bottom-left-radius: 8px;
+      }
+
+      .message.user .message-content {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        border-bottom-right-radius: 8px;
+      }
+
+      .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 1rem;
+        flex-shrink: 0;
+      }
+
+      .message.ai .message-avatar {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        order: -1;
+      }
+
+      .message.user .message-avatar {
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+      }
+
+      /* Audio Captured Message */
+      .audio-captured {
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .audio-captured-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 16px;
+        font-weight: 600;
+        box-shadow: var(--shadow-md);
+        animation: slideInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes slideInScale {
+        0% {
+          opacity: 0;
+          transform: translateY(20px) scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .primary-button {
+        background: linear-gradient(135deg, #4a90e2, #7c3aed) !important;
+        color: white !important;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .primary-button:hover:not(:disabled) {
+        background: linear-gradient(135deg, #7c3aed, #4a90e2) !important;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .primary-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .secondary-button {
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--text-primary);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .secondary-button:hover {
+        background: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Ensure record button is clickable */
+      #recordButton {
+        pointer-events: auto !important;
+        z-index: 100;
+        position: relative;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 2rem 1rem;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .analysis-options {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .analysis-option {
+          padding: 2rem;
+        }
+
+        .option-icon {
+          width: 64px;
+          height: 64px;
+        }
+
+        .scenario-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+
+        .message-content {
+          max-width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="main-header fade-in">
+        <nav class="header-nav">
+          <div class="logo-section">
+            <a href="index.html" class="flex items-center gap-3 group">
+              <img
+                src="images/tree-logo.svg"
+                alt="Tree Logo"
+                class="h-9 w-auto group-hover:scale-105 transition-transform"
+              />
+              <span
+                class="font-semibold text-lg tracking-tight nav-brand-text"
+                style="margin-left: 0.25rem"
+              >
+                <span class="nav-orange">articul</span
+                ><span class="nav-blue">ai</span
+                ><span class="nav-orange">tion</span
+                ><span class="nav-orange">.com</span>
+              </span>
+            </a>
+            <div class="nav-links">
+              <a href="dashboard.html" class="nav-link">Home</a>
+              <a href="professional-communication.html" class="nav-link"
+                >Professional Communication</a
+              >
+              <a href="personal-communication.html" class="nav-link active"
+                >Personal Communication</a
+              >
+              <a href="improvement-hub.html" class="nav-link"
+                >Improvement Hub</a
+              >
+              <a href="pricing.html" class="nav-link">Pricing</a>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <!-- User Dropdown -->
+            <div class="relative">
+              <button
+                class="flex items-center gap-3 px-4 py-2 rounded-xl bg-white bg-opacity-10 hover:bg-opacity-15 transition-all"
+                id="userMenuBtn"
+              >
+                <div
+                  id="userAvatar"
+                  style="
+                    width: 32px;
+                    height: 32px;
+                    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: 700;
+                    font-size: 14px;
+                  "
+                >
+                  U
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+                    margin-left: 8px;
+                  "
+                >
+                  <span
+                    id="userName"
+                    style="
+                      color: var(--text-primary);
+                      font-weight: 500;
+                      font-size: 14px;
+                      line-height: 1.2;
+                    "
+                    >Account</span
+                  >
+                  <span
+                    id="userPlan"
+                    style="
+                      background: linear-gradient(135deg, #10b981, #06b6d4);
+                      color: white;
+                      padding: 2px 8px;
+                      border-radius: 12px;
+                      font-size: 10px;
+                      font-weight: 600;
+                      width: fit-content;
+                      margin-top: 2px;
+                    "
+                    >Free Plan</span
+                  >
+                </div>
+                <i
+                  data-lucide="chevron-down"
+                  style="
+                    width: 16px;
+                    height: 16px;
+                    color: var(--text-secondary);
+                  "
+                ></i>
+              </button>
+              <div
+                class="absolute right-0 top-full mt-2 w-48 glass-intense rounded-xl shadow-2xl border border-black border-opacity-10 hidden"
+                id="userDropdown"
+              >
+                <a
+                  href="#"
+                  class="flex items-center gap-3 px-4 py-3 hover:bg-black hover:bg-opacity-10 rounded-t-xl"
+                  style="color: var(--text-primary); font-weight: 400"
+                >
+                  <i data-lucide="user" style="width: 16px; height: 16px"></i>
+                  <span style="font-size: 14px">Profile Settings</span>
+                </a>
+                <a
+                  href="#"
+                  class="flex items-center gap-3 px-4 py-3 hover:bg-black hover:bg-opacity-10"
+                  style="color: var(--text-primary); font-weight: 400"
+                >
+                  <i
+                    data-lucide="credit-card"
+                    style="width: 16px; height: 16px"
+                  ></i>
+                  <span style="font-size: 14px">Billing & Plans</span>
+                </a>
+                <a
+                  href="#"
+                  class="flex items-center gap-3 px-4 py-3 hover:bg-black hover:bg-opacity-10"
+                  style="color: var(--text-primary); font-weight: 400"
+                >
+                  <i
+                    data-lucide="settings"
+                    style="width: 16px; height: 16px"
+                  ></i>
+                  <span style="font-size: 14px">Preferences</span>
+                </a>
+                <hr style="border-color: rgba(0, 0, 0, 0.1); margin: 8px 0" />
+                <button
+                  class="flex items-center gap-3 px-4 py-3 hover:bg-red-500 hover:bg-opacity-20 w-full text-left text-red-400 rounded-b-xl"
+                  id="logoutBtn"
+                  style="font-weight: 400"
+                >
+                  <i
+                    data-lucide="log-out"
+                    style="width: 16px; height: 16px"
+                  ></i>
+                  <span style="font-size: 14px">Sign Out</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb slide-up delay-100">
+          <a href="dashboard.html">Dashboard</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <a href="personal-communication.html">Personal</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <span class="current">Casual Conversation Analysis</span>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title-section slide-up delay-200">
+          <div class="title-with-icon">
+            <div class="title-icon">
+              <i data-lucide="users" class="w-6 h-6"></i>
+            </div>
+            <h1 class="page-title">Casual & Social Conversation Analysis</h1>
+          </div>
+          <p class="page-description">
+            Master everyday interactions with AI-powered analysis and practice.
+            Perfect your small talk, social connections, and casual
+            conversations.
+          </p>
+        </div>
+
+        <!-- Analysis Options -->
+        <div class="analysis-options">
+          <!-- Upload Existing Recording -->
+          <div class="analysis-option scale-in delay-300" data-type="upload">
+            <div class="option-icon">
+              <i data-lucide="upload" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">Upload Conversation</h3>
+            <p class="option-description">
+              Upload an existing casual conversation recording for detailed
+              analysis and feedback.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Flow analysis • Engagement metrics • Natural rhythm • Connection
+                quality
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Practice Session -->
+          <div class="analysis-option scale-in delay-400" data-type="practice">
+            <div class="option-icon">
+              <i data-lucide="message-circle" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">AI Practice Scenarios</h3>
+            <p class="option-description">
+              Explore 6 different casual conversation scenarios to understand
+              communication dynamics and practice techniques.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Social scenarios • Communication tips • Conversation guides •
+                Best practices
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+          <h2 class="section-title">Upload Your Conversation</h2>
+          <p class="section-subtitle">
+            Upload an audio or video file of your casual conversation for
+            detailed analysis
+          </p>
+
+          <div class="upload-center">
+            <div class="upload-option-single" id="fileUpload">
+              <div class="upload-icon">
+                <i data-lucide="folder" class="w-6 h-6"></i>
+              </div>
+              <div class="upload-title">Choose File</div>
+              <div class="upload-description">
+                Select an audio or video file from your device (MP3, M4A, WAV,
+                MP4, MOV)
+              </div>
+              <button class="upload-button" id="chooseFileBtn">
+                <i data-lucide="upload" class="w-4 h-4"></i>
+                Select File
+              </button>
+              <input
+                type="file"
+                id="audioFile"
+                accept=".mp3,.m4a,.wav,.mp4,.mov"
+                hidden
+              />
+
+              <div
+                class="file-selected"
+                id="fileSelected"
+                style="display: none"
+              >
+                <div class="file-icon">
+                  <i data-lucide="file-audio" class="w-5 h-5"></i>
+                </div>
+                <div class="file-details">
+                  <div class="file-name" id="fileName">conversation.mp4</div>
+                  <div class="file-size" id="fileSize">2.4 MB</div>
+                </div>
+                <button class="remove-file" id="removeFile">
+                  <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="secondary-button" id="backToOptions">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="primary-button" id="analyzeUpload" disabled>
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              Analyze Recording
+            </button>
+          </div>
+        </div>
+
+        <!-- Practice Information Section -->
+        <div class="ai-practice-section" id="practiceSection">
+          <h2 class="section-title">
+            Choose Your Casual Conversation Scenario
+          </h2>
+          <p class="section-subtitle">
+            Select a social scenario to learn communication techniques and best
+            practices
+          </p>
+
+          <!-- Scenario Selection Grid -->
+          <div class="scenario-grid">
+            <div class="scenario-type" data-scenario="meeting-new-people">
+              <div class="scenario-icon">
+                <i data-lucide="users" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Meeting New People</div>
+              <div class="scenario-description">
+                Practice natural introductions and conversation starters at
+                networking mixers
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="workplace-smalltalk">
+              <div class="scenario-icon">
+                <i data-lucide="coffee" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Workplace Small Talk</div>
+              <div class="scenario-description">
+                Navigate casual conversations with colleagues and build
+                workplace relationships
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="neighbors-community">
+              <div class="scenario-icon">
+                <i data-lucide="home" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Neighbors & Community</div>
+              <div class="scenario-description">
+                Connect with neighbors and participate in community
+                conversations
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="shared-interests">
+              <div class="scenario-icon">
+                <i data-lucide="heart" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Shared Interests</div>
+              <div class="scenario-description">
+                The art of connecting through common passions, hobbies, and
+                experiences that create instant rapport and meaningful bonds
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="awkward-recovery">
+              <div class="scenario-icon">
+                <i data-lucide="refresh-cw" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Awkward Recovery</div>
+              <div class="scenario-description">
+                Handle awkward moments gracefully and keep conversations flowing
+                naturally
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="party-events">
+              <div class="scenario-icon">
+                <i data-lucide="party-popper" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Party & Social Events</div>
+              <div class="scenario-description">
+                Engage confidently at parties, celebrations, and social
+                gatherings
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="conversation-container"
+            id="conversationContainer"
+            style="display: none"
+          >
+            <!-- Scenario Introduction -->
+            <div class="scenario-intro">
+              <div class="scenario-title">
+                <i data-lucide="users" class="w-5 h-5 inline mr-2"></i>
+                <span id="scenarioTitle">Conversation Scenario</span>
+              </div>
+              <div class="scenario-text" id="scenarioText">
+                Learn about this casual conversation scenario.
+              </div>
+            </div>
+
+            <!-- Combined Scenario & Conversation Starter -->
+            <div class="scenario-details" id="scenarioDetails">
+              <div class="enhanced-scenario-section">
+                <div class="scenario-header">
+                  <div class="scenario-icon-small">
+                    <i data-lucide="play-circle" class="w-4 h-4"></i>
+                  </div>
+                  <h3>Your Practice Scenario</h3>
+                </div>
+                <div class="scenario-content">
+                  <div class="scenario-context">
+                    <p id="scenarioContext">
+                      Scenario details will appear here.
+                    </p>
+                  </div>
+                  <div
+                    class="conversation-starter"
+                    id="conversationPrompt"
+                    style="display: none"
+                  >
+                    <p id="conversationPromptText">
+                      Generating conversation prompt...
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="action-buttons">
+              <button class="secondary-button" id="backToScenarios">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Scenarios
+              </button>
+              <button class="secondary-button" id="newStarter">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                New Starter
+              </button>
+              <button class="secondary-button" id="recordButton">
+                <i data-lucide="mic" class="w-4 h-4"></i>
+                Record Response
+              </button>
+              <button class="primary-button" id="submitForAnalysis">
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                Submit for Analysis
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons" id="scenarioActions">
+            <button class="secondary-button" id="backToOptionsFromPractice">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="primary-button" id="startPractice" disabled>
+              <i data-lucide="play" class="w-4 h-4"></i>
+              Start Conversation Practice
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <!-- API Configuration - Copy api-config-template.js to api-config.js and add your keys -->
+    <script src="js/api-config.js"></script>
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Initialize Gemini AI Engine
+      const aiEngine = new GeminiAIEngine();
+      // Make it globally available
+      window.geminiEngine = aiEngine;
+
+      // Analysis function for personal communication
+      async function analyzeConversation(audioBlob, analysisType) {
+        console.log(
+          "Starting personal communication analysis...",
+          analysisType
+        );
+
+        // Convert blob to file for analysis
+        const audioFile = new File([audioBlob], "recording.webm", {
+          type: audioBlob.type,
+        });
+
+        try {
+          // Initialize analysis system
+          const simpleAnalysis = new SimpleAnalysis();
+
+          // Get transcript from audio
+          console.log("Transcribing audio...");
+          const analysisResult = await simpleAnalysis.analyzeAudio(
+            audioFile,
+            "personal"
+          );
+
+          // Extract conversation type from analysisType (e.g., 'personal-casual' -> 'casual-conversation')
+          const conversationType = "casual-conversation";
+
+          // Perform AI analysis using personal communication engine
+          let personalAnalysis;
+          if (
+            analysisResult.transcript &&
+            analysisResult.transcript.length > 20
+          ) {
+            console.log("📝 Using demo personal analysis for testing...");
+            personalAnalysis =
+              simpleAnalysis.getPersonalDemoAnalysis(conversationType);
+          } else {
+            console.log("📝 Using demo personal analysis...");
+            personalAnalysis =
+              simpleAnalysis.getPersonalDemoAnalysis(conversationType);
+          }
+
+          return {
+            ...analysisResult,
+            personalAnalysis: personalAnalysis,
+            conversationType: conversationType,
+            analysisType: analysisType,
+            timestamp: Date.now(),
+            status: "analyzed",
+          };
+        } catch (error) {
+          console.error("Analysis error:", error);
+
+          // Return error result with audio preserved
+          return {
+            audioBlob: audioBlob,
+            audioFile: audioFile,
+            analysisType: analysisType,
+            timestamp: Date.now(),
+            status: "error",
+            error: error.message,
+            transcript: "Error transcribing audio. Please try again.",
+            personalAnalysis: getErrorAnalysis(analysisType),
+          };
+        }
+      }
+
+      // Error analysis function for when analysis fails
+      function getErrorAnalysis(analysisType) {
+        return {
+          score: 0,
+          analysis:
+            "Unable to analyze audio due to processing error. Please try recording again with clear audio.",
+          metrics: {},
+          insights: ["❌ Unable to analyze audio. Please try recording again."],
+          recommendations: [
+            "Ensure you have a good microphone connection and speak clearly.",
+            "Check that your audio recording is not too quiet or too loud.",
+            "Try recording in a quiet environment with minimal background noise.",
+          ],
+        };
+      }
+
+      // Personal communication analysis based on provided criteria
+      async function analyzePersonalCommunication(
+        transcript,
+        conversationType,
+        baseAnalysis
+      ) {
+        console.log("Analyzing personal communication:", conversationType);
+
+        if (!transcript) {
+          return getErrorAnalysis(conversationType);
+        }
+
+        // Calculate basic metrics from transcript
+        const words = transcript.split(/\s+/).filter((word) => word.length > 0);
+        const sentences = transcript
+          .split(/[.!?]+/)
+          .filter((s) => s.trim().length > 0);
+        const wordCount = words.length;
+
+        // Estimate speech duration (assuming 150 WPM average)
+        const estimatedDuration = wordCount / 150; // in minutes
+        const speechRate =
+          estimatedDuration > 0 ? Math.round(wordCount / estimatedDuration) : 0;
+
+        // Calculate filler words
+        const fillerWords = ["um", "uh", "like", "you know", "so", "well"];
+        const fillerCount = words.filter((word) =>
+          fillerWords.includes(word.toLowerCase().replace(/[^\w]/g, ""))
+        ).length;
+        const fillersPerMinute =
+          estimatedDuration > 0
+            ? (fillerCount / estimatedDuration).toFixed(1)
+            : 0;
+
+        // Calculate sentiment (basic positive/negative word count)
+        const positiveWords = [
+          "good",
+          "great",
+          "amazing",
+          "wonderful",
+          "excellent",
+          "fantastic",
+          "love",
+          "enjoy",
+          "happy",
+          "excited",
+        ];
+        const negativeWords = [
+          "bad",
+          "terrible",
+          "awful",
+          "hate",
+          "dislike",
+          "frustrated",
+          "angry",
+          "sad",
+          "disappointed",
+        ];
+
+        const positiveCount = words.filter((word) =>
+          positiveWords.includes(word.toLowerCase().replace(/[^\w]/g, ""))
+        ).length;
+        const negativeCount = words.filter((word) =>
+          negativeWords.includes(word.toLowerCase().replace(/[^\w]/g, ""))
+        ).length;
+
+        const sentimentScore =
+          positiveCount + negativeCount > 0
+            ? Math.round(
+                (positiveCount / (positiveCount + negativeCount)) * 100
+              )
+            : 60;
+
+        // Count questions
+        const questionCount = (transcript.match(/\?/g) || []).length;
+        const questionsPerHour =
+          estimatedDuration > 0
+            ? Math.round((questionCount / estimatedDuration) * 60)
+            : 0;
+
+        // Count "I" vs "You" statements
+        const iStatements = (transcript.match(/\bI\s/gi) || []).length;
+        const youStatements = (transcript.match(/\byou\s/gi) || []).length;
+        const iVsYouRatio =
+          youStatements > 0
+            ? (iStatements / youStatements).toFixed(1)
+            : iStatements;
+
+        // Generate analysis based on conversation type
+        switch (conversationType) {
+          case "casual":
+            return analyzeCasualConversation(transcript, {
+              speechRate,
+              fillersPerMinute,
+              sentimentScore,
+              wordCount,
+              questionCount,
+              estimatedDuration,
+              positiveCount,
+              negativeCount,
+            });
+
+          default:
+            return analyzeCasualConversation(transcript, {
+              speechRate,
+              fillersPerMinute,
+              sentimentScore,
+              wordCount,
+              questionCount,
+              estimatedDuration,
+              positiveCount,
+              negativeCount,
+            });
+        }
+      }
+
+      // Casual & Social Conversation Analysis - FULL CRITERIA IMPLEMENTATION
+      function analyzeCasualConversation(transcript, metrics) {
+        console.log("🎯 Implementing FULL Casual Conversation Criteria");
+        const {
+          speechRate,
+          fillersPerMinute,
+          sentimentScore,
+          questionCount,
+          estimatedDuration,
+          wordCount,
+        } = metrics;
+
+        // QUANTITATIVE METRICS - EXACT IMPLEMENTATION PER CRITERIA
+
+        // 1. Talk/Listen Ratio (Ideal: 40% talking, 60% listening for casual)
+        // Since we only have one side, estimate based on response length vs typical conversation
+        const avgCasualResponseWords = 50; // Typical casual response
+        const talkListenRatio = Math.min(
+          1.0,
+          wordCount / avgCasualResponseWords
+        ).toFixed(2);
+        let talkListenScore =
+          talkListenRatio <= 0.6
+            ? 100
+            : Math.max(60, 100 - (talkListenRatio - 0.6) * 100);
+
+        // 2. Average Pause/Patience (Ideal: 0.5-1.5 seconds for casual)
+        // Estimate based on speech rate and filler words
+        const avgPausePatience =
+          fillersPerMinute < 2
+            ? "1.2s"
+            : fillersPerMinute < 4
+            ? "0.8s"
+            : "0.3s";
+        const pauseScore =
+          fillersPerMinute < 2 ? 100 : fillersPerMinute < 4 ? 80 : 60;
+
+        // 3. Interactivity Score (Speaker switches per minute - simulated)
+        const interactivityScore =
+          questionCount > 0 ? Math.min(100, questionCount * 20) : 40;
+
+        // 4. Empathy Signals ("I hear you," "That makes sense," etc.)
+        const empathyPhrases = [
+          "i hear",
+          "makes sense",
+          "i understand",
+          "i see",
+          "that sounds",
+          "i get",
+        ];
+        const empathySignals = empathyPhrases.reduce((count, phrase) => {
+          return (
+            count +
+            (transcript.toLowerCase().match(new RegExp(phrase, "g")) || [])
+              .length
+          );
+        }, 0);
+        const empathyScore = Math.min(100, empathySignals * 25 + 40);
+
+        // 5. Interruptions (Estimate based on sentence fragments)
+        const sentenceFragments = transcript
+          .split(/[.!?]/)
+          .filter((s) => s.trim().length > 0 && s.trim().length < 20).length;
+        const interruptions = Math.max(0, sentenceFragments - 2);
+        const interruptionScore = Math.max(60, 100 - interruptions * 10);
+
+        // 6. Pitch & Volume Consistency (Simulated based on exclamation marks and caps)
+        const exclamations = (transcript.match(/!/g) || []).length;
+        const capsWords = (transcript.match(/\b[A-Z]{2,}\b/g) || []).length;
+        const pitchVolumeScore =
+          exclamations <= 2 && capsWords <= 1
+            ? 100
+            : Math.max(70, 100 - (exclamations + capsWords) * 5);
+
+        // 7. Descriptive Language (Adjectives and descriptive words)
+        const descriptiveWords = [
+          "beautiful",
+          "amazing",
+          "interesting",
+          "wonderful",
+          "cool",
+          "awesome",
+          "nice",
+          "great",
+          "fun",
+          "exciting",
+        ];
+        const descriptiveCount = descriptiveWords.reduce((count, word) => {
+          return (
+            count +
+            (
+              transcript
+                .toLowerCase()
+                .match(new RegExp("\\b" + word + "\\b", "g")) || []
+            ).length
+          );
+        }, 0);
+        const descriptiveScore = Math.min(100, descriptiveCount * 20 + 60);
+
+        // 8. Positive Affirmations ("Yes," "Absolutely," "Totally")
+        const affirmationWords = [
+          "yes",
+          "absolutely",
+          "totally",
+          "definitely",
+          "exactly",
+          "right",
+          "true",
+        ];
+        const affirmationCount = affirmationWords.reduce((count, word) => {
+          return (
+            count +
+            (
+              transcript
+                .toLowerCase()
+                .match(new RegExp("\\b" + word + "\\b", "g")) || []
+            ).length
+          );
+        }, 0);
+        const affirmationScore = Math.min(100, affirmationCount * 15 + 50);
+
+        // 9. Laughter/Engagement ("haha," "lol," emotional expressions)
+        const laughterWords = [
+          "haha",
+          "lol",
+          "funny",
+          "hilarious",
+          "laugh",
+          "hehe",
+        ];
+        const laughterCount = laughterWords.reduce((count, word) => {
+          return (
+            count +
+            (
+              transcript
+                .toLowerCase()
+                .match(new RegExp("\\b" + word + "\\b", "g")) || []
+            ).length
+          );
+        }, 0);
+        const laughterScore = Math.min(100, laughterCount * 25 + 60);
+
+        // Calculate weighted overall score
+        const overallScore = Math.round(
+          talkListenScore * 0.15 +
+            pauseScore * 0.1 +
+            interactivityScore * 0.15 +
+            empathyScore * 0.15 +
+            interruptionScore * 0.1 +
+            pitchVolumeScore * 0.1 +
+            descriptiveScore * 0.1 +
+            affirmationScore * 0.1 +
+            laughterScore * 0.05
+        );
+
+        // QUALITATIVE ASSESSMENTS
+        const qualitativeAssessments = generateCasualQualitativeAssessments(
+          transcript,
+          {
+            talkListenRatio,
+            empathySignals,
+            descriptiveCount,
+            affirmationCount,
+            laughterCount,
+          }
+        );
+
+        return {
+          overallScore: overallScore,
+          metrics: {
+            // Quantitative Metrics
+            talkListenRatio: parseFloat(talkListenRatio),
+            avgPausePatience: avgPausePatience,
+            interactivityScore: interactivityScore,
+            empathySignals: empathySignals,
+            interruptions: interruptions,
+            pitchVolumeScore: pitchVolumeScore,
+            descriptiveLanguage: descriptiveCount,
+            positiveAffirmations: affirmationCount,
+            laughterEngagement: laughterCount,
+
+            // Legacy metrics for compatibility
+            speechRate: speechRate,
+            fillersPerMinute: parseFloat(fillersPerMinute),
+            sentimentScore: sentimentScore,
+            questionCount: questionCount,
+            estimatedDuration: estimatedDuration.toFixed(1),
+          },
+          qualitativeAssessments: qualitativeAssessments,
+          insights: generateCasualInsights(
+            overallScore,
+            empathySignals,
+            descriptiveCount,
+            laughterCount
+          ),
+          recommendations: generateCasualRecommendations(
+            talkListenScore,
+            empathyScore,
+            descriptiveScore,
+            affirmationScore
+          ),
+        };
+      }
+
+      // QUALITATIVE ASSESSMENT FUNCTIONS - FULL IMPLEMENTATION
+
+      function generateCasualQualitativeAssessments(transcript, data) {
+        const {
+          talkListenRatio,
+          empathySignals,
+          descriptiveCount,
+          affirmationCount,
+          laughterCount,
+        } = data;
+
+        return {
+          tone:
+            talkListenRatio <= 0.6
+              ? "Warm and inviting - appropriate balance of sharing and space for others"
+              : "May be talking too much - consider leaving more space for the other person",
+          clarity:
+            empathySignals >= 2
+              ? "Clear empathetic responses showing you understand others"
+              : 'Could use more validating phrases like "I hear you" or "That makes sense"',
+          engagement:
+            laughterCount >= 1
+              ? "Shows good humor and engagement with appropriate lightness"
+              : "Could benefit from more humor and lightness in casual settings",
+          authenticity:
+            descriptiveCount >= 2
+              ? "Uses vivid language that makes conversations more engaging"
+              : "Could use more descriptive words to paint clearer pictures",
+          warmth:
+            affirmationCount >= 2
+              ? "Shows good agreement and positive reinforcement"
+              : 'Could use more affirmations like "absolutely" or "exactly" to show connection',
+        };
+      }
+
+      // Updated insight functions
+      function generateCasualInsights(
+        overallScore,
+        empathySignals,
+        descriptiveCount,
+        laughterCount
+      ) {
+        let insights = [];
+
+        if (overallScore >= 85) {
+          insights.push(
+            "✅ Excellent casual conversation skills with natural flow and engagement."
+          );
+        } else if (overallScore >= 70) {
+          insights.push(
+            "💬 Good conversational foundation with room for improvement."
+          );
+        } else {
+          insights.push(
+            "🎯 Focus on building more engaging and balanced conversation skills."
+          );
+        }
+
+        if (empathySignals >= 2) {
+          insights.push("✅ Shows good empathy and validation in responses.");
+        } else {
+          insights.push(
+            "🤝 Could use more empathetic responses like 'I hear you' or 'That makes sense'."
+          );
+        }
+
+        if (descriptiveCount >= 2) {
+          insights.push(
+            "✅ Uses vivid language that makes conversations more interesting."
+          );
+        } else {
+          insights.push(
+            "🎨 Could paint clearer pictures with more descriptive language."
+          );
+        }
+
+        if (laughterCount >= 1) {
+          insights.push(
+            "✅ Brings appropriate humor and lightness to the conversation."
+          );
+        } else {
+          insights.push(
+            "😄 Could benefit from more humor and playful engagement."
+          );
+        }
+
+        return insights;
+      }
+
+      function generateCasualRecommendations(
+        talkListenScore,
+        empathyScore,
+        descriptiveScore,
+        affirmationScore
+      ) {
+        let recommendations = [];
+
+        if (talkListenScore < 80) {
+          recommendations.push(
+            "Work on talk/listen balance - aim for 40% talking, 60% listening in casual conversations."
+          );
+        }
+
+        if (empathyScore < 80) {
+          recommendations.push(
+            "Use more empathetic phrases like 'I hear you', 'That makes sense', or 'I understand'."
+          );
+        }
+
+        if (descriptiveScore < 80) {
+          recommendations.push(
+            "Add more descriptive language to make your stories and responses more vivid and engaging."
+          );
+        }
+
+        if (affirmationScore < 80) {
+          recommendations.push(
+            "Use positive affirmations like 'absolutely', 'exactly', or 'totally' to show agreement."
+          );
+        }
+
+        recommendations.push(
+          "Practice active listening with validation and ask follow-up questions to show genuine interest."
+        );
+
+        return recommendations;
+      }
+
+      function getErrorAnalysis(conversationType) {
+        return {
+          overallScore: 0,
+          metrics: {},
+          insights: ["❌ Unable to analyze audio. Please try recording again."],
+          recommendations: [
+            "Ensure you have a good microphone connection and speak clearly.",
+          ],
+        };
+      }
+
+      // Casual conversation scenarios
+      const casualScenarios = {
+        "meeting-new-people": {
+          title: "Meeting New People",
+          description:
+            "Building initial connections with strangers through approachable conversation that creates comfort and openness.",
+          whatWeLookFor:
+            "Casual conversation serves as the foundation for all human relationships and professional opportunities. It's the gateway skill that allows us to transform strangers into connections, creating the social bonds that enrich our personal lives and advance our careers.",
+        },
+        "workplace-smalltalk": {
+          title: "Workplace Small Talk",
+          description:
+            "Building rapport with colleagues through friendly, professional conversations that create a positive work environment.",
+          whatWeLookFor:
+            "Casual conversation serves as the foundation for all human relationships and professional opportunities. It's the gateway skill that allows us to transform strangers into connections, creating the social bonds that enrich our personal lives and advance our careers.",
+        },
+        "neighbors-community": {
+          title: "Neighbors & Community",
+          description:
+            "Fostering community connections through friendly interactions that build neighborhood relationships and mutual support.",
+          whatWeLookFor:
+            "Casual conversation serves as the foundation for all human relationships and professional opportunities. It's the gateway skill that allows us to transform strangers into connections, creating the social bonds that enrich our personal lives and advance our careers.",
+        },
+        "shared-interests": {
+          title: "Shared Interests",
+          description:
+            "Connecting deeply with others through common passions, hobbies, and experiences that create natural enthusiasm and mutual understanding.",
+          whatWeLookFor:
+            "Casual conversation serves as the foundation for all human relationships and professional opportunities. It's the gateway skill that allows us to transform strangers into connections, creating the social bonds that enrich our personal lives and advance our careers.",
+        },
+        "awkward-recovery": {
+          title: "Awkward Recovery",
+          description:
+            "Gracefully navigating social missteps and uncomfortable moments while maintaining dignity and turning tension into connection.",
+          whatWeLookFor:
+            "Casual conversation serves as the foundation for all human relationships and professional opportunities. It's the gateway skill that allows us to transform strangers into connections, creating the social bonds that enrich our personal lives and advance our careers.",
+        },
+        "party-events": {
+          title: "Party & Social Events",
+          description:
+            "Navigating social gatherings with confidence, making connections, and enjoying group dynamics in celebratory environments.",
+          whatWeLookFor:
+            "Casual conversation serves as the foundation for all human relationships and professional opportunities. It's the gateway skill that allows us to transform strangers into connections, creating the social bonds that enrich our personal lives and advance our careers.",
+        },
+      };
+
+      // State management
+      let currentMode = null;
+      let selectedScenario = null;
+      let conversationHistory = [];
+      let conversationCount = 0;
+      let isRecording = false;
+      let mediaRecorder = null;
+      let audioChunks = [];
+      let recordedAudioBlob = null;
+
+      // DOM elements
+      const analysisOptions = document.querySelectorAll(".analysis-option");
+      const uploadSection = document.getElementById("uploadSection");
+      const practiceSection = document.getElementById("practiceSection");
+      const scenarioTypes = document.querySelectorAll(".scenario-type");
+      const conversationContainer = document.getElementById(
+        "conversationContainer"
+      );
+      const conversationFlow = document.getElementById("conversationFlow");
+      const startPracticeBtn = document.getElementById("startPractice");
+      const backToScenariosBtn = document.getElementById("backToScenarios");
+      const endConversationBtn = document.getElementById("endConversation");
+      const recordBtn = document.getElementById("recordButton");
+      const submitBtn = document.getElementById("submitForAnalysis");
+      const scenarioActionsDiv = document.getElementById("scenarioActions");
+
+      // Debug: Check if critical elements exist
+      console.log("🔍 DOM Elements Check:");
+      console.log("  - recordBtn:", recordBtn ? "✅ Found" : "❌ Missing");
+      console.log("  - submitBtn:", submitBtn ? "✅ Found" : "❌ Missing");
+      console.log(
+        "  - scenarioActionsDiv:",
+        scenarioActionsDiv ? "✅ Found" : "❌ Missing"
+      );
+
+      // Ensure submit button starts disabled
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = "0.5";
+      }
+
+      // Initialize analysis engine early
+      window.addEventListener("load", () => {
+        console.log("🚀 Page loaded, initializing analysis engine...");
+        if (!window.simpleAnalysis) {
+          try {
+            window.simpleAnalysis = new SimpleAnalysis();
+            console.log("✅ Analysis engine initialized successfully");
+          } catch (error) {
+            console.error("❌ Failed to initialize analysis engine:", error);
+          }
+        }
+      });
+
+      // Wait for DOM to be fully loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("🚀 Initializing casual conversation analysis...");
+        console.log("📋 Found analysis options:", analysisOptions.length);
+
+        // Re-query DOM elements to ensure they exist
+        const refreshedAnalysisOptions =
+          document.querySelectorAll(".analysis-option");
+        console.log(
+          "🔄 Refreshed analysis options:",
+          refreshedAnalysisOptions.length
+        );
+
+        // Analysis option selection
+        refreshedAnalysisOptions.forEach((option, index) => {
+          console.log(
+            `✅ Setting up listener for option ${index}:`,
+            option.dataset.type
+          );
+
+          option.addEventListener("click", (e) => {
+            console.log("🎯 Analysis option clicked:", option.dataset.type);
+
+            refreshedAnalysisOptions.forEach((opt) =>
+              opt.classList.remove("selected")
+            );
+            option.classList.add("selected");
+            currentMode = option.dataset.type;
+
+            console.log("📍 Current mode set to:", currentMode);
+
+            if (currentMode === "upload") {
+              console.log("📤 Showing upload section");
+              uploadSection.classList.add("active");
+              practiceSection.classList.remove("active");
+            } else if (currentMode === "practice") {
+              console.log("🎭 Showing practice section");
+              practiceSection.classList.add("active");
+              uploadSection.classList.remove("active");
+            }
+          });
+
+          // Add visual feedback for clickability
+          option.style.cursor = "pointer";
+          option.style.userSelect = "none";
+        });
+
+        // Event delegation as additional backup
+        document.addEventListener("click", function (e) {
+          if (e.target.closest(".analysis-option")) {
+            const option = e.target.closest(".analysis-option");
+            const dataType = option.dataset.type;
+
+            if (dataType) {
+              console.log("🎯 Event delegation caught click:", dataType);
+
+              document
+                .querySelectorAll(".analysis-option")
+                .forEach((opt) => opt.classList.remove("selected"));
+              option.classList.add("selected");
+              currentMode = dataType;
+
+              const uploadSection = document.getElementById("uploadSection");
+              const practiceSection =
+                document.getElementById("practiceSection");
+
+              if (dataType === "upload") {
+                if (uploadSection) uploadSection.classList.add("active");
+                if (practiceSection) practiceSection.classList.remove("active");
+              } else if (dataType === "practice") {
+                if (practiceSection) practiceSection.classList.add("active");
+                if (uploadSection) uploadSection.classList.remove("active");
+              }
+            }
+          }
+        });
+      });
+
+      // Analysis option selection (fallback)
+      analysisOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          console.log(
+            "🎯 Fallback analysis option clicked:",
+            option.dataset.type
+          );
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+          option.classList.add("selected");
+          currentMode = option.dataset.type;
+
+          if (currentMode === "upload") {
+            uploadSection.classList.add("active");
+            practiceSection.classList.remove("active");
+          } else if (currentMode === "practice") {
+            practiceSection.classList.add("active");
+            uploadSection.classList.remove("active");
+          }
+        });
+      });
+
+      // Scenario selection - auto-start when clicked
+      let currentScenarioType = null;
+
+      scenarioTypes.forEach((scenario) => {
+        scenario.addEventListener("click", () => {
+          const scenarioType = scenario.dataset.scenario;
+          currentScenarioType = scenarioType;
+          startConversationPractice(scenarioType);
+        });
+      });
+
+      // AI-generated conversation starter function with contexts
+      function getCasualScenarioData(scenarioType) {
+        const scenarioData = {
+          "meeting-new-people": {
+            contexts: [
+              "You are at a networking event where you want to make genuine connections with new people.",
+              "You are at a community gathering and notice someone who seems interesting and approachable.",
+              "You are at a social meetup and want to practice introducing yourself to strangers in a natural way.",
+              "You are at a professional conference and see someone you would like to get to know better.",
+              "You are at a friend's party where you only know the host and want to meet new people.",
+              "You are at a local event and want to practice starting conversations with people you've never met.",
+            ],
+            starters: [
+              "I love meeting new people at events like this! What brings you here today?",
+              "You seem like someone who has interesting stories. What's been the highlight of your week so far?",
+              "I'm trying to be better at introducing myself to people. What should I call you?",
+              "This is such a great turnout! Have you been to one of these before, or are you new like me?",
+              "I'm always curious about what people do when they're not at events like this. What keeps you busy?",
+              "You have such good energy! I had to come over and introduce myself. What's your story?",
+              "I'm working on being more social and meeting new people. What made you decide to come tonight?",
+              "I was just admiring how comfortable you seem here. Are you from around this area originally?",
+            ],
+          },
+          "workplace-smalltalk": {
+            contexts: [
+              "You are in the office break room when a colleague approaches you for friendly conversation.",
+              "You are at your desk when a coworker stops by to chat and build rapport.",
+              "You are at a company lunch event and a colleague wants to get to know you better.",
+              "You are in the elevator when a teammate starts a casual conversation.",
+              "You are at a team meeting coffee break when someone approaches you for small talk.",
+              "You are in the office common area when a colleague from another department initiates friendly conversation.",
+            ],
+            starters: [
+              "Hey! I see you here every morning getting coffee too. How do you like working on the third floor?",
+              "I've been meaning to introduce myself - I'm always impressed by how organized your workspace looks. What's your secret?",
+              "You seem like you really enjoy what you do here. What brought you to this company originally?",
+              "I noticed you're always so calm during those Monday morning meetings. How do you stay so zen at the start of the week?",
+              "I love your coffee mug! Is that from somewhere special? I'm always looking for good coffee spots around here.",
+              "You always seem to have such great energy in the office. Do you have any tips for staying motivated during busy weeks?",
+              "I was just thinking how nice it is to actually get to know people beyond just work emails. How long have you been with the team?",
+              "You seem like someone who really knows how to balance work and life well. What do you like to do when you're not in the office?",
+            ],
+          },
+          "hobby-interests": {
+            contexts: [
+              "You are connecting with someone over shared interests and hobbies.",
+              "You are discovering common passions with someone and want to explore that connection.",
+              "You are at a hobby-related event and want to learn about what excites other people.",
+              "You are having a conversation about personal interests and what brings joy outside of work.",
+              "You are exploring someone's creative side and what they're passionate about.",
+              "You are sharing enthusiasm for hobbies and learning about different ways people spend their free time.",
+            ],
+            starters: [
+              "I couldn't help but notice you're into [hobby]! How long have you been doing that?",
+              "You mentioned [interest] earlier and I got so excited! What first got you started with it?",
+              "I'm always looking for new things to try. What's something you're passionate about that might surprise people?",
+              "You seem like someone who has interesting hobbies. What do you love doing when you're not working?",
+              "I've been trying to find more things I'm genuinely excited about. What gets you most energized in your free time?",
+              "I love meeting people who are really into something. What's been your latest obsession or interest?",
+              "You have this creative energy about you. Are you working on any fun projects lately?",
+              "I'm trying to be more intentional about my free time. What's something you do that always makes you feel good?",
+            ],
+          },
+          "social-events": {
+            contexts: [
+              "You are at a social gathering and want to make meaningful connections with other attendees.",
+              "You are at a party and practicing how to approach and engage with new people naturally.",
+              "You are at a celebration and want to enjoy genuine conversations rather than small talk.",
+              "You are at a community event and looking to build relationships with people in your area.",
+              "You are at a friend's gathering and want to make new friends through existing connections.",
+              "You are practicing social skills at an event where you want to be genuinely interested in others.",
+            ],
+            starters: [
+              "I love the energy at these kinds of events! How do you know [host name]?",
+              "You seem like you're having a great time! Are you someone who loves parties or do you come for specific people?",
+              "I was just thinking how nice it is when people actually talk instead of just staying on their phones. What's been your favorite part of tonight?",
+              "You have such a great vibe! I had to come over and see if you're as interesting as you seem.",
+              "I'm working on being more social at events like this. Any tips for someone who's naturally more introverted?",
+              "You seem to know everyone here! Are you one of those people who's great at staying in touch with friends?",
+              "I love seeing how different people approach social events. Are you more of a 'talk to everyone' person or 'stick with close friends' person?",
+              "You look like you're really enjoying yourself! What made you decide to come tonight?",
+            ],
+          },
+          "common-interests": {
+            contexts: [
+              "You have discovered you share common interests with someone and want to explore that connection.",
+              "You are building on shared passions to create a deeper conversational bond.",
+              "You are connecting with someone who shares your enthusiasm for something you both love.",
+              "You are in a conversation where mutual interests have created natural chemistry and excitement.",
+              "You are exploring shared hobbies or interests that could lead to ongoing friendship.",
+              "You are practicing how to build on common ground to create meaningful connections.",
+            ],
+            starters: [
+              "I heard you mention [interest] and got so excited! I'm really into that too. What got you started?",
+              "It's so rare to meet someone else who's into [interest]! What's your favorite thing about it?",
+              "I've been looking for people who share my interest in [interest]. How long have you been passionate about it?",
+              "You seem like someone who would have great recommendations. I'm trying to get more into [interest] - where should I start?",
+              "I love finding common ground with people! What's something you're into that you don't get to talk about very often?",
+              "You mentioned [interest] and I could see how excited you got talking about it. What makes it so special to you?",
+              "I'm always looking for people to share interests with. What's something you love that you wish more people understood?",
+              "You have such good taste in [interest]! How did you develop such a good eye for it?",
+            ],
+          },
+          "awkward-recovery": {
+            contexts: [
+              "You have just made a social mistake and need to recover gracefully while turning it into a connection opportunity.",
+              "You are practicing how to handle embarrassing moments with humor and authenticity.",
+              "You have accidentally created an awkward situation and want to use it as a chance to show your character.",
+              "You are learning to navigate social mishaps with grace and genuine care for the other person.",
+              "You are turning an uncomfortable moment into an opportunity to make a real human connection.",
+              "You are practicing owning mistakes honestly while maintaining confidence and charm.",
+            ],
+            starters: [
+              "Oh no, I'm so sorry! Let me help you with that - I can't believe I just did that!",
+              "I am mortified! Please let me buy you another drink - I promise I'm not usually this clumsy!",
+              "Well, that's one way to make a memorable first impression! I'm so sorry - are you okay?",
+              "I'm having one of those days where everything I touch goes wrong! Let me make this right - what can I do?",
+              "I feel terrible! This is exactly the kind of thing that would happen to me. Can I at least introduce myself properly after that disaster?",
+              "I'm so embarrassed! I was actually having a good day until I decided to bump into you. How can I fix this?",
+              "This is definitely not how I planned to meet someone new today! I'm really sorry - let me help clean this up.",
+              "I promise I'm more coordinated than this usually suggests! Can I please make it up to you somehow?",
+            ],
+          },
+        };
+
+        return (
+          scenarioData[scenarioType] || {
+            contexts: ["You are having a casual conversation."],
+            starters: ["How has your day been?"],
+          }
+        );
+      }
+
+      // AI-generated scenario function
+      async function generateAIScenario(scenarioKey) {
+        const scenario = casualScenarios[scenarioKey];
+        if (!scenario) return "You are having a casual conversation.";
+
+        try {
+          // Check if Gemini is configured
+          if (!window.geminiEngine || !window.geminiEngine.isConfigured()) {
+            console.warn("Gemini API not configured, using fallback");
+            return getFallbackScenario(scenarioKey);
+          }
+
+          const prompt = `Generate a specific, realistic scenario for casual conversation practice: ${scenario.title}
+
+Create a single, specific scenario that puts the user in a realistic moment where they would naturally engage in this type of conversation.
+
+Format: Start with "You are at..." or "You notice..." or "You see..." and describe a specific situation.
+
+Examples:
+- For shared interests: "You are at your favorite coffee shop and someone walks in wearing a t-shirt of your favorite musician."
+- For workplace small talk: "You are in the office kitchen making coffee when a colleague you rarely talk to walks in looking stressed."
+- For awkward recovery: "You just called someone by the wrong name and they politely corrected you - now there's an awkward silence."
+
+Generate one specific scenario for ${scenario.title}. Keep it realistic and relatable, 1-2 sentences maximum.`;
+
+          const response = await window.geminiEngine.callGeminiAPI(prompt);
+          return response.trim();
+        } catch (error) {
+          console.error("Error generating AI scenario:", error);
+          return getFallbackScenario(scenarioKey);
+        }
+      }
+
+      // Fallback scenarios for when AI is unavailable
+      function getFallbackScenario(scenarioKey) {
+        const fallbacks = {
+          "shared-interests":
+            "You are at your favorite coffee shop and someone walks in wearing a t-shirt of your favorite musician.",
+          "workplace-smalltalk":
+            "You are in the office kitchen making coffee when a colleague walks in looking tired.",
+          "meeting-new-people":
+            "You are at a networking event and notice someone standing alone who seems approachable.",
+          "awkward-recovery":
+            "You just called someone by the wrong name and they politely corrected you.",
+          "party-events":
+            "You are at a party where you only know the host and want to join a conversation.",
+          "neighbors-community":
+            "You are getting your mail when your neighbor comes outside to walk their dog.",
+        };
+        return (
+          fallbacks[scenarioKey] || "You are having a casual conversation."
+        );
+      }
+
+      // Generate AI conversation starter using Gemini
+      async function generateAIConversationStarter(scenarioKey, context) {
+        const scenario = casualScenarios[scenarioKey];
+        if (!scenario) return "How has your day been?";
+
+        try {
+          // Check if API is configured
+          if (!window.geminiEngine.isConfigured()) {
+            console.warn("Gemini API not configured, using fallback");
+            const scenarioData = getCasualScenarioData(scenarioKey);
+            return scenarioData.starters[
+              Math.floor(Math.random() * scenarioData.starters.length)
+            ];
+          }
+
+          const prompt = `Generate 5 different simple scenarios for: ${scenario.title}
+
+Context: ${context}
+
+Create 5 brief, realistic scenarios from the user's perspective, each with variety within the topic. Keep them simple and relatable.
+
+Format each as a single sentence starting with "You notice..." or "You see..." or "You overhear..."
+
+Examples for workplace scenarios:
+- You notice your coworker has a coffee mug from a place you've visited.
+- You see your colleague reading a book you've been meaning to check out.
+- You overhear someone mention a restaurant you love.
+- You notice your coworker has a plant you've been trying to grow.
+- You see someone wearing a shirt from your favorite sports team.
+
+Generate 5 different scenarios within the topic. Keep each short and realistic.`;
+
+          // Call Gemini API directly for personal communication
+          const response = await window.geminiEngine.callGeminiAPI(prompt);
+
+          // Parse the response to get multiple scenarios and pick one randomly
+          const scenarios = response
+            .trim()
+            .split("\n")
+            .filter(
+              (line) =>
+                line.trim().startsWith("-") ||
+                line.trim().startsWith("•") ||
+                line.trim().match(/^\d+\./)
+            );
+          if (scenarios.length > 0) {
+            const randomScenario =
+              scenarios[Math.floor(Math.random() * scenarios.length)];
+            // Clean up the scenario text (remove bullet points, numbers, etc.)
+            return randomScenario.replace(/^[-•\d.\s]+/, "").trim();
+          }
+
+          return response.trim();
+        } catch (error) {
+          console.error("Error generating AI conversation starter:", error);
+          // Fallback to random pre-written starter
+          const scenarioData = getCasualScenarioData(scenarioKey);
+          return scenarioData.starters[
+            Math.floor(Math.random() * scenarioData.starters.length)
+          ];
+        }
+      }
+
+      // Start conversation practice - show scenario info
+      async function startConversationPractice(scenarioKey) {
+        const scenario = casualScenarios[scenarioKey];
+        if (!scenario) return;
+
+        // Store current scenario for "New Starter" button
+        currentScenarioType = scenarioKey;
+
+        // Update UI with proper format
+        document.getElementById("scenarioTitle").textContent = scenario.title;
+        document.getElementById("scenarioText").textContent =
+          scenario.description;
+
+        // Generate AI scenario context
+        const aiScenario = await generateAIScenario(scenarioKey);
+        document.getElementById("scenarioContext").textContent = aiScenario;
+
+        // Update conversation prompt with loading state
+        const conversationPromptElement = document.getElementById(
+          "conversationPromptText"
+        );
+        if (conversationPromptElement) {
+          conversationPromptElement.textContent =
+            "Generating conversation starter...";
+          conversationPromptElement.style.fontStyle = "italic";
+
+          // Remove AI conversation starter
+          conversationPromptElement.style.display = "none";
+        }
+
+        // Hide scenario grid and show scenario details
+        document.querySelector(".scenario-grid").style.display = "none";
+        document.querySelector("#practiceSection h2").style.display = "none";
+        document.querySelector(
+          "#practiceSection .section-subtitle"
+        ).style.display = "none";
+        scenarioActionsDiv.style.display = "none";
+        conversationContainer.style.display = "block";
+
+        // Show scenario details only (no conversation prompt)
+        document.getElementById("scenarioDetails").style.display = "block";
+        document.getElementById("conversationPrompt").style.display = "none";
+      }
+
+      // New Starter button functionality
+      const newStarterBtn = document.getElementById("newStarter");
+      if (newStarterBtn) {
+        newStarterBtn.addEventListener("click", async function () {
+          if (currentScenarioType) {
+            // Show loading state for scenario
+            const scenarioContextElement =
+              document.getElementById("scenarioContext");
+            scenarioContextElement.textContent = "Generating new scenario...";
+            scenarioContextElement.style.fontStyle = "italic";
+
+            // Add animation to show the change
+            const scenarioDetailsElement =
+              document.getElementById("scenarioDetails");
+            if (scenarioDetailsElement) {
+              scenarioDetailsElement.style.opacity = "0.7";
+              setTimeout(() => {
+                scenarioDetailsElement.style.opacity = "1";
+              }, 300);
+            }
+
+            // Generate new AI scenario
+            const newAIScenario = await generateAIScenario(currentScenarioType);
+
+            // Update the displayed content
+            scenarioContextElement.textContent = newAIScenario;
+            scenarioContextElement.style.fontStyle = "normal";
+          }
+        });
+      }
+
+      // AI practice session functionality removed
+
+      // Recording functionality with enhanced feedback
+      recordBtn.addEventListener("click", async () => {
+        console.log("🎤 Record button clicked, isRecording:", isRecording);
+
+        if (!isRecording) {
+          try {
+            console.log("🎤 Requesting microphone access...");
+            showRecordingStatus("Requesting microphone access...", "info");
+
+            const stream = await navigator.mediaDevices.getUserMedia({
+              audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                sampleRate: 44100,
+              },
+            });
+
+            console.log("✅ Microphone access granted");
+            mediaRecorder = new MediaRecorder(stream, {
+              mimeType: "audio/webm;codecs=opus",
+            });
+            audioChunks = [];
+
+            mediaRecorder.ondataavailable = (event) => {
+              console.log(
+                "📦 Audio data chunk received:",
+                event.data.size,
+                "bytes"
+              );
+              audioChunks.push(event.data);
+            };
+
+            mediaRecorder.onstop = () => {
+              console.log("⏹️ Recording stopped, creating blob...");
+              recordedAudioBlob = new Blob(audioChunks, { type: "audio/webm" });
+              console.log(
+                "✅ Audio blob created:",
+                recordedAudioBlob.size,
+                "bytes"
+              );
+
+              // Stop all tracks
+              stream.getTracks().forEach((track) => {
+                console.log("🔇 Stopping track:", track.kind);
+                track.stop();
+              });
+
+              // Show success message
+              showRecordingStatus(
+                "Recording successful! " +
+                  formatFileSize(recordedAudioBlob.size),
+                "success"
+              );
+
+              // Enable submit button
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = "1";
+              }
+            };
+
+            mediaRecorder.onerror = (event) => {
+              console.error("❌ MediaRecorder error:", event.error);
+              showRecordingStatus(
+                "Recording error: " + event.error.message,
+                "error"
+              );
+            };
+
+            console.log("🎙️ Starting recording...");
+            mediaRecorder.start(1000); // Collect data every second
+            isRecording = true;
+
+            // Update button UI for recording state
+            recordBtn.innerHTML =
+              '<i data-lucide="stop-circle" class="w-4 h-4"></i> Stop Recording';
+            recordBtn.style.background = "#ef4444";
+            recordBtn.style.borderColor = "#ef4444";
+            recordBtn.style.color = "white";
+            recordBtn.classList.add("recording");
+            lucide.createIcons();
+
+            // Show recording status
+            showRecordingStatus("🔴 Recording... Click to stop", "recording");
+          } catch (error) {
+            console.error("❌ Error accessing microphone:", error);
+            showRecordingStatus(
+              "Microphone access denied. Please check permissions.",
+              "error"
+            );
+
+            // More specific error messages
+            if (error.name === "NotAllowedError") {
+              alert(
+                "Microphone permission denied. Please allow microphone access and try again."
+              );
+            } else if (error.name === "NotFoundError") {
+              alert(
+                "No microphone found. Please connect a microphone and try again."
+              );
+            } else {
+              alert("Unable to access microphone: " + error.message);
+            }
+          }
+        } else {
+          // Stop recording
+          console.log("⏹️ Stopping recording...");
+          showRecordingStatus("Stopping recording...", "info");
+
+          if (mediaRecorder && mediaRecorder.state !== "inactive") {
+            mediaRecorder.stop();
+            isRecording = false;
+
+            // Update button UI back to normal
+            recordBtn.innerHTML =
+              '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+            recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+            recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+            recordBtn.style.color = "var(--text-primary)";
+            recordBtn.classList.remove("recording");
+            lucide.createIcons();
+          }
+        }
+      });
+
+      // Helper functions for recording feedback
+      function showRecordingStatus(message, type) {
+        // Find or create status element
+        let statusElement = document.getElementById("recordingStatus");
+        if (!statusElement) {
+          statusElement = document.createElement("div");
+          statusElement.id = "recordingStatus";
+          statusElement.style.cssText = `
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+          `;
+
+          // Insert after record button
+          if (recordBtn && recordBtn.parentNode) {
+            recordBtn.parentNode.insertBefore(
+              statusElement,
+              recordBtn.nextSibling
+            );
+          }
+        }
+
+        // Set message and styling based on type
+        statusElement.textContent = message;
+        statusElement.className = "recording-status";
+
+        switch (type) {
+          case "success":
+            statusElement.style.backgroundColor = "#10b981";
+            statusElement.style.color = "white";
+            statusElement.style.border = "1px solid #059669";
+            break;
+          case "error":
+            statusElement.style.backgroundColor = "#ef4444";
+            statusElement.style.color = "white";
+            statusElement.style.border = "1px solid #dc2626";
+            break;
+          case "recording":
+            statusElement.style.backgroundColor = "#fbbf24";
+            statusElement.style.color = "#92400e";
+            statusElement.style.border = "1px solid #f59e0b";
+            break;
+          case "info":
+          default:
+            statusElement.style.backgroundColor = "#3b82f6";
+            statusElement.style.color = "white";
+            statusElement.style.border = "1px solid #2563eb";
+            break;
+        }
+
+        statusElement.style.display = "block";
+        statusElement.style.opacity = "1";
+
+        // Auto-hide success messages after 3 seconds
+        if (type === "success") {
+          setTimeout(() => {
+            if (statusElement) {
+              statusElement.style.opacity = "0";
+              setTimeout(() => {
+                if (statusElement && statusElement.parentNode) {
+                  statusElement.style.display = "none";
+                }
+              }, 300);
+            }
+          }, 3000);
+        }
+      }
+
+      function formatFileSize(bytes) {
+        if (bytes === 0) return "0 Bytes";
+        const k = 1024;
+        const sizes = ["Bytes", "KB", "MB", "GB"];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+      }
+
+      // Submit for analysis
+      submitBtn.addEventListener("click", async () => {
+        if (!recordedAudioBlob) {
+          alert("Please record your response first.");
+          return;
+        }
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML =
+          '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+        lucide.createIcons();
+
+        try {
+          // Prepare audio data for personal communication analysis
+          console.log(
+            "🔄 Preparing audio for personal communication analysis..."
+          );
+          console.log("📁 Audio blob details:", {
+            size: recordedAudioBlob.size,
+            type: recordedAudioBlob.type,
+          });
+
+          // Convert blob to base64 for transfer
+          const reader = new FileReader();
+          reader.onloadend = function () {
+            const base64Audio = reader.result;
+
+            // Prepare audio data object
+            const audioData = {
+              base64: base64Audio,
+              size: recordedAudioBlob.size,
+              type: recordedAudioBlob.type,
+              name: "casual-conversation.webm",
+              analysisType: "casual",
+            };
+
+            console.log(
+              "📱 Storing audio data for analysis:",
+              audioData.name,
+              audioData.analysisType
+            );
+
+            // Store audio data for the analysis page
+            sessionStorage.setItem(
+              "audioForAnalysis",
+              JSON.stringify(audioData)
+            );
+
+            // Redirect to casual conversation analysis results page
+            window.location.href = "casual-analysis-results.html";
+          };
+
+          reader.readAsDataURL(recordedAudioBlob);
+        } catch (error) {
+          console.error("Analysis error:", error);
+          alert("Error analyzing conversation. Please try again.");
+
+          // Reset button
+          submitBtn.disabled = false;
+          submitBtn.innerHTML =
+            '<i data-lucide="check-circle" class="w-4 h-4"></i> Submit for Analysis';
+          lucide.createIcons();
+        }
+      });
+
+      // Back to scenarios button
+      backToScenariosBtn.addEventListener("click", () => {
+        conversationContainer.style.display = "none";
+        scenarioActionsDiv.style.display = "flex";
+        document.querySelector(".scenario-grid").style.display = "grid";
+        document.querySelector("#practiceSection h2").style.display = "block";
+        document.querySelector(
+          "#practiceSection .section-subtitle"
+        ).style.display = "block";
+        resetPracticeSession();
+      });
+
+      // Reset practice session
+      function resetPracticeSession() {
+        scenarioTypes.forEach((s) => s.classList.remove("selected"));
+        selectedScenario = null;
+        startPracticeBtn.disabled = true;
+        conversationFlow.innerHTML = "";
+        conversationHistory = [];
+        conversationCount = 0;
+        endConversationBtn.style.display = "none";
+        recordBtn.style.display = "none";
+
+        // Reset recording state
+        isRecording = false;
+        recordedAudioBlob = null;
+        audioChunks = [];
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+        }
+
+        // Reset record button UI
+        recordBtn.innerHTML =
+          '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+        recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+        recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+        recordBtn.style.color = "var(--text-primary)";
+        lucide.createIcons();
+      }
+
+      // Back to options buttons
+      document.getElementById("backToOptions").addEventListener("click", () => {
+        uploadSection.classList.remove("active");
+        analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+        currentMode = null;
+      });
+
+      document
+        .getElementById("backToOptionsFromPractice")
+        .addEventListener("click", () => {
+          practiceSection.classList.remove("active");
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+          currentMode = null;
+
+          // Reset scenario selection view
+          conversationContainer.style.display = "none";
+          scenarioActionsDiv.style.display = "flex";
+          document.querySelector(".scenario-grid").style.display = "grid";
+          document.querySelector("#practiceSection h2").style.display = "block";
+          document.querySelector(
+            "#practiceSection .section-subtitle"
+          ).style.display = "block";
+
+          resetPracticeSession();
+        });
+
+      // File upload functionality
+      document.getElementById("chooseFileBtn").addEventListener("click", () => {
+        document.getElementById("audioFile").click();
+      });
+
+      document.getElementById("audioFile").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          // Show file details
+          document.getElementById("fileName").textContent = file.name;
+          document.getElementById("fileSize").textContent =
+            (file.size / (1024 * 1024)).toFixed(1) + " MB";
+          document.getElementById("fileSelected").style.display = "flex";
+          document.getElementById("analyzeUpload").disabled = false;
+        }
+      });
+
+      // Remove file functionality
+      document.getElementById("removeFile").addEventListener("click", () => {
+        document.getElementById("audioFile").value = "";
+        document.getElementById("fileSelected").style.display = "none";
+        document.getElementById("analyzeUpload").disabled = true;
+      });
+
+      // Analyze upload button
+      document
+        .getElementById("analyzeUpload")
+        .addEventListener("click", async () => {
+          const audioFile = document.getElementById("audioFile");
+          if (!audioFile.files[0]) {
+            alert("Please select a file first");
+            return;
+          }
+
+          // Update button state
+          const analyzeBtn = document.getElementById("analyzeUpload");
+          analyzeBtn.disabled = true;
+          analyzeBtn.innerHTML =
+            '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+
+          try {
+            // Use personal communication analysis for uploads
+            const result = await analyzeConversation(
+              new Blob([audioFile.files[0]], { type: audioFile.files[0].type }),
+              "personal-casual"
+            );
+
+            // Store results for personal communication analysis
+            localStorage.setItem("analysisResults", JSON.stringify(result));
+            window.location.href = "casual-analysis-results.html";
+          } catch (error) {
+            console.error("Analysis failed:", error);
+            alert("Analysis failed. Please try again.");
+            analyzeBtn.disabled = false;
+            analyzeBtn.innerHTML =
+              '<i data-lucide="zap" class="w-4 h-4"></i> Analyze Recording';
+          }
+        });
+
+      // AI conversation analysis functionality removed
+
+      // AI conversation message functions removed
+
+      // Audio recording functionality removed for personal communication analysis
+
+      // Initialize analysis system
+      let analysisProcessor = null;
+      try {
+        analysisProcessor = new SimpleAnalysis();
+        console.log("✅ SimpleAnalysis system initialized successfully");
+      } catch (error) {
+        console.error("❌ Failed to initialize analysis system:", error);
+      }
+
+      // User dropdown functionality
+      const userMenuBtn = document.getElementById("userMenuBtn");
+      const userDropdown = document.getElementById("userDropdown");
+
+      if (userMenuBtn && userDropdown) {
+        userMenuBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          userDropdown.classList.toggle("hidden");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", (e) => {
+          if (
+            !userMenuBtn.contains(e.target) &&
+            !userDropdown.contains(e.target)
+          ) {
+            userDropdown.classList.add("hidden");
+          }
+        });
+
+        // Logout functionality
+        const logoutBtn = document.getElementById("logoutBtn");
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", () => {
+            // Clear any stored authentication data
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("userSession");
+            sessionStorage.clear();
+
+            // Redirect to login page
+            window.location.href = "login.html";
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

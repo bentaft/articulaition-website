@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Sign up or log in to Articulaition - Transform your communication skills with advanced coaching software."
+    />
+    <title>Sign Up / Log In - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+  </head>
+  <body>
+    <header id="header" class="header">
+      <nav class="container nav">
+        <div class="logo-section">
+          <a href="index.html" class="brand-container">
+            <img
+              src="images/logo-main.svg"
+              alt="Articulaition Logo"
+              class="main-logo"
+            />
+            <img
+              src="images/logo-header.svg"
+              alt="Articulaition.com"
+              class="logo-image"
+            />
+          </a>
+        </div>
+        <div class="nav-links">
+          <a href="index.html#how-it-works">How It Works</a>
+          <a href="index.html#pricing">Pricing</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="auth-main">
+      <div class="auth-container">
+        <div class="auth-header">
+          <h1 id="authTitle">Let's Begin the Journey.</h1>
+          <p id="authSubtitle">Sign in or create your account to start improving your communication today.</p>
+        </div>
+
+        <div class="auth-toggle">
+          <button class="toggle-btn active" data-form="signup">Sign Up</button>
+          <button class="toggle-btn" data-form="login">Log In</button>
+        </div>
+
+        <!-- Sign Up Form -->
+        <form class="auth-form" id="signupForm">
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" name="password" required />
+          </div>
+          <div class="form-group">
+            <label for="signup-confirm">Confirm Password</label>
+            <input type="password" id="signup-confirm" name="confirmPassword" required />
+          </div>
+          <button type="submit" class="cta-button auth-submit">Create My Account</button>
+          <p class="auth-switch">
+            Already have an account? <button type="button" class="switch-link" data-form="login">Log in.</button>
+          </p>
+        </form>
+
+        <!-- Log In Form -->
+        <form class="auth-form hidden" id="loginForm">
+          <div class="form-group">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" name="password" required />
+          </div>
+          <div class="form-group">
+            <button type="button" class="forgot-password-link" id="forgotPasswordBtn">Forgot your password?</button>
+          </div>
+          <button type="submit" class="cta-button auth-submit">Log In</button>
+          <p class="auth-switch">
+            New to Articulaition? <button type="button" class="switch-link" data-form="signup">Create an account.</button>
+          </p>
+        </form>
+      </div>
+    </main>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Scripts -->
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    
+    <!-- Debug Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== AUTH PAGE DEBUG ===');
+            
+            // Check all buttons
+            const allButtons = document.querySelectorAll('button');
+            console.log(`Found ${allButtons.length} buttons on page`);
+            
+            allButtons.forEach((button, index) => {
+                console.log(`Button ${index + 1}: "${button.textContent.trim()}"`);
+                
+                // Add debug click handler
+                button.addEventListener('click', function(e) {
+                    console.log(`Button clicked: "${this.textContent.trim()}"`, e);
+                    console.log('Event target:', e.target);
+                    console.log('Current target:', e.currentTarget);
+                    console.log('Event type:', e.type);
+                    console.log('Is default prevented?', e.defaultPrevented);
+                }, true); // Use capture phase
+                
+                // Check computed styles
+                const styles = getComputedStyle(button);
+                if (styles.pointerEvents === 'none' || styles.visibility === 'hidden' || styles.display === 'none') {
+                    console.warn(`Button "${button.textContent.trim()}" might not be clickable:`, {
+                        pointerEvents: styles.pointerEvents,
+                        visibility: styles.visibility,
+                        display: styles.display
+                    });
+                }
+            });
+            
+            // Check forms
+            const forms = document.querySelectorAll('form');
+            console.log(`Found ${forms.length} forms`);
+            
+            forms.forEach((form, index) => {
+                console.log(`Form ${index + 1}: ${form.id}`);
+                form.addEventListener('submit', function(e) {
+                    console.log(`Form submit attempt: ${this.id}`, e);
+                }, true);
+            });
+            
+            // Check for any elements blocking clicks
+            document.addEventListener('click', function(e) {
+                console.log('Document click detected:', {
+                    target: e.target,
+                    tagName: e.target.tagName,
+                    className: e.target.className,
+                    id: e.target.id
+                });
+            }, true);
+        });
+    </script>
+  </body>
+</html>

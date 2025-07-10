@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Help Center - Articulaition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/navigation.css">
+  <link rel="stylesheet" href="css/buttons.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      min-height: 100vh;
+    }
+    
+    .help-header {
+      background: rgba(74, 144, 226, 0.03);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+    
+    .faq-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+    
+    .faq-hero {
+      text-align: center;
+      padding: var(--space-4xl) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .faq-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(74, 144, 226, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 147, 77, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 60% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .faq-hero > * {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .faq-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(74, 144, 226, 0.2);
+      border-radius: 9999px;
+      color: var(--primary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(74, 144, 226, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .faq-badge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(74, 144, 226, 0.15);
+    }
+    
+    .faq-badge svg {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .faq-title {
+      font-size: clamp(2.25rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+    
+    .gradient-text::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: textShine 3s ease-in-out infinite;
+    }
+    
+    @keyframes textShine {
+      0%, 100% { transform: translateX(-100%); opacity: 0; }
+      50% { transform: translateX(100%); opacity: 1; }
+    }
+    
+    .faq-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 750px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    
+    .search-box {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(74, 144, 226, 0.1);
+      border-radius: 16px;
+      padding: 1.25rem 1.75rem;
+      margin-bottom: 3rem;
+      max-width: 550px;
+      margin-left: auto;
+      margin-right: auto;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .search-box:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1), 0 8px 30px rgba(0, 0, 0, 0.12);
+      transform: translateY(-2px);
+    }
+    
+    .search-input {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background: transparent;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    
+    .search-input::placeholder {
+      color: var(--text-tertiary);
+      font-weight: 400;
+    }
+    
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+    
+    .faq-item {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    
+    .faq-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(74, 144, 226, 0.03) 0%, rgba(255, 147, 77, 0.02) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .faq-item:hover {
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      border-color: rgba(74, 144, 226, 0.2);
+      transform: translateY(-3px);
+    }
+    
+    .faq-item:hover::before {
+      opacity: 1;
+    }
+    
+    .faq-item[open] {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.15), 0 12px 40px rgba(0, 0, 0, 0.12);
+      transform: translateY(-2px);
+    }
+    
+    .faq-item[open]::before {
+      opacity: 1;
+      background: linear-gradient(135deg, rgba(74, 144, 226, 0.05) 0%, rgba(255, 147, 77, 0.03) 100%);
+    }
+    
+    .faq-summary {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 1.75rem;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .faq-summary::-webkit-details-marker {
+      display: none;
+    }
+    
+    .faq-icon-wrapper {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-right: 1.25rem;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+    }
+    
+    .faq-summary:hover .faq-icon-wrapper {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    }
+    
+    .icon-blue {
+      background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+    }
+    
+    .icon-orange {
+      background: linear-gradient(135deg, #FF934D 0%, #E67E3C 100%);
+    }
+    
+    .icon-purple {
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    }
+    
+    .icon-green {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+    
+    .icon-teal {
+      background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+    }
+    
+    .faq-content {
+      flex: 1;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .faq-question {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+      transition: color 0.3s ease;
+    }
+    
+    .faq-summary:hover .faq-question {
+      color: var(--primary);
+    }
+    
+    .faq-category {
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: rgba(74, 144, 226, 0.08);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    
+    .chevron {
+      width: 24px;
+      height: 24px;
+      color: var(--text-tertiary);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .faq-item[open] .chevron {
+      transform: rotate(180deg);
+      color: var(--primary);
+    }
+    
+    .faq-answer {
+      padding: 0 1.75rem 2rem;
+      margin-left: 4.5rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .faq-answer p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+    
+    .faq-answer ul {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0;
+    }
+    
+    .faq-answer li {
+      padding-left: 1.75rem;
+      position: relative;
+      margin-bottom: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    .faq-answer li:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.6rem;
+      width: 6px;
+      height: 6px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      border-radius: 50%;
+    }
+    
+    .faq-answer strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    
+    .cta-section {
+      text-align: center;
+      padding: 4rem 0;
+      margin: 4rem 0;
+      background: linear-gradient(135deg, rgba(74, 144, 226, 0.95) 0%, rgba(255, 147, 77, 0.95) 100%);
+      border-radius: 24px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    
+    .cta-section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .cta-section p {
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+      opacity: 0.95;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .cta-buttons .btn {
+      background: white;
+      color: var(--primary);
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cta-buttons .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      color: var(--primary);
+    }
+    
+    .cta-buttons .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+    
+    .cta-buttons .btn-secondary:hover {
+      background: white;
+      color: var(--primary);
+    }
+    
+    
+    @media (max-width: 1024px) {
+      .faq-container {
+        padding: 0 var(--space-md);
+      }
+      
+      .faq-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+      
+      .faq-hero {
+        padding: 3rem 0;
+      }
+      
+      .faq-title {
+        font-size: 2.5rem;
+      }
+      
+      .faq-subtitle {
+        font-size: 1.125rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .faq-hero {
+        padding: 2.5rem 0;
+      }
+      
+      .faq-title {
+        font-size: 2rem;
+      }
+      
+      .faq-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+      }
+      
+      .search-box {
+        margin-bottom: 2rem;
+        padding: 1rem 1.25rem;
+      }
+      
+      .faq-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .faq-item {
+        border-radius: 12px;
+      }
+      
+      .faq-summary {
+        padding: 1.25rem;
+      }
+      
+      .faq-icon-wrapper {
+        width: 44px;
+        height: 44px;
+        margin-right: 1rem;
+      }
+      
+      .faq-question {
+        font-size: 1rem;
+      }
+      
+      .faq-answer {
+        margin-left: 0;
+        padding: 0 1.25rem 1.5rem;
+      }
+      
+      .cta-section {
+        padding: 3rem 1.5rem;
+        margin: 3rem 0;
+        border-radius: 16px;
+      }
+      
+      .cta-section h2 {
+        font-size: 1.75rem;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      
+      .cta-buttons .btn {
+        width: 100%;
+        max-width: 280px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .faq-hero {
+        padding: 2rem 0;
+      }
+      
+      .faq-title {
+        font-size: 1.75rem;
+      }
+      
+      .faq-subtitle {
+        font-size: 0.95rem;
+      }
+      
+      .faq-badge {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+      
+      .faq-badge svg {
+        width: 16px;
+        height: 16px;
+      }
+      
+      .search-box {
+        padding: 0.875rem 1rem;
+      }
+      
+      .faq-summary {
+        padding: 1rem;
+      }
+      
+      .faq-icon-wrapper {
+        width: 40px;
+        height: 40px;
+        margin-right: 0.75rem;
+      }
+      
+      .faq-question {
+        font-size: 0.95rem;
+      }
+      
+      .faq-category {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+      }
+      
+      .faq-answer {
+        padding: 0 1rem 1.25rem;
+      }
+      
+      .faq-answer p {
+        font-size: 0.9rem;
+      }
+      
+      .cta-section {
+        padding: 2.5rem 1rem;
+      }
+      
+      .cta-section h2 {
+        font-size: 1.5rem;
+      }
+      
+      .cta-section p {
+        font-size: 1rem;
+      }
+    }
+
+    /* Navigation Branding with Shiny Effect */
+    .nav-orange {
+        background: linear-gradient(
+            145deg,
+            #ff934d 0%,
+            #ffb366 30%,
+            #ff7f50 60%,
+            #ff934d 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 2px 4px rgba(255, 147, 77, 0.3));
+    }
+
+    .nav-blue {
+        background: linear-gradient(
+            145deg,
+            #4a90e2 0%,
+            #6bb6ff 30%,
+            #4f94e8 60%,
+            #4a90e2 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 2px 4px rgba(74, 144, 226, 0.3));
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-wrapper">
+      <a href="index.html" class="nav-logo" aria-label="Articulaition home">
+        <span><span class="nav-orange">articul</span><span class="nav-blue">ai</span><span class="nav-orange">tion</span><span class="nav-orange">.com</span></span>
+      </a>
+      
+      <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav-toggle-line"></span>
+        <span class="nav-toggle-line"></span>
+        <span class="nav-toggle-line"></span>
+      </button>
+      
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html#features" class="nav-link">Features</a></li>
+        <li class="nav-item"><a href="index.html#how-it-works" class="nav-link">How it Works</a></li>
+        <li class="nav-item"><a href="index.html#pricing" class="nav-link">Pricing</a></li>
+        <li class="nav-item"><a href="testimonials.html" class="nav-link">Success Stories</a></li>
+        <li class="nav-item nav-item-cta">
+          <a href="signup.html" class="btn btn-primary btn-sm">Get Started</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="min-h-screen">
+    <!-- Help Header -->
+    <header class="help-header">
+      <div class="faq-container py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center"
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <span class="text-lg font-semibold">Help Center</span>
+          </div>
+          <a href="mailto:support@articulaition.com" class="btn btn-secondary btn-sm">
+            Contact Support
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="faq-container">
+      <!-- Hero Section -->
+      <div class="faq-hero">
+        <div class="faq-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>Expert Support Center</span>
+        </div>
+        
+        <h1 class="faq-title">
+          Your Success is Our
+          <span class="gradient-text">Priority</span>
+        </h1>
+        
+        <p class="faq-subtitle">
+          Get instant answers to your questions and discover how Articulaition can transform your communication skills and accelerate your professional growth.
+        </p>
+
+        <!-- Search Box -->
+        <div class="search-box">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 text-gray-400 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input type="text" placeholder="Search for answers..." class="search-input">
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Grid -->
+      <div class="faq-grid">
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <div class="flex items-start">
+              <div class="faq-icon-wrapper icon-blue">
+                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+                  <path d="M12 6v6l4 2"></path>
+                </svg>
+              </div>
+              <div class="faq-content">
+                <h3 class="faq-question">How do I get started with Articulaition?</h3>
+                <p class="faq-category">Getting Started</p>
+              </div>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Getting started with Articulaition is simple and takes just a few minutes:</p>
+            <ul>
+              <li>Sign up for a free account - no credit card required</li>
+              <li>Complete your first speech analysis by recording a 1-2 minute sample</li>
+              <li>Review your personalized Deep Analysis report with insights on pace, tone, clarity, and more</li>
+              <li>Start practicing with AI conversations tailored to your specific needs</li>
+              <li>Track your progress over time with detailed analytics</li>
+            </ul>
+            <p>Your first analysis is completely free, giving you valuable insights into your communication style immediately.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <div class="flex items-start">
+              <div class="faq-icon-wrapper icon-orange">
+                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="10" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </div>
+              <div class="faq-content">
+                <h3 class="faq-question">How does Articulaition protect my privacy and data?</h3>
+                <p class="faq-category">Privacy & Security</p>
+              </div>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Your privacy is our top priority. Here's how we protect your data:</p>
+            <ul>
+              <li>All audio recordings are encrypted end-to-end and stored securely</li>
+              <li>You have full control over your data and can delete recordings at any time</li>
+              <li>We never share your personal information or recordings with third parties</li>
+              <li>Audio analysis is performed using secure, isolated processing</li>
+              <li>We comply with GDPR, CCPA, and other privacy regulations</li>
+            </ul>
+            <p>For enterprise users, we offer additional security features including SSO integration and custom data retention policies.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <div class="flex items-start">
+              <div class="faq-icon-wrapper icon-purple">
+                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+              </div>
+              <div class="faq-content">
+                <h3 class="faq-question">What features are included in each pricing plan?</h3>
+                <p class="faq-category">Pricing & Plans</p>
+              </div>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="faq-answer">
+            <p>We offer flexible plans to meet your communication improvement needs:</p>
+            <ul>
+              <li><strong>Starter (Free):</strong> 1 audio analysis, basic feedback, and key strengths overview</li>
+              <li><strong>Essential Analysis Plan ($9.99/month):</strong> Unlimited analyses, AI practice conversations, progress tracking, and personalized improvement plans</li>
+              <li><strong>Max Growth ($15.99/month):</strong> Everything in Essential Analysis Plan plus advanced analytics, industry-specific scenarios, team collaboration, and priority support</li>
+              <li><strong>Enterprise (Custom):</strong> Custom solutions, dedicated support, API access, and organization-wide analytics</li>
+            </ul>
+            <p>All paid plans include a 7-day free trial. No credit card required to start.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <div class="flex items-start">
+              <div class="faq-icon-wrapper icon-green">
+                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </div>
+              <div class="faq-content">
+                <h3 class="faq-question">How accurate is the AI speech analysis?</h3>
+                <p class="faq-category">Technology & Accuracy</p>
+              </div>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Our AI speech analysis is highly accurate and continuously improving:</p>
+            <ul>
+              <li>Trained on millions of speech samples across diverse accents and languages</li>
+              <li>Analyzes multiple dimensions: pace, tone, clarity, filler words, confidence, and more</li>
+              <li>Provides objective metrics based on proven communication research</li>
+              <li>Accuracy validated by professional speech coaches and communication experts</li>
+              <li>Regular updates improve analysis precision and add new features</li>
+            </ul>
+            <p>While AI analysis is powerful, we always recommend combining it with human judgment and practicing in real-world scenarios.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <div class="flex items-start">
+              <div class="faq-icon-wrapper icon-teal">
+                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <path d="M12 1v6m0 6v6m11-6h-6m-6 0H1m20.485-6.485l-4.242 4.242M7.757 7.757L3.515 3.515m13.435 13.435l-4.242-4.242M7.757 16.243l-4.242 4.242"></path>
+                </svg>
+              </div>
+              <div class="faq-content">
+                <h3 class="faq-question">Can I use Articulaition for specific industries or scenarios?</h3>
+                <p class="faq-category">Use Cases & Customization</p>
+              </div>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes! Articulaition offers specialized training for various industries and scenarios:</p>
+            <ul>
+              <li><strong>Sales:</strong> Pitch optimization, objection handling, and closing techniques</li>
+              <li><strong>Healthcare:</strong> Patient communication and bedside manner improvement</li>
+              <li><strong>Education:</strong> Classroom engagement and lecture delivery</li>
+              <li><strong>Legal:</strong> Courtroom presence and argumentation skills</li>
+              <li><strong>Tech:</strong> Technical presentation and stakeholder communication</li>
+              <li><strong>Executive Leadership:</strong> Board presentations and public speaking</li>
+            </ul>
+            <p>Professional and Enterprise plans include access to industry-specific scenarios and customized practice sessions.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <div class="flex items-start">
+              <div class="faq-icon-wrapper icon-blue">
+                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div class="faq-content">
+                <h3 class="faq-question">What results can I expect from using Articulaition?</h3>
+                <p class="faq-category">Results & Outcomes</p>
+              </div>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Users typically see measurable improvements in their communication skills within weeks:</p>
+            <ul>
+              <li>Increased confidence in presentations and meetings</li>
+              <li>Better clarity and reduced filler words</li>
+              <li>Improved pace and vocal variety</li>
+              <li>Enhanced persuasive abilities and emotional intelligence</li>
+              <li>Professional advancement through better communication</li>
+            </ul>
+            <p>Many users report career breakthroughs, successful job interviews, and stronger professional relationships after just a few weeks of practice.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <div class="flex items-start">
+              <div class="faq-icon-wrapper icon-orange">
+                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                </svg>
+              </div>
+              <div class="faq-content">
+                <h3 class="faq-question">Is there a free trial or money-back guarantee?</h3>
+                <p class="faq-category">Trial & Guarantees</p>
+              </div>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes, we offer multiple ways to try Articulaition risk-free:</p>
+            <ul>
+              <li>Free account includes one complete speech analysis</li>
+              <li>7-day free trial on all paid plans</li>
+              <li>30-day money-back guarantee if you're not satisfied</li>
+              <li>Cancel anytime with no long-term commitments</li>
+              <li>Dedicated customer success team to help you succeed</li>
+            </ul>
+            <p>We're confident in our platform's value, which is why we offer these generous trial periods and guarantees.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <div class="flex items-start">
+              <div class="faq-icon-wrapper icon-purple">
+                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <div class="faq-content">
+                <h3 class="faq-question">Do you offer team or enterprise solutions?</h3>
+                <p class="faq-category">Enterprise & Teams</p>
+              </div>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes, we provide comprehensive enterprise solutions for organizations:</p>
+            <ul>
+              <li>Team dashboards with progress tracking and analytics</li>
+              <li>Custom training programs for your industry</li>
+              <li>SSO integration and advanced security features</li>
+              <li>Dedicated account management and support</li>
+              <li>API access for integration with existing systems</li>
+              <li>White-label options and custom branding</li>
+            </ul>
+            <p>Contact our enterprise team to discuss custom solutions for your organization's communication training needs.</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="cta-section">
+        <h2>Ready to Transform Your Communication?</h2>
+        <p>Join thousands of professionals who've already elevated their speaking skills with Articulaition.</p>
+        <div class="cta-buttons">
+          <a href="signup.html" class="btn btn-primary">
+            Start Your Free Analysis
+          </a>
+          <a href="mailto:support@articulaition.com" class="btn btn-secondary">
+            Contact Support
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">Articulaition</h3>
+          <p class="footer-description">Transform your communication skills with AI-powered speech analysis.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="index.html#pricing">Pricing</a></li>
+            <li><a href="testimonials.html">Success Stories</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="faq.html">Help Center</a></li>
+            <li><a href="mailto:support@articulaition.com">Contact Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Articulaition. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/navigation.js"></script>
+  <script>
+    // Add smooth scrolling and enhanced interactions
+    document.querySelectorAll('details').forEach(detail => {
+      detail.addEventListener('toggle', function() {
+        if (this.open) {
+          // Close other open details
+          document.querySelectorAll('details[open]').forEach(openDetail => {
+            if (openDetail !== this) {
+              openDetail.open = false;
+            }
+          });
+        }
+      });
+    });
+
+    // Search functionality
+    const searchInput = document.querySelector('.search-input');
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    searchInput.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      
+      faqItems.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(searchTerm)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = searchTerm ? 'none' : 'block';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

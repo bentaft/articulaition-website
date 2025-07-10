@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Technology Professional Lexicon - 20 Essential Terms | Articulaition
+    </title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0a0e17;
+        min-height: 100vh;
+        color: white;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(59, 130, 246, 0.1) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(59, 130, 246, 0.08) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 50% 50%,
+            rgba(59, 130, 246, 0.05) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .main-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .term-card {
+        background: rgba(59, 130, 246, 0.1);
+        padding: 2rem;
+        border-radius: 1rem;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .term-card:hover {
+        background: rgba(59, 130, 246, 0.15);
+        border-color: rgba(59, 130, 246, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .term-title {
+        color: #3b82f6;
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      .term-definition {
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      .term-application {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+        font-style: italic;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+
+  <body class="auth-body">
+    <!-- Navigation -->
+    <nav
+      style="
+        background: rgba(15, 15, 15, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      "
+    >
+      <div
+        style="
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div style="display: flex; align-items: center; gap: 2rem">
+          <img
+            src="images/logo-header.svg"
+            alt="Articulaition"
+            style="height: 40px"
+          />
+          <span
+            style="
+              color: rgba(255, 255, 255, 0.6);
+              font-size: 0.9rem;
+              font-weight: 500;
+            "
+            >Technology Professional Lexicon</span
+          >
+        </div>
+        <div style="display: flex; align-items: center; gap: 1.5rem">
+          <a
+            href="technology-communication.html"
+            style="
+              background: linear-gradient(135deg, #3b82f6, #2563eb);
+              color: white;
+              padding: 0.75rem 1.5rem;
+              border-radius: 0.5rem;
+              text-decoration: none;
+              font-weight: 600;
+              font-size: 0.9rem;
+              transition: all 0.3s ease;
+              box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+            "
+            >← Back to Tech Guide</a
+          >
+          <a
+            href="dashboard.html"
+            style="
+              color: rgba(255, 255, 255, 0.8);
+              text-decoration: none;
+              font-weight: 500;
+              transition: color 0.3s ease;
+              padding: 0.5rem 1rem;
+            "
+            >Dashboard</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main
+      class="main-content"
+      style="max-width: 1200px; margin: 0 auto; padding: 2rem"
+    >
+      <!-- Hero Section -->
+      <section style="text-align: center; margin-bottom: 4rem">
+        <div
+          style="
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 2rem auto;
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+          "
+        >
+          💻
+        </div>
+
+        <h1
+          style="
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          "
+        >
+          Technology Professional Lexicon
+        </h1>
+
+        <p
+          style="
+            font-size: 1.25rem;
+            color: #3b82f6;
+            font-weight: 600;
+            margin-bottom: 1rem;
+          "
+        >
+          20 Essential Terms for Technology Communication
+        </p>
+
+        <p
+          style="
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+          "
+        >
+          Master the specialized vocabulary that enables effective technical
+          communication and bridges the gap between complexity and clarity.
+        </p>
+      </section>
+
+      <!-- Terms Grid -->
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+          gap: 2rem;
+          margin-bottom: 4rem;
+        "
+      >
+        <!-- Term 1 -->
+        <div class="term-card">
+          <h3 class="term-title">1. API (Application Programming Interface)</h3>
+          <p class="term-definition">
+            A set of protocols, routines, and tools for building software
+            applications that specifies how software components should interact.
+          </p>
+          <p class="term-application">
+            Essential for explaining how different systems communicate and
+            integrate. Use when discussing software architecture, third-party
+            integrations, or platform extensibility with stakeholders.
+          </p>
+        </div>
+
+        <!-- Term 2 -->
+        <div class="term-card">
+          <h3 class="term-title">2. Scalability</h3>
+          <p class="term-definition">
+            The ability of a system, network, or process to handle a growing
+            amount of work or its potential to be enlarged to accommodate
+            growth.
+          </p>
+          <p class="term-application">
+            Critical for business discussions about future growth,
+            infrastructure planning, and investment decisions. Helps
+            stakeholders understand long-term technical sustainability.
+          </p>
+        </div>
+
+        <!-- Term 3 -->
+        <div class="term-card">
+          <h3 class="term-title">3. Cloud Computing</h3>
+          <p class="term-definition">
+            The delivery of computing services including servers, storage,
+            databases, networking, and software over the internet ("the cloud").
+          </p>
+          <p class="term-application">
+            Fundamental for explaining modern infrastructure choices, cost
+            models, and deployment strategies to business leaders and
+            non-technical stakeholders.
+          </p>
+        </div>
+
+        <!-- Term 4 -->
+        <div class="term-card">
+          <h3 class="term-title">4. Agile Methodology</h3>
+          <p class="term-definition">
+            An iterative approach to software development that emphasizes
+            flexibility, collaboration, customer feedback, and rapid delivery of
+            working software.
+          </p>
+          <p class="term-application">
+            Essential for communicating development processes, timeline
+            expectations, and project management approaches to business
+            stakeholders and clients.
+          </p>
+        </div>
+
+        <!-- Term 5 -->
+        <div class="term-card">
+          <h3 class="term-title">5. DevOps</h3>
+          <p class="term-definition">
+            A set of practices that combines software development and IT
+            operations to shorten development cycles and provide continuous
+            delivery with high software quality.
+          </p>
+          <p class="term-application">
+            Important for explaining improved efficiency, faster deployment
+            cycles, and reduced time-to-market to business leaders focused on
+            competitive advantage.
+          </p>
+        </div>
+
+        <!-- Term 6 -->
+        <div class="term-card">
+          <h3 class="term-title">6. Machine Learning</h3>
+          <p class="term-definition">
+            A method of data analysis that automates analytical model building,
+            enabling systems to automatically learn and improve from experience
+            without being explicitly programmed.
+          </p>
+          <p class="term-application">
+            Crucial for discussing AI capabilities, data-driven insights,
+            automation opportunities, and competitive advantages in business
+            contexts.
+          </p>
+        </div>
+
+        <!-- Term 7 -->
+        <div class="term-card">
+          <h3 class="term-title">7. Cybersecurity</h3>
+          <p class="term-definition">
+            The practice of protecting systems, networks, and programs from
+            digital attacks that aim to access, change, or destroy sensitive
+            information.
+          </p>
+          <p class="term-application">
+            Essential for risk management discussions, compliance requirements,
+            and building stakeholder confidence in data protection and privacy
+            measures.
+          </p>
+        </div>
+
+        <!-- Term 8 -->
+        <div class="term-card">
+          <h3 class="term-title">8. User Experience (UX)</h3>
+          <p class="term-definition">
+            The overall experience a person has when interacting with a product,
+            especially in terms of how easy or pleasing it is to use.
+          </p>
+          <p class="term-application">
+            Critical for communicating design decisions, user adoption
+            strategies, and the business impact of intuitive interfaces to
+            stakeholders.
+          </p>
+        </div>
+
+        <!-- Term 9 -->
+        <div class="term-card">
+          <h3 class="term-title">9. Big Data</h3>
+          <p class="term-definition">
+            Extremely large datasets that require specialized tools and
+            techniques to capture, store, manage, and analyze for insights and
+            decision-making.
+          </p>
+          <p class="term-application">
+            Important for discussing data strategy, analytics capabilities,
+            business intelligence, and evidence-based decision making with
+            leadership teams.
+          </p>
+        </div>
+
+        <!-- Term 10 -->
+        <div class="term-card">
+          <h3 class="term-title">10. Blockchain</h3>
+          <p class="term-definition">
+            A distributed ledger technology that maintains a continuously
+            growing list of records linked and secured using cryptography.
+          </p>
+          <p class="term-application">
+            Useful for explaining transparency, security, and trust mechanisms
+            in applications like supply chain, finance, and digital identity
+            verification.
+          </p>
+        </div>
+
+        <!-- Term 11 -->
+        <div class="term-card">
+          <h3 class="term-title">11. IoT (Internet of Things)</h3>
+          <p class="term-definition">
+            A network of physical objects embedded with sensors, software, and
+            connectivity that enables them to collect and exchange data.
+          </p>
+          <p class="term-application">
+            Essential for discussing smart systems, data collection
+            opportunities, automation possibilities, and digital transformation
+            initiatives.
+          </p>
+        </div>
+
+        <!-- Term 12 -->
+        <div class="term-card">
+          <h3 class="term-title">12. Microservices</h3>
+          <p class="term-definition">
+            An architectural approach where applications are built as a
+            collection of loosely coupled, independently deployable services.
+          </p>
+          <p class="term-application">
+            Important for explaining system flexibility, development speed,
+            scalability benefits, and technical debt reduction to business
+            stakeholders.
+          </p>
+        </div>
+
+        <!-- Term 13 -->
+        <div class="term-card">
+          <h3 class="term-title">13. Technical Debt</h3>
+          <p class="term-definition">
+            The implied cost of additional rework caused by choosing an easy
+            solution now instead of using a better approach that would take
+            longer.
+          </p>
+          <p class="term-application">
+            Critical for explaining maintenance costs, development velocity
+            impacts, and the business case for refactoring and infrastructure
+            investments.
+          </p>
+        </div>
+
+        <!-- Term 14 -->
+        <div class="term-card">
+          <h3 class="term-title">
+            14. CI/CD (Continuous Integration/Continuous Deployment)
+          </h3>
+          <p class="term-definition">
+            A method to frequently deliver apps by introducing automation into
+            the stages of app development, from integration to delivery and
+            deployment.
+          </p>
+          <p class="term-application">
+            Essential for explaining faster release cycles, reduced risk,
+            improved quality, and competitive advantages in time-to-market
+            discussions.
+          </p>
+        </div>
+
+        <!-- Term 15 -->
+        <div class="term-card">
+          <h3 class="term-title">15. Digital Transformation</h3>
+          <p class="term-definition">
+            The integration of digital technology into all areas of business,
+            fundamentally changing how organizations operate and deliver value
+            to customers.
+          </p>
+          <p class="term-application">
+            Crucial for strategic discussions about modernization, competitive
+            positioning, operational efficiency, and customer experience
+            enhancement.
+          </p>
+        </div>
+
+        <!-- Term 16 -->
+        <div class="term-card">
+          <h3 class="term-title">16. SaaS (Software as a Service)</h3>
+          <p class="term-definition">
+            A software distribution model where applications are hosted by a
+            service provider and made available to customers over the internet.
+          </p>
+          <p class="term-application">
+            Important for explaining cost models, scalability benefits,
+            maintenance advantages, and deployment strategies to business
+            decision-makers.
+          </p>
+        </div>
+
+        <!-- Term 17 -->
+        <div class="term-card">
+          <h3 class="term-title">17. Open Source</h3>
+          <p class="term-definition">
+            Software with source code that anyone can inspect, modify, and
+            enhance, typically developed collaboratively and freely available.
+          </p>
+          <p class="term-application">
+            Essential for discussing cost savings, security considerations,
+            community support, and innovation opportunities in technology
+            strategy conversations.
+          </p>
+        </div>
+
+        <!-- Term 18 -->
+        <div class="term-card">
+          <h3 class="term-title">18. Artificial Intelligence (AI)</h3>
+          <p class="term-definition">
+            Computer systems able to perform tasks that typically require human
+            intelligence, such as visual perception, speech recognition, and
+            decision-making.
+          </p>
+          <p class="term-application">
+            Critical for discussing automation opportunities, competitive
+            advantages, efficiency gains, and future-proofing business
+            operations.
+          </p>
+        </div>
+
+        <!-- Term 19 -->
+        <div class="term-card">
+          <h3 class="term-title">19. MVP (Minimum Viable Product)</h3>
+          <p class="term-definition">
+            A product with just enough features to satisfy early customers and
+            provide feedback for future development iterations.
+          </p>
+          <p class="term-application">
+            Important for explaining lean development approaches, risk
+            mitigation, market validation, and efficient resource allocation to
+            stakeholders.
+          </p>
+        </div>
+
+        <!-- Term 20 -->
+        <div class="term-card">
+          <h3 class="term-title">20. Legacy System</h3>
+          <p class="term-definition">
+            An outdated computer system or application that continues to be used
+            because it still fulfills critical business functions.
+          </p>
+          <p class="term-application">
+            Essential for discussing modernization needs, maintenance costs,
+            security risks, and the business case for system upgrades or
+            replacements.
+          </p>
+        </div>
+      </div>
+
+      <!-- Back Navigation -->
+      <div style="text-align: center; margin-top: 4rem">
+        <a
+          href="technology-communication.html"
+          style="
+            display: inline-block;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+          "
+          >← Back to Technology Communication Guide</a
+        >
+      </div>
+    </main>
+
+    <script src="js/global-error-handler.js"></script>
+  </body>
+</html>

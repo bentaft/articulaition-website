@@ -1,0 +1,2626 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI-Powered Deep Conversation Analysis - Articulaition"
+    />
+    <title>Deep & Meaningful Conversation Analysis - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Analysis System -->
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --primary-blue: #4a90e2;
+        --success-green: #10b981;
+        --client-teal: #0891b2;
+        --relationship-purple: #7c3aed;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --bg-primary: #fafbfc;
+        --bg-secondary: #f4f6f8;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Background Effects */
+      .dashboard-container {
+        background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 100%);
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .dashboard-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(74, 144, 226, 0.03) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(74, 144, 226, 0.025) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(16, 185, 129, 0.02) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(245, 158, 11, 0.015) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Animation Classes */
+      .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+        opacity: 0;
+      }
+
+      .slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .scale-in {
+        animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes scaleIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-500 {
+        animation-delay: 0.5s;
+      }
+
+      /* Header Styling */
+      .main-header {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .logo-section img {
+        height: 32px;
+        width: auto;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--text-primary);
+      }
+
+      .nav-link.active {
+        color: var(--voice-primary);
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid #4a90e2;
+        border-radius: 0;
+        padding-bottom: 0.4rem;
+      }
+
+      /* Navigation Branding with Shiny Effect */
+      .nav-orange {
+        color: #f59e0b;
+        font-weight: 700;
+      }
+
+      .nav-blue {
+        color: #3b82f6;
+        font-weight: 700;
+      }
+
+      /* Glass Effect */
+      .glass-intense {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        color: var(--text-secondary);
+      }
+
+      .breadcrumb .current {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      /* Page Title Section */
+      .page-title-section {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .title-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .page-description {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* Analysis Options Grid */
+      .analysis-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .analysis-option {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.06);
+        border-radius: 24px;
+        padding: 2.5rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .analysis-option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .analysis-option:hover {
+        transform: translateY(-8px);
+        border-color: rgba(74, 144, 226, 0.3);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .analysis-option:hover::before {
+        opacity: 1;
+      }
+
+      .analysis-option.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-4px);
+      }
+
+      .option-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        border-radius: 20px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .analysis-option:hover .option-icon {
+        transform: scale(1.1);
+      }
+
+      .option-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-features {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .features-list {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      /* Upload Section */
+      .upload-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .upload-section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-subtitle {
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-center {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-option-single {
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px dashed rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 3rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .upload-option-single:hover {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.02);
+      }
+
+      .file-selected {
+        margin-top: 1.5rem;
+        background: rgba(16, 185, 129, 0.05);
+        border: 2px solid rgba(16, 185, 129, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .file-selected .file-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--success-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .file-selected .file-details {
+        flex: 1;
+        text-align: left;
+      }
+
+      .file-selected .file-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+
+      .file-selected .file-size {
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+      }
+
+      .file-selected .remove-file {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .file-selected .remove-file:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+
+      .upload-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1rem;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .upload-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .upload-button {
+        background: var(--primary-blue);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .upload-button:hover {
+        background: var(--relationship-purple);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* AI Practice Section */
+      .ai-practice-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .ai-practice-section.active {
+        display: block;
+      }
+
+      /* Scenario Grid */
+      .scenario-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .scenario-type {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-type:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary-blue);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .scenario-type.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-2px);
+      }
+
+      .scenario-type::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .scenario-type:hover::before,
+      .scenario-type.selected::before {
+        opacity: 1;
+      }
+
+      .scenario-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 1.5rem;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .scenario-type:hover .scenario-icon {
+        transform: scale(1.1);
+      }
+
+      .scenario-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-description {
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+        position: relative;
+        z-index: 2;
+        font-weight: 500;
+      }
+
+      /* Conversation Interface */
+      .conversation-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .scenario-intro {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        padding: 2rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-intro::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>')
+          repeat;
+        opacity: 0.3;
+      }
+
+      .scenario-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        position: relative;
+        z-index: 2;
+      }
+
+      .conversation-flow {
+        space-y: 1.5rem;
+      }
+
+      .message {
+        display: flex;
+        margin-bottom: 1.5rem;
+      }
+
+      .message.ai {
+        justify-content: flex-start;
+      }
+
+      .message.user {
+        justify-content: flex-end;
+      }
+
+      .message-content {
+        max-width: 80%;
+        padding: 1.25rem 1.5rem;
+        border-radius: 20px;
+        position: relative;
+      }
+
+      .message.ai .message-content {
+        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-bottom-left-radius: 8px;
+      }
+
+      .message.user .message-content {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        border-bottom-right-radius: 8px;
+      }
+
+      .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 1rem;
+        flex-shrink: 0;
+      }
+
+      .message.ai .message-avatar {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        order: -1;
+      }
+
+      .message.user .message-avatar {
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+      }
+
+      /* Audio Captured Message */
+      .audio-captured {
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .audio-captured-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 16px;
+        font-weight: 600;
+        box-shadow: var(--shadow-md);
+        animation: slideInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes slideInScale {
+        0% {
+          opacity: 0;
+          transform: translateY(20px) scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .primary-button {
+        background: linear-gradient(135deg, #4a90e2, #7c3aed) !important;
+        color: white !important;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .primary-button:hover:not(:disabled) {
+        background: linear-gradient(135deg, #7c3aed, #4a90e2) !important;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .primary-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .secondary-button {
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--text-primary);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .secondary-button:hover {
+        background: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Ensure record button is clickable */
+      #recordButton {
+        pointer-events: auto !important;
+        z-index: 100;
+        position: relative;
+      }
+
+      /* Enhanced Scenario and Conversation Sections */
+      .enhanced-scenario-section,
+      .enhanced-conversation-section {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.9) 0%,
+          rgba(255, 255, 255, 0.7) 100%
+        );
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        border: 1px solid rgba(74, 144, 226, 0.1);
+        padding: 0;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+      }
+
+      .enhanced-scenario-section:hover,
+      .enhanced-conversation-section:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .scenario-header,
+      .conversation-header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue) 0%,
+          var(--relationship-purple) 100%
+        );
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .conversation-header {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      }
+
+      .scenario-icon-small {
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .conversation-icon {
+        font-size: 1.5rem;
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .scenario-header h3,
+      .conversation-header h3 {
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      .scenario-content {
+        padding: 24px;
+      }
+
+      .scenario-content p {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .scenario-context p {
+        margin: 0 0 20px 0;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+        padding: 16px;
+        background: rgba(74, 144, 226, 0.04);
+        border-radius: 12px;
+        border-left: 4px solid var(--primary-blue);
+      }
+
+      .conversation-starter {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .starter-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .starter-icon {
+        font-size: 1.2rem;
+      }
+
+      .starter-text {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .conversation-starter p {
+        margin: 0;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+        font-style: italic;
+        position: relative;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .conversation-starter p::before {
+        content: '"';
+        position: absolute;
+        top: -4px;
+        left: 0;
+        font-size: 2rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        font-family: serif;
+      }
+
+      .conversation-starter p::after {
+        content: '"';
+        position: absolute;
+        bottom: -12px;
+        right: 0;
+        font-size: 2rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        font-family: serif;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 2rem 1rem;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .analysis-options {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .analysis-option {
+          padding: 2rem;
+        }
+
+        .option-icon {
+          width: 64px;
+          height: 64px;
+        }
+
+        .scenario-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+
+        .message-content {
+          max-width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="main-header fade-in">
+        <nav class="header-nav">
+          <div class="logo-section">
+            <a href="index.html" class="flex items-center gap-3 group">
+              <img
+                src="images/tree-logo.svg"
+                alt="Tree Logo"
+                class="h-9 w-auto group-hover:scale-105 transition-transform"
+              />
+              <span
+                class="font-semibold text-lg tracking-tight nav-brand-text"
+                style="margin-left: 0.25rem"
+              >
+                <span class="nav-orange">articul</span
+                ><span class="nav-blue">ai</span
+                ><span class="nav-orange">tion</span
+                ><span class="nav-orange">.com</span>
+              </span>
+            </a>
+            <div class="nav-links">
+              <a href="dashboard.html" class="nav-link">Home</a>
+              <a href="professional-communication.html" class="nav-link"
+                >Professional Communication</a
+              >
+              <a href="personal-communication.html" class="nav-link active"
+                >Personal Communication</a
+              >
+              <a href="improvement-hub.html" class="nav-link"
+                >Improvement Hub</a
+              >
+              <a href="pricing.html" class="nav-link">Pricing</a>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <!-- User Dropdown -->
+            <div class="relative">
+              <button
+                class="flex items-center gap-3 px-4 py-2 rounded-xl bg-white bg-opacity-10 hover:bg-opacity-15 transition-all"
+                id="userMenuBtn"
+              >
+                <div
+                  id="userAvatar"
+                  style="
+                    width: 32px;
+                    height: 32px;
+                    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: 700;
+                    font-size: 14px;
+                  "
+                >
+                  U
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+                    margin-left: 8px;
+                  "
+                >
+                  <span
+                    id="userName"
+                    style="
+                      color: var(--text-primary);
+                      font-weight: 500;
+                      font-size: 14px;
+                      line-height: 1.2;
+                    "
+                    >Account</span
+                  >
+                  <span
+                    id="userPlan"
+                    style="
+                      background: linear-gradient(135deg, #10b981, #06b6d4);
+                      color: white;
+                      padding: 2px 8px;
+                      border-radius: 12px;
+                      font-size: 10px;
+                      font-weight: 600;
+                      width: fit-content;
+                      margin-top: 2px;
+                    "
+                    >Free Plan</span
+                  >
+                </div>
+                <i
+                  data-lucide="chevron-down"
+                  style="
+                    width: 16px;
+                    height: 16px;
+                    color: var(--text-secondary);
+                  "
+                ></i>
+              </button>
+              <div
+                class="absolute right-0 top-full mt-2 w-48 glass-intense rounded-xl shadow-2xl border border-black border-opacity-10 hidden"
+                id="userDropdown"
+              >
+                <a
+                  href="#"
+                  class="flex items-center gap-3 px-4 py-3 hover:bg-black hover:bg-opacity-10 rounded-t-xl"
+                  style="color: var(--text-primary); font-weight: 400"
+                >
+                  <i data-lucide="user" style="width: 16px; height: 16px"></i>
+                  <span style="font-size: 14px">Profile Settings</span>
+                </a>
+                <a
+                  href="#"
+                  class="flex items-center gap-3 px-4 py-3 hover:bg-black hover:bg-opacity-10"
+                  style="color: var(--text-primary); font-weight: 400"
+                >
+                  <i
+                    data-lucide="credit-card"
+                    style="width: 16px; height: 16px"
+                  ></i>
+                  <span style="font-size: 14px">Billing & Plans</span>
+                </a>
+                <a
+                  href="#"
+                  class="flex items-center gap-3 px-4 py-3 hover:bg-black hover:bg-opacity-10"
+                  style="color: var(--text-primary); font-weight: 400"
+                >
+                  <i
+                    data-lucide="settings"
+                    style="width: 16px; height: 16px"
+                  ></i>
+                  <span style="font-size: 14px">Preferences</span>
+                </a>
+                <hr style="border-color: rgba(0, 0, 0, 0.1); margin: 8px 0" />
+                <button
+                  class="flex items-center gap-3 px-4 py-3 hover:bg-red-500 hover:bg-opacity-20 w-full text-left text-red-400 rounded-b-xl"
+                  id="logoutBtn"
+                  style="font-weight: 400"
+                >
+                  <i
+                    data-lucide="log-out"
+                    style="width: 16px; height: 16px"
+                  ></i>
+                  <span style="font-size: 14px">Sign Out</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb slide-up delay-100">
+          <a href="dashboard.html">Dashboard</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <a href="personal-communication.html">Personal</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <span class="current">Deep Conversation Analysis</span>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title-section slide-up delay-200">
+          <div class="title-with-icon">
+            <div class="title-icon">
+              <i data-lucide="heart" class="w-6 h-6"></i>
+            </div>
+            <h1 class="page-title">
+              🌟 Deep & Meaningful Conversation Analysis 🌟
+            </h1>
+          </div>
+          <p class="page-description">
+            Transform shallow small talk into profound connections. Master
+            vulnerability, emotional intelligence, and the art of meaningful
+            dialogue that creates lasting, authentic relationships.
+          </p>
+        </div>
+
+        <!-- Analysis Options -->
+        <div class="analysis-options">
+          <!-- Upload Existing Recording -->
+          <div class="analysis-option scale-in delay-300" data-type="upload">
+            <div class="option-icon">
+              <i data-lucide="upload" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">Upload Conversation</h3>
+            <p class="option-description">
+              Upload a recording of your meaningful conversation to discover how
+              well you create emotional safety, ask soul-stirring questions, and
+              foster deep connection.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Vulnerability assessment • Emotional intelligence • Active
+                listening • Question depth • Authentic connection
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Practice Session -->
+          <div class="analysis-option scale-in delay-400" data-type="practice">
+            <div class="option-icon">
+              <i data-lucide="message-circle" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">AI Practice Scenarios</h3>
+            <p class="option-description">
+              Explore 6 different deep conversation scenarios to understand
+              emotional depth, vulnerability, and meaningful connection
+              techniques.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Life purpose concepts • Values exploration • Emotional intimacy
+                • Vulnerability principles
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+          <h2 class="section-title">Upload Your Meaningful Conversation</h2>
+          <p class="section-subtitle">
+            Share a recording of your deep conversation to discover how
+            effectively you create emotional intimacy and authentic connection
+          </p>
+
+          <div class="upload-center">
+            <div class="upload-option-single" id="fileUpload">
+              <div class="upload-icon">
+                <i data-lucide="folder" class="w-6 h-6"></i>
+              </div>
+              <div class="upload-title">Choose File</div>
+              <div class="upload-description">
+                Select an audio or video file from your device (MP3, M4A, WAV,
+                MP4, MOV)
+              </div>
+              <button class="upload-button" id="chooseFileBtn">
+                <i data-lucide="upload" class="w-4 h-4"></i>
+                Select File
+              </button>
+              <input
+                type="file"
+                id="audioFile"
+                accept=".mp3,.m4a,.wav,.mp4,.mov"
+                hidden
+              />
+
+              <div
+                class="file-selected"
+                id="fileSelected"
+                style="display: none"
+              >
+                <div class="file-icon">
+                  <i data-lucide="file-audio" class="w-5 h-5"></i>
+                </div>
+                <div class="file-details">
+                  <div class="file-name" id="fileName">conversation.mp4</div>
+                  <div class="file-size" id="fileSize">2.4 MB</div>
+                </div>
+                <button class="remove-file" id="removeFile">
+                  <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="secondary-button" id="backToOptions">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="primary-button" id="analyzeUpload" disabled>
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              Analyze Recording
+            </button>
+          </div>
+        </div>
+
+        <!-- Practice Information Section -->
+        <div class="ai-practice-section" id="practiceSection">
+          <h2 class="section-title">Choose Your Deep Conversation Scenario</h2>
+          <p class="section-subtitle">
+            Select a meaningful scenario to learn techniques for emotional
+            depth, vulnerability, and authentic connection
+          </p>
+
+          <!-- Scenario Selection Grid -->
+          <div class="scenario-grid">
+            <div class="scenario-type" data-scenario="values-discussion">
+              <div class="scenario-icon">
+                <i data-lucide="compass" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Values & Beliefs</div>
+              <div class="scenario-description">
+                Navigate the sacred territory of personal values and beliefs
+                that shape who you are
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="dreams-aspirations">
+              <div class="scenario-icon">
+                <i data-lucide="star" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Dreams & Aspirations</div>
+              <div class="scenario-description">
+                Open your heart about your deepest dreams and what truly sets
+                your soul on fire
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="life-challenges">
+              <div class="scenario-icon">
+                <i data-lucide="mountain" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Life Challenges</div>
+              <div class="scenario-description">
+                Share vulnerable stories of struggle, growth, and the wisdom
+                found in hardship
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="relationships-love">
+              <div class="scenario-icon">
+                <i data-lucide="heart" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Love & Connection</div>
+              <div class="scenario-description">
+                Dive deep into what love means to you and how you create
+                profound connections
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="purpose-meaning">
+              <div class="scenario-icon">
+                <i data-lucide="search" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Life's Purpose & Meaning</div>
+              <div class="scenario-description">
+                Explore the big questions: your unique purpose and what gives
+                life meaning
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="fears-vulnerabilities">
+              <div class="scenario-icon">
+                <i data-lucide="shield" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Sacred Vulnerability</div>
+              <div class="scenario-description">
+                Practice the courage to share your deepest fears and authentic
+                self
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="conversation-container"
+            id="conversationContainer"
+            style="display: none"
+          >
+            <!-- Scenario Introduction -->
+            <div class="scenario-intro">
+              <div class="scenario-title">
+                <i data-lucide="heart" class="w-5 h-5 inline mr-2"></i>
+                <span id="scenarioTitle">Deep Conversation Scenario</span>
+              </div>
+              <div class="scenario-text" id="scenarioText">
+                Learn about this deep conversation scenario.
+              </div>
+            </div>
+
+            <!-- Combined Scenario & Conversation Starter -->
+            <div
+              class="scenario-details"
+              id="scenarioDetails"
+              style="display: none"
+            >
+              <div class="enhanced-scenario-section">
+                <div class="scenario-header">
+                  <div class="scenario-icon-small">
+                    <i data-lucide="play-circle" class="w-4 h-4"></i>
+                  </div>
+                  <h3>Your Practice Scenario</h3>
+                </div>
+                <div class="scenario-content">
+                  <div class="scenario-context">
+                    <p id="scenarioContext">
+                      Scenario details will appear here.
+                    </p>
+                  </div>
+                  <div
+                    class="conversation-starter"
+                    id="conversationPrompt"
+                    style="display: none"
+                  >
+                    <div class="starter-label">
+                      <span class="starter-icon">💬</span>
+                      <span class="starter-text">What do you say?</span>
+                    </div>
+                    <p id="conversationPromptText">
+                      Generating conversation prompt...
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="action-buttons">
+              <button class="secondary-button" id="backToScenarios">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Scenarios
+              </button>
+              <button class="secondary-button" id="newStarter">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                New Starter
+              </button>
+              <button class="secondary-button" id="recordButton">
+                <i data-lucide="mic" class="w-4 h-4"></i>
+                Record Response
+              </button>
+              <button class="primary-button" id="submitForAnalysis">
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                Submit for Analysis
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <!-- API Configuration - Copy api-config-template.js to api-config.js and add your keys -->
+    <script src="js/api-config.js"></script>
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Initialize Gemini AI Engine
+      const aiEngine = new GeminiAIEngine();
+      // Make it globally available
+      window.geminiEngine = aiEngine;
+
+      // Analysis function for deep communication
+      async function analyzeConversation(audioBlob, analysisType) {
+        console.log("Starting deep communication analysis...", analysisType);
+
+        // Convert blob to file for analysis
+        const audioFile = new File([audioBlob], "recording.webm", {
+          type: audioBlob.type,
+        });
+
+        try {
+          // Initialize analysis system
+          const simpleAnalysis = new SimpleAnalysis();
+
+          // Get transcript from audio
+          console.log("Transcribing audio...");
+          const analysisResult = await simpleAnalysis.analyzeAudio(
+            audioFile,
+            "personal"
+          );
+
+          // Extract conversation type from analysisType
+          const conversationType = analysisType.replace("personal-", "");
+
+          // Perform specific analysis based on conversation type
+          const personalAnalysis = await analyzeDeepCommunication(
+            analysisResult.transcript || analysisResult.fallbackTranscript,
+            conversationType,
+            analysisResult
+          );
+
+          return {
+            ...analysisResult,
+            personalAnalysis: personalAnalysis,
+            conversationType: conversationType,
+            analysisType: analysisType,
+            timestamp: Date.now(),
+            status: "analyzed",
+          };
+        } catch (error) {
+          console.error("Analysis error:", error);
+
+          // Return error result with audio preserved
+          return {
+            audioBlob: audioBlob,
+            audioFile: audioFile,
+            analysisType: analysisType,
+            timestamp: Date.now(),
+            status: "error",
+            error: error.message,
+            transcript: "Error transcribing audio. Please try again.",
+            personalAnalysis: getErrorAnalysis(analysisType),
+          };
+        }
+      }
+
+      // Deep communication analysis function
+      async function analyzeDeepCommunication(
+        transcript,
+        conversationType,
+        baseAnalysis
+      ) {
+        console.log("Analyzing deep communication:", conversationType);
+
+        if (!transcript) {
+          return getErrorAnalysis(conversationType);
+        }
+
+        // Calculate basic metrics from transcript
+        const words = transcript.split(/\s+/).filter((word) => word.length > 0);
+        const sentences = transcript
+          .split(/[.!?]+/)
+          .filter((s) => s.trim().length > 0);
+        const wordCount = words.length;
+
+        // Estimate speech duration (assuming 150 WPM average)
+        const estimatedDuration = wordCount / 150; // in minutes
+        const speechRate =
+          estimatedDuration > 0 ? Math.round(wordCount / estimatedDuration) : 0;
+
+        // Calculate vulnerability indicators
+        const vulnerabilityWords = [
+          "feel",
+          "afraid",
+          "scared",
+          "worry",
+          "difficult",
+          "struggle",
+          "emotional",
+          "vulnerable",
+          "share",
+          "open",
+        ];
+        const vulnerabilityCount = words.filter((word) =>
+          vulnerabilityWords.includes(word.toLowerCase().replace(/[^\w]/g, ""))
+        ).length;
+
+        // Calculate emotional depth indicators
+        const emotionalWords = [
+          "love",
+          "fear",
+          "hope",
+          "dream",
+          "passion",
+          "meaning",
+          "purpose",
+          "connection",
+          "heart",
+          "soul",
+        ];
+        const emotionalCount = words.filter((word) =>
+          emotionalWords.includes(word.toLowerCase().replace(/[^\w]/g, ""))
+        ).length;
+
+        // Calculate reflective language
+        const reflectiveWords = [
+          "think",
+          "believe",
+          "wonder",
+          "realize",
+          "understand",
+          "learn",
+          "grow",
+          "change",
+          "become",
+        ];
+        const reflectiveCount = words.filter((word) =>
+          reflectiveWords.includes(word.toLowerCase().replace(/[^\w]/g, ""))
+        ).length;
+
+        // Count questions
+        const questionCount = (transcript.match(/\?/g) || []).length;
+        const questionsPerHour =
+          estimatedDuration > 0
+            ? Math.round((questionCount / estimatedDuration) * 60)
+            : 0;
+
+        // Generate analysis based on conversation type
+        return analyzeDeepConversation(transcript, {
+          speechRate,
+          vulnerabilityCount,
+          emotionalCount,
+          reflectiveCount,
+          wordCount,
+          questionCount,
+          estimatedDuration,
+        });
+      }
+
+      // Deep Conversation Analysis
+      function analyzeDeepConversation(transcript, metrics) {
+        console.log("🎯 Implementing Deep Conversation Analysis");
+        const {
+          speechRate,
+          vulnerabilityCount,
+          emotionalCount,
+          reflectiveCount,
+          questionCount,
+          estimatedDuration,
+          wordCount,
+        } = metrics;
+
+        // Calculate scores based on deep conversation criteria
+        const vulnerabilityScore = Math.min(100, vulnerabilityCount * 15 + 40);
+        const emotionalDepthScore = Math.min(100, emotionalCount * 12 + 50);
+        const reflectiveScore = Math.min(100, reflectiveCount * 10 + 45);
+        const questionScore = Math.min(100, questionCount * 20 + 30);
+
+        // Calculate weighted overall score
+        const overallScore = Math.round(
+          vulnerabilityScore * 0.25 +
+            emotionalDepthScore * 0.25 +
+            reflectiveScore * 0.25 +
+            questionScore * 0.25
+        );
+
+        return {
+          overallScore: overallScore,
+          metrics: {
+            vulnerabilityIndicators: vulnerabilityCount,
+            emotionalDepth: emotionalCount,
+            reflectiveLanguage: reflectiveCount,
+            meaningfulQuestions: questionCount,
+            speechRate: speechRate,
+            estimatedDuration: estimatedDuration.toFixed(1),
+          },
+          insights: generateDeepInsights(
+            overallScore,
+            vulnerabilityCount,
+            emotionalCount,
+            reflectiveCount
+          ),
+          recommendations: generateDeepRecommendations(
+            vulnerabilityScore,
+            emotionalDepthScore,
+            reflectiveScore,
+            questionScore
+          ),
+        };
+      }
+
+      function generateDeepInsights(
+        overallScore,
+        vulnerabilityCount,
+        emotionalCount,
+        reflectiveCount
+      ) {
+        let insights = [];
+
+        if (overallScore >= 85) {
+          insights.push(
+            "✅ Excellent capacity for deep, meaningful conversation."
+          );
+        } else if (overallScore >= 70) {
+          insights.push(
+            "💫 Good foundation for emotional depth with room for growth."
+          );
+        } else {
+          insights.push(
+            "🌱 Focus on developing vulnerability and emotional openness."
+          );
+        }
+
+        if (vulnerabilityCount >= 3) {
+          insights.push(
+            "✅ Shows courage in sharing vulnerable thoughts and feelings."
+          );
+        } else {
+          insights.push(
+            "🤗 Could benefit from more emotional openness and vulnerability."
+          );
+        }
+
+        if (emotionalCount >= 3) {
+          insights.push(
+            "✅ Uses rich emotional language that creates connection."
+          );
+        } else {
+          insights.push(
+            "💖 Could explore deeper emotional expression and feeling words."
+          );
+        }
+
+        if (reflectiveCount >= 3) {
+          insights.push(
+            "✅ Demonstrates thoughtful reflection and self-awareness."
+          );
+        } else {
+          insights.push(
+            "🧠 Could use more reflective language and introspection."
+          );
+        }
+
+        return insights;
+      }
+
+      function generateDeepRecommendations(
+        vulnerabilityScore,
+        emotionalDepthScore,
+        reflectiveScore,
+        questionScore
+      ) {
+        let recommendations = [];
+
+        if (vulnerabilityScore < 80) {
+          recommendations.push(
+            "Practice sharing personal stories and emotional experiences more openly."
+          );
+        }
+
+        if (emotionalDepthScore < 80) {
+          recommendations.push(
+            "Use more feeling words and explore the emotional landscape of topics."
+          );
+        }
+
+        if (reflectiveScore < 80) {
+          recommendations.push(
+            "Ask more 'why' and 'how' questions to encourage deeper reflection."
+          );
+        }
+
+        if (questionScore < 80) {
+          recommendations.push(
+            "Pose more meaningful questions that invite soul-searching responses."
+          );
+        }
+
+        recommendations.push(
+          "Create emotional safety by validating feelings and sharing your own experiences."
+        );
+
+        return recommendations;
+      }
+
+      function getErrorAnalysis(conversationType) {
+        return {
+          overallScore: 0,
+          metrics: {},
+          insights: ["❌ Unable to analyze audio. Please try recording again."],
+          recommendations: [
+            "Ensure you have a good microphone connection and speak clearly.",
+          ],
+        };
+      }
+
+      // AI-generated scenario function
+      async function generateAIScenario(scenarioKey) {
+        const scenarioTitles = {
+          "values-discussion": "Values & Beliefs Discussion",
+          "dreams-aspirations": "Dreams & Aspirations",
+          "life-challenges": "Life Challenges",
+          "relationships-love": "Love & Connection",
+          "purpose-meaning": "Life's Purpose & Meaning",
+          "fears-vulnerabilities": "Sacred Vulnerability",
+        };
+
+        const scenarioTitle = scenarioTitles[scenarioKey];
+        if (!scenarioTitle)
+          return "You are having a deep, meaningful conversation.";
+
+        try {
+          // Check if Gemini is configured
+          if (!window.geminiEngine || !window.geminiEngine.isConfigured()) {
+            console.warn("Gemini API not configured, using fallback");
+            return getFallbackScenario(scenarioKey);
+          }
+
+          const prompt = `Generate a specific, realistic scenario for deep conversation practice: ${scenarioTitle}
+
+Create a single, specific scenario that puts the user in a realistic moment where they would naturally engage in this type of meaningful conversation.
+
+Format: Start with "You are..." or "You notice..." or "You find yourself..." and describe a specific situation that would naturally lead to deep conversation.
+
+Examples:
+- For values discussion: "You are having a late-night conversation with your best friend about what really matters in life."
+- For life challenges: "You are on a long walk with someone and the conversation turns to childhood memories and difficult times."
+- For dreams: "You are sitting by a fire with friends and someone asks about your biggest dreams and what you're passionate about."
+
+Generate one specific scenario for ${scenarioTitle}. Keep it realistic, intimate, and conducive to meaningful dialogue, 1-2 sentences maximum.`;
+
+          const response = await window.geminiEngine.callGeminiAPI(prompt);
+          return response.trim();
+        } catch (error) {
+          console.error("Error generating AI scenario:", error);
+          return getFallbackScenario(scenarioKey);
+        }
+      }
+
+      // Fallback scenarios for when AI is unavailable
+      function getFallbackScenario(scenarioKey) {
+        const fallbacks = {
+          "values-discussion":
+            "You are having a late-night conversation with your best friend about what really matters in life.",
+          "dreams-aspirations":
+            "You are sitting by a fire with friends and someone asks about your biggest dreams.",
+          "life-challenges":
+            "You are on a long walk with someone and the conversation turns to childhood memories.",
+          "relationships-love":
+            "You are having a heart-to-heart conversation about what love means to each of you.",
+          "purpose-meaning":
+            "You are discussing life's deeper questions with someone who shares your curiosity.",
+          "fears-vulnerabilities":
+            "You are in a safe space with someone who invites you to share what you normally keep hidden.",
+        };
+        return (
+          fallbacks[scenarioKey] ||
+          "You are having a deep, meaningful conversation."
+        );
+      }
+
+      // State management
+      let currentMode = null;
+      let selectedScenario = null;
+      let conversationHistory = [];
+      let conversationCount = 0;
+      let isRecording = false;
+      let mediaRecorder = null;
+      let audioChunks = [];
+      let recordedAudioBlob = null;
+
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("🚀 Initializing deep conversation analysis...");
+
+        const analysisOptions = document.querySelectorAll(".analysis-option");
+        const uploadSection = document.getElementById("uploadSection");
+        const practiceSection = document.getElementById("practiceSection");
+        const recordBtn = document.getElementById("recordButton");
+        const submitBtn = document.getElementById("submitForAnalysis");
+
+        analysisOptions.forEach((option) => {
+          option.addEventListener("click", function () {
+            const type = this.dataset.type;
+
+            // Remove selected class from all options
+            analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+            // Add selected class to clicked option
+            this.classList.add("selected");
+
+            // Show/hide sections
+            if (type === "upload") {
+              uploadSection.classList.add("active");
+              practiceSection.classList.remove("active");
+            } else if (type === "practice") {
+              practiceSection.classList.add("active");
+              uploadSection.classList.remove("active");
+            }
+          });
+        });
+
+        // Scenario selection functionality - auto-start when clicked
+        const scenarioTypes = document.querySelectorAll(".scenario-type");
+        let currentScenarioType = null; // Store for generating new starters
+
+        scenarioTypes.forEach((scenario) => {
+          scenario.addEventListener("click", function () {
+            // Immediately start the practice session for clicked scenario
+            const scenarioType = this.dataset.scenario;
+            currentScenarioType = scenarioType;
+            startConversationPractice(scenarioType);
+          });
+        });
+
+        // Back to scenarios button
+        const backToScenariosBtn = document.getElementById("backToScenarios");
+        if (backToScenariosBtn) {
+          backToScenariosBtn.addEventListener("click", function () {
+            // Hide conversation container and show scenario grid
+            document.getElementById("conversationContainer").style.display =
+              "none";
+            document.querySelector(".scenario-grid").style.display = "grid";
+
+            // Reset current scenario
+            currentScenarioType = null;
+          });
+        }
+
+        // New starter button - generate fresh conversation prompt
+        const newStarterBtn = document.getElementById("newStarter");
+        if (newStarterBtn) {
+          newStarterBtn.addEventListener("click", async function () {
+            if (currentScenarioType) {
+              const conversationPromptElement = document.getElementById(
+                "conversationPromptText"
+              );
+              if (conversationPromptElement) {
+                // Show loading state
+                conversationPromptElement.textContent =
+                  "Generating new conversation starter...";
+                conversationPromptElement.style.fontStyle = "italic";
+
+                // Add a subtle animation to show the change
+                const promptElement =
+                  document.getElementById("conversationPrompt");
+                promptElement.style.opacity = "0.5";
+                setTimeout(() => {
+                  promptElement.style.opacity = "1";
+                }, 200);
+
+                try {
+                  // Get the scenario data like in the startConversationPractice function
+                  const getScenarioContexts = (scenarioType) => {
+                    const scenarioData = {
+                      "values-discussion": {
+                        contexts: [
+                          "You are having a conversation with a close friend who is curious about what drives your life decisions and moral compass.",
+                          "You are discussing with someone who is questioning their own values and looking for perspective.",
+                          "You are in a deep conversation about what principles guide important life choices.",
+                          "You are sharing with someone who wants to understand the beliefs that shape your worldview.",
+                          "You are discussing moral and ethical perspectives with someone who values philosophical conversation.",
+                        ],
+                      },
+                      "dreams-aspirations": {
+                        contexts: [
+                          "You are sharing with someone who wants to understand what excites you most about your future.",
+                          "You are discussing hopes and dreams with someone who is also pursuing their passions.",
+                          "You are opening up about your aspirations with someone who encourages big thinking.",
+                          "You are talking about life goals with someone who believes in supporting others' dreams.",
+                          "You are exploring what makes you feel most alive and purposeful with an understanding friend.",
+                        ],
+                      },
+                      "life-challenges": {
+                        contexts: [
+                          "You are opening up to someone who is also facing difficulties and looking for perspective.",
+                          "You are sharing your struggles with someone who has shown wisdom in their own challenges.",
+                          "You are discussing life's difficulties with someone who creates a safe space for vulnerability.",
+                          "You are talking about growth through hardship with someone who values resilience.",
+                          "You are sharing lessons learned from tough times with someone who appreciates authentic stories.",
+                        ],
+                      },
+                      "relationships-love": {
+                        contexts: [
+                          "You are discussing the nature of love and meaningful relationships with someone who values emotional intimacy.",
+                          "You are sharing insights about connection with someone who is also navigating relationships.",
+                          "You are exploring what makes relationships meaningful with someone who prioritizes depth.",
+                          "You are talking about love and vulnerability with someone who understands the complexities of the heart.",
+                          "You are discussing authentic connection with someone who values genuine emotional bonds.",
+                        ],
+                      },
+                      "purpose-meaning": {
+                        contexts: [
+                          "You are exploring life's bigger questions with someone who is also searching for meaning and purpose.",
+                          "You are discussing existential topics with someone who enjoys philosophical conversations.",
+                          "You are sharing thoughts about life's meaning with someone who values deep reflection.",
+                          "You are exploring purpose with someone who is also on a journey of self-discovery.",
+                          "You are discussing what makes life worthwhile with someone who appreciates profound questions.",
+                        ],
+                      },
+                      "fears-vulnerabilities": {
+                        contexts: [
+                          "You are in a safe space with someone who values authenticity and invites you to share what you normally keep hidden.",
+                          "You are opening up to someone who has shown they can hold space for difficult emotions.",
+                          "You are sharing vulnerabilities with someone who has been courageously honest with you.",
+                          "You are discussing fears with someone who creates an atmosphere of acceptance and understanding.",
+                          "You are being authentic with someone who appreciates the courage it takes to be vulnerable.",
+                        ],
+                      },
+                    };
+                    return scenarioData[scenarioType];
+                  };
+
+                  const scenarioContexts =
+                    getScenarioContexts(currentScenarioType);
+                  const randomContext = scenarioContexts
+                    ? scenarioContexts.contexts[
+                        Math.floor(
+                          Math.random() * scenarioContexts.contexts.length
+                        )
+                      ]
+                    : "You are having a deep, meaningful conversation.";
+
+                  // Update the displayed context
+                  document.getElementById("scenarioContext").textContent =
+                    randomContext;
+
+                  // Generate new AI conversation starter
+                  const aiStarter = await generateAIConversationStarter(
+                    currentScenarioType,
+                    randomContext
+                  );
+                  conversationPromptElement.textContent = aiStarter;
+                } catch (error) {
+                  console.error("Error generating new starter:", error);
+                  // Fallback to pre-written starter
+                  const newStarter =
+                    generateConversationStarter(currentScenarioType);
+                  conversationPromptElement.textContent = newStarter;
+                }
+              }
+            }
+          });
+        }
+
+        // AI-generated conversation starter function
+        async function generateAIConversationStarter(scenarioKey, context) {
+          const scenarioTitles = {
+            "values-discussion": "Values & Beliefs",
+            "dreams-aspirations": "Dreams & Aspirations",
+            "life-challenges": "Life Challenges",
+            "relationships-love": "Relationships & Love",
+            "purpose-meaning": "Purpose & Meaning",
+            "fears-vulnerabilities": "Fears & Vulnerabilities",
+          };
+
+          const scenarioTitle =
+            scenarioTitles[scenarioKey] || "Deep Conversation";
+
+          try {
+            // Check if Gemini is configured
+            if (!window.geminiEngine || !window.geminiEngine.isConfigured()) {
+              console.warn("Gemini API not configured, using fallback");
+              return generateConversationStarter(scenarioKey);
+            }
+
+            const prompt = `Generate 5 different simple scenarios for: ${scenarioTitle}
+
+Context: ${context}
+
+Create 5 brief, realistic scenarios from the user's perspective, each with variety within the topic. Keep them simple and relatable.
+
+Format each as a single sentence starting with "You notice..." or "You see..." or "You overhear..."
+
+Examples for deep conversation scenarios:
+- You notice your friend seems thoughtful about something important.
+- You see your colleague reading a philosophy book during lunch.
+- You overhear someone talking about a life-changing experience.
+- You notice your friend has been more reflective lately.
+- You see someone journaling in a coffee shop.
+
+Generate 5 different scenarios within the topic. Keep each short and realistic.`;
+
+            const response = await window.geminiEngine.callGeminiAPI(prompt);
+
+            // Parse the response to get multiple scenarios and pick one randomly
+            const scenarios = response
+              .trim()
+              .split("\n")
+              .filter(
+                (line) =>
+                  line.trim().startsWith("-") ||
+                  line.trim().startsWith("•") ||
+                  line.trim().match(/^\d+\./)
+              );
+            if (scenarios.length > 0) {
+              const randomScenario =
+                scenarios[Math.floor(Math.random() * scenarios.length)];
+              // Clean up the scenario text (remove bullet points, numbers, etc.)
+              return randomScenario.replace(/^[-•\d.\s]+/, "").trim();
+            }
+
+            return response.trim();
+          } catch (error) {
+            console.error("Error generating AI conversation starter:", error);
+            // Fallback to existing function
+            return generateConversationStarter(scenarioKey);
+          }
+        }
+
+        // Legacy conversation starter function
+        function generateConversationStarter(scenarioType) {
+          const scenarios = {
+            "values-discussion": [
+              "I've been reflecting on what really drives my decisions lately. What are the core values that you feel most strongly about in your life?",
+              "You seem like someone who thinks deeply about life. What beliefs or principles do you find yourself coming back to when making important choices?",
+              "I'm curious about what shapes how you see the world. Are there any values from your childhood that still guide you today?",
+              "Sometimes I wonder if my values have changed as I've gotten older. What's something you believe in now that might surprise your younger self?",
+              "I've noticed you approach things differently than most people. What core beliefs do you think make you who you are?",
+              "I'm trying to figure out my own moral compass. What's a value or principle that you'd never compromise on, no matter what?",
+              "You always seem so grounded in your decisions. Is there a particular philosophy or belief system that resonates with you?",
+              "I've been questioning a lot of things lately. What's something you believe in so deeply that it affects how you live every day?",
+            ],
+            "dreams-aspirations": [
+              "I've been feeling stuck in my routine lately. What's something you dream about doing that makes you feel really alive when you think about it?",
+              "You have this energy about you that's inspiring. What are you most excited about when you think about your future?",
+              "I'm trying to reconnect with what really matters to me. What's a dream or goal that you've never told anyone about?",
+              "Sometimes I forget what I'm passionate about. What gets you so excited that you could talk about it for hours?",
+              "I admire people who chase their dreams. What's something you hope to accomplish that would make you incredibly proud?",
+              "I've been thinking about legacy lately. What impact do you want to have on the world, even if it's just in your small corner of it?",
+              "You seem like someone who knows what they want. What's driving you forward right now in life?",
+              "I'm curious about what motivates different people. What's a dream you have that might seem crazy to others but feels completely right to you?",
+            ],
+            "life-challenges": [
+              "I've been going through a really tough time lately and feeling pretty lost. Have you ever experienced something that completely changed how you see yourself?",
+              "You seem like you've learned a lot from life. What's a difficult experience that you wouldn't change because of what it taught you?",
+              "I'm struggling with something and could use perspective. When you've faced your biggest challenges, what helped you get through them?",
+              "You have this resilience about you that I admire. What's something hard you've overcome that made you stronger?",
+              "I've been thinking about how struggles shape us. Is there a time when you surprised yourself with how you handled something difficult?",
+              "Sometimes I feel like I'm not handling things well. Have you ever faced something that felt impossible but somehow you made it through?",
+              "I'm learning that everyone has hidden battles. What's a challenge you've faced that taught you something important about who you are?",
+              "You seem to have such wisdom about life. What's a difficult period you went through that ultimately led to growth or change?",
+            ],
+            "relationships-love": [
+              "I've been thinking about what makes relationships really work. What does authentic connection look like to you?",
+              "You seem to have meaningful relationships in your life. What do you think makes love last beyond the initial excitement?",
+              "I'm trying to understand what real intimacy means. How do you know when you truly trust someone with your heart?",
+              "I've experienced different kinds of love in my life. What's your definition of what makes a connection truly deep?",
+              "You approach relationships in a way that seems really genuine. What do you think are the most important things to share with someone you love?",
+              "I'm curious about how people create lasting bonds. What makes you feel most loved and understood by the people close to you?",
+              "I've been reflecting on my relationships lately. What do you think is the difference between being in love and truly loving someone?",
+              "You seem to really understand people. What's the most important thing you've learned about creating meaningful connections with others?",
+            ],
+            "purpose-meaning": [
+              "I've been feeling like I'm just going through the motions lately. What gives your life a sense of real purpose?",
+              "You seem to have found something meaningful in life. When do you feel most like you're living according to your true purpose?",
+              "I'm questioning what really matters in the grand scheme of things. What makes you feel like your existence has significance?",
+              "Sometimes I wonder if I'm on the right path. How do you know when you're living a life that feels meaningful to you?",
+              "I've been thinking about legacy and impact. What would make you feel like you've lived a life worth living?",
+              "You have this sense of direction that I admire. What drives you to get up in the morning and feel excited about life?",
+              "I'm trying to figure out my place in the world. What gives you the strongest sense that you're exactly where you're supposed to be?",
+              "I've been reading about different philosophies of meaning. What's your personal answer to why we're here and what we're supposed to do?",
+            ],
+            "fears-vulnerabilities": [
+              "I've been carrying this fear around and it's exhausting. What's something you're afraid of that you don't usually talk about with people?",
+              "You seem so confident, but I imagine everyone has fears. What's something that makes you feel vulnerable that might surprise people?",
+              "I'm trying to be more honest about my insecurities. What's a fear you have that sometimes holds you back from being your full self?",
+              "I've realized I hide certain parts of myself because I'm scared. What's something authentic about you that you're sometimes afraid to show?",
+              "You're someone I feel safe being real with. What's a vulnerability you carry that you wish people understood better?",
+              "I've been thinking about courage and how it's not the absence of fear. What scares you most about being truly seen by others?",
+              "Sometimes I feel like I'm pretending to be braver than I am. What's something you're afraid of that you're working on accepting about yourself?",
+              "I admire how genuine you are. What's a fear or insecurity that you've learned to be more open about over time?",
+            ],
+          };
+
+          const prompts = scenarios[scenarioType];
+          if (!prompts) return "Tell me something meaningful about yourself.";
+
+          // Generate a random selection
+          const randomPrompt =
+            prompts[Math.floor(Math.random() * prompts.length)];
+          return randomPrompt;
+        }
+
+        // Start conversation practice - show scenario info
+        async function startConversationPractice(scenarioType) {
+          // Store the current scenario type for the "New Starter" button
+          currentScenarioType = scenarioType;
+
+          // Define scenario contexts with multiple options
+          const scenarioData = {
+            "values-discussion": {
+              title: "Values & Beliefs Discussion",
+              description:
+                "Navigate the sacred territory of personal values and beliefs that shape who you are",
+              contexts: [
+                "You are having a conversation with a close friend who is curious about what drives your life decisions and moral compass.",
+                "You are discussing with someone who is questioning their own values and looking for perspective.",
+                "You are in a deep conversation about what principles guide important life choices.",
+                "You are sharing with someone who wants to understand the beliefs that shape your worldview.",
+                "You are discussing moral and ethical perspectives with someone who values philosophical conversation.",
+              ],
+            },
+            "dreams-aspirations": {
+              title: "Dreams & Aspirations",
+              description:
+                "Open your heart about your deepest dreams and what truly sets your soul on fire",
+              contexts: [
+                "You are sharing with someone who wants to understand what excites you most about your future.",
+                "You are discussing hopes and dreams with someone who is also pursuing their passions.",
+                "You are opening up about your aspirations with someone who encourages big thinking.",
+                "You are talking about life goals with someone who believes in supporting others' dreams.",
+                "You are exploring what makes you feel most alive and purposeful with an understanding friend.",
+              ],
+            },
+            "life-challenges": {
+              title: "Life Challenges",
+              description:
+                "Share vulnerable stories of struggle, growth, and the wisdom found in hardship",
+              contexts: [
+                "You are opening up to someone who is also facing difficulties and looking for perspective.",
+                "You are sharing your struggles with someone who has shown wisdom in their own challenges.",
+                "You are discussing life's difficulties with someone who creates a safe space for vulnerability.",
+                "You are talking about growth through hardship with someone who values resilience.",
+                "You are sharing lessons learned from tough times with someone who appreciates authentic stories.",
+              ],
+            },
+            "relationships-love": {
+              title: "Love & Connection",
+              description:
+                "Dive deep into what love means to you and how you create profound connections",
+              contexts: [
+                "You are discussing the nature of love and meaningful relationships with someone who values emotional intimacy.",
+                "You are sharing insights about connection with someone who is also navigating relationships.",
+                "You are exploring what makes relationships meaningful with someone who prioritizes depth.",
+                "You are talking about love and vulnerability with someone who understands the complexities of the heart.",
+                "You are discussing authentic connection with someone who values genuine emotional bonds.",
+              ],
+            },
+            "purpose-meaning": {
+              title: "Life's Purpose & Meaning",
+              description:
+                "Explore the big questions: your unique purpose and what gives life meaning",
+              contexts: [
+                "You are exploring life's bigger questions with someone who is also searching for meaning and purpose.",
+                "You are discussing existential topics with someone who enjoys philosophical conversations.",
+                "You are sharing thoughts about life's meaning with someone who values deep reflection.",
+                "You are exploring purpose with someone who is also on a journey of self-discovery.",
+                "You are discussing what makes life worthwhile with someone who appreciates profound questions.",
+              ],
+            },
+            "fears-vulnerabilities": {
+              title: "Sacred Vulnerability",
+              description:
+                "Practice the courage to share your deepest fears and authentic self",
+              contexts: [
+                "You are in a safe space with someone who values authenticity and invites you to share what you normally keep hidden.",
+                "You are opening up to someone who has shown they can hold space for difficult emotions.",
+                "You are sharing vulnerabilities with someone who has been courageously honest with you.",
+                "You are discussing fears with someone who creates an atmosphere of acceptance and understanding.",
+                "You are being authentic with someone who appreciates the courage it takes to be vulnerable.",
+              ],
+            },
+          };
+
+          const scenario = scenarioData[scenarioType];
+          if (!scenario) return;
+
+          // Update UI with proper format
+          document.getElementById("scenarioTitle").textContent = scenario.title;
+          document.getElementById("scenarioText").textContent =
+            scenario.description;
+
+          // Generate AI scenario context
+          const aiScenario = await generateAIScenario(scenarioType);
+          document.getElementById("scenarioContext").textContent = aiScenario;
+
+          // Update conversation prompt with loading state
+          const conversationPromptElement = document.getElementById(
+            "conversationPromptText"
+          );
+          if (conversationPromptElement) {
+            conversationPromptElement.textContent =
+              "Generating conversation starter...";
+            conversationPromptElement.style.fontStyle = "italic";
+
+            // Generate AI conversation starter
+            try {
+              const aiStarter = await generateAIConversationStarter(
+                scenarioType,
+                aiScenario
+              );
+              conversationPromptElement.textContent = aiStarter;
+              conversationPromptElement.style.fontStyle = "normal";
+            } catch (error) {
+              console.error("Error generating AI starter:", error);
+              // Fallback to pre-written starter
+              const conversationStarter =
+                generateConversationStarter(scenarioType);
+              conversationPromptElement.textContent = conversationStarter;
+              conversationPromptElement.style.fontStyle = "normal";
+            }
+          }
+
+          // Hide scenario grid and show scenario details
+          document.querySelector(".scenario-grid").style.display = "none";
+          document.getElementById("conversationContainer").style.display =
+            "block";
+
+          // Show scenario details
+          document.getElementById("scenarioDetails").style.display = "block";
+          document.getElementById("conversationPrompt").style.display = "block";
+        }
+
+        // Recording functionality
+        if (recordBtn) {
+          recordBtn.addEventListener("click", async () => {
+            if (!isRecording) {
+              try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                  audio: true,
+                });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = (event) => {
+                  audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                  recordedAudioBlob = new Blob(audioChunks, {
+                    type: "audio/webm",
+                  });
+                  stream.getTracks().forEach((track) => track.stop());
+                };
+
+                mediaRecorder.start();
+                isRecording = true;
+
+                // Update button UI
+                recordBtn.innerHTML =
+                  '<i data-lucide="stop-circle" class="w-4 h-4"></i> Stop Recording';
+                recordBtn.style.background = "#ef4444";
+                recordBtn.style.borderColor = "#ef4444";
+                recordBtn.style.color = "white";
+                lucide.createIcons();
+              } catch (error) {
+                console.error("Error accessing microphone:", error);
+                alert(
+                  "Unable to access microphone. Please check your permissions."
+                );
+              }
+            } else {
+              // Stop recording
+              if (mediaRecorder && mediaRecorder.state !== "inactive") {
+                mediaRecorder.stop();
+                isRecording = false;
+
+                // Update button UI
+                recordBtn.innerHTML =
+                  '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+                recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+                recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+                recordBtn.style.color = "var(--text-primary)";
+                lucide.createIcons();
+              }
+            }
+          });
+        }
+
+        // Submit for analysis
+        if (submitBtn) {
+          submitBtn.addEventListener("click", async () => {
+            if (!recordedAudioBlob) {
+              alert("Please record your response first.");
+              return;
+            }
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML =
+              '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+            lucide.createIcons();
+
+            try {
+              // Prepare audio data for personal communication analysis
+              console.log(
+                "🔄 Preparing audio for deep conversation analysis..."
+              );
+
+              // Convert blob to base64 for transfer
+              const reader = new FileReader();
+              reader.onloadend = function () {
+                const base64Audio = reader.result;
+
+                // Prepare audio data object
+                const audioData = {
+                  base64: base64Audio,
+                  size: recordedAudioBlob.size,
+                  type: recordedAudioBlob.type,
+                  name: "deep-conversation.webm",
+                  analysisType: "deep",
+                };
+
+                console.log(
+                  "📱 Storing audio data for analysis:",
+                  audioData.name,
+                  audioData.analysisType
+                );
+
+                // Store audio data for the analysis page
+                sessionStorage.setItem(
+                  "audioForAnalysis",
+                  JSON.stringify(audioData)
+                );
+
+                // Redirect to deep conversation analysis results page
+                window.location.href = "deep-analysis-results.html";
+              };
+
+              reader.readAsDataURL(recordedAudioBlob);
+            } catch (error) {
+              console.error("Analysis error:", error);
+              alert("Error analyzing conversation. Please try again.");
+
+              // Reset button
+              submitBtn.disabled = false;
+              submitBtn.innerHTML =
+                '<i data-lucide="check-circle" class="w-4 h-4"></i> Submit for Analysis';
+              lucide.createIcons();
+            }
+          });
+        }
+
+        // Back to options buttons
+        const backToOptionsBtn = document.getElementById("backToOptions");
+        if (backToOptionsBtn) {
+          backToOptionsBtn.addEventListener("click", () => {
+            uploadSection.classList.remove("active");
+            analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+            currentMode = null;
+          });
+        }
+
+        // File upload functionality
+        const chooseFileBtnEl = document.getElementById("chooseFileBtn");
+        const audioFileEl = document.getElementById("audioFile");
+        const analyzeUploadBtn = document.getElementById("analyzeUpload");
+        const removeFileBtn = document.getElementById("removeFile");
+
+        if (chooseFileBtnEl && audioFileEl) {
+          chooseFileBtnEl.addEventListener("click", () => {
+            audioFileEl.click();
+          });
+
+          audioFileEl.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+              // Show file details
+              document.getElementById("fileName").textContent = file.name;
+              document.getElementById("fileSize").textContent =
+                (file.size / (1024 * 1024)).toFixed(1) + " MB";
+              document.getElementById("fileSelected").style.display = "flex";
+              if (analyzeUploadBtn) analyzeUploadBtn.disabled = false;
+            }
+          });
+        }
+
+        // Remove file functionality
+        if (removeFileBtn && audioFileEl && analyzeUploadBtn) {
+          removeFileBtn.addEventListener("click", () => {
+            audioFileEl.value = "";
+            document.getElementById("fileSelected").style.display = "none";
+            analyzeUploadBtn.disabled = true;
+          });
+        }
+
+        // Analyze upload button
+        if (analyzeUploadBtn && audioFileEl) {
+          analyzeUploadBtn.addEventListener("click", async () => {
+            if (!audioFileEl.files[0]) {
+              alert("Please select a file first");
+              return;
+            }
+
+            // Update button state
+            analyzeUploadBtn.disabled = true;
+            analyzeUploadBtn.innerHTML =
+              '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+
+            try {
+              // Use the analysis processor
+              const processor = new SimpleAnalysis();
+              const results = await processor.analyzeAudio(
+                audioFileEl.files[0],
+                "deep-conversation"
+              );
+
+              // Store results and redirect
+              sessionStorage.setItem(
+                "analysisResults",
+                JSON.stringify(results)
+              );
+              window.location.href =
+                "deep-analysis-results.html?type=deep-conversation&source=upload";
+            } catch (error) {
+              console.error("Analysis failed:", error);
+              alert("Analysis failed. Please try again.");
+              analyzeUploadBtn.disabled = false;
+              analyzeUploadBtn.innerHTML =
+                '<i data-lucide="zap" class="w-4 h-4"></i> Analyze Recording';
+            }
+          });
+        }
+
+        // Initialize Lucide icons
+        if (typeof lucide !== "undefined") {
+          lucide.createIcons();
+        }
+
+        // User dropdown functionality
+        const userMenuBtn = document.getElementById("userMenuBtn");
+        const userDropdown = document.getElementById("userDropdown");
+
+        if (userMenuBtn && userDropdown) {
+          userMenuBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle("hidden");
+          });
+
+          // Close dropdown when clicking outside
+          document.addEventListener("click", (e) => {
+            if (
+              !userMenuBtn.contains(e.target) &&
+              !userDropdown.contains(e.target)
+            ) {
+              userDropdown.classList.add("hidden");
+            }
+          });
+
+          // Logout functionality
+          const logoutBtn = document.getElementById("logoutBtn");
+          if (logoutBtn) {
+            logoutBtn.addEventListener("click", () => {
+              // Clear any stored authentication data
+              localStorage.removeItem("authToken");
+              localStorage.removeItem("userSession");
+              sessionStorage.clear();
+
+              // Redirect to login page
+              window.location.href = "login.html";
+            });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

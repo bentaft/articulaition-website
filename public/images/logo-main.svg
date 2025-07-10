@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <defs>
+    <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff934d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff7f50;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4a90e2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6bb6ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <text x="10" y="40" font-family="Inter, sans-serif" font-size="28" font-weight="700">
+    <tspan fill="url(#orangeGradient)">Artic</tspan><tspan fill="url(#blueGradient)">ulaition</tspan>
+  </text>
+</svg>

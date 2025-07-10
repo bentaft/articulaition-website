@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership & Feedback Analysis Results - Articulaition</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .leadership-results-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .leadership-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .leadership-header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .leadership-header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .metric-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .metric-score {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .metric-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-bar {
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+        .ideal-range {
+            font-size: 0.85rem;
+            color: #888;
+            font-style: italic;
+        }
+
+        .insights-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .insights-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .insight-item {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .insight-category {
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .qualitative-section {
+            margin-bottom: 3rem;
+        }
+
+        .qualitative-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .qualitative-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .qualitative-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        .qualitative-item h3 {
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .qualitative-rating {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .star {
+            color: #ddd;
+            font-size: 1.2rem;
+        }
+
+        .star.filled {
+            color: #FFD700;
+        }
+
+        .feedback-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .feedback-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .feedback-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .feedback-category h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .feedback-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feedback-list li {
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .feedback-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+
+        .communication-insights {
+            background: #e8f5e9;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .communication-insights h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .insight-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-top: 3px solid var(--accent-color);
+        }
+
+        .insight-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .cta-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: background 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .error-state {
+            background: #ffebee;
+            color: #c62828;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .leadership-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="leadership-results-container">
+        <div class="leadership-header">
+            <h1>Leadership & Feedback Analysis Results</h1>
+            <p>Comprehensive assessment of your leadership communication and feedback delivery</p>
+        </div>
+
+        <div id="loadingState" class="loading-state">
+            <p>Analyzing your leadership communication style...</p>
+        </div>
+
+        <div id="errorState" class="error-state" style="display: none;">
+            <p>Unable to process the analysis. Please try again.</p>
+        </div>
+
+        <div id="resultsContent" style="display: none;">
+            <!-- Key Insights Section -->
+            <div class="insights-section">
+                <h2>Key Leadership Insights</h2>
+                <div id="keyInsights">
+                    <!-- Insights will be populated here -->
+                </div>
+            </div>
+
+            <!-- Quantitative Metrics Section -->
+            <div class="metrics-grid" id="quantitativeMetrics">
+                <!-- Metrics will be populated here -->
+            </div>
+
+            <!-- Qualitative Assessment Section -->
+            <div class="qualitative-section">
+                <h2>Qualitative Assessment</h2>
+                <div class="qualitative-metrics" id="qualitativeMetrics">
+                    <!-- Qualitative metrics will be populated here -->
+                </div>
+            </div>
+
+            <!-- Communication Insights Section -->
+            <div class="communication-insights">
+                <h2>Communication Insights</h2>
+                <div class="insight-grid" id="communicationInsights">
+                    <!-- Communication insights will be populated here -->
+                </div>
+            </div>
+
+            <!-- Feedback & Recommendations Section -->
+            <div class="feedback-section">
+                <h2>Personalized Feedback & Recommendations</h2>
+                <div id="feedbackContent">
+                    <!-- Feedback will be populated here -->
+                </div>
+            </div>
+
+            <!-- Enhanced Next Steps Section -->
+            <div class="next-steps-section">
+              <div class="insight-card-modern next-steps" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9)); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);">
+                <div class="insight-header-modern">
+                  <div class="insight-icon-modern" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); animation: pulse 2s infinite;">
+                    <i data-lucide="target"></i>
+                  </div>
+                  <h3 class="insight-title-modern" style="font-size: 1.5rem; color: var(--primary-color); font-weight: 700;">Your Next Steps</h3>
+                </div>
+                <div class="insight-content-modern">
+                  <!-- Hero Message -->
+                  <div style="margin-bottom: 3rem; text-align: center; padding: 2.5rem 2rem; background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9)); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);">
+                    <div style="max-width: 600px; margin: 0 auto;">
+                      <h4 style="font-size: 2.25rem; font-weight: 800; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 1rem 0; line-height: 1.2;">
+                        Transform Your Communication
+                      </h4>
+                      <p style="color: var(--text-secondary); line-height: 1.8; margin: 0; font-size: 1.125rem; font-weight: 400;">
+                        You've unlocked professional insights that transform how you communicate. Choose your growth path and turn these discoveries into <strong style="color: var(--primary-color);">exponential progress</strong>.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  
+                  <!-- Premium Pricing Section -->
+                  <div style="background: linear-gradient(135deg, rgba(248, 250, 252, 0.95), rgba(241, 245, 249, 0.98)); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06); backdrop-filter: blur(10px); margin-bottom: 2rem; position: relative; overflow: hidden;">
+                    
+                    <!-- Collapsible Header -->
+                    <div style="position: relative; z-index: 1; cursor: pointer;" onclick="togglePricingSection()">
+                      <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                          <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255, 255, 255, 0.8); padding: 0.5rem 1rem; border-radius: 50px; border: 1px solid rgba(0, 0, 0, 0.1);">
+                            <i data-lucide="rocket" style="width: 16px; height: 16px; color: var(--primary-color);"></i>
+                            <span style="font-size: 0.875rem; font-weight: 600; color: var(--primary-color);">Choose Your Growth Path</span>
+                          </div>
+                          <div>
+                            <h4 style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin: 0; line-height: 1.2;">Plans Built for Every Stage</h4>
+                            <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0.25rem 0 0 0; font-weight: 400;" id="pricingSubtitle">View Our Improvement Plans</p>
+                          </div>
+                        </div>
+                        <button style="background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;" id="pricingToggleBtn" onmouseover="this.style.background='rgba(255, 255, 255, 1)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.8)'; this.style.boxShadow='none'">
+                          <i data-lucide="chevron-down" style="width: 20px; height: 20px; transition: transform 0.3s ease;" id="pricingToggleIcon"></i>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <!-- Collapsible Content -->
+                    <div id="pricingContent" style="display: none; opacity: 0; transition: all 0.4s ease; margin-top: 2rem;">
+                      <p style="font-size: 1rem; color: var(--text-secondary); margin: 0.5rem auto 2rem; font-weight: 400; text-align: center; max-width: 500px;">From first insights to complete mastery—grow at your pace with tools designed for real results.</p>
+                    
+                    <!-- Premium Pricing Grid -->
+                    <div style="position: relative; z-index: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1400px; margin: 0 auto;">
+                      
+                      <!-- Essential Plan -->
+                      <div style="background: white; border: 2px solid rgba(0, 0, 0, 0.06); border-radius: 24px; padding: 2.5rem 2rem; text-align: left; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);" onmouseover="this.style.transform='translateY(-12px)'; this.style.boxShadow='0 25px 50px rgba(99, 102, 241, 0.15)'; this.style.borderColor='rgba(99, 102, 241, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.04)'; this.style.borderColor='rgba(0, 0, 0, 0.06)'">
+                        <div style="margin-bottom: 2rem;">
+                          <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(99, 102, 241, 0.1); padding: 0.375rem 0.75rem; border-radius: 50px; margin-bottom: 1.5rem;">
+                            <i data-lucide="play" style="width: 14px; height: 14px; color: var(--primary-color);"></i>
+                            <span style="font-size: 0.75rem; font-weight: 600; color: var(--primary-color); text-transform: uppercase; letter-spacing: 0.5px;">Essential</span>
+                          </div>
+                          <h5 style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin: 0 0 0.5rem 0;">Start Your Growth</h5>
+                          <p style="color: var(--text-secondary); font-size: 1rem; margin: 0 0 1.5rem 0; line-height: 1.6;">Perfect for building steady confidence in how you express yourself.</p>
+                          <div style="margin-bottom: 2rem;">
+                            <span style="font-size: 3rem; font-weight: 900; color: var(--text-primary); line-height: 1;">$9.99</span>
+                            <span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/month</span>
+                          </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 2rem;">
+                          <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.5px;">What's included:</div>
+                          <ul style="list-style: none; padding: 0; margin: 0; space-y: 0.75rem;">
+                            <li style="padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5;">
+                              <div style="width: 20px; height: 20px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="check" style="width: 12px; height: 12px; color: #10b981;"></i>
+                              </div>
+                              <span>10 detailed audio analyses per month</span>
+                            </li>
+                            <li style="padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5;">
+                              <div style="width: 20px; height: 20px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="check" style="width: 12px; height: 12px; color: #10b981;"></i>
+                              </div>
+                              <span>Monthly improvement catalog with drills</span>
+                            </li>
+                            <li style="padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5;">
+                              <div style="width: 20px; height: 20px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="check" style="width: 12px; height: 12px; color: #10b981;"></i>
+                              </div>
+                              <span>Email support</span>
+                            </li>
+                          </ul>
+                        </div>
+                        
+                        <button onclick="window.location.href='pricing.html'" style="width: 100%; background: var(--primary-color); color: white; border: none; padding: 1rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 1rem; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);" onmouseover="this.style.background='#5145db'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(99, 102, 241, 0.35)'" onmouseout="this.style.background='var(--primary-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(99, 102, 241, 0.25)'">Get Started</button>
+                      </div>
+                      
+                      <!-- Max Growth Plan -->
+                      <div style="background: linear-gradient(135deg, white, #fafbff); border: 3px solid var(--primary-color); border-radius: 24px; padding: 2.5rem 2rem; text-align: left; position: relative; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; transform: scale(1.05); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);" onmouseover="this.style.transform='translateY(-12px) scale(1.08)'; this.style.boxShadow='0 30px 60px rgba(99, 102, 241, 0.25)'" onmouseout="this.style.transform='translateY(0) scale(1.05)'; this.style.boxShadow='0 20px 40px rgba(99, 102, 241, 0.15)'">
+                        <!-- Popular Badge -->
+                        <div style="position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.625rem; font-weight: 600; box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3); text-transform: uppercase; letter-spacing: 0.5px;">
+                          <i data-lucide="star" style="width: 10px; height: 10px; margin-right: 0.2rem;"></i>Popular
+                        </div>
+                        
+                        <div style="margin-bottom: 2rem; margin-top: 1rem;">
+                          <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.05)); padding: 0.375rem 0.75rem; border-radius: 50px; margin-bottom: 1.5rem;">
+                            <i data-lucide="zap" style="width: 14px; height: 14px; color: var(--primary-color);"></i>
+                            <span style="font-size: 0.75rem; font-weight: 600; color: var(--primary-color); text-transform: uppercase; letter-spacing: 0.5px;">Max Growth</span>
+                          </div>
+                          <h5 style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin: 0 0 0.5rem 0;">Complete Transformation</h5>
+                          <p style="color: var(--text-secondary); font-size: 1rem; margin: 0 0 1.5rem 0; line-height: 1.6;">For serious communicators ready to unlock their full potential with unlimited practice and expert guidance.</p>
+                          <div style="margin-bottom: 2rem;">
+                            <span style="font-size: 3rem; font-weight: 900; color: var(--text-primary); line-height: 1;">$15.99</span>
+                            <span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/month</span>
+                          </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 2rem;">
+                          <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.5px;">Everything in Essential, plus:</div>
+                          <ul style="list-style: none; padding: 0; margin: 0; space-y: 0.75rem;">
+                            <li style="padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5;">
+                              <div style="width: 20px; height: 20px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.1)); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="infinity" style="width: 12px; height: 12px; color: var(--primary-color);"></i>
+                              </div>
+                              <span><strong>Unlimited</strong> audio analysis</span>
+                            </li>
+                            <li style="padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5;">
+                              <div style="width: 20px; height: 20px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.1)); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="users" style="width: 12px; height: 12px; color: var(--primary-color);"></i>
+                              </div>
+                              <span>Weekly expert review sessions</span>
+                            </li>
+                            <li style="padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5;">
+                              <div style="width: 20px; height: 20px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.1)); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="sparkles" style="width: 12px; height: 12px; color: var(--primary-color);"></i>
+                              </div>
+                              <span>Full access to Improvement Hub</span>
+                            </li>
+                            <li style="padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5;">
+                              <div style="width: 20px; height: 20px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.1)); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="clock" style="width: 12px; height: 12px; color: var(--primary-color);"></i>
+                              </div>
+                              <span>Early access to new tools</span>
+                            </li>
+                          </ul>
+                        </div>
+                        
+                        <button onclick="window.location.href='pricing.html'" style="width: 100%; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 1rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 1rem; box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 12px 30px rgba(99, 102, 241, 0.5)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 20px rgba(99, 102, 241, 0.4)'">Start Free Trial</button>
+                      </div>
+                      
+                      <!-- Enterprise Plan -->
+                      <div style="background: white; border: 2px solid rgba(107, 114, 128, 0.15); border-radius: 24px; padding: 2.5rem 2rem; text-align: left; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);" onmouseover="this.style.transform='translateY(-12px)'; this.style.boxShadow='0 25px 50px rgba(107, 114, 128, 0.15)'; this.style.borderColor='rgba(107, 114, 128, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.04)'; this.style.borderColor='rgba(107, 114, 128, 0.15)'">
+                        <div style="margin-bottom: 2rem;">
+                          <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(107, 114, 128, 0.1); padding: 0.375rem 0.75rem; border-radius: 50px; margin-bottom: 1.5rem;">
+                            <i data-lucide="building" style="width: 14px; height: 14px; color: var(--text-primary);"></i>
+                            <span style="font-size: 0.75rem; font-weight: 600; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.5px;">Enterprise</span>
+                          </div>
+                          <h5 style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin: 0 0 0.5rem 0;">Scale Your Team</h5>
+                          <p style="color: var(--text-secondary); font-size: 1rem; margin: 0 0 1.5rem 0; line-height: 1.6;">Custom solutions for teams, coaches, and organizations building communication excellence.</p>
+                          <div style="margin-bottom: 2rem;">
+                            <span style="font-size: 3rem; font-weight: 900; color: var(--text-primary); line-height: 1;">Custom</span>
+                            <span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);"> pricing</span>
+                          </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 2rem;">
+                          <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.5px;">Enterprise features:</div>
+                          <ul style="list-style: none; padding: 0; margin: 0; space-y: 0.75rem;">
+                            <li style="padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5;">
+                              <div style="width: 20px; height: 20px; background: rgba(107, 114, 128, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="chart-line" style="width: 12px; height: 12px; color: var(--text-primary);"></i>
+                              </div>
+                              <span>Custom team dashboards & analytics</span>
+                            </li>
+                            <li style="padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5;">
+                              <div style="width: 20px; height: 20px; background: rgba(107, 114, 128, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="users-2" style="width: 12px; height: 12px; color: var(--text-primary);"></i>
+                              </div>
+                              <span>Group metrics & shared insights</span>
+                            </li>
+                            <li style="padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5;">
+                              <div style="width: 20px; height: 20px; background: rgba(107, 114, 128, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="headphones" style="width: 12px; height: 12px; color: var(--text-primary);"></i>
+                              </div>
+                              <span>Dedicated support & onboarding</span>
+                            </li>
+                          </ul>
+                        </div>
+                        
+                        <button onclick="window.location.href='pricing.html'" style="width: 100%; background: var(--text-primary); color: white; border: none; padding: 1rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 1rem; box-shadow: 0 4px 12px rgba(107, 114, 128, 0.25);" onmouseover="this.style.background='#1f2937'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(107, 114, 128, 0.35)'" onmouseout="this.style.background='var(--text-primary)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(107, 114, 128, 0.25)'">Contact Sales</button>
+                      </div>
+                      
+                      <!-- One-Time Plan -->
+                      <div style="background: white; border: 2px solid rgba(139, 92, 246, 0.15); border-radius: 24px; padding: 2.5rem 2rem; text-align: left; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);" onmouseover="this.style.transform='translateY(-12px)'; this.style.boxShadow='0 25px 50px rgba(139, 92, 246, 0.15)'; this.style.borderColor='rgba(139, 92, 246, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.04)'; this.style.borderColor='rgba(139, 92, 246, 0.15)'">
+                        <div style="margin-bottom: 2rem;">
+                          <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(139, 92, 246, 0.1); padding: 0.375rem 0.75rem; border-radius: 50px; margin-bottom: 1.5rem;">
+                            <i data-lucide="file-text" style="width: 14px; height: 14px; color: var(--secondary-color);"></i>
+                            <span style="font-size: 0.75rem; font-weight: 600; color: var(--secondary-color); text-transform: uppercase; letter-spacing: 0.5px;">One-Time</span>
+                          </div>
+                          <h5 style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin: 0 0 0.5rem 0;">Personal Blueprint</h5>
+                          <p style="color: var(--text-secondary); font-size: 1rem; margin: 0 0 1.5rem 0; line-height: 1.6;">A comprehensive communication analysis and personalized improvement plan delivered as a PDF.</p>
+                          <div style="margin-bottom: 2rem;">
+                            <span style="font-size: 3rem; font-weight: 900; color: var(--text-primary); line-height: 1;">$30</span>
+                            <span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);"> one-time</span>
+                          </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 2rem;">
+                          <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.5px;">What you get:</div>
+                          <ul style="list-style: none; padding: 0; margin: 0; space-y: 0.75rem;">
+                            <li style="padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5;">
+                              <div style="width: 20px; height: 20px; background: rgba(139, 92, 246, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="search" style="width: 12px; height: 12px; color: var(--secondary-color);"></i>
+                              </div>
+                              <span>Deep analysis of vocal patterns & delivery</span>
+                            </li>
+                            <li style="padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5;">
+                              <div style="width: 20px; height: 20px; background: rgba(139, 92, 246, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="target" style="width: 12px; height: 12px; color: var(--secondary-color);"></i>
+                              </div>
+                              <span>Targeted breakdown of specific issues</span>
+                            </li>
+                            <li style="padding: 0.5rem 0; font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5;">
+                              <div style="width: 20px; height: 20px; background: rgba(139, 92, 246, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="download" style="width: 12px; height: 12px; color: var(--secondary-color);"></i>
+                              </div>
+                              <span>Lifetime PDF access—yours forever</span>
+                            </li>
+                          </ul>
+                        </div>
+                        
+                        <button onclick="window.location.href='pricing.html'" style="width: 100%; background: var(--secondary-color); color: white; border: none; padding: 1rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 1rem; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);" onmouseover="this.style.background='#7c3aed'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(139, 92, 246, 0.35)'" onmouseout="this.style.background='var(--secondary-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(139, 92, 246, 0.25)'">Get My Report</button>
+                      </div>
+                      
+                    </div>
+                    
+                    </div>
+                  </div>
+                  
+                  <!-- Enhanced Action Section -->
+                  <div style="margin-top: 3rem; text-align: center; padding: 3rem 2rem; background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(248, 250, 252, 0.9)); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);">
+                    <div style="max-width: 600px; margin: 0 auto 2rem;">
+                      <h4 style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color); margin: 0 0 0.75rem 0;">Ready to Continue Your Growth?</h4>
+                      <p style="color: var(--text-secondary); line-height: 1.6; margin: 0; font-size: 1rem;">Keep building on these insights or explore more tools to accelerate your communication mastery.</p>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; max-width: 500px; margin: 0 auto;">
+                      <button onclick="window.location.href='leadership-analysis.html'" 
+                        style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 1rem; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); flex: 1; min-width: 200px;"
+                        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(99, 102, 241, 0.4)'"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(99, 102, 241, 0.3)'">
+                        <i data-lucide="mic" style="width: 16px; height: 16px; margin-right: 0.5rem; vertical-align: middle;"></i>
+                        Practice Again
+                      </button>
+                      <button onclick="window.location.href='improvement-hub.html'" 
+                        style="background: white; color: var(--primary-color); border: 2px solid var(--primary-color); padding: 1rem 2rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 1rem; flex: 1; min-width: 200px;"
+                        onmouseover="this.style.background='var(--primary-color)'; this.style.color='white'; this.style.transform='translateY(-2px)'"
+                        onmouseout="this.style.background='white'; this.style.color='var(--primary-color)'; this.style.transform='translateY(0)'">
+                        <i data-lucide="sparkles" style="width: 16px; height: 16px; margin-right: 0.5rem; vertical-align: middle;"></i>
+                        Explore Improvement Hub
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <a href="dashboard.html" class="cta-button">Return to Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle pricing section
+        function togglePricingSection() {
+          const content = document.getElementById('pricingContent');
+          const icon = document.getElementById('pricingToggleIcon');
+          const subtitle = document.getElementById('pricingSubtitle');
+          const button = document.getElementById('pricingToggleBtn');
+          
+          if (content.style.display === 'none' || content.style.display === '') {
+            // Show content
+            content.style.display = 'block';
+            setTimeout(() => {
+              content.style.opacity = '1';
+              content.style.transform = 'translateY(0)';
+            }, 10);
+            icon.style.transform = 'rotate(180deg)';
+            subtitle.textContent = 'Click to collapse pricing options';
+            button.style.background = 'var(--primary-color)';
+            button.style.borderColor = 'var(--primary-color)';
+            icon.style.color = 'white';
+          } else {
+            // Hide content
+            content.style.opacity = '0';
+            content.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+              content.style.display = 'none';
+            }, 400);
+            icon.style.transform = 'rotate(0deg)';
+            subtitle.textContent = 'View Our Improvement Plans';
+            button.style.background = 'rgba(255, 255, 255, 0.8)';
+            button.style.borderColor = 'rgba(0, 0, 0, 0.1)';
+            icon.style.color = 'var(--text-primary)';
+          }
+          
+          // Re-initialize lucide icons
+          if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+          }
+        }
+
+        // Configuration
+        const GEMINI_API_KEY = 'AIzaSyA0gQOwJxe3QpyYT6JdQ8PJ2vlNnp6uRXc';
+        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
+
+        // Leadership-specific fallback content
+        const fallbackContent = {
+            insights: [
+                {
+                    category: "Feedback Delivery",
+                    insight: "Your feedback shows potential for structured delivery. Consider implementing the SBI framework more consistently to enhance clarity and impact."
+                },
+                {
+                    category: "Emotional Intelligence",
+                    insight: "Building stronger empathy cues in your communication can deepen trust and receptiveness to feedback."
+                },
+                {
+                    category: "Authority Balance",
+                    insight: "Maintaining a 2:1 support-to-critique ratio helps establish psychological safety while driving performance."
+                }
+            ],
+            quantitative: {
+                feedbackFraming: {
+                    score: 65,
+                    description: "Measures use of structured feedback (SBI: Situation-Behavior-Impact)",
+                    ideal: "Detected structure in ≥1 feedback unit"
+                },
+                empathyValidation: {
+                    score: 70,
+                    description: "Tracks empathetic language and validation phrases",
+                    ideal: "≥1 in short clips; ≥3 in 5 min"
+                },
+                directiveClarity: {
+                    score: 75,
+                    description: "Clear action-oriented language and expectations",
+                    ideal: "≥1 per key point"
+                },
+                supportCritiqueRatio: {
+                    score: 60,
+                    description: "Balance between supportive and critical feedback",
+                    ideal: "2:1 or better"
+                },
+                toneWarmth: {
+                    score: 72,
+                    description: "Overall warmth and positivity in delivery",
+                    ideal: "+0.2 to +0.7 polarity"
+                }
+            },
+            qualitative: {
+                supportiveTone: 3,
+                specificityOfFeedback: 4,
+                collaborativeFraming: 3,
+                tensionManagement: 3,
+                balanceOfPraiseCritique: 3
+            },
+            communicationInsights: [
+                {
+                    title: "Trust Building",
+                    content: "Start feedback conversations with acknowledgment of effort or progress to establish psychological safety."
+                },
+                {
+                    title: "Constructive Guidance",
+                    content: "Frame critiques as growth opportunities using phrases like 'What if we tried...' or 'I see potential for...'"
+                },
+                {
+                    title: "Emotional Regulation",
+                    content: "Monitor your tone and pace during difficult conversations. Slower, measured delivery enhances receptiveness."
+                }
+            ],
+            feedback: {
+                strengths: [
+                    "Clear communication of expectations",
+                    "Professional demeanor maintained throughout",
+                    "Logical structure in feedback delivery"
+                ],
+                improvements: [
+                    "Increase use of empathetic validation phrases",
+                    "Implement more structured feedback frameworks (SBI)",
+                    "Balance directive statements with collaborative questions"
+                ],
+                recommendations: [
+                    "Practice the SBI framework: Start with Situation, describe Behavior, explain Impact",
+                    "Begin feedback sessions with positive acknowledgments",
+                    "Use 'we' language to foster collaboration: 'How can we improve this together?'",
+                    "Pause after delivering feedback to allow processing time"
+                ]
+            }
+        };
+
+        // Function to analyze content with Gemini
+        async function analyzeWithGemini(transcript) {
+            const prompt = `
+                You are an expert leadership communication consultant analyzing a leadership/feedback conversation transcript. Focus on feedback delivery mastery, team communication excellence, authority establishment, emotional intelligence application, and constructive guidance effectiveness.
+
+                Analyze this leadership/feedback conversation transcript and provide a detailed assessment:
+
+                Transcript: "${transcript}"
+
+                Provide analysis in the following JSON format:
+                {
+                    "insights": [
+                        {
+                            "category": "Leadership Communication Excellence",
+                            "insight": "Specific insight about leadership communication effectiveness, team engagement, and authority establishment"
+                        }
+                    ],
+                    "quantitative": {
+                        "feedbackFraming": {
+                            "score": 0-100,
+                            "description": "SBI framework usage and structured feedback delivery",
+                            "ideal": "Detected structure in ≥1 feedback unit with clear situation-behavior-impact framework"
+                        },
+                        "empathyValidation": {
+                            "score": 0-100,
+                            "description": "Empathetic language frequency and emotional intelligence demonstration",
+                            "ideal": "≥1 in short clips; ≥3 in 5 min showing emotional awareness and validation"
+                        },
+                        "directiveClarity": {
+                            "score": 0-100,
+                            "description": "Clear action-oriented language and leadership directive effectiveness",
+                            "ideal": "≥1 per key point with specific, actionable guidance"
+                        },
+                        "supportCritiqueRatio": {
+                            "score": 0-100,
+                            "description": "Balance of support vs critique for constructive leadership",
+                            "ideal": "2:1 or better ratio demonstrating positive leadership approach"
+                        },
+                        "toneWarmth": {
+                            "score": 0-100,
+                            "description": "Overall warmth and positivity while maintaining authority",
+                            "ideal": "+0.2 to +0.7 polarity showing approachable yet authoritative leadership"
+                        }
+                    },
+                    "qualitative": {
+                        "supportiveTone": 1-5,
+                        "specificityOfFeedback": 1-5,
+                        "collaborativeFraming": 1-5,
+                        "tensionManagement": 1-5,
+                        "balanceOfPraiseCritique": 1-5
+                    },
+                    "communicationInsights": [
+                        {
+                            "title": "Leadership Communication Insight",
+                            "content": "Detailed insight about leadership communication style, team engagement effectiveness, and authority establishment"
+                        }
+                    ],
+                    "feedback": {
+                        "strengths": ["specific leadership communication strengths in feedback delivery, team management, or authority establishment"],
+                        "improvements": ["specific areas for improvement in leadership communication, team engagement, or constructive guidance"],
+                        "recommendations": ["actionable recommendations for enhanced leadership communication and team management effectiveness"]
+                    }
+                }
+
+                Focus specifically on leadership communication excellence:
+                - Constructive feedback delivery mastery and emotional intelligence application
+                - Authority establishment while maintaining team rapport and trust-building
+                - Specific, actionable guidance provision and team development effectiveness
+                - Professional leadership assessment standards and team communication excellence
+                - Conflict resolution capabilities and tension management skills
+                - Team motivation and engagement strategies through communication
+                - Balance between directive leadership and collaborative team dynamics
+
+                Evaluate against professional leadership communication standards and team management best practices.
+            `;
+
+            try {
+                const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            topK: 40,
+                            topP: 0.95,
+                            maxOutputTokens: 2048,
+                        }
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+
+                const data = await response.json();
+                const text = data.candidates[0].content.parts[0].text;
+                
+                // Extract JSON from response
+                const jsonMatch = text.match(/\{[\s\S]*\}/);
+                if (jsonMatch) {
+                    return JSON.parse(jsonMatch[0]);
+                }
+                
+                throw new Error('Invalid response format');
+            } catch (error) {
+                console.error('Gemini API Error:', error);
+                return fallbackContent;
+            }
+        }
+
+        // Function to render insights
+        function renderInsights(insights) {
+            const container = document.getElementById('keyInsights');
+            container.innerHTML = insights.map(insight => `
+                <div class="insight-item">
+                    <div class="insight-category">${insight.category}</div>
+                    <p>${insight.insight}</p>
+                </div>
+            `).join('');
+        }
+
+        // Function to render quantitative metrics
+        function renderQuantitativeMetrics(metrics) {
+            const container = document.getElementById('quantitativeMetrics');
+            const metricTitles = {
+                feedbackFraming: 'Feedback Framing Score',
+                empathyValidation: 'Empathy & Validation Tags',
+                directiveClarity: 'Directive Clarity',
+                supportCritiqueRatio: 'Support-to-Critique Ratio',
+                toneWarmth: 'Tone Warmth Score'
+            };
+
+            container.innerHTML = Object.entries(metrics).map(([key, metric]) => `
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-title">${metricTitles[key]}</div>
+                        <div class="metric-score">${metric.score}%</div>
+                    </div>
+                    <div class="metric-description">${metric.description}</div>
+                    <div class="score-bar">
+                        <div class="score-fill" style="width: ${metric.score}%"></div>
+                    </div>
+                    <div class="ideal-range">Ideal: ${metric.ideal}</div>
+                </div>
+            `).join('');
+        }
+
+        // Function to render qualitative metrics
+        function renderQualitativeMetrics(metrics) {
+            const container = document.getElementById('qualitativeMetrics');
+            const metricTitles = {
+                supportiveTone: 'Supportive Tone',
+                specificityOfFeedback: 'Specificity of Feedback',
+                collaborativeFraming: 'Collaborative Framing',
+                tensionManagement: 'Tension Management',
+                balanceOfPraiseCritique: 'Balance of Praise & Critique'
+            };
+
+            container.innerHTML = Object.entries(metrics).map(([key, rating]) => `
+                <div class="qualitative-item">
+                    <h3>${metricTitles[key]}</h3>
+                    <div class="qualitative-rating">
+                        ${[1,2,3,4,5].map(i => `
+                            <span class="star ${i <= rating ? 'filled' : ''}">★</span>
+                        `).join('')}
+                    </div>
+                    <p>${getQualitativeDescription(key, rating)}</p>
+                </div>
+            `).join('');
+        }
+
+        // Function to get qualitative descriptions
+        function getQualitativeDescription(metric, rating) {
+            const descriptions = {
+                supportiveTone: [
+                    "Minimal supportive language detected",
+                    "Some supportive elements present",
+                    "Moderate supportive tone maintained",
+                    "Consistently supportive approach",
+                    "Exceptionally warm and supportive"
+                ],
+                specificityOfFeedback: [
+                    "Feedback lacks specific examples",
+                    "Occasional specific references",
+                    "Moderately specific feedback",
+                    "Clear, specific examples provided",
+                    "Highly detailed and actionable feedback"
+                ],
+                collaborativeFraming: [
+                    "Primarily directive approach",
+                    "Limited collaborative elements",
+                    "Balanced directive and collaborative",
+                    "Strong collaborative framing",
+                    "Exceptional partnership approach"
+                ],
+                tensionManagement: [
+                    "Tension escalation observed",
+                    "Some difficulty managing tension",
+                    "Adequate tension management",
+                    "Skillful de-escalation techniques",
+                    "Masterful tension resolution"
+                ],
+                balanceOfPraiseCritique: [
+                    "Heavily critique-focused",
+                    "More critique than praise",
+                    "Reasonable balance achieved",
+                    "Good balance favoring growth",
+                    "Optimal praise-critique ratio"
+                ]
+            };
+
+            return descriptions[metric][rating - 1];
+        }
+
+        // Function to render communication insights
+        function renderCommunicationInsights(insights) {
+            const container = document.getElementById('communicationInsights');
+            container.innerHTML = insights.map(insight => `
+                <div class="insight-card">
+                    <h3>${insight.title}</h3>
+                    <p>${insight.content}</p>
+                </div>
+            `).join('');
+        }
+
+        // Function to render feedback
+        function renderFeedback(feedback) {
+            const container = document.getElementById('feedbackContent');
+            container.innerHTML = `
+                <div class="feedback-category">
+                    <h3>Key Strengths</h3>
+                    <ul class="feedback-list">
+                        ${feedback.strengths.map(strength => `<li>${strength}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="feedback-category">
+                    <h3>Areas for Improvement</h3>
+                    <ul class="feedback-list">
+                        ${feedback.improvements.map(improvement => `<li>${improvement}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="feedback-category">
+                    <h3>Actionable Recommendations</h3>
+                    <ul class="feedback-list">
+                        ${feedback.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+
+        // Main initialization function
+        async function initializeResults() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const transcript = urlParams.get('transcript') || sessionStorage.getItem('leadershipTranscript') || '';
+
+            try {
+                // Analyze with Gemini or use fallback
+                const analysis = transcript ? 
+                    await analyzeWithGemini(transcript) : 
+                    fallbackContent;
+
+                // Hide loading, show results
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('resultsContent').style.display = 'block';
+
+                // Render all sections
+                renderInsights(analysis.insights);
+                renderQuantitativeMetrics(analysis.quantitative);
+                renderQualitativeMetrics(analysis.qualitative);
+                renderCommunicationInsights(analysis.communicationInsights);
+                renderFeedback(analysis.feedback);
+
+                // Animate score bars after a short delay
+                setTimeout(() => {
+                    document.querySelectorAll('.score-fill').forEach(bar => {
+                        bar.style.width = bar.style.width;
+                    });
+                }, 100);
+
+            } catch (error) {
+                console.error('Error initializing results:', error);
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('errorState').style.display = 'block';
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializeResults);
+    </script>
+</body>
+</html>

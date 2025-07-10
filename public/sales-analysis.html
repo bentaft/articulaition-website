@@ -1,0 +1,2283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI-Powered Sales Communication Analysis - Articulaition"
+    />
+    <title>Sales & Objection Handling Analysis - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --primary-blue: #4a90e2;
+        --success-green: #10b981;
+        --client-teal: #0891b2;
+        --relationship-purple: #7c3aed;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --bg-primary: #fafbfc;
+        --bg-secondary: #f4f6f8;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Background Effects */
+      .dashboard-container {
+        background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 100%);
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .dashboard-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(74, 144, 226, 0.03) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(74, 144, 226, 0.025) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(16, 185, 129, 0.02) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(245, 158, 11, 0.015) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Animation Classes */
+      .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+        opacity: 0;
+      }
+
+      .slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .scale-in {
+        animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes scaleIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-500 {
+        animation-delay: 0.5s;
+      }
+
+      /* Header Styling */
+      .main-header {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .logo-section img {
+        height: 32px;
+        width: auto;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--text-primary);
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        color: var(--text-secondary);
+      }
+
+      .breadcrumb .current {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      /* Page Title Section */
+      .page-title-section {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .title-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .page-description {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* Analysis Options Grid */
+      .analysis-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .analysis-option {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.06);
+        border-radius: 24px;
+        padding: 2.5rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .analysis-option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .analysis-option:hover {
+        transform: translateY(-8px);
+        border-color: rgba(74, 144, 226, 0.3);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .analysis-option:hover::before {
+        opacity: 1;
+      }
+
+      .analysis-option.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-4px);
+      }
+
+      .option-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        border-radius: 20px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .analysis-option:hover .option-icon {
+        transform: scale(1.1);
+      }
+
+      .option-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-features {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .features-list {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      /* Upload Section */
+      .upload-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .upload-section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-subtitle {
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-center {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-option-single {
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px dashed rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 3rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .upload-option-single:hover {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.02);
+      }
+
+      .file-selected {
+        margin-top: 1.5rem;
+        background: rgba(16, 185, 129, 0.05);
+        border: 2px solid rgba(16, 185, 129, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .file-selected .file-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--success-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .file-selected .file-details {
+        flex: 1;
+        text-align: left;
+      }
+
+      .file-selected .file-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+
+      .file-selected .file-size {
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+      }
+
+      .file-selected .remove-file {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .file-selected .remove-file:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+
+      .upload-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1rem;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .upload-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .upload-button {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .upload-button:hover {
+        background: var(--relationship-purple);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* AI Practice Section */
+      .ai-practice-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .ai-practice-section.active {
+        display: block;
+      }
+
+      /* Scenario Grid */
+      .scenario-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .scenario-type {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .scenario-type:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary-blue);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .scenario-type.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-2px);
+      }
+
+      .scenario-type::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .scenario-type:hover::before,
+      .scenario-type.selected::before {
+        opacity: 1;
+      }
+
+      .scenario-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 1.5rem;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .scenario-type:hover .scenario-icon {
+        transform: scale(1.1);
+      }
+
+      .scenario-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-description {
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+        position: relative;
+        z-index: 2;
+        font-weight: 500;
+      }
+
+      /* Conversation Interface */
+      .conversation-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .scenario-intro {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--primary-orange)
+        );
+        color: white;
+        padding: 2rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-intro::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>')
+          repeat;
+        opacity: 0.3;
+      }
+
+      .scenario-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        position: relative;
+        z-index: 2;
+      }
+
+      .conversation-flow {
+        space-y: 1.5rem;
+      }
+
+      .message {
+        display: flex;
+        margin-bottom: 1.5rem;
+      }
+
+      .message.ai {
+        justify-content: flex-start;
+      }
+
+      .message.user {
+        justify-content: flex-end;
+      }
+
+      .message-content {
+        max-width: 80%;
+        padding: 1.25rem 1.5rem;
+        border-radius: 20px;
+        position: relative;
+      }
+
+      .message.ai .message-content {
+        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-bottom-left-radius: 8px;
+      }
+
+      .message.user .message-content {
+        background: linear-gradient(
+          135deg,
+          var(--primary-orange),
+          var(--relationship-purple)
+        );
+        color: white;
+        border-bottom-right-radius: 8px;
+      }
+
+      .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 1rem;
+        flex-shrink: 0;
+      }
+
+      .message.ai .message-avatar {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--primary-orange)
+        );
+        color: white;
+        order: -1;
+      }
+
+      .message.user .message-avatar {
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+      }
+
+      /* Audio Captured Message */
+      .audio-captured {
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .audio-captured-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 16px;
+        font-weight: 600;
+        box-shadow: var(--shadow-md);
+        animation: slideInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes slideInScale {
+        0% {
+          opacity: 0;
+          transform: translateY(20px) scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .primary-button {
+        background: linear-gradient(135deg, #4a90e2, #7c3aed) !important;
+        color: white !important;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .primary-button:hover:not(:disabled) {
+        background: linear-gradient(
+          135deg,
+          var(--relationship-purple),
+          #e55a1c
+        );
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .primary-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .secondary-button {
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--text-primary);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .secondary-button:hover {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        border-color: var(--primary-blue);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Ensure record button is clickable */
+      #recordButton {
+        pointer-events: auto !important;
+        z-index: 100;
+        position: relative;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 2rem 1rem;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .analysis-options {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .analysis-option {
+          padding: 2rem;
+        }
+
+        .option-icon {
+          width: 64px;
+          height: 64px;
+        }
+
+        .scenario-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+
+        .message-content {
+          max-width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="main-header fade-in">
+        <nav class="header-nav">
+          <div class="logo-section">
+            <img src="images/logo-header.svg" alt="Articulaition.com" />
+          </div>
+          <div class="nav-links">
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="professional-communication.html" class="nav-link"
+              >Professional</a
+            >
+            <a href="personal-communication.html" class="nav-link">Personal</a>
+          </div>
+          <div class="user-menu">
+            <div class="user-avatar">JD</div>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb slide-up delay-100">
+          <a href="dashboard.html">Dashboard</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <span class="current">Presentation Analysis</span>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title-section slide-up delay-200">
+          <div class="title-with-icon">
+            <div class="title-icon">
+              <i data-lucide="presentation" class="w-6 h-6"></i>
+            </div>
+            <h1 class="page-title">Sales & Objection Handling Analysis</h1>
+          </div>
+          <p class="page-description">
+            Master the art of persuasive selling—develop confident objection
+            reframing and persuasive closing techniques.
+          </p>
+        </div>
+
+        <!-- Analysis Options -->
+        <div class="analysis-options">
+          <!-- Upload Existing Recording -->
+          <div class="analysis-option scale-in delay-300" data-type="upload">
+            <div class="option-icon">
+              <i data-lucide="upload" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">Upload Sales Recording</h3>
+            <p class="option-description">
+              Upload a recording of your sales call, presentation, or
+              conversation for detailed analysis.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Objection handling • Closing techniques • Customer focus •
+                Persuasion tactics
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Practice Session -->
+          <div class="analysis-option scale-in delay-400" data-type="practice">
+            <div class="option-icon">
+              <i data-lucide="users" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">AI Sales Practice</h3>
+            <p class="option-description">
+              Practice with AI customers who present realistic objections and
+              buying scenarios.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Realistic objections • Dynamic scenarios • Real-time feedback •
+                Closing practice
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+          <h2 class="section-title">Upload Your Sales Recording</h2>
+          <p class="section-subtitle">
+            Upload an audio or video file of your sales conversation for
+            detailed analysis
+          </p>
+
+          <div class="upload-center">
+            <div class="upload-option-single" id="fileUpload">
+              <div class="upload-icon">
+                <i data-lucide="folder" class="w-6 h-6"></i>
+              </div>
+              <div class="upload-title">Choose File</div>
+              <div class="upload-description">
+                Select an audio or video file from your device (MP3, M4A, WAV,
+                MP4, MOV)
+              </div>
+              <button class="upload-button" id="chooseFileBtn">
+                <i data-lucide="upload" class="w-4 h-4"></i>
+                Select File
+              </button>
+              <input
+                type="file"
+                id="audioFile"
+                accept=".mp3,.m4a,.wav,.mp4,.mov"
+                hidden
+              />
+
+              <div
+                class="file-selected"
+                id="fileSelected"
+                style="display: none"
+              >
+                <div class="file-icon">
+                  <i data-lucide="file-audio" class="w-5 h-5"></i>
+                </div>
+                <div class="file-details">
+                  <div class="file-name" id="fileName">presentation.mp4</div>
+                  <div class="file-size" id="fileSize">2.4 MB</div>
+                </div>
+                <button class="remove-file" id="removeFile">
+                  <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="secondary-button" id="backToOptions">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="primary-button" id="analyzeUpload" disabled>
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              Analyze Recording
+            </button>
+          </div>
+        </div>
+
+        <!-- AI Practice Section -->
+        <div class="ai-practice-section" id="practiceSection">
+          <h2 class="section-title">Choose Your Sales Scenario</h2>
+          <p class="section-subtitle">
+            Select a sales scenario to practice with our AI customer
+          </p>
+
+          <!-- Scenario Selection Grid -->
+          <div class="scenario-grid">
+            <div class="scenario-type" data-scenario="cold-call">
+              <div class="scenario-icon">
+                <i data-lucide="phone" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Cold Call</div>
+              <div class="scenario-description">
+                Practice making initial contact with potential customers
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="discovery-call">
+              <div class="scenario-icon">
+                <i data-lucide="search" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Discovery Call</div>
+              <div class="scenario-description">
+                Uncover customer needs and pain points effectively
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="product-demo">
+              <div class="scenario-icon">
+                <i data-lucide="monitor" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Product Demo</div>
+              <div class="scenario-description">
+                Demonstrate your product to address specific customer concerns
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="price-objection">
+              <div class="scenario-icon">
+                <i data-lucide="dollar-sign" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Price Objection</div>
+              <div class="scenario-description">
+                Handle pricing concerns and demonstrate value effectively
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="competitor-objection">
+              <div class="scenario-icon">
+                <i data-lucide="shield" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Competitor Comparison</div>
+              <div class="scenario-description">
+                Address competitor mentions and differentiate your offering
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="closing-call">
+              <div class="scenario-icon">
+                <i data-lucide="handshake" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Closing Call</div>
+              <div class="scenario-description">
+                Practice closing techniques and overcome final hesitations
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="conversation-container"
+            id="conversationContainer"
+            style="display: none"
+          >
+            <!-- Scenario Introduction -->
+            <div class="scenario-intro">
+              <div class="scenario-title">
+                <i data-lucide="presentation" class="w-5 h-5 inline mr-2"></i>
+                <span id="scenarioTitle">Presentation Scenario</span>
+              </div>
+              <div class="scenario-text" id="scenarioText">
+                Practice your presentation skills in this scenario.
+              </div>
+            </div>
+
+            <!-- Conversation Flow -->
+            <div class="conversation-flow" id="conversationFlow">
+              <!-- AI messages will be dynamically inserted here -->
+            </div>
+
+            <!-- Audio status display -->
+            <div
+              id="audioStatus"
+              style="
+                display: none;
+                margin: 1rem 0;
+                padding: 1rem;
+                background: #f0f8ff;
+                border-radius: 8px;
+                border-left: 4px solid #007bff;
+              "
+            >
+              <strong>🎤 Recording Status:</strong>
+              <div
+                id="statusDisplay"
+                style="margin-top: 0.5rem; font-style: italic; color: #666"
+              >
+                Ready to record...
+              </div>
+            </div>
+
+            <div class="action-buttons">
+              <button class="secondary-button" id="backToScenarios">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Scenarios
+              </button>
+              <button
+                class="secondary-button"
+                id="recordButton"
+                style="display: none"
+              >
+                <i data-lucide="mic" class="w-4 h-4"></i>
+                Record Response
+              </button>
+              <button
+                class="primary-button"
+                id="endConversation"
+                style="display: none"
+              >
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                Submit for Analysis
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons" id="scenarioActions">
+            <button class="secondary-button" id="backToOptionsFromPractice">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="secondary-button" id="changeScenario">
+              <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+              Change Scenario
+            </button>
+            <button class="primary-button" id="startPractice" disabled>
+              <i data-lucide="play" class="w-4 h-4"></i>
+              Start Sales Practice
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <!-- API Configuration - Copy api-config-template.js to api-config.js and add your keys -->
+    <script src="js/api-config.js"></script>
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <script>
+      // Debug: Check for existing variables
+      console.log("=== SALES ANALYSIS DEBUG START ===");
+      console.log("Window variables:", Object.keys(window));
+
+      // Prevent conflicts by clearing any existing variables
+      if (typeof recordingTimer !== "undefined") {
+        console.warn("recordingTimer already exists, clearing it");
+        delete window.recordingTimer;
+      }
+
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Initialize AI engines
+      let aiEngine = null;
+      let geminiEngine = null;
+
+      try {
+        aiEngine = new AIConversationEngine();
+        console.log("AI Conversation Engine initialized");
+      } catch (error) {
+        console.warn("AI Conversation Engine not available:", error);
+      }
+
+      try {
+        console.log("🔄 Attempting to initialize Gemini AI Engine...");
+        geminiEngine = new GeminiAIEngine();
+        console.log("🔑 Checking API configuration...");
+        console.log("🔑 window.GEMINI_API_KEY:", window.GEMINI_API_KEY ? "Present" : "Missing");
+        console.log("🔑 API_CONFIG:", window.API_CONFIG ? "Present" : "Missing");
+        const isConfigured = geminiEngine.isConfigured();
+        console.log(
+          "✅ Gemini AI Engine initialized:",
+          isConfigured ? "Configured" : "Not configured"
+        );
+        if (!isConfigured) {
+          console.error("❌ Gemini API is not configured - dynamic prompts will not work");
+        }
+      } catch (error) {
+        console.error("❌ Gemini AI Engine initialization failed:", error);
+        console.warn("Gemini AI Engine not available:", error);
+      }
+
+      // Sales-specific scenarios
+      const presentationScenarios = {
+        "cold-call": {
+          title: "Cold Call Practice",
+          description:
+            "You're making a cold call to a potential customer. They're busy and initially resistant.",
+          objections: [
+            "We're not interested in new vendors right now.",
+            "We already have a solution that works fine.",
+            "I don't have time to discuss this today.",
+            "Send me some information and I'll look at it later.",
+          ],
+        },
+        "discovery-call": {
+          title: "Discovery Call Practice",
+          description:
+            "You're on a discovery call with a prospect who agreed to learn more about your solution.",
+          objections: [
+            "I'm not sure we really have that big of a problem.",
+            "Our current process works okay, just could be better.",
+            "We've looked at solutions before but they were too complex.",
+            "I'd need to get buy-in from several other people.",
+          ],
+        },
+        "product-demo": {
+          title: "Product Demo Practice",
+          description:
+            "You're demonstrating your product to a prospect who has specific technical concerns.",
+          objections: [
+            "This looks complicated for our team to learn.",
+            "How do we know this will work with our current setup?",
+            "We've had bad experiences with similar tools before.",
+            "The interface seems overwhelming for our users.",
+          ],
+        },
+        "price-objection": {
+          title: "Price Objection Practice",
+          description:
+            "The prospect is interested but has concerns about the price point.",
+          objections: [
+            "We found a competitor that's half the price.",
+            "Our budget just isn't there for something this expensive.",
+            "I need to justify this cost to my manager.",
+            "Can you do better on the price?",
+          ],
+        },
+        "competitor-objection": {
+          title: "Competitor Comparison Practice",
+          description:
+            "The prospect is comparing you to a specific competitor they're considering.",
+          objections: [
+            "Competitor X has been around longer than you.",
+            "Their reviews seem just as good as yours.",
+            "They're offering us a better deal.",
+            "Our colleague at another company uses them and likes it.",
+          ],
+        },
+        "closing-call": {
+          title: "Closing Call Practice",
+          description:
+            "You're on a closing call with a prospect who seems ready to move forward but has final hesitations.",
+          objections: [
+            "We want to think about it over the weekend.",
+            "I need to run this by one more person.",
+            "The timing isn't quite right for us.",
+            "Can we start with a smaller package first?",
+          ],
+        },
+      };
+
+      // State management
+      let currentMode = null;
+      let selectedScenario = null;
+      let conversationHistory = [];
+      let conversationCount = 0;
+      let isRecording = false;
+      let mediaRecorder = null;
+      let audioChunks = [];
+      let recordedAudioBlob = null;
+      let speechRecognition = null;
+      let recordedTranscript = "";
+
+      // DOM elements
+      const analysisOptions = document.querySelectorAll(".analysis-option");
+      const uploadSection = document.getElementById("uploadSection");
+      const practiceSection = document.getElementById("practiceSection");
+      const scenarioTypes = document.querySelectorAll(".scenario-type");
+      const conversationContainer = document.getElementById(
+        "conversationContainer"
+      );
+      const conversationFlow = document.getElementById("conversationFlow");
+      const startPracticeBtn = document.getElementById("startPractice");
+      const backToScenariosBtn = document.getElementById("backToScenarios");
+      const endConversationBtn = document.getElementById("endConversation");
+      const recordBtn = document.getElementById("recordButton");
+      const scenarioActionsDiv = document.getElementById("scenarioActions");
+      const changeScenarioBtn = document.getElementById("changeScenario");
+
+      // Debug DOM elements
+      console.log("DOM elements loaded:");
+      console.log("- recordBtn:", recordBtn);
+      console.log("- conversationFlow:", conversationFlow);
+      console.log("- endConversationBtn:", endConversationBtn);
+
+      // Test record button click detection
+      if (recordBtn) {
+        recordBtn.onclick = (e) => {
+          console.log("Record button onclick fired!");
+        };
+
+        // Add a test function to manually show and test the button
+        window.testRecordButton = () => {
+          console.log("Manually showing record button for testing");
+          recordBtn.style.display = "inline-flex";
+          recordBtn.style.visibility = "visible";
+          recordBtn.style.opacity = "1";
+          console.log("Record button styles:", {
+            display: recordBtn.style.display,
+            visibility: recordBtn.style.visibility,
+            opacity: recordBtn.style.opacity,
+          });
+        };
+      }
+
+      // Analysis option selection
+      console.log(
+        "Setting up analysis options, found:",
+        analysisOptions.length,
+        "elements"
+      );
+      analysisOptions.forEach((option, index) => {
+        console.log(`Setting up click handler for option ${index}:`, option);
+        option.addEventListener("click", (e) => {
+          console.log("CLICK DETECTED on option:", option.dataset.type);
+          e.preventDefault();
+          e.stopPropagation();
+
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+          option.classList.add("selected");
+          currentMode = option.dataset.type;
+
+          console.log("Current mode set to:", currentMode);
+
+          if (currentMode === "upload") {
+            console.log("Showing upload section");
+            uploadSection.classList.add("active");
+            practiceSection.classList.remove("active");
+          } else if (currentMode === "practice") {
+            console.log("Showing practice section");
+            practiceSection.classList.add("active");
+            uploadSection.classList.remove("active");
+          }
+        });
+      });
+
+      // Scenario selection
+      scenarioTypes.forEach((scenario) => {
+        scenario.addEventListener("click", () => {
+          scenarioTypes.forEach((s) => s.classList.remove("selected"));
+          scenario.classList.add("selected");
+          selectedScenario = scenario.dataset.scenario;
+          startPracticeBtn.disabled = false;
+        });
+      });
+
+      // Start practice button
+      startPracticeBtn.addEventListener("click", () => {
+        if (selectedScenario) {
+          initializePracticeSession(selectedScenario);
+          conversationContainer.style.display = "block";
+          scenarioActionsDiv.style.display = "none";
+          document.querySelector(".scenario-grid").style.display = "none";
+          document.querySelector("#practiceSection h2").style.display = "none";
+          document.querySelector(
+            "#practiceSection .section-subtitle"
+          ).style.display = "none";
+        }
+      });
+
+      // Change Scenario button
+      changeScenarioBtn.addEventListener("click", async () => {
+        if (!selectedScenario) {
+          alert("Please select a scenario first");
+          return;
+        }
+
+        // Update button state to show loading
+        changeScenarioBtn.disabled = true;
+        changeScenarioBtn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Generating...';
+
+        try {
+          // Get the current scenario information
+          const currentScenario = presentationScenarios[selectedScenario];
+          
+          // Use GeminiAIEngine to generate a new scenario
+          if (geminiEngine && geminiEngine.generateScenario) {
+            const newScenarioDescription = await geminiEngine.generateScenario(selectedScenario, currentScenario.title);
+            
+            // Update the scenario description with the new one
+            presentationScenarios[selectedScenario].description = newScenarioDescription;
+            
+            // Update the display if we're already in the selected scenario
+            const scenarioTextElement = document.getElementById("scenarioText");
+            if (scenarioTextElement) {
+              scenarioTextElement.textContent = newScenarioDescription;
+            }
+            
+            console.log("Generated new scenario:", newScenarioDescription);
+          } else {
+            console.warn("GeminiAI engine not available, using fallback");
+            // Fallback: Generate a simple variation
+            const fallbackScenarios = {
+              "cold-call": "You're making a cold call to a potential customer who just had a bad experience with their current vendor. They're frustrated but might be open to alternatives if you can demonstrate clear value.",
+              "discovery-call": "You're on a discovery call with a prospect who is evaluating solutions but seems to have limited budget. They need to understand ROI and cost-effectiveness more than features.",
+              "product-demo": "You're demonstrating your product to a technical team who will be the end users. They're detail-oriented and concerned about implementation complexity and integration with existing systems.",
+              "price-objection": "A qualified prospect loves your solution but is concerned about the cost. They've mentioned budget constraints and are comparing you to lower-priced alternatives.",
+              "competitor-objection": "Your prospect is seriously considering a competitor who has been in the market longer. They're concerned about choosing a newer player and want reassurance about your stability and support.",
+              "closing-call": "You're in the final stages with a prospect who seems ready to buy but has some last-minute concerns from their legal team about contract terms and service level agreements."
+            };
+            
+            const newDescription = fallbackScenarios[selectedScenario] || currentScenario.description;
+            presentationScenarios[selectedScenario].description = newDescription;
+            
+            const scenarioTextElement = document.getElementById("scenarioText");
+            if (scenarioTextElement) {
+              scenarioTextElement.textContent = newDescription;
+            }
+          }
+          
+          // Success feedback
+          changeScenarioBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> Updated!';
+          setTimeout(() => {
+            changeScenarioBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-4 h-4"></i> Change Scenario';
+            changeScenarioBtn.disabled = false;
+          }, 2000);
+          
+        } catch (error) {
+          console.error("Error generating new scenario:", error);
+          alert("Failed to generate new scenario. Please try again.");
+          
+          // Reset button state
+          changeScenarioBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-4 h-4"></i> Change Scenario';
+          changeScenarioBtn.disabled = false;
+        }
+      });
+
+      // Initialize practice session
+      async function initializePracticeSession(scenarioKey) {
+        const scenarioInfo = presentationScenarios[scenarioKey];
+        document.getElementById("scenarioTitle").textContent =
+          scenarioInfo.title;
+        document.getElementById("scenarioText").textContent =
+          scenarioInfo.description;
+
+        // Clear previous conversation
+        conversationFlow.innerHTML = "";
+        conversationHistory = [];
+
+        // Generate initial AI message
+        setTimeout(async () => {
+          console.log("🚀 Starting practice session initialization...");
+          console.log("🎯 Scenario:", scenarioKey);
+          console.log("📋 Scenario info:", scenarioInfo);
+          
+          let initialPrompt = "";
+
+          // Try to use Gemini AI for dynamic prompt generation
+          console.log("🤖 Checking Gemini availability...");
+          console.log("🤖 geminiEngine exists:", !!geminiEngine);
+          console.log("🤖 geminiEngine.isConfigured():", geminiEngine ? geminiEngine.isConfigured() : "N/A");
+          
+          if (geminiEngine && geminiEngine.isConfigured()) {
+            try {
+              console.log("✅ Using Gemini for dynamic prompt generation");
+              
+              // Set scenario context for Gemini
+              console.log("📝 Setting scenario context...");
+              geminiEngine.setScenarioContext(
+                scenarioKey,
+                scenarioInfo.title,
+                scenarioInfo.description,
+                'professional'
+              );
+
+              // Generate dynamic initial prompt
+              console.log("🔄 Generating initial prompt...");
+              initialPrompt = await geminiEngine.generateInitialPrompt();
+              console.log(
+                "✅ Generated dynamic prompt via Gemini:",
+                initialPrompt
+              );
+            } catch (error) {
+              console.error(
+                "❌ Gemini prompt generation failed, using fallback:",
+                error
+              );
+              console.error("Full error details:", error.stack);
+              // Fallback to static prompt
+              initialPrompt =
+                scenarioInfo.objections[
+                  Math.floor(Math.random() * scenarioInfo.objections.length)
+                ];
+              console.log("🔄 Using fallback prompt:", initialPrompt);
+            }
+          } else {
+            // Fallback to static prompt when Gemini is not configured
+            console.log("⚠️ Gemini not configured, using static prompt");
+            console.log("⚠️ Reason - geminiEngine:", !!geminiEngine, "isConfigured:", geminiEngine ? geminiEngine.isConfigured() : "N/A");
+            initialPrompt =
+              scenarioInfo.objections[
+                Math.floor(Math.random() * scenarioInfo.objections.length)
+              ];
+            console.log("📝 Static prompt selected:", initialPrompt);
+          }
+
+          addAIMessage(initialPrompt);
+          recordBtn.style.display = "inline-flex";
+          endConversationBtn.style.display = "inline-flex";
+          console.log(
+            "Practice session initialized, record button should be visible"
+          );
+        }, 1000);
+      }
+
+      // Back to scenarios button
+      backToScenariosBtn.addEventListener("click", () => {
+        conversationContainer.style.display = "none";
+        scenarioActionsDiv.style.display = "flex";
+        document.querySelector(".scenario-grid").style.display = "grid";
+        document.querySelector("#practiceSection h2").style.display = "block";
+        document.querySelector(
+          "#practiceSection .section-subtitle"
+        ).style.display = "block";
+        resetPracticeSession();
+      });
+
+      // Reset practice session
+      function resetPracticeSession() {
+        scenarioTypes.forEach((s) => s.classList.remove("selected"));
+        selectedScenario = null;
+        startPracticeBtn.disabled = true;
+        conversationFlow.innerHTML = "";
+        conversationHistory = [];
+        conversationCount = 0;
+        endConversationBtn.style.display = "none";
+        recordBtn.style.display = "none";
+
+        // Reset recording state
+        isRecording = false;
+        recordedAudioBlob = null;
+        audioChunks = [];
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+        }
+
+        // Reset record button UI
+        recordBtn.innerHTML =
+          '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+        recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+        recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+        recordBtn.style.color = "var(--text-primary)";
+        lucide.createIcons();
+      }
+
+      // Back to options buttons
+      document.getElementById("backToOptions").addEventListener("click", () => {
+        uploadSection.classList.remove("active");
+        analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+        currentMode = null;
+      });
+
+      document
+        .getElementById("backToOptionsFromPractice")
+        .addEventListener("click", () => {
+          practiceSection.classList.remove("active");
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+          currentMode = null;
+
+          // Reset scenario selection view
+          conversationContainer.style.display = "none";
+          scenarioActionsDiv.style.display = "flex";
+          document.querySelector(".scenario-grid").style.display = "grid";
+          document.querySelector("#practiceSection h2").style.display = "block";
+          document.querySelector(
+            "#practiceSection .section-subtitle"
+          ).style.display = "block";
+
+          resetPracticeSession();
+        });
+
+      // File upload functionality
+      document.getElementById("chooseFileBtn").addEventListener("click", () => {
+        document.getElementById("audioFile").click();
+      });
+
+      document.getElementById("audioFile").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          // Show file details
+          document.getElementById("fileName").textContent = file.name;
+          document.getElementById("fileSize").textContent =
+            (file.size / (1024 * 1024)).toFixed(1) + " MB";
+          document.getElementById("fileSelected").style.display = "flex";
+          document.getElementById("analyzeUpload").disabled = false;
+        }
+      });
+
+      // Remove file functionality
+      document.getElementById("removeFile").addEventListener("click", () => {
+        document.getElementById("audioFile").value = "";
+        document.getElementById("fileSelected").style.display = "none";
+        document.getElementById("analyzeUpload").disabled = true;
+      });
+
+      // Analyze upload
+      document
+        .getElementById("analyzeUpload")
+        .addEventListener("click", async () => {
+          const audioFile = document.getElementById("audioFile");
+          if (!audioFile.files[0]) {
+            alert("Please select a file first");
+            return;
+          }
+
+          // Update button state
+          const analyzeBtn = document.getElementById("analyzeUpload");
+          analyzeBtn.disabled = true;
+          analyzeBtn.innerHTML =
+            '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+
+          try {
+            // Use SimpleAnalysis
+            const processor = new SimpleAnalysis();
+            const results = await processor.analyzeAudio(
+              audioFile.files[0],
+              "sales"
+            );
+
+            // Store results and redirect
+            sessionStorage.setItem("analysisResults", JSON.stringify(results));
+            window.location.href =
+              "sales-analysis-results.html?type=sales&source=upload";
+          } catch (error) {
+            console.error("Analysis failed:", error);
+            alert("Analysis failed. Please try again.");
+            analyzeBtn.disabled = false;
+            analyzeBtn.innerHTML =
+              '<i data-lucide="zap" class="w-4 h-4"></i> Analyze Recording';
+          }
+        });
+
+      // Audio recording functionality
+      if (recordBtn) {
+        console.log("Setting up record button event listener");
+        recordBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log("Record button clicked, isRecording:", isRecording);
+          if (!isRecording) {
+            startRecording();
+          } else {
+            stopRecording();
+          }
+        });
+      } else {
+        console.error(
+          'Record button not found! Element with ID "recordButton" does not exist'
+        );
+      }
+
+      async function startRecording() {
+        console.log("startRecording called");
+        try {
+          // Check if getUserMedia is supported
+          if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            throw new Error("getUserMedia not supported in this browser");
+          }
+
+          console.log("Requesting microphone access...");
+          // Request microphone access
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+              echoCancellation: true,
+              noiseSuppression: true,
+              sampleRate: 44100,
+            },
+          });
+
+          console.log("Microphone access granted, stream:", stream);
+
+          // CLEAN AUDIO RECORDING - No live transcription, just record and store
+          console.log("🎙️ PURE AUDIO RECORDING - No live processing");
+          console.log("Audio will be analyzed only when user submits");
+
+          // Clear previous audio chunks
+          audioChunks = [];
+
+          // Create MediaRecorder with better compatibility
+          const options = { mimeType: "audio/webm" };
+          if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+            options.mimeType = "audio/mp4";
+            if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+              options.mimeType = "";
+            }
+          }
+
+          mediaRecorder = new MediaRecorder(stream, options);
+          console.log("MediaRecorder created with mimeType:", options.mimeType);
+
+          // Handle data available event
+          mediaRecorder.ondataavailable = (event) => {
+            console.log("📊 MEDIA RECORDER DATA AVAILABLE:");
+            console.log("Chunk size:", event.data.size, "bytes");
+            console.log("Chunk type:", event.data.type);
+            console.log("Total chunks so far:", audioChunks.length);
+
+            if (event.data.size > 0) {
+              audioChunks.push(event.data);
+              console.log("✅ Audio chunk added to collection");
+            } else {
+              console.warn("⚠️ Empty audio chunk received");
+            }
+
+            // Calculate total audio data collected so far
+            const totalSize = audioChunks.reduce(
+              (total, chunk) => total + chunk.size,
+              0
+            );
+            console.log("📈 Total audio data collected:", totalSize, "bytes");
+          };
+
+          // Handle recording stop event
+          mediaRecorder.onstop = async () => {
+            console.log("🛑 AUDIO RECORDING STOPPED");
+
+            // Create blob from chunks
+            recordedAudioBlob = new Blob(audioChunks, {
+              type: mediaRecorder.mimeType || "audio/webm",
+            });
+            console.log(
+              "🎵 Audio blob created:",
+              recordedAudioBlob.size,
+              "bytes"
+            );
+
+            // Stop all tracks to release microphone
+            stream.getTracks().forEach((track) => track.stop());
+            console.log("🎤 Microphone released");
+
+            // Store audio globally for later analysis
+            window.recordedAudioBlob = recordedAudioBlob;
+
+            if (recordedAudioBlob.size > 0) {
+              console.log("✅ Audio successfully recorded and stored");
+              console.log("Audio details:", {
+                size: recordedAudioBlob.size,
+                type: recordedAudioBlob.type,
+                lastModified: recordedAudioBlob.lastModified,
+              });
+              addAudioCapturedMessage(
+                `Audio recorded (${recordedAudioBlob.size} bytes) - ready for analysis`
+              );
+            } else {
+              console.error("❌ No audio data captured");
+              addAudioCapturedMessage(
+                "No audio data was captured - please try again"
+              );
+            }
+          };
+
+          // Handle errors
+          mediaRecorder.onerror = (event) => {
+            console.error("MediaRecorder error:", event.error);
+          };
+
+          // Start recording
+          console.log("🎬 STARTING AUDIO RECORDING");
+
+          mediaRecorder.start(1000); // Collect data every second
+          isRecording = true;
+
+          // Update UI
+          recordBtn.innerHTML =
+            '<i data-lucide="square" class="w-4 h-4"></i> Stop Recording';
+          recordBtn.style.background = "#ef4444 !important";
+          recordBtn.style.borderColor = "#ef4444 !important";
+          recordBtn.style.color = "white !important";
+          lucide.createIcons();
+
+          // Show recording status
+          const audioStatus = document.getElementById("audioStatus");
+          const statusDisplay = document.getElementById("statusDisplay");
+          if (audioStatus && statusDisplay) {
+            audioStatus.style.display = "block";
+            statusDisplay.textContent = "Recording audio... Speak now!";
+            statusDisplay.style.color = "#d73527";
+          }
+
+          console.log("✅ Recording started successfully");
+        } catch (error) {
+          console.error("Error starting recording:", error);
+          isRecording = false;
+
+          let errorMessage = "Unable to access microphone. ";
+          if (error.name === "NotAllowedError") {
+            errorMessage += "Please allow microphone access and try again.";
+          } else if (error.name === "NotFoundError") {
+            errorMessage +=
+              "No microphone found. Please connect a microphone and try again.";
+          } else {
+            errorMessage += error.message;
+          }
+
+          alert(errorMessage);
+        }
+      }
+
+      function stopRecording() {
+        console.log("🛑 STOPPING RECORDING");
+
+        if (mediaRecorder && isRecording) {
+          mediaRecorder.stop();
+          isRecording = false;
+
+          // Update UI
+          recordBtn.innerHTML =
+            '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+          recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+          recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+          recordBtn.style.color = "var(--text-primary)";
+          lucide.createIcons();
+
+          // Update status display
+          const statusDisplay = document.getElementById("statusDisplay");
+          if (statusDisplay) {
+            statusDisplay.textContent = "Processing audio...";
+            statusDisplay.style.color = "#666";
+          }
+
+          console.log("✅ Recording stopped, processing audio...");
+        } else {
+          console.warn(
+            "Cannot stop recording: mediaRecorder=",
+            mediaRecorder,
+            "isRecording=",
+            isRecording
+          );
+        }
+      }
+
+      function addAudioCapturedMessage(message) {
+        console.log("🎯 AUDIO CAPTURED MESSAGE:", message);
+
+        const messageElement = document.createElement("div");
+        messageElement.className = "audio-captured";
+        messageElement.innerHTML = `
+          <div class="audio-captured-box">
+            <i data-lucide="check-circle" class="w-5 h-5"></i>
+            <span>${message} - Ready for Transcription</span>
+          </div>
+        `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        // Hide the recording status display
+        const audioStatus = document.getElementById("audioStatus");
+        if (audioStatus) {
+          audioStatus.style.display = "none";
+        }
+
+        // Add to conversation history for context
+        conversationHistory.push({
+          type: "audio-captured",
+          message: message,
+          timestamp: Date.now(),
+        });
+
+        // Skip transcription preview - go directly to analysis results
+
+        // Show submit button, hide record button
+        endConversationBtn.style.display = "inline-flex";
+        recordBtn.style.display = "none";
+
+        console.log("✅ Ready for analysis - user can now submit");
+      }
+
+      // Show transcription preview for sales
+      async function showSalesTranscriptionPreview() {
+        try {
+          console.log("🔄 Sending to Gemini for transcription...");
+
+          const processor = new SimpleAnalysis();
+          const audioFile = new File(
+            [window.recordedAudioBlob],
+            "sales-preview.webm",
+            {
+              type: window.recordedAudioBlob.type,
+            }
+          );
+
+          const transcript = await processor.getTranscript(audioFile);
+          console.log("✅ TRANSCRIPTION SUCCESS:", transcript);
+
+          // Show transcription in conversation
+          const transcriptElement = document.createElement("div");
+          transcriptElement.className = "transcription-preview";
+          transcriptElement.innerHTML = `
+            <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 12px; padding: 1rem; margin: 1rem 0;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #6366f1; font-weight: 600;">
+                <i data-lucide="file-text" style="width: 16px; height: 16px;"></i>
+                <span>Transcription Preview:</span>
+              </div>
+              <div style="color: #374151; font-style: italic;">"${transcript}"</div>
+            </div>
+          `;
+          conversationFlow.appendChild(transcriptElement);
+          lucide.createIcons();
+        } catch (error) {
+          console.error("Sales transcription preview failed:", error);
+        }
+      }
+
+      // End conversation and analyze
+      endConversationBtn.addEventListener("click", async () => {
+        console.log("🎯 SUBMIT BUTTON CLICKED");
+
+        // Update button state
+        endConversationBtn.disabled = true;
+        endConversationBtn.innerHTML =
+          '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing Conversation...';
+
+        try {
+          // Check if we have recorded audio to pass to analysis page
+          if (window.recordedAudioBlob && window.recordedAudioBlob.size > 0) {
+            console.log("🎤 Audio available, passing to analysis page...");
+
+            // Convert blob to base64 for storage
+            const reader = new FileReader();
+            reader.onloadend = function () {
+              const audioData = {
+                base64: reader.result,
+                type: window.recordedAudioBlob.type,
+                size: window.recordedAudioBlob.size,
+                name: "sales-practice-recording.webm",
+                timestamp: new Date().toISOString(),
+                analysisType: "sales",
+                source: "practice",
+              };
+
+              console.log("🚀 STORING AUDIO DATA FOR ANALYSIS PAGE");
+
+              // Store audio data for analysis page
+              sessionStorage.setItem(
+                "audioForAnalysis",
+                JSON.stringify(audioData)
+              );
+
+              // Store minimal results data
+              const basicResults = {
+                hasAudio: true,
+                audioStored: true,
+                timestamp: new Date().toISOString(),
+                analysisType: "sales",
+                source: "practice",
+                note: "Audio file stored - transcription will be done on results page",
+              };
+
+              sessionStorage.setItem(
+                "analysisResults",
+                JSON.stringify(basicResults)
+              );
+
+              console.log("✅ Audio data stored successfully");
+              window.location.href =
+                "sales-analysis-results.html?type=sales&source=practice";
+            };
+
+            reader.readAsDataURL(window.recordedAudioBlob);
+          } else if (geminiEngine && geminiEngine.isConfigured()) {
+            console.log("📝 No audio, analyzing conversation text...");
+            const analysisResults = await geminiEngine.analyzePracticeSession(
+              conversationHistory,
+              "sales"
+            );
+
+            // Store results and redirect
+            sessionStorage.setItem(
+              "analysisResults",
+              JSON.stringify(analysisResults)
+            );
+            window.location.href =
+              "sales-analysis-results.html?type=sales&source=practice";
+          } else {
+            // Fallback analysis
+            const fallbackResults = {
+              success: true,
+              analysis: `## Sales Practice Session Analysis
+
+**Communication Effectiveness**: 7/10
+Your sales approach showed good rapport building and clear value proposition delivery.
+
+**Objection Handling**: 6/10  
+You addressed concerns but could strengthen your responses with more specific benefits and social proof.
+
+**Closing Techniques**: 7/10
+Good attempt at moving toward commitment. Consider using trial closes and assumptive language.
+
+**Overall Score**: 20/30
+
+Keep practicing! Focus on building stronger emotional connections with prospects.`,
+              conversationHistory: conversationHistory,
+              timestamp: Date.now(),
+            };
+
+            sessionStorage.setItem(
+              "analysisResults",
+              JSON.stringify(fallbackResults)
+            );
+            window.location.href =
+              "sales-analysis-results.html?type=sales&source=practice";
+          }
+        } catch (error) {
+          console.error("Analysis failed:", error);
+          alert("Analysis failed. Please try again.");
+          endConversationBtn.disabled = false;
+          endConversationBtn.innerHTML =
+            '<i data-lucide="check-circle" class="w-4 h-4"></i> Submit for Analysis';
+        }
+      });
+
+      // Generate AI follow-up response
+      async function generateAIResponse() {
+        let followUpPrompt = "";
+        
+        // Try to use Gemini AI for dynamic follow-up generation
+        if (geminiEngine && geminiEngine.isConfigured()) {
+          try {
+            // Generate dynamic follow-up based on conversation history
+            followUpPrompt = await geminiEngine.generateFollowUpPrompt(
+              "User recorded response",
+              conversationHistory
+            );
+            console.log(
+              "Generated dynamic follow-up via Gemini:",
+              followUpPrompt
+            );
+          } catch (error) {
+            console.warn(
+              "Gemini follow-up generation failed, using fallback:",
+              error
+            );
+            // Fallback to static follow-up
+            followUpPrompt = getFallbackFollowUp();
+          }
+        } else {
+          // Fallback to static follow-up when Gemini is not configured
+          console.log("Gemini not configured, using static follow-up");
+          followUpPrompt = getFallbackFollowUp();
+        }
+        
+        if (followUpPrompt) {
+          addAIMessage(followUpPrompt);
+          
+          // Add to conversation history
+          conversationHistory.push({
+            type: "ai",
+            message: followUpPrompt,
+            timestamp: Date.now(),
+          });
+          
+          // Re-enable recording for next response
+          recordBtn.style.display = "inline-flex";
+          endConversationBtn.style.display = "inline-flex";
+        }
+      }
+
+      // Fallback follow-up responses for sales scenarios
+      function getFallbackFollowUp() {
+        const followUps = [
+          "I understand what you're saying, but I'm still not convinced this is the right time for us.",
+          "That's a fair point, but how do we know this will actually work for our specific situation?",
+          "I hear you, but I'd need to see some concrete ROI numbers before I could justify this to my team.",
+          "Okay, but what happens if this doesn't work out? What kind of support do you provide?",
+          "I appreciate the information, but I think I need to compare this with a few other options first.",
+          "That makes sense, but I'm concerned about the budget. Can you work with us on pricing?",
+          "I see your point, but how does this compare to what we're currently using?",
+          "That's interesting, but I'd need to get approval from my manager first. What's your timeline?",
+          "I understand the benefits, but I'm worried about the learning curve for my team.",
+          "Good points, but I've heard mixed reviews about similar solutions. How do you address that?"
+        ];
+        
+        return followUps[Math.floor(Math.random() * followUps.length)];
+      }
+
+      function addUserMessage(message) {
+        const messageElement = document.createElement("div");
+        messageElement.className = "message user";
+        messageElement.innerHTML = `
+          <div class="message-content">
+            <div>${message}</div>
+          </div>
+          <div class="message-avatar">
+            <i data-lucide="user" class="w-5 h-5"></i>
+          </div>
+        `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        conversationHistory.push({
+          type: "user",
+          message: message,
+          timestamp: Date.now(),
+        });
+      }
+
+      // DISABLED - No AI messages needed
+      function addAIMessage(message) {
+        console.log("📨 Adding AI message:", message);
+        const messageElement = document.createElement("div");
+        messageElement.className = "message ai";
+        messageElement.innerHTML = `
+          <div class="message-avatar">
+            <i data-lucide="brain" class="w-5 h-5"></i>
+          </div>
+          <div class="message-content">
+            <div>${message}</div>
+          </div>
+        `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        conversationHistory.push({
+          type: "ai",
+          message: message,
+          timestamp: Date.now(),
+        });
+        
+        console.log("✅ AI message added to conversation flow");
+      }
+
+      // Initialize simple analysis system
+      const simpleAnalysis = new SimpleAnalysis();
+      console.log("✅ Simple analysis system ready");
+
+      // Removed processRecordedAudio function - now using Gemini AI analysis
+
+      // Event handlers
+      document.addEventListener("DOMContentLoaded", function () {
+        // Event handlers are already set up above
+        console.log("Document ready, all event handlers configured");
+
+        // File upload analysis
+        const analyzeUploadBtn = document.getElementById("analyzeUpload");
+        if (analyzeUploadBtn) {
+          analyzeUploadBtn.addEventListener("click", async function () {
+            const audioFile = document.getElementById("audioFile").files[0];
+            if (!audioFile) {
+              alert("Please select an audio file first.");
+              return;
+            }
+
+            try {
+              // Show loading state
+              const originalText = this.innerHTML;
+              this.innerHTML =
+                '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+              this.disabled = true;
+              lucide.createIcons();
+
+              // Use simple analysis
+              const analysisResult = await simpleAnalysis.analyzeAudio(
+                audioFile,
+                "sales"
+              );
+
+              // Always show results (simple analysis always succeeds)
+              showAnalysisResults(
+                "Sales Analysis Complete",
+                analysisResult.analysis || "Your audio has been analyzed."
+              );
+            } catch (error) {
+              console.error("File analysis error:", error);
+              console.error("Error stack:", error.stack);
+
+              alert(
+                `Failed to analyze file: ${error.message}\n\nPlease check the browser console for details.`
+              );
+
+              // Restore button
+              this.innerHTML = originalText;
+              this.disabled = false;
+              lucide.createIcons();
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

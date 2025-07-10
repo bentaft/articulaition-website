@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Communication Analysis - Articulaition" />
+    <title>Analysis - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --primary-orange: #ff934d;
+        --primary-blue: #4a90e2;
+        --success-green: #10b981;
+        --warning-yellow: #f59e0b;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --bg-primary: #fafbfc;
+        --bg-secondary: #f4f6f8;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Background Effects */
+      .dashboard-container {
+        background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 100%);
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .dashboard-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(255, 147, 77, 0.03) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(74, 144, 226, 0.025) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(16, 185, 129, 0.02) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(245, 158, 11, 0.015) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Animation Classes */
+      .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+        opacity: 0;
+      }
+
+      .slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .scale-in {
+        animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes scaleIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-500 {
+        animation-delay: 0.5s;
+      }
+
+      /* Header Styling */
+      .main-header {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .logo-section img {
+        height: 32px;
+        width: auto;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--text-primary);
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--primary-orange),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        color: var(--text-secondary);
+      }
+
+      .breadcrumb .current {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      /* Page Title Section */
+      .page-title-section {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .title-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-orange),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .page-description {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* Analysis Card */
+      .analysis-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .section-subtitle {
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+
+      /* Input Type Selector */
+      .input-type-selector {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+
+      .input-type-card {
+        background: rgba(255, 255, 255, 0.7);
+        border: 2px solid rgba(0, 0, 0, 0.06);
+        border-radius: 16px;
+        padding: 2rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        text-align: center;
+      }
+
+      .input-type-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        border-color: rgba(255, 147, 77, 0.3);
+      }
+
+      .input-type-card.active {
+        border-color: var(--primary-orange);
+        background: rgba(255, 147, 77, 0.05);
+      }
+
+      .input-type-icon {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 1rem;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-orange),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .input-type-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .input-type-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      /* Upload Section */
+      .upload-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      @media (max-width: 768px) {
+        .upload-section {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .upload-option {
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px dashed rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 2.5rem 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .upload-option:hover {
+        border-color: var(--primary-orange);
+        background: rgba(255, 147, 77, 0.02);
+      }
+
+      .upload-option.active {
+        border-color: var(--primary-orange);
+        border-style: solid;
+        background: rgba(255, 147, 77, 0.05);
+      }
+
+      .upload-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1rem;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-orange),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .upload-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .upload-button {
+        background: var(--primary-orange);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .upload-button:hover {
+        background: #ff7f33;
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* Text Input Area */
+      .text-input-area {
+        display: none;
+      }
+
+      .text-input-area.active {
+        display: block;
+      }
+
+      .text-input-label {
+        display: block;
+        font-weight: 500;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+      }
+
+      .text-input-field {
+        width: 100%;
+        min-height: 200px;
+        padding: 1.5rem;
+        border: 2px solid rgba(0, 0, 0, 0.06);
+        border-radius: 16px;
+        font-family: inherit;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        resize: vertical;
+        transition: border-color 0.3s ease;
+      }
+
+      .text-input-field:focus {
+        outline: none;
+        border-color: var(--primary-orange);
+      }
+
+      .text-input-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+      }
+
+      .character-count {
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
+      /* File Selected State */
+      .file-selected {
+        display: none;
+        background: rgba(16, 185, 129, 0.05);
+        border: 2px solid rgba(16, 185, 129, 0.2);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .file-selected.show {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .file-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: var(--success-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .file-details {
+        flex: 1;
+      }
+
+      .file-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.25rem;
+      }
+
+      .file-size {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+      }
+
+      .remove-file {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .remove-file:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .primary-button {
+        background: linear-gradient(135deg, var(--primary-orange), #ff7f33);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .primary-button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .primary-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .secondary-button {
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--text-primary);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .secondary-button:hover {
+        background: white;
+        border-color: var(--primary-orange);
+        transform: translateY(-1px);
+      }
+
+      /* Processing State */
+      .processing-state {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(250, 251, 252, 0.95);
+        backdrop-filter: blur(20px);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .processing-state.show {
+        display: flex;
+      }
+
+      .processing-content {
+        text-align: center;
+        max-width: 500px;
+        padding: 3rem;
+      }
+
+      .loading-spinner {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 2rem;
+        border: 3px solid rgba(255, 147, 77, 0.1);
+        border-top: 3px solid var(--primary-orange);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .processing-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+      }
+
+      .processing-description {
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+
+      .progress-steps {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+      }
+
+      .progress-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        opacity: 0.4;
+        transition: opacity 0.3s ease;
+      }
+
+      .progress-step.active {
+        opacity: 1;
+      }
+
+      .step-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: var(--primary-orange);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .step-text {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-primary);
+      }
+
+      /* Recording Modal */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-overlay.show {
+        display: flex;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 24px;
+        padding: 3rem;
+        max-width: 700px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      .modal-body {
+        margin: 2rem 0;
+      }
+
+      .scenario-prompt {
+        background: rgba(255, 147, 77, 0.05);
+        border: 1px solid rgba(255, 147, 77, 0.15);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .prompt-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .prompt-content {
+        color: var(--text-primary);
+        font-size: 1.1rem;
+        line-height: 1.6;
+        font-style: italic;
+      }
+
+      .recording-instruction {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+        margin-bottom: 2rem;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .modal-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .modal-close:hover {
+        background: rgba(0, 0, 0, 0.05);
+        color: var(--text-primary);
+      }
+
+      /* Recording Interface */
+      .recording-interface {
+        text-align: center;
+        padding: 2rem 0;
+      }
+
+      .mic-visualization {
+        position: relative;
+        margin: 2rem auto;
+        width: 120px;
+        height: 120px;
+      }
+
+      .mic-circle {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--primary-orange),
+          var(--primary-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+      }
+
+      .mic-circle:hover {
+        transform: scale(1.05);
+      }
+
+      .mic-circle.recording {
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(255, 147, 77, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 20px rgba(255, 147, 77, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(255, 147, 77, 0);
+        }
+      }
+
+      .recording-timer {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 1rem 0;
+      }
+
+      .recording-controls {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 2rem 1rem;
+        }
+
+        .analysis-card {
+          padding: 2rem;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .input-type-selector,
+        .progress-steps {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+
+        .modal-content {
+          padding: 2rem;
+          margin: 1rem;
+        }
+      }
+
+      /* Back Button */
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        margin-bottom: 1rem;
+      }
+
+      .back-btn:hover {
+        color: var(--text-primary);
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* Results Display */
+      .results-container {
+        display: none;
+      }
+
+      .results-container.show {
+        display: block;
+      }
+
+      .results-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .overall-score {
+        background: linear-gradient(135deg, var(--success-green), #16a085);
+        color: white;
+        padding: 3rem 2rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .score-value {
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .score-label {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+
+      .analysis-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .analysis-category {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .category-score {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-orange);
+        margin-bottom: 0.5rem;
+      }
+
+      .category-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+      }
+
+      .category-feedback {
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      .insights-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .insight-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 2rem;
+      }
+
+      .insight-card.strengths {
+        border-left: 4px solid var(--success-green);
+      }
+
+      .insight-card.improvements {
+        border-left: 4px solid var(--warning-yellow);
+      }
+
+      .insight-card.recommendations {
+        border-left: 4px solid var(--primary-blue);
+      }
+
+      .insight-title {
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .insight-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .insight-list li {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        position: relative;
+        line-height: 1.6;
+      }
+
+      .insight-list.strengths li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--success-green);
+        font-weight: bold;
+      }
+
+      .insight-list.improvements li:before {
+        content: "⚠";
+        position: absolute;
+        left: 0;
+        color: var(--warning-yellow);
+      }
+
+      .insight-list.recommendations li:before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--primary-blue);
+        font-weight: bold;
+      }
+
+      .action-buttons {
+        text-align: center;
+        margin-top: 3rem;
+      }
+
+      .action-btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary-orange),
+          var(--primary-blue)
+        );
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 0 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(255, 147, 77, 0.3);
+      }
+
+      .secondary-btn {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .secondary-btn:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="main-header fade-in">
+        <nav class="header-nav">
+          <div class="logo-section">
+            <img src="images/logo-header.svg" alt="Articulaition.com" />
+          </div>
+          <div class="nav-links">
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="professional-communication.html" class="nav-link"
+              >Professional</a
+            >
+            <a href="personal-communication.html" class="nav-link">Personal</a>
+          </div>
+          <div class="user-menu">
+            <div class="user-avatar">JD</div>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb slide-up delay-100">
+          <a href="dashboard.html">Dashboard</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <a href="professional-communication.html">Professional</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <span class="current" id="breadcrumbCurrent">Analysis</span>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title-section slide-up delay-200">
+          <div class="title-with-icon">
+            <div class="title-icon" id="titleIcon">
+              <i data-lucide="brain" class="w-6 h-6"></i>
+            </div>
+            <h1 class="page-title" id="pageTitle">Communication Analysis</h1>
+          </div>
+          <p class="page-description" id="pageDescription">
+            Upload your communication sample to receive detailed, personalized
+            feedback that helps you improve your speaking and writing skills.
+          </p>
+        </div>
+
+        <!-- Analysis Card -->
+        <div class="analysis-card scale-in delay-300">
+          <h2 class="section-title">Choose Your Analysis Type</h2>
+          <p class="section-subtitle">
+            Select how you'd like to submit your communication sample for
+            analysis
+          </p>
+
+          <!-- Input Type Selector -->
+          <div class="input-type-selector">
+            <div class="input-type-card" data-type="audio">
+              <div class="input-type-icon">
+                <i data-lucide="mic" class="w-6 h-6"></i>
+              </div>
+              <div class="input-type-title">Audio Analysis</div>
+              <div class="input-type-description">
+                Upload or record audio for speech pattern, tone, and delivery
+                analysis
+              </div>
+            </div>
+            <div class="input-type-card" data-type="text">
+              <div class="input-type-icon">
+                <i data-lucide="file-text" class="w-6 h-6"></i>
+              </div>
+              <div class="input-type-title">Text Analysis</div>
+              <div class="input-type-description">
+                Paste written communication for clarity, tone, and effectiveness
+                feedback
+              </div>
+            </div>
+          </div>
+
+          <!-- Audio Upload Section -->
+          <div class="upload-section" id="audioSection" style="display: none">
+            <div class="upload-option" id="uploadOption">
+              <div class="upload-icon">
+                <i data-lucide="upload" class="w-6 h-6"></i>
+              </div>
+              <div class="upload-title">Upload Audio File</div>
+              <div class="upload-description">
+                Choose an existing audio file from your device (MP3, M4A, WAV)
+              </div>
+              <button class="upload-button" id="chooseFileBtn">
+                <i data-lucide="folder" class="w-4 h-4"></i>
+                Choose File
+              </button>
+              <input
+                type="file"
+                id="audioFile"
+                accept=".mp3,.m4a,.wav"
+                hidden
+              />
+            </div>
+
+            <div class="upload-option" id="recordOption">
+              <div class="upload-icon">
+                <i data-lucide="mic" class="w-6 h-6"></i>
+              </div>
+              <div class="upload-title">Record New Audio</div>
+              <div class="upload-description">
+                Record directly in your browser for immediate analysis
+              </div>
+              <button class="upload-button" id="recordBtn">
+                <i data-lucide="radio" class="w-4 h-4"></i>
+                Start Recording
+              </button>
+            </div>
+          </div>
+
+          <!-- File Selected State -->
+          <div class="file-selected" id="fileSelected">
+            <div class="file-icon">
+              <i data-lucide="file-audio" class="w-5 h-5"></i>
+            </div>
+            <div class="file-details">
+              <div class="file-name" id="fileName">audio-file.mp3</div>
+              <div class="file-size" id="fileSize">2.4 MB</div>
+            </div>
+            <button class="remove-file" id="removeFile">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+
+          <!-- Text Input Section -->
+          <div class="text-input-area" id="textSection">
+            <label for="textInput" class="text-input-label">
+              Paste Your Written Communication
+            </label>
+            <textarea
+              id="textInput"
+              class="text-input-field"
+              placeholder="Paste your email, message, or written communication here for analysis..."
+              rows="8"
+            ></textarea>
+            <div class="text-input-footer">
+              <span class="character-count" id="characterCount"
+                >0 / 250 words</span
+              >
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <button class="secondary-button" id="backBtn">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Dashboard
+            </button>
+            <button class="primary-button" id="analyzeBtn" disabled>
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              Start Analysis
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Processing State -->
+      <div class="processing-state" id="processingState">
+        <div class="processing-content">
+          <div class="loading-spinner"></div>
+          <h3 class="processing-title">Analyzing Your Communication</h3>
+          <p class="processing-description">
+            We're analyzing your submission across multiple dimensions. This
+            usually takes 30-60 seconds.
+          </p>
+          <div class="progress-steps">
+            <div class="progress-step active" id="step1">
+              <div class="step-icon">
+                <i data-lucide="upload" class="w-5 h-5"></i>
+              </div>
+              <div class="step-text">Processing Input</div>
+            </div>
+            <div class="progress-step" id="step2">
+              <div class="step-icon">
+                <i data-lucide="brain" class="w-5 h-5"></i>
+              </div>
+              <div class="step-text">AI Analysis</div>
+            </div>
+            <div class="progress-step" id="step3">
+              <div class="step-icon">
+                <i data-lucide="chart-bar" class="w-5 h-5"></i>
+              </div>
+              <div class="step-text">Generating Report</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Display -->
+      <div class="results-container" id="resultsContainer">
+        <div class="results-header">
+          <h1>Your Communication Analysis</h1>
+          <p>Here's your personalized feedback and insights</p>
+        </div>
+
+        <!-- Overall Score -->
+        <div class="overall-score" id="overallScoreCard">
+          <div class="score-value" id="overallScoreValue">--</div>
+          <div class="score-label">Overall Communication Score</div>
+        </div>
+
+        <!-- Analysis Categories -->
+        <div class="analysis-grid" id="analysisGrid">
+          <!-- Categories will be populated by JavaScript -->
+        </div>
+
+        <!-- Insights Section -->
+        <div class="insights-section">
+          <!-- Strengths -->
+          <div class="insight-card strengths">
+            <div class="insight-title">
+              <i
+                data-lucide="check-circle"
+                style="width: 20px; height: 20px; color: var(--success-green)"
+              ></i>
+              What You're Doing Well
+            </div>
+            <ul class="insight-list strengths" id="strengthsList">
+              <!-- Strengths will be populated by JavaScript -->
+            </ul>
+          </div>
+
+          <!-- Areas for Improvement -->
+          <div class="insight-card improvements">
+            <div class="insight-title">
+              <i
+                data-lucide="alert-circle"
+                style="width: 20px; height: 20px; color: var(--warning-yellow)"
+              ></i>
+              Areas for Growth
+            </div>
+            <ul class="insight-list improvements" id="improvementsList">
+              <!-- Improvements will be populated by JavaScript -->
+            </ul>
+          </div>
+
+          <!-- Recommendations -->
+          <div class="insight-card recommendations">
+            <div class="insight-title">
+              <i
+                data-lucide="lightbulb"
+                style="width: 20px; height: 20px; color: var(--primary-blue)"
+              ></i>
+              Action Plan
+            </div>
+            <ul class="insight-list recommendations" id="recommendationsList">
+              <!-- Recommendations will be populated by JavaScript -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="action-btn" id="newRecordingBtn">
+            <i data-lucide="mic" style="width: 20px; height: 20px"></i>
+            Record Again
+          </button>
+          <button class="action-btn secondary-btn" id="dashboardBtn">
+            <i data-lucide="home" style="width: 20px; height: 20px"></i>
+            Back to Dashboard
+          </button>
+          <button class="action-btn secondary-btn" id="shareResultsBtn">
+            <i data-lucide="share" style="width: 20px; height: 20px"></i>
+            Share Results
+          </button>
+        </div>
+      </div>
+
+      <!-- Recording Modal -->
+      <div class="modal-overlay" id="recordingModal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">Record Your Response</h3>
+            <button class="modal-close" id="closeModalBtn">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <!-- AI Scenario Prompt -->
+            <div class="scenario-prompt" id="scenarioPromptContainer">
+              <div class="prompt-header">
+                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                <span id="promptLabel">Scenario:</span>
+              </div>
+              <div class="prompt-content" id="aiPrompt">
+                "Let me share a situation with you. How would you handle this
+                communication challenge?"
+              </div>
+            </div>
+
+            <div class="recording-instruction">
+              <i data-lucide="mic" class="w-4 h-4"></i>
+              <span>Click the microphone to record your response</span>
+            </div>
+          </div>
+
+          <div class="recording-interface">
+            <div class="mic-visualization">
+              <div class="mic-circle" id="micCircle">
+                <i data-lucide="mic" class="w-8 h-8"></i>
+              </div>
+            </div>
+
+            <div class="recording-timer" id="recordingTimer">00:00</div>
+
+            <div class="recording-controls">
+              <button
+                class="secondary-button"
+                id="stopRecording"
+                style="display: none"
+              >
+                <i data-lucide="square" class="w-4 h-4"></i>
+                Stop Recording
+              </button>
+              <button
+                class="primary-button"
+                id="useRecording"
+                style="display: none"
+              >
+                <i data-lucide="check" class="w-4 h-4"></i>
+                Use This Recording
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // DOM elements
+      const inputTypeCards = document.querySelectorAll(".input-type-card");
+      const audioSection = document.getElementById("audioSection");
+      const textSection = document.getElementById("textSection");
+      const chooseFileBtn = document.getElementById("chooseFileBtn");
+      const audioFile = document.getElementById("audioFile");
+      const recordBtn = document.getElementById("recordBtn");
+      const analyzeBtn = document.getElementById("analyzeBtn");
+      const backBtn = document.getElementById("backBtn");
+      const fileSelected = document.getElementById("fileSelected");
+      const removeFile = document.getElementById("removeFile");
+      const processingState = document.getElementById("processingState");
+      const recordingModal = document.getElementById("recordingModal");
+      const closeModalBtn = document.getElementById("closeModalBtn");
+      const micCircle = document.getElementById("micCircle");
+      const recordingTimer = document.getElementById("recordingTimer");
+      const stopRecording = document.getElementById("stopRecording");
+      const useRecording = document.getElementById("useRecording");
+      const textInput = document.getElementById("textInput");
+      const characterCount = document.getElementById("characterCount");
+
+      let selectedType = null;
+      let isRecording = false;
+      let recordingInterval;
+      let recordingTime = 0;
+
+      // Input type selection
+      inputTypeCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          inputTypeCards.forEach((c) => c.classList.remove("active"));
+          card.classList.add("active");
+          selectedType = card.dataset.type;
+
+          if (selectedType === "audio") {
+            audioSection.style.display = "grid";
+            textSection.classList.remove("active");
+          } else {
+            audioSection.style.display = "none";
+            textSection.classList.add("active");
+          }
+
+          updateAnalyzeButton();
+        });
+      });
+
+      // File upload
+      chooseFileBtn.addEventListener("click", () => {
+        audioFile.click();
+      });
+
+      audioFile.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          document.getElementById("fileName").textContent = file.name;
+          document.getElementById("fileSize").textContent = formatFileSize(
+            file.size
+          );
+          fileSelected.classList.add("show");
+          updateAnalyzeButton();
+        }
+      });
+
+      // Remove file
+      removeFile.addEventListener("click", () => {
+        audioFile.value = "";
+        fileSelected.classList.remove("show");
+        updateAnalyzeButton();
+      });
+
+      // Recording
+      recordBtn.addEventListener("click", () => {
+        // Generate context-appropriate scenario based on selected type
+        generateRecordingScenario();
+        recordingModal.classList.add("show");
+      });
+
+      function generateRecordingScenario() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const analysisType = urlParams.get("type");
+
+        let scenario = {
+          label: "Scenario:",
+          prompt:
+            "Let me share a situation with you. How would you handle this communication challenge?",
+        };
+
+        // Type-specific scenarios
+        if (analysisType === "presentation") {
+          const presentationScenarios = [
+            'You\'re about to present to the board. Start with: "Good morning everyone. Thank you for joining us today..."',
+            "You're pitching a new product idea. Begin with your opening hook to capture attention.",
+            "You're explaining a complex technical concept to non-technical stakeholders. How do you start?",
+          ];
+          scenario = {
+            label: "Presentation Opening:",
+            prompt:
+              presentationScenarios[
+                Math.floor(Math.random() * presentationScenarios.length)
+              ],
+          };
+        } else if (analysisType === "sales-objections") {
+          const salesScenarios = [
+            '"I appreciate your demo, but your solution seems quite expensive compared to alternatives. How can you justify this cost?"',
+            '"This looks good, but we\'re happy with our current vendor. Why should we switch?"',
+            '"The implementation timeline seems too long. We need something faster."',
+          ];
+          scenario = {
+            label: "Client Objection:",
+            prompt:
+              salesScenarios[Math.floor(Math.random() * salesScenarios.length)],
+          };
+        } else if (analysisType === "leadership") {
+          const leadershipScenarios = [
+            "\"I'm feeling overwhelmed with my workload and don't think the team distribution is fair.\"",
+            '"I disagree with the new direction. I think we\'re making a mistake."',
+            "\"I've been passed over for promotion again. I'm starting to lose motivation.\"",
+          ];
+          scenario = {
+            label: "Team Member Says:",
+            prompt:
+              leadershipScenarios[
+                Math.floor(Math.random() * leadershipScenarios.length)
+              ],
+          };
+        } else if (analysisType === "negotiation") {
+          const negotiationScenarios = [
+            '"Your proposal is 30% higher than our budget. We need significant concessions to move forward."',
+            '"We\'re considering multiple vendors. What makes your offer the best choice?"',
+            '"These terms are non-negotiable for us. Take it or leave it."',
+          ];
+          scenario = {
+            label: "Negotiation Position:",
+            prompt:
+              negotiationScenarios[
+                Math.floor(Math.random() * negotiationScenarios.length)
+              ],
+          };
+        } else if (analysisType === "client-calls") {
+          const clientScenarios = [
+            "\"We've been having some issues with your service lately. I'm starting to question if this partnership is working.\"",
+            '"I need to understand better what value you\'re providing. Can you walk me through it?"',
+            '"Our needs have changed. How can you adapt to support us better?"',
+          ];
+          scenario = {
+            label: "Client Concern:",
+            prompt:
+              clientScenarios[
+                Math.floor(Math.random() * clientScenarios.length)
+              ],
+          };
+        }
+
+        // Update the modal with the scenario
+        document.getElementById("promptLabel").textContent = scenario.label;
+        document.getElementById("aiPrompt").textContent = scenario.prompt;
+      }
+
+      closeModalBtn.addEventListener("click", () => {
+        recordingModal.classList.remove("show");
+        if (isRecording) {
+          stopRecordingFunction();
+        }
+      });
+
+      micCircle.addEventListener("click", () => {
+        if (!isRecording) {
+          startRecording();
+        }
+      });
+
+      stopRecording.addEventListener("click", () => {
+        stopRecordingFunction();
+      });
+
+      useRecording.addEventListener("click", () => {
+        recordingModal.classList.remove("show");
+        // Simulate recording file
+        document.getElementById("fileName").textContent = "recorded-audio.wav";
+        document.getElementById("fileSize").textContent = "1.2 MB";
+        fileSelected.classList.add("show");
+        updateAnalyzeButton();
+      });
+
+      // Text input
+      textInput.addEventListener("input", () => {
+        const words = textInput.value
+          .trim()
+          .split(/\s+/)
+          .filter((word) => word.length > 0);
+        const wordCount = words.length;
+        characterCount.textContent = `${wordCount} / 250 words`;
+        updateAnalyzeButton();
+      });
+
+      // Back button
+      backBtn.addEventListener("click", () => {
+        window.location.href = "dashboard.html";
+      });
+
+      // Analyze button
+      analyzeBtn.addEventListener("click", () => {
+        startAnalysis();
+      });
+
+      // Functions
+      function updateAnalyzeButton() {
+        const hasAudioFile = fileSelected.classList.contains("show");
+        const hasText = textInput.value.trim().length > 0;
+        const canAnalyze =
+          (selectedType === "audio" && hasAudioFile) ||
+          (selectedType === "text" && hasText);
+
+        analyzeBtn.disabled = !canAnalyze;
+      }
+
+      function formatFileSize(bytes) {
+        if (bytes === 0) return "0 Bytes";
+        const k = 1024;
+        const sizes = ["Bytes", "KB", "MB", "GB"];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+      }
+
+      function startRecording() {
+        isRecording = true;
+        recordingTime = 0;
+        micCircle.classList.add("recording");
+        stopRecording.style.display = "inline-flex";
+
+        recordingInterval = setInterval(() => {
+          recordingTime++;
+          const minutes = Math.floor(recordingTime / 60);
+          const seconds = recordingTime % 60;
+          recordingTimer.textContent = `${minutes
+            .toString()
+            .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+        }, 1000);
+      }
+
+      function stopRecordingFunction() {
+        isRecording = false;
+        micCircle.classList.remove("recording");
+        clearInterval(recordingInterval);
+        stopRecording.style.display = "none";
+        useRecording.style.display = "inline-flex";
+      }
+
+      function startAnalysis() {
+        processingState.classList.add("show");
+
+        // Simulate processing steps
+        setTimeout(() => {
+          document.getElementById("step1").classList.remove("active");
+          document.getElementById("step2").classList.add("active");
+        }, 2000);
+
+        setTimeout(() => {
+          document.getElementById("step2").classList.remove("active");
+          document.getElementById("step3").classList.add("active");
+        }, 4000);
+
+        setTimeout(() => {
+          // Redirect to results page
+          window.location.href = "results.html";
+        }, 6000);
+      }
+
+      // Initialize page based on URL parameters
+      function initializePage() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const analysisType = urlParams.get("type");
+
+        if (analysisType) {
+          updatePageForAnalysisType(analysisType);
+        }
+      }
+
+      function updatePageForAnalysisType(type) {
+        const analysisTypes = {
+          presentation: {
+            title: "Presentation & Pitches Analysis",
+            breadcrumb: "Presentation Analysis",
+            icon: "presentation",
+            description:
+              "Perfect your presentation skills with AI-powered practice sessions or analyze existing recordings for detailed feedback on delivery, engagement, and impact.",
+          },
+          "sales-objections": {
+            title: "Sales Objection Handling Analysis",
+            breadcrumb: "Sales Analysis",
+            icon: "trending-up",
+            description:
+              "Practice handling sales objections with AI or upload existing recordings for detailed analysis and improvement suggestions.",
+          },
+          leadership: {
+            title: "Leadership & Feedback Conversations Analysis",
+            breadcrumb: "Leadership Analysis",
+            icon: "crown",
+            description:
+              "Develop your leadership voice through AI-powered practice sessions that simulate real team scenarios, difficult conversations, and leadership challenges.",
+          },
+          "client-calls": {
+            title: "Client & Partner Calls Analysis",
+            breadcrumb: "Client Calls Analysis",
+            icon: "phone",
+            description:
+              "Build trust and rapport—refine your consultative approach, active listening, and relationship-building skills.",
+          },
+          negotiation: {
+            title: "Negotiation & Conflict Resolution Analysis",
+            breadcrumb: "Negotiation Analysis",
+            icon: "handshake",
+            description:
+              "Navigate complex negotiations and resolve conflicts—develop strategic communication for deals, disputes, and difficult conversations.",
+          },
+        };
+
+        const config = analysisTypes[type];
+        if (config) {
+          document.getElementById("pageTitle").textContent = config.title;
+          document.getElementById("breadcrumbCurrent").textContent =
+            config.breadcrumb;
+          document.getElementById("pageDescription").textContent =
+            config.description;
+          document
+            .querySelector("#titleIcon i")
+            .setAttribute("data-lucide", config.icon);
+          document.title = config.title + " - Articulaition";
+          lucide.createIcons();
+        }
+      }
+
+      // Results display functionality
+      function checkForAnalysisResults() {
+        const analysisResults = localStorage.getItem("analysis_results");
+        const analysisTimestamp = localStorage.getItem("analysis_timestamp");
+
+        if (analysisResults && analysisTimestamp) {
+          // Check if results are recent (within 1 hour)
+          const timestamp = parseInt(analysisTimestamp);
+          const oneHourAgo = Date.now() - 60 * 60 * 1000;
+
+          if (timestamp > oneHourAgo) {
+            try {
+              const results = JSON.parse(analysisResults);
+              displayAnalysisResults(results);
+              return true;
+            } catch (error) {
+              console.error("Error parsing analysis results:", error);
+            }
+          } else {
+            // Clear old results
+            localStorage.removeItem("analysis_results");
+            localStorage.removeItem("analysis_timestamp");
+          }
+        }
+        return false;
+      }
+
+      function displayAnalysisResults(results) {
+        console.log("Displaying analysis results:", results);
+
+        // Hide main content and show results
+        document.querySelector(".main-content").style.display = "none";
+        document.getElementById("resultsContainer").classList.add("show");
+
+        // Update overall score
+        const overallScore = results.overallScore || 75;
+        document.getElementById("overallScoreValue").textContent = overallScore;
+
+        // Update score card color based on score
+        const scoreCard = document.getElementById("overallScoreCard");
+        if (overallScore >= 80) {
+          scoreCard.style.background =
+            "linear-gradient(135deg, var(--success-green), #16a085)";
+        } else if (overallScore >= 60) {
+          scoreCard.style.background =
+            "linear-gradient(135deg, var(--warning-yellow), #f39c12)";
+        } else {
+          scoreCard.style.background =
+            "linear-gradient(135deg, #e74c3c, #c0392b)";
+        }
+
+        // Display analysis categories
+        displayAnalysisCategories(results.analysis || {});
+
+        // Display insights
+        displayInsights(
+          results.strengths || ["Clear articulation"],
+          results.improvements || ["Practice more frequently"],
+          results.recommendations || ["Focus on breathing exercises"]
+        );
+
+        // Set up action buttons
+        setupActionButtons();
+
+        // Refresh Lucide icons
+        lucide.createIcons();
+      }
+
+      function displayAnalysisCategories(analysis) {
+        const analysisGrid = document.getElementById("analysisGrid");
+        analysisGrid.innerHTML = "";
+
+        const categories = [
+          { key: "pace", title: "Pace & Rhythm", icon: "clock" },
+          { key: "vocal", title: "Vocal Quality", icon: "volume-2" },
+          { key: "language", title: "Language Use", icon: "message-circle" },
+          { key: "confidence", title: "Confidence", icon: "trending-up" },
+        ];
+
+        categories.forEach((category) => {
+          const categoryData = analysis[category.key] || {
+            score: 50,
+            feedback: "Analysis pending",
+          };
+
+          const categoryElement = document.createElement("div");
+          categoryElement.className = "analysis-category";
+          categoryElement.innerHTML = `
+            <div class="category-score">${categoryData.score}%</div>
+            <div class="category-title">
+              <i data-lucide="${category.icon}" style="width: 16px; height: 16px; margin-right: 0.5rem;"></i>
+              ${category.title}
+            </div>
+            <div class="category-feedback">${categoryData.feedback}</div>
+          `;
+
+          analysisGrid.appendChild(categoryElement);
+        });
+      }
+
+      function displayInsights(strengths, improvements, recommendations) {
+        // Display strengths
+        const strengthsList = document.getElementById("strengthsList");
+        strengthsList.innerHTML = "";
+        strengths.forEach((strength) => {
+          const li = document.createElement("li");
+          li.textContent = strength;
+          strengthsList.appendChild(li);
+        });
+
+        // Display improvements
+        const improvementsList = document.getElementById("improvementsList");
+        improvementsList.innerHTML = "";
+        improvements.forEach((improvement) => {
+          const li = document.createElement("li");
+          li.textContent = improvement;
+          improvementsList.appendChild(li);
+        });
+
+        // Display recommendations
+        const recommendationsList = document.getElementById(
+          "recommendationsList"
+        );
+        recommendationsList.innerHTML = "";
+        recommendations.forEach((recommendation) => {
+          const li = document.createElement("li");
+          li.textContent = recommendation;
+          recommendationsList.appendChild(li);
+        });
+      }
+
+      function setupActionButtons() {
+        // New Recording button
+        document
+          .getElementById("newRecordingBtn")
+          .addEventListener("click", () => {
+            localStorage.removeItem("analysis_results");
+            localStorage.removeItem("analysis_timestamp");
+            window.location.href = "professional-communication.html";
+          });
+
+        // Dashboard button
+        document
+          .getElementById("dashboardBtn")
+          .addEventListener("click", () => {
+            window.location.href = "dashboard.html";
+          });
+
+        // Share Results button
+        document
+          .getElementById("shareResultsBtn")
+          .addEventListener("click", () => {
+            if (navigator.share) {
+              navigator.share({
+                title: "My Communication Analysis Results",
+                text: "Check out my communication analysis results from Articulaition!",
+                url: window.location.href,
+              });
+            } else {
+              // Fallback - copy to clipboard
+              const resultsUrl = window.location.href;
+              navigator.clipboard
+                .writeText(resultsUrl)
+                .then(() => {
+                  alert("Results URL copied to clipboard!");
+                })
+                .catch(() => {
+                  alert(
+                    "Unable to share results. Please copy the URL manually."
+                  );
+                });
+            }
+          });
+      }
+
+      // Update the startAnalysis function to work with our new system
+      function startAnalysis() {
+        // Check if this is a real analysis or demo
+        const hasRealData =
+          fileSelected.classList.contains("show") ||
+          textInput.value.trim().length > 0;
+
+        if (hasRealData) {
+          processingState.classList.add("show");
+
+          // Simulate processing steps
+          setTimeout(() => {
+            document.getElementById("step1").classList.remove("active");
+            document.getElementById("step2").classList.add("active");
+          }, 2000);
+
+          setTimeout(() => {
+            document.getElementById("step2").classList.remove("active");
+            document.getElementById("step3").classList.add("active");
+          }, 4000);
+
+          setTimeout(() => {
+            processingState.classList.remove("show");
+
+            // For now, show demo results since we don't have real analysis yet
+            const demoResults = {
+              overallScore: 78,
+              analysis: {
+                pace: {
+                  score: 82,
+                  feedback:
+                    "Your speaking pace is well-controlled and engaging. Good use of pauses for emphasis.",
+                },
+                vocal: {
+                  score: 75,
+                  feedback:
+                    "Clear articulation with good volume projection. Consider adding more vocal variety.",
+                },
+                language: {
+                  score: 80,
+                  feedback:
+                    "Professional vocabulary with clear, concise messaging. Minimal filler words.",
+                },
+                confidence: {
+                  score: 74,
+                  feedback:
+                    "Confident delivery with strong presence. Some hesitation in technical explanations.",
+                },
+              },
+              strengths: [
+                "Clear and professional tone throughout",
+                "Good pacing with effective use of pauses",
+                "Strong opening that captures attention",
+                "Confident body language and voice projection",
+              ],
+              improvements: [
+                "Reduce 'um' and 'uh' filler words",
+                "Add more vocal variety to maintain engagement",
+                "Practice smooth transitions between topics",
+                "Use more specific examples to support points",
+              ],
+              recommendations: [
+                "Practice recording yourself daily for 5 minutes",
+                "Focus on breathing exercises before speaking",
+                "Join a public speaking group like Toastmasters",
+                "Work on storytelling techniques to engage audience",
+              ],
+            };
+
+            displayAnalysisResults(demoResults);
+          }, 6000);
+        } else {
+          alert("Please upload an audio file or enter text to analyze.");
+        }
+      }
+
+      // Initialize page
+      function initializePage() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const analysisType = urlParams.get("type");
+        const category = urlParams.get("category");
+
+        // Redirect personal communication types to their specific pages
+        if (category === "personal" && analysisType) {
+          const personalAnalysisPages = {
+            'casual-conversation': 'casual-conversation-analysis.html',
+            'deep-conversation': 'deep-conversation-analysis.html',
+            'storytelling': 'storytelling-analysis.html',
+            'conflict-resolution': 'conflict-resolution-analysis.html',
+            'dating-conversation': 'dating-conversation-analysis.html'
+          };
+          
+          const targetPage = personalAnalysisPages[analysisType];
+          if (targetPage) {
+            window.location.href = `${targetPage}?category=personal&type=${analysisType}`;
+            return;
+          }
+        }
+
+        // Check for existing analysis results first
+        if (checkForAnalysisResults()) {
+          return; // Results are displayed, no need to show input interface
+        }
+
+        // Otherwise initialize the input interface
+        if (analysisType) {
+          updatePageForAnalysisType(analysisType);
+        }
+      }
+
+      // Initialize
+      initializePage();
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

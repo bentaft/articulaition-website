@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Record Your Audio - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --primary-orange: #ff934d;
+        --primary-blue: #4a90e2;
+        --success-green: #10b981;
+        --danger-red: #ef4444;
+        --warning-yellow: #f59e0b;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --bg-primary: #fafbfc;
+        --bg-secondary: #f4f6f8;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+      }
+
+      .header p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      .recording-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 3rem;
+        text-align: center;
+        box-shadow: var(--shadow-xl);
+        margin-bottom: 2rem;
+      }
+
+      .recording-status {
+        margin-bottom: 2rem;
+      }
+
+      .recording-status.idle {
+        color: var(--text-muted);
+      }
+
+      .recording-status.recording {
+        color: var(--danger-red);
+      }
+
+      .recording-status.processing {
+        color: var(--warning-yellow);
+      }
+
+      .recording-status.complete {
+        color: var(--success-green);
+      }
+
+      .recording-visualizer {
+        width: 100%;
+        height: 120px;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+        margin: 2rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .visualizer-wave {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        height: 60px;
+      }
+
+      .wave-bar {
+        width: 4px;
+        background: linear-gradient(
+          to top,
+          var(--primary-orange),
+          var(--primary-blue)
+        );
+        border-radius: 2px;
+        transition: height 0.1s ease;
+      }
+
+      .wave-bar.active {
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          height: 20px;
+          opacity: 0.7;
+        }
+        50% {
+          height: 60px;
+          opacity: 1;
+        }
+      }
+
+      .recording-timer {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 1rem 0;
+      }
+
+      .recording-timer.recording {
+        color: var(--danger-red);
+      }
+
+      .control-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin: 2rem 0;
+      }
+
+      .btn {
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--primary-orange),
+          var(--primary-blue)
+        );
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(255, 147, 77, 0.3);
+      }
+
+      .btn-danger {
+        background: var(--danger-red);
+        color: white;
+      }
+
+      .btn-danger:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+      }
+
+      .btn-secondary {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 1rem 0;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--primary-orange),
+          var(--primary-blue)
+        );
+        transition: width 0.3s ease;
+        border-radius: 4px;
+      }
+
+      .instructions {
+        background: rgba(74, 144, 226, 0.1);
+        border: 1px solid rgba(74, 144, 226, 0.2);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .instructions h3 {
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .instructions ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .instructions li {
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+        padding-left: 1.5rem;
+        position: relative;
+      }
+
+      .instructions li:before {
+        content: "•";
+        color: var(--primary-blue);
+        position: absolute;
+        left: 0;
+      }
+
+      .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #f3f3f3;
+        border-top: 2px solid var(--primary-orange);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .error-message {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        color: var(--danger-red);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        text-align: center;
+      }
+
+      .success-message {
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        color: var(--success-green);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        text-align: center;
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        color: var(--text-secondary);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Breadcrumb -->
+      <div class="breadcrumb">
+        <a href="dashboard.html">Dashboard</a>
+        <i data-lucide="chevron-right" style="width: 16px; height: 16px"></i>
+        <span>Record Audio</span>
+      </div>
+
+      <!-- Header -->
+      <div class="header">
+        <h1>Record Your Audio</h1>
+        <p>
+          Record your voice to get personalized communication insights and
+          feedback
+        </p>
+      </div>
+
+      <!-- Instructions -->
+      <div class="instructions">
+        <h3>Recording Tips</h3>
+        <ul>
+          <li>Find a quiet space with minimal background noise</li>
+          <li>Speak clearly and at a natural pace</li>
+          <li>Keep your device about 6-12 inches from your mouth</li>
+          <li>Recording will automatically stop after 5 minutes</li>
+          <li>You can stop recording at any time</li>
+        </ul>
+      </div>
+
+      <!-- Recording Card -->
+      <div class="recording-card">
+        <div class="recording-status idle" id="recordingStatus">
+          <h2>Ready to Record</h2>
+          <p>Click the record button to start capturing your voice</p>
+        </div>
+
+        <!-- Visualizer -->
+        <div class="recording-visualizer" id="visualizer">
+          <div class="visualizer-wave" id="waveform">
+            <!-- Wave bars will be generated by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Timer -->
+        <div class="recording-timer" id="recordingTimer">00:00</div>
+
+        <!-- Progress Bar -->
+        <div
+          class="progress-bar"
+          id="progressBarContainer"
+          style="display: none"
+        >
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="control-buttons">
+          <button class="btn btn-primary" id="startRecordingBtn">
+            <i data-lucide="mic" style="width: 20px; height: 20px"></i>
+            Start Recording
+          </button>
+          <button
+            class="btn btn-danger"
+            id="stopRecordingBtn"
+            style="display: none"
+          >
+            <i data-lucide="square" style="width: 20px; height: 20px"></i>
+            Stop Recording
+          </button>
+          <button
+            class="btn btn-secondary"
+            id="analyzeBtn"
+            style="display: none"
+          >
+            <i data-lucide="brain" style="width: 20px; height: 20px"></i>
+            Analyze Recording
+          </button>
+        </div>
+
+        <!-- Messages -->
+        <div id="messageContainer"></div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio-recorder.js"></script>
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Get DOM elements
+      const startRecordingBtn = document.getElementById("startRecordingBtn");
+      const stopRecordingBtn = document.getElementById("stopRecordingBtn");
+      const analyzeBtn = document.getElementById("analyzeBtn");
+      const recordingStatus = document.getElementById("recordingStatus");
+      const recordingTimer = document.getElementById("recordingTimer");
+      const progressBarContainer = document.getElementById(
+        "progressBarContainer"
+      );
+      const progressFill = document.getElementById("progressFill");
+      const messageContainer = document.getElementById("messageContainer");
+      const visualizer = document.getElementById("visualizer");
+      const waveform = document.getElementById("waveform");
+
+      // Initialize audio recorder
+      const audioRecorder = new AudioRecorder();
+      let recordedAudioBlob = null;
+      let recordingDuration = 0;
+
+      // Get analysis parameters from URL or localStorage
+      const urlParams = new URLSearchParams(window.location.search);
+      const analysisType =
+        urlParams.get("type") ||
+        localStorage.getItem("selected_analysis_type") ||
+        "general";
+      const situationType =
+        urlParams.get("situation") ||
+        localStorage.getItem("selected_situation_type") ||
+        "casual";
+
+      // Set up audio recorder callbacks
+      audioRecorder.onRecordingStart = () => {
+        updateRecordingStatus(
+          "recording",
+          "Recording in Progress",
+          "Speak naturally and clearly"
+        );
+        showButton("stopRecordingBtn");
+        hideButton("startRecordingBtn");
+        hideButton("analyzeBtn");
+        startWaveAnimation();
+      };
+
+      audioRecorder.onRecordingStop = (duration) => {
+        recordingDuration = duration;
+        updateRecordingStatus(
+          "complete",
+          "Recording Complete",
+          "Ready to analyze your audio"
+        );
+        showButton("analyzeBtn");
+        hideButton("stopRecordingBtn");
+        stopWaveAnimation();
+      };
+
+      audioRecorder.onRecordingComplete = (audioBlob, duration) => {
+        recordedAudioBlob = audioBlob;
+        recordingDuration = duration;
+        console.log("Recording completed:", { size: audioBlob.size, duration });
+      };
+
+      audioRecorder.onProgress = (elapsed, maxTime) => {
+        const progress = (elapsed / maxTime) * 100;
+        updateTimer(elapsed);
+        updateProgressBar(progress);
+      };
+
+      audioRecorder.onAnalysisComplete = (analysis) => {
+        console.log("Analysis completed:", analysis);
+
+        // Store analysis results
+        localStorage.setItem("analysis_results", JSON.stringify(analysis));
+        localStorage.setItem("analysis_timestamp", Date.now().toString());
+
+        // Navigate to results page
+        window.location.href = "analysis.html";
+      };
+
+      audioRecorder.onError = (error) => {
+        console.error("Audio recorder error:", error);
+        showMessage("error", error);
+        resetRecordingState();
+      };
+
+      // Event listeners
+      startRecordingBtn.addEventListener("click", async () => {
+        clearMessages();
+        const success = await audioRecorder.startRecording();
+        if (success) {
+          progressBarContainer.style.display = "block";
+        }
+      });
+
+      stopRecordingBtn.addEventListener("click", () => {
+        audioRecorder.stopRecording();
+        progressBarContainer.style.display = "none";
+      });
+
+      analyzeBtn.addEventListener("click", async () => {
+        if (!recordedAudioBlob) {
+          showMessage("error", "No recording available to analyze");
+          return;
+        }
+
+        try {
+          updateRecordingStatus(
+            "processing",
+            "Analyzing Audio",
+            "This may take a moment..."
+          );
+          showButton("analyzeBtn");
+          analyzeBtn.innerHTML =
+            '<span class="loading-spinner"></span> Analyzing...';
+          analyzeBtn.disabled = true;
+
+          await audioRecorder.uploadAndAnalyze(
+            recordedAudioBlob,
+            analysisType,
+            situationType
+          );
+        } catch (error) {
+          console.error("Analysis error:", error);
+          showMessage("error", "Analysis failed: " + error.message);
+          resetAnalyzeButton();
+        }
+      });
+
+      // Helper functions
+      function updateRecordingStatus(state, title, message) {
+        recordingStatus.className = `recording-status ${state}`;
+        recordingStatus.innerHTML = `
+                <h2>${title}</h2>
+                <p>${message}</p>
+            `;
+      }
+
+      function showButton(buttonId) {
+        const button = document.getElementById(buttonId);
+        if (button) {
+          button.style.display = "flex";
+        }
+      }
+
+      function hideButton(buttonId) {
+        const button = document.getElementById(buttonId);
+        if (button) {
+          button.style.display = "none";
+        }
+      }
+
+      function updateTimer(milliseconds) {
+        const formatted = audioRecorder.formatTime(milliseconds);
+        recordingTimer.textContent = formatted;
+        recordingTimer.className = audioRecorder.isCurrentlyRecording()
+          ? "recording-timer recording"
+          : "recording-timer";
+      }
+
+      function updateProgressBar(progress) {
+        progressFill.style.width = Math.min(progress, 100) + "%";
+      }
+
+      function showMessage(type, message) {
+        const messageElement = document.createElement("div");
+        messageElement.className = `${type}-message fade-in`;
+        messageElement.textContent = message;
+        messageContainer.appendChild(messageElement);
+
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+          if (messageElement.parentNode) {
+            messageElement.parentNode.removeChild(messageElement);
+          }
+        }, 5000);
+      }
+
+      function clearMessages() {
+        messageContainer.innerHTML = "";
+      }
+
+      function resetRecordingState() {
+        updateRecordingStatus(
+          "idle",
+          "Ready to Record",
+          "Click the record button to start capturing your voice"
+        );
+        showButton("startRecordingBtn");
+        hideButton("stopRecordingBtn");
+        hideButton("analyzeBtn");
+        recordingTimer.textContent = "00:00";
+        recordingTimer.className = "recording-timer";
+        progressBarContainer.style.display = "none";
+        stopWaveAnimation();
+      }
+
+      function resetAnalyzeButton() {
+        analyzeBtn.innerHTML =
+          '<i data-lucide="brain" style="width: 20px; height: 20px;"></i> Analyze Recording';
+        analyzeBtn.disabled = false;
+        lucide.createIcons();
+      }
+
+      // Wave animation
+      function initializeWaveform() {
+        const numBars = 20;
+        waveform.innerHTML = "";
+
+        for (let i = 0; i < numBars; i++) {
+          const bar = document.createElement("div");
+          bar.className = "wave-bar";
+          bar.style.height = "20px";
+          bar.style.animationDelay = `${i * 0.1}s`;
+          waveform.appendChild(bar);
+        }
+      }
+
+      function startWaveAnimation() {
+        const bars = waveform.querySelectorAll(".wave-bar");
+        bars.forEach((bar) => bar.classList.add("active"));
+      }
+
+      function stopWaveAnimation() {
+        const bars = waveform.querySelectorAll(".wave-bar");
+        bars.forEach((bar) => {
+          bar.classList.remove("active");
+          bar.style.height = "20px";
+        });
+      }
+
+      // Initialize on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        initializeWaveform();
+        console.log("Recording interface initialized");
+        console.log("Analysis type:", analysisType);
+        console.log("Situation type:", situationType);
+      });
+
+      // Cleanup on page unload
+      window.addEventListener("beforeunload", () => {
+        audioRecorder.cleanup();
+      });
+    </script>
+  </body>
+</html>

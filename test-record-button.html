@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Button Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        button:hover {
+            background: #357abd;
+        }
+        .recording {
+            background: #ef4444 !important;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Record Button Test</h1>
+        <p>This is a test to verify the record button functionality works correctly.</p>
+        
+        <button id="recordButton">🎤 Record Response</button>
+        <button id="testButton">Test Alert</button>
+        
+        <div class="status" id="status">
+            Status: Ready to record
+        </div>
+    </div>
+
+    <script>
+        // Recording variables
+        let isRecording = false;
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let recordedAudioBlob = null;
+
+        // DOM elements
+        const recordBtn = document.getElementById("recordButton");
+        const testBtn = document.getElementById("testButton");
+        const statusDiv = document.getElementById("status");
+
+        // Test button to verify JavaScript is working
+        testBtn.addEventListener("click", () => {
+            alert("JavaScript is working!");
+            statusDiv.textContent = "Status: Test button clicked";
+        });
+
+        // Record button functionality
+        recordBtn.addEventListener("click", async () => {
+            console.log("Record button clicked, isRecording:", isRecording);
+            statusDiv.textContent = "Status: Button clicked, checking recording state...";
+
+            if (!isRecording) {
+                try {
+                    statusDiv.textContent = "Status: Requesting microphone access...";
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    
+                    statusDiv.textContent = "Status: Microphone access granted, setting up recorder...";
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+                    
+                    mediaRecorder.ondataavailable = (event) => {
+                        audioChunks.push(event.data);
+                        console.log("Audio data available, chunk size:", event.data.size);
+                    };
+                    
+                    mediaRecorder.onstop = () => {
+                        recordedAudioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        console.log("Recording stopped, blob size:", recordedAudioBlob.size);
+                        stream.getTracks().forEach(track => track.stop());
+                        statusDiv.textContent = "Status: Recording stopped, audio saved (" + (recordedAudioBlob.size / 1024).toFixed(1) + " KB)";
+                    };
+                    
+                    mediaRecorder.start();
+                    isRecording = true;
+                    
+                    // Update button UI
+                    recordBtn.textContent = "⏹️ Stop Recording";
+                    recordBtn.classList.add("recording");
+                    statusDiv.textContent = "Status: Recording in progress...";
+                    
+                } catch (error) {
+                    console.error('Error accessing microphone:', error);
+                    statusDiv.textContent = "Status: Error - " + error.message;
+                    alert('Unable to access microphone. Please check your permissions.');
+                }
+            } else {
+                // Stop recording
+                if (mediaRecorder && mediaRecorder.state !== "inactive") {
+                    mediaRecorder.stop();
+                    isRecording = false;
+                    
+                    // Update button UI
+                    recordBtn.textContent = "🎤 Record Response";
+                    recordBtn.classList.remove("recording");
+                    statusDiv.textContent = "Status: Stopping recording...";
+                }
+            }
+        });
+
+        // Log when page loads
+        console.log("Test page loaded successfully");
+        statusDiv.textContent = "Status: Page loaded, ready to test recording";
+    </script>
+</body>
+</html>

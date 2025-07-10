@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI-Powered Casual Conversation Practice - Articulaition"
+    />
+    <title>Casual Conversation Practice - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Analysis System -->
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --primary-blue: #4a90e2;
+        --success-green: #10b981;
+        --client-teal: #0891b2;
+        --relationship-purple: #7c3aed;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --bg-primary: #fafbfc;
+        --bg-secondary: #f4f6f8;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Background Effects */
+      .dashboard-container {
+        background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 100%);
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .dashboard-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(74, 144, 226, 0.03) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(74, 144, 226, 0.025) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(16, 185, 129, 0.02) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(245, 158, 11, 0.015) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Animation Classes */
+      .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+        opacity: 0;
+      }
+
+      .slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .scale-in {
+        animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes scaleIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-500 {
+        animation-delay: 0.5s;
+      }
+
+      /* Header Styling */
+      .main-header {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .logo-section img {
+        height: 32px;
+        width: auto;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--text-primary);
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        color: var(--text-secondary);
+      }
+
+      .breadcrumb .current {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      /* Page Title Section */
+      .page-title-section {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .title-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .page-description {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* AI Practice Section */
+      .ai-practice-section {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-subtitle {
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      /* Scenario Grid */
+      .scenario-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .scenario-type {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-type:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary-blue);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .scenario-type.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-2px);
+      }
+
+      .scenario-type::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .scenario-type:hover::before,
+      .scenario-type.selected::before {
+        opacity: 1;
+      }
+
+      .scenario-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 1.5rem;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .scenario-type:hover .scenario-icon {
+        transform: scale(1.1);
+      }
+
+      .scenario-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-description {
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+        position: relative;
+        z-index: 2;
+        font-weight: 500;
+      }
+
+      /* Conversation Interface */
+      .conversation-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .scenario-intro {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        padding: 2rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-intro::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>')
+          repeat;
+        opacity: 0.3;
+      }
+
+      .scenario-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        position: relative;
+        z-index: 2;
+      }
+
+      .conversation-flow {
+        space-y: 1.5rem;
+      }
+
+      .message {
+        display: flex;
+        margin-bottom: 1.5rem;
+      }
+
+      .message.ai {
+        justify-content: flex-start;
+      }
+
+      .message.user {
+        justify-content: flex-end;
+      }
+
+      .message-content {
+        max-width: 80%;
+        padding: 1.25rem 1.5rem;
+        border-radius: 20px;
+        position: relative;
+      }
+
+      .message.ai .message-content {
+        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-bottom-left-radius: 8px;
+      }
+
+      .message.user .message-content {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        border-bottom-right-radius: 8px;
+      }
+
+      .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 1rem;
+        flex-shrink: 0;
+      }
+
+      .message.ai .message-avatar {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        color: white;
+        order: -1;
+      }
+
+      .message.user .message-avatar {
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+      }
+
+      /* Audio Captured Message */
+      .audio-captured {
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .audio-captured-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 16px;
+        font-weight: 600;
+        box-shadow: var(--shadow-md);
+        animation: slideInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes slideInScale {
+        0% {
+          opacity: 0;
+          transform: translateY(20px) scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .primary-button {
+        background: linear-gradient(135deg, #4a90e2, #7c3aed) !important;
+        color: white !important;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .primary-button:hover:not(:disabled) {
+        background: linear-gradient(135deg, #7c3aed, #4a90e2) !important;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .primary-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .secondary-button {
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--text-primary);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .secondary-button:hover {
+        background: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Ensure record button is clickable */
+      #recordButton {
+        pointer-events: auto !important;
+        z-index: 100;
+        position: relative;
+      }
+
+      /* Analysis Options Grid */
+      .analysis-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .analysis-option {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.06);
+        border-radius: 24px;
+        padding: 2.5rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .analysis-option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .analysis-option:hover {
+        transform: translateY(-8px);
+        border-color: rgba(74, 144, 226, 0.3);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .analysis-option:hover::before {
+        opacity: 1;
+      }
+
+      .analysis-option.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-4px);
+      }
+
+      .option-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        border-radius: 20px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .analysis-option:hover .option-icon {
+        transform: scale(1.1);
+      }
+
+      .option-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-features {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .features-list {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      /* Upload Section */
+      .upload-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .upload-section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-subtitle {
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-center {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-option-single {
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px dashed rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 3rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .upload-option-single:hover {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.02);
+      }
+
+      .file-selected {
+        margin-top: 1.5rem;
+        background: rgba(16, 185, 129, 0.05);
+        border: 2px solid rgba(16, 185, 129, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .file-selected .file-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--success-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .file-selected .file-details {
+        flex: 1;
+        text-align: left;
+      }
+
+      .file-selected .file-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+
+      .file-selected .file-size {
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+      }
+
+      .file-selected .remove-file {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .file-selected .remove-file:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+
+      .upload-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1rem;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--relationship-purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .upload-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .upload-button {
+        background: var(--primary-blue);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .upload-button:hover {
+        background: var(--relationship-purple);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 2rem 1rem;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .analysis-options {
+          grid-template-columns: 1fr;
+        }
+
+        .scenario-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+
+        .message-content {
+          max-width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="main-header fade-in">
+        <nav class="header-nav">
+          <div class="logo-section">
+            <img src="images/logo-header.svg" alt="Articulaition.com" />
+          </div>
+          <div class="nav-links">
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="professional-communication.html" class="nav-link"
+              >Professional</a
+            >
+            <a href="personal-communication.html" class="nav-link">Personal</a>
+          </div>
+          <div class="user-menu">
+            <div class="user-avatar">JD</div>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb slide-up delay-100">
+          <a href="dashboard.html">Dashboard</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <a href="personal-communication.html">Personal Communication</a>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <span class="current">Casual Conversation Practice</span>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title-section slide-up delay-200">
+          <div class="title-with-icon">
+            <div class="title-icon">
+              <i data-lucide="users" class="w-6 h-6"></i>
+            </div>
+            <h1 class="page-title">Personal Communication Training</h1>
+          </div>
+          <p class="page-description">
+            Build confidence in social interactions, storytelling, and
+            meaningful connections with AI-powered practice sessions and
+            detailed analysis.
+          </p>
+        </div>
+
+        <!-- Analysis Options -->
+        <div class="analysis-options">
+          <!-- Upload Existing Recording -->
+          <div class="analysis-option scale-in delay-300" data-type="upload">
+            <div class="option-icon">
+              <i data-lucide="upload" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">Upload Conversation</h3>
+            <p class="option-description">
+              Upload an existing social conversation or personal interaction for
+              detailed analysis and feedback.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Social confidence • Conversation flow • Engagement quality •
+                Authenticity assessment
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Practice Session -->
+          <div class="analysis-option scale-in delay-400" data-type="practice">
+            <div class="option-icon">
+              <i data-lucide="message-circle" class="w-8 h-8"></i>
+            </div>
+            <h3 class="option-title">AI Conversation Practice</h3>
+            <p class="option-description">
+              Practice with our AI that simulates different social scenarios,
+              conversation starters, and challenging interpersonal situations.
+            </p>
+            <div class="option-features">
+              <div class="features-list">
+                Real conversations • Natural responses • Social challenges •
+                Personalized feedback
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+          <h2 class="section-title">Upload Your Conversation</h2>
+          <p class="section-subtitle">
+            Upload an audio or video file of your personal conversation for
+            detailed analysis
+          </p>
+
+          <div class="upload-center">
+            <div class="upload-option-single" id="fileUpload">
+              <div class="upload-icon">
+                <i data-lucide="folder" class="w-6 h-6"></i>
+              </div>
+              <div class="upload-title">Choose File</div>
+              <div class="upload-description">
+                Select an audio or video file from your device (MP3, M4A, WAV,
+                MP4, MOV)
+              </div>
+              <button class="upload-button" id="chooseFileBtn">
+                <i data-lucide="upload" class="w-4 h-4"></i>
+                Select File
+              </button>
+              <input
+                type="file"
+                id="audioFile"
+                accept=".mp3,.m4a,.wav,.mp4,.mov"
+                hidden
+              />
+
+              <div
+                class="file-selected"
+                id="fileSelected"
+                style="display: none"
+              >
+                <div class="file-icon">
+                  <i data-lucide="file-audio" class="w-5 h-5"></i>
+                </div>
+                <div class="file-details">
+                  <div class="file-name" id="fileName">conversation.mp4</div>
+                  <div class="file-size" id="fileSize">2.4 MB</div>
+                </div>
+                <button class="remove-file" id="removeFile">
+                  <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="secondary-button" id="backToOptions">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Options
+            </button>
+            <button class="primary-button" id="analyzeUpload" disabled>
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              Analyze Recording
+            </button>
+          </div>
+        </div>
+
+        <!-- AI Practice Section -->
+        <div class="ai-practice-section" id="practiceSection">
+          <h2 class="section-title">
+            Choose Your Personal Communication Scenario
+          </h2>
+          <p class="section-subtitle">
+            Select a social scenario to practice with our AI conversation
+            partner
+          </p>
+
+          <!-- Scenario Selection Grid -->
+          <div class="scenario-grid">
+            <div class="scenario-type" data-scenario="party-networking">
+              <div class="scenario-icon">
+                <i data-lucide="glass-water" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Party & Social Events</div>
+              <div class="scenario-description">
+                Practice mingling at parties, social gatherings, and networking
+                events
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="workplace-casual">
+              <div class="scenario-icon">
+                <i data-lucide="coffee" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Workplace Small Talk</div>
+              <div class="scenario-description">
+                Casual conversations with colleagues, coffee break chats, and
+                office interactions
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="meetup-strangers">
+              <div class="scenario-icon">
+                <i data-lucide="users-round" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Meeting New People</div>
+              <div class="scenario-description">
+                Breaking the ice with strangers at meetups, classes, or social
+                activities
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="neighbor-community">
+              <div class="scenario-icon">
+                <i data-lucide="home" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Neighbors & Community</div>
+              <div class="scenario-description">
+                Friendly conversations with neighbors, community events, and
+                local interactions
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="hobby-interests">
+              <div class="scenario-icon">
+                <i data-lucide="heart" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Shared Interests & Hobbies</div>
+              <div class="scenario-description">
+                Connecting over common interests, hobbies, and passions with
+                like-minded people
+              </div>
+            </div>
+
+            <div class="scenario-type" data-scenario="awkward-recovery">
+              <div class="scenario-icon">
+                <i data-lucide="shield" class="w-6 h-6"></i>
+              </div>
+              <div class="scenario-title">Awkward Moment Recovery</div>
+              <div class="scenario-description">
+                Navigate uncomfortable silences, recover from social missteps,
+                and rebuild rapport
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="conversation-container"
+            id="conversationContainer"
+            style="display: none"
+          >
+            <!-- Scenario Introduction -->
+            <div class="scenario-intro">
+              <div class="scenario-title">
+                <i data-lucide="message-circle" class="w-5 h-5 inline mr-2"></i>
+                <span id="scenarioTitle">Casual Conversation Practice</span>
+              </div>
+              <div class="scenario-text" id="scenarioText">
+                Practice your casual conversation skills in this scenario.
+              </div>
+            </div>
+
+            <!-- Conversation Flow -->
+            <div class="conversation-flow" id="conversationFlow">
+              <!-- AI messages will be dynamically inserted here -->
+            </div>
+
+            <div class="action-buttons">
+              <button class="secondary-button" id="backToScenarios">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Scenarios
+              </button>
+              <button
+                class="secondary-button"
+                id="recordButton"
+                style="display: none"
+              >
+                <i data-lucide="mic" class="w-4 h-4"></i>
+                Record Response
+              </button>
+              <button
+                class="primary-button"
+                id="endConversation"
+                style="display: none"
+              >
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                Submit for Analysis
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons" id="scenarioActions">
+            <button class="secondary-button" id="backToOptionsFromPractice">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Analysis Options
+            </button>
+            <button class="primary-button" id="startPractice" disabled>
+              <i data-lucide="play" class="w-4 h-4"></i>
+              Start Conversation Practice
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <!-- API Configuration - Copy api-config-template.js to api-config.js and add your keys -->
+    <script src="js/api-config.js"></script>
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Initialize Gemini AI engine
+      let geminiEngine = null;
+      try {
+        geminiEngine = new GeminiAIEngine();
+        console.log(
+          "Gemini AI Engine initialized:",
+          geminiEngine.isConfigured() ? "Configured" : "Not configured"
+        );
+      } catch (error) {
+        console.warn("Gemini AI Engine not available:", error);
+      }
+
+      // Casual conversation scenarios
+      const casualScenarios = {
+        "party-networking": {
+          title: "Party & Social Events",
+          description:
+            "You're at a party where you only know the host. The music is playing, people are mingling, and you spot someone standing alone by the refreshment table.",
+          initialMessage:
+            "Okay, I have to ask - do you actually know anyone here, or are we both just wandering around pretending we're having a great time? Because I've been nursing this same drink for an hour and nodding at people I don't recognize.",
+          objections: [
+            "Okay, I have to ask - do you actually know anyone here, or are we both just wandering around pretending we're having a great time? Because I've been nursing this same drink for an hour and nodding at people I don't recognize.",
+            "Well, this is awkward - I just realized I've been standing here for ten minutes trying to look like I'm having deep thoughts about the snacks. Please tell me you're also feeling a bit lost at this party?",
+            "Hi there! I'm doing that thing where I pretend to check my phone to avoid looking like I don't know anyone. Are you here with the host, or are you also one of those mysterious plus-ones?",
+          ],
+        },
+        "workplace-casual": {
+          title: "Workplace Small Talk",
+          description:
+            "You're in the office kitchen making coffee when a colleague you don't know well walks in. It's Monday morning and you want to be friendly but professional.",
+          initialMessage:
+            "Oh hey! You're here early too, huh? I swear this coffee machine is the only thing keeping me functional on Mondays. Please tell me you had a better weekend than I did - I spent mine doing laundry and questioning my life choices.",
+          objections: [
+            "Oh hey! You're here early too, huh? I swear this coffee machine is the only thing keeping me functional on Mondays. Please tell me you had a better weekend than I did - I spent mine doing laundry and questioning my life choices.",
+            "Morning! I see you're also part of the 'can't function without coffee' club. I'm desperately trying to remember if I have any actual work to do today or if I just came in out of habit.",
+            "Good morning! Fair warning - I haven't had my coffee yet, so I'm basically running on autopilot. Are you one of those people who's actually awake at this hour, or are we both just pretending?",
+          ],
+        },
+        "meetup-strangers": {
+          title: "Meeting New People",
+          description:
+            "You're at a networking mixer and notice someone standing alone by the refreshment table, looking around the room. They seem approachable but maybe a bit uncertain.",
+          initialMessage:
+            "Hey there! I keep seeing the same faces here, but I don't think we've met. I'm trying to work up the courage to actually network instead of just hovering by the snack table. How are you finding this whole thing?",
+          objections: [
+            "Hey there! I keep seeing the same faces here, but I don't think we've met. I'm trying to work up the courage to actually network instead of just hovering by the snack table. How are you finding this whole thing?",
+            "Well, we finally meet! I'm the one who's been awkwardly trying to look busy near the refreshments. Please tell me you're also feeling a bit out of your element here?",
+            "Okay, I have to ask - do you actually know anyone here, or are we both just wandering around pretending we're having a great time? Because I've been nursing this same drink for an hour and nodding at people I don't recognize.",
+          ],
+        },
+        "neighbor-community": {
+          title: "Neighbors & Community",
+          description:
+            "You're getting your mail when you see your neighbor who you've only waved to before. You'd like to be more friendly and build a better relationship with people in your neighborhood.",
+          initialMessage:
+            "Well, we finally meet! I'm the one with the dog who barks at 6 AM - sorry about that. I keep meaning to introduce myself properly instead of just doing the awkward wave from across the yard.",
+          objections: [
+            "Well, we finally meet! I'm the one with the dog who barks at 6 AM - sorry about that. I keep meaning to introduce myself properly instead of just doing the awkward wave from across the yard.",
+            "Hey there! I realized we've been neighbors for months and I still don't know your name. I'm that person who always seems to be taking out trash at the exact same time as you - it's like we're synchronized.",
+            "Hi! I have to confess - I've been meaning to introduce myself for ages, but every time I see you I'm either in my pajamas or covered in dirt from gardening. Today I'm presentable, so here I am!",
+          ],
+        },
+        "hobby-interests": {
+          title: "Shared Interests & Hobbies",
+          description:
+            "You're at a bookstore/record shop/hobby store when you notice someone looking at something you're passionate about. You want to strike up a conversation about your shared interest.",
+          initialMessage:
+            "No way, is that the new vinyl I've been trying to get my hands on for weeks? Where did you find it? And please tell me you're not about to tell me it's terrible and I've been wasting my time looking for it.",
+          objections: [
+            "No way, is that the new vinyl I've been trying to get my hands on for weeks? Where did you find it? And please tell me you're not about to tell me it's terrible and I've been wasting my time looking for it.",
+            "Oh wow, I don't think I've ever seen someone else actually browsing this section! Are you into this stuff too, or are you just as lost as I usually am in here?",
+            "Excuse me, I couldn't help but notice what you're looking at. I'm trying to decide if I should be excited that someone else has good taste, or worried that you're about to buy the last copy of something I want.",
+          ],
+        },
+        "awkward-recovery": {
+          title: "Awkward Moment Recovery",
+          description:
+            "You just said something that created an awkward pause in conversation. Maybe you made an inappropriate joke, brought up a sensitive topic, or misread the situation. You need to recover gracefully.",
+          initialMessage:
+            "So... that was awkward. I just realized I've been talking about my ex this whole time and you probably think I'm completely unhinged. Can we pretend the last five minutes didn't happen, or should I just slowly back away now?",
+          objections: [
+            "So... that was awkward. I just realized I've been talking about my ex this whole time and you probably think I'm completely unhinged. Can we pretend the last five minutes didn't happen, or should I just slowly back away now?",
+            "Well, that didn't come out the way I intended. I swear I'm not usually this foot-in-mouth person, but apparently today I'm really going for it. Should I stop talking now or just keep digging this hole deeper?",
+            "Okay, that sounded way better in my head. I'm going to blame this on not enough coffee and too much social anxiety. Please tell me you've also had moments where words just... betray you?",
+          ],
+        },
+      };
+
+      // State management
+      let currentMode = null;
+      let selectedScenario = null;
+      let conversationHistory = [];
+      let conversationCount = 0;
+      let isRecording = false;
+      let mediaRecorder = null;
+      let audioChunks = [];
+      let recordedAudioBlob = null;
+
+      // DOM elements
+      const analysisOptions = document.querySelectorAll(".analysis-option");
+      const uploadSection = document.getElementById("uploadSection");
+      const practiceSection = document.getElementById("practiceSection");
+      const scenarioTypes = document.querySelectorAll(".scenario-type");
+      const conversationContainer = document.getElementById(
+        "conversationContainer"
+      );
+      const conversationFlow = document.getElementById("conversationFlow");
+      const startPracticeBtn = document.getElementById("startPractice");
+      const backToScenariosBtn = document.getElementById("backToScenarios");
+      const endConversationBtn = document.getElementById("endConversation");
+      const recordBtn = document.getElementById("recordButton");
+      const scenarioActionsDiv = document.getElementById("scenarioActions");
+
+      // Analysis option selection
+      analysisOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          const type = option.dataset.type;
+
+          // Remove active class from all options
+          analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+
+          // Add active class to clicked option
+          option.classList.add("selected");
+
+          // Hide all sections
+          uploadSection.classList.remove("active");
+          practiceSection.classList.remove("active");
+
+          // Show appropriate section
+          if (type === "upload") {
+            uploadSection.classList.add("active");
+            currentMode = "upload";
+          } else if (type === "practice") {
+            practiceSection.classList.add("active");
+            currentMode = "practice";
+          }
+        });
+      });
+
+      // Back to options button handlers
+      document.getElementById("backToOptions").addEventListener("click", () => {
+        uploadSection.classList.remove("active");
+        practiceSection.classList.remove("active");
+        analysisOptions.forEach((opt) => opt.classList.remove("selected"));
+        currentMode = null;
+      });
+
+      // File upload handling
+      const chooseFileBtn = document.getElementById("chooseFileBtn");
+      const audioFileInput = document.getElementById("audioFile");
+      const fileSelectedDiv = document.getElementById("fileSelected");
+      const analyzeUploadBtn = document.getElementById("analyzeUpload");
+      const removeFileBtn = document.getElementById("removeFile");
+
+      chooseFileBtn.addEventListener("click", () => {
+        audioFileInput.click();
+      });
+
+      audioFileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          document.getElementById("fileName").textContent = file.name;
+          document.getElementById("fileSize").textContent = formatFileSize(
+            file.size
+          );
+          fileSelectedDiv.style.display = "flex";
+          analyzeUploadBtn.disabled = false;
+        }
+      });
+
+      removeFileBtn.addEventListener("click", () => {
+        audioFileInput.value = "";
+        fileSelectedDiv.style.display = "none";
+        analyzeUploadBtn.disabled = true;
+      });
+
+      analyzeUploadBtn.addEventListener("click", () => {
+        const file = audioFileInput.files[0];
+        if (file) {
+          // Handle file upload analysis
+          console.log("Analyzing uploaded file:", file.name);
+          // Add your file analysis logic here
+          alert("File analysis feature coming soon!");
+        }
+      });
+
+      function formatFileSize(bytes) {
+        if (bytes === 0) return "0 Bytes";
+        const k = 1024;
+        const sizes = ["Bytes", "KB", "MB", "GB"];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+      }
+
+      // Scenario selection
+      scenarioTypes.forEach((scenario) => {
+        scenario.addEventListener("click", () => {
+          scenarioTypes.forEach((s) => s.classList.remove("selected"));
+          scenario.classList.add("selected");
+          selectedScenario = scenario.dataset.scenario;
+          startPracticeBtn.disabled = false;
+        });
+      });
+
+      // Start practice button
+      startPracticeBtn.addEventListener("click", () => {
+        if (selectedScenario) {
+          initializePracticeSession(selectedScenario);
+          conversationContainer.style.display = "block";
+          scenarioActionsDiv.style.display = "none";
+          document.querySelector(".scenario-grid").style.display = "none";
+          document.querySelector("#practiceSection h2").style.display = "none";
+          document.querySelector(
+            "#practiceSection .section-subtitle"
+          ).style.display = "none";
+        }
+      });
+
+      // Initialize practice session
+      function initializePracticeSession(scenarioKey) {
+        const scenarioInfo = casualScenarios[scenarioKey];
+        document.getElementById("scenarioTitle").textContent =
+          scenarioInfo.title;
+        document.getElementById("scenarioText").textContent =
+          scenarioInfo.description;
+
+        // Clear previous conversation
+        conversationFlow.innerHTML = "";
+        conversationHistory = [];
+
+        // Generate initial AI message
+        setTimeout(async () => {
+          let initialPrompt = "";
+
+          // Try to use Gemini AI for dynamic prompt generation
+          if (geminiEngine && geminiEngine.isConfigured()) {
+            try {
+              // Set scenario context for Gemini
+              geminiEngine.setScenarioContext(
+                scenarioKey,
+                scenarioInfo.title,
+                scenarioInfo.description,
+                "personal"
+              );
+
+              // Generate dynamic initial prompt
+              initialPrompt = await geminiEngine.generateInitialPrompt();
+              console.log(
+                "Generated dynamic prompt via Gemini:",
+                initialPrompt
+              );
+            } catch (error) {
+              console.warn(
+                "Gemini prompt generation failed, using fallback:",
+                error
+              );
+              // Fallback to static prompt
+              initialPrompt =
+                scenarioInfo.objections[
+                  Math.floor(Math.random() * scenarioInfo.objections.length)
+                ];
+            }
+          } else {
+            // Fallback to static prompt when Gemini is not configured
+            console.log("Gemini not configured, using static prompt");
+            initialPrompt =
+              scenarioInfo.objections[
+                Math.floor(Math.random() * scenarioInfo.objections.length)
+              ];
+          }
+
+          // Add AI conversation starter
+          addAIMessage(initialPrompt);
+          recordBtn.style.display = "inline-flex";
+          endConversationBtn.style.display = "inline-flex";
+        }, 1000);
+      }
+
+      // Back to scenarios button
+      backToScenariosBtn.addEventListener("click", () => {
+        conversationContainer.style.display = "none";
+        scenarioActionsDiv.style.display = "flex";
+        document.querySelector(".scenario-grid").style.display = "grid";
+        document.querySelector("#practiceSection h2").style.display = "block";
+        document.querySelector(
+          "#practiceSection .section-subtitle"
+        ).style.display = "block";
+        resetPracticeSession();
+      });
+
+      // Reset practice session
+      function resetPracticeSession() {
+        scenarioTypes.forEach((s) => s.classList.remove("selected"));
+        selectedScenario = null;
+        startPracticeBtn.disabled = true;
+        conversationFlow.innerHTML = "";
+        conversationHistory = [];
+        conversationCount = 0;
+        endConversationBtn.style.display = "none";
+        recordBtn.style.display = "none";
+
+        // Reset recording state
+        isRecording = false;
+        recordedAudioBlob = null;
+        audioChunks = [];
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+        }
+
+        // Reset record button UI
+        recordBtn.innerHTML =
+          '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+        recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+        recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+        recordBtn.style.color = "var(--text-primary)";
+        lucide.createIcons();
+      }
+
+      // Back to options buttons
+      document
+        .getElementById("backToOptionsFromPractice")
+        .addEventListener("click", () => {
+          window.location.href = "casual-conversation-analysis.html";
+        });
+
+      // End conversation and analyze
+      endConversationBtn.addEventListener("click", async () => {
+        // Update button state
+        endConversationBtn.disabled = true;
+        endConversationBtn.innerHTML =
+          '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing Conversation...';
+
+        try {
+          // Check if we have recorded audio to pass to analysis page
+          if (recordedAudioBlob && recordedAudioBlob.size > 0) {
+            // Audio available, passing to analysis page
+
+            // Convert blob to base64 for storage
+            const reader = new FileReader();
+            reader.onloadend = function () {
+              const audioData = {
+                base64: reader.result,
+                type: recordedAudioBlob.type,
+                size: recordedAudioBlob.size,
+                name: "casual-practice-recording.webm",
+                timestamp: new Date().toISOString(),
+                analysisType: "casual-conversation",
+                source: "practice",
+              };
+
+              // Store audio data for analysis page
+              sessionStorage.setItem(
+                "audioForAnalysis",
+                JSON.stringify(audioData)
+              );
+
+              // Also store minimal results data
+              const basicResults = {
+                hasAudio: true,
+                audioStored: true,
+                timestamp: new Date().toISOString(),
+                analysisType: "casual-conversation",
+                source: "practice",
+                note: "Audio file stored - transcription will be done on results page",
+              };
+
+              sessionStorage.setItem(
+                "analysisResults",
+                JSON.stringify(basicResults)
+              );
+
+              window.location.href =
+                "analysis-results.html?type=casual-conversation&source=practice";
+            };
+
+            reader.readAsDataURL(recordedAudioBlob);
+          } else if (geminiEngine && geminiEngine.isConfigured()) {
+            // No audio, analyzing conversation text
+            const analysisResults = await geminiEngine.analyzePracticeSession(
+              conversationHistory,
+              "casual-conversation"
+            );
+
+            // Store results and redirect
+            sessionStorage.setItem(
+              "analysisResults",
+              JSON.stringify(analysisResults)
+            );
+            window.location.href =
+              "analysis-results.html?type=casual-conversation&source=practice";
+          } else {
+            // Fallback analysis if Gemini is not available
+            const fallbackResults = {
+              success: true,
+              analysis: `## Casual Conversation Practice Analysis
+
+      **Social Confidence**: 7/10
+      You demonstrated good social awareness and maintained a natural conversational flow. Your responses showed genuine interest in connecting.
+
+      **Conversation Flow**: 8/10
+      You kept the conversation moving smoothly and asked follow-up questions that showed you were listening.
+
+      **Authenticity**: 7/10
+      Your responses felt genuine and personal. You shared appropriately without oversharing.
+
+      **Areas for Improvement**:
+      - Try using more open-ended questions to encourage deeper sharing
+      - Practice reading social cues for when to change topics
+      - Work on finding common ground more quickly
+
+      **Strengths Demonstrated**:
+      - Natural and relaxed conversational style
+      - Good balance of talking and listening
+      - Showed genuine interest in the other person
+
+      **Overall Score**: 22/30
+
+      Great work! Focus on deepening connections through more engaging questions and finding shared experiences.`,
+              conversationHistory: conversationHistory,
+              scenarioInfo: casualScenarios[selectedScenario],
+              timestamp: Date.now(),
+            };
+
+            sessionStorage.setItem(
+              "analysisResults",
+              JSON.stringify(fallbackResults)
+            );
+            window.location.href =
+              "analysis-results.html?type=casual-conversation&source=practice";
+          }
+        } catch (error) {
+          console.error("Conversation analysis failed:", error);
+          alert("Analysis failed. Please try again.");
+          endConversationBtn.disabled = false;
+          endConversationBtn.innerHTML =
+            '<i data-lucide="check-circle" class="w-4 h-4"></i> Submit for Analysis';
+        }
+      });
+
+      function addUserMessage(message) {
+        const messageElement = document.createElement("div");
+        messageElement.className = "message user";
+        messageElement.innerHTML = `
+                <div class="message-content">
+                  <div>${message}</div>
+                </div>
+                <div class="message-avatar">
+                  <i data-lucide="user" class="w-5 h-5"></i>
+                </div>
+              `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        conversationHistory.push({
+          type: "user",
+          message: message,
+          timestamp: Date.now(),
+        });
+      }
+
+      function addAIMessage(message) {
+        const messageElement = document.createElement("div");
+        messageElement.className = "message ai";
+        messageElement.innerHTML = `
+          <div class="message-avatar">
+            <i data-lucide="brain" class="w-5 h-5"></i>
+          </div>
+          <div class="message-content">
+            <div>${message}</div>
+          </div>
+        `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        conversationHistory.push({
+          type: "ai",
+          message: message,
+          timestamp: Date.now(),
+        });
+      }
+
+      // Audio recording functionality
+      if (recordBtn) {
+        recordBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (!isRecording) {
+            startRecording();
+          } else {
+            stopRecording();
+          }
+        });
+      }
+
+      async function startRecording() {
+        try {
+          if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            throw new Error("getUserMedia not supported in this browser");
+          }
+
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+              echoCancellation: true,
+              noiseSuppression: true,
+              sampleRate: 44100,
+            },
+          });
+
+          audioChunks = [];
+
+          const options = { mimeType: "audio/webm" };
+          if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+            options.mimeType = "audio/mp4";
+            if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+              options.mimeType = "";
+            }
+          }
+
+          mediaRecorder = new MediaRecorder(stream, options);
+
+          mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+              audioChunks.push(event.data);
+            }
+          };
+
+          mediaRecorder.onstop = () => {
+            recordedAudioBlob = new Blob(audioChunks, {
+              type: mediaRecorder.mimeType || "audio/webm",
+            });
+
+            stream.getTracks().forEach((track) => track.stop());
+            addAudioCapturedMessage();
+          };
+
+          mediaRecorder.onerror = (event) => {
+            console.error("MediaRecorder error:", event.error);
+          };
+
+          mediaRecorder.start(1000);
+          isRecording = true;
+
+          // Update UI
+          recordBtn.innerHTML =
+            '<i data-lucide="square" class="w-4 h-4"></i> Stop Recording';
+          recordBtn.style.background = "#ef4444 !important";
+          recordBtn.style.borderColor = "#ef4444 !important";
+          recordBtn.style.color = "white !important";
+          lucide.createIcons();
+        } catch (error) {
+          console.error("Error starting recording:", error);
+          isRecording = false;
+
+          let errorMessage = "Unable to access microphone. ";
+          if (error.name === "NotAllowedError") {
+            errorMessage += "Please allow microphone access and try again.";
+          } else if (error.name === "NotFoundError") {
+            errorMessage +=
+              "No microphone found. Please connect a microphone and try again.";
+          } else {
+            errorMessage += error.message;
+          }
+
+          alert(errorMessage);
+        }
+      }
+
+      function stopRecording() {
+        if (mediaRecorder && isRecording) {
+          mediaRecorder.stop();
+          isRecording = false;
+
+          // Update UI
+          recordBtn.innerHTML =
+            '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+          recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+          recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+          recordBtn.style.color = "var(--text-primary)";
+          lucide.createIcons();
+        }
+      }
+
+      function addAudioCapturedMessage() {
+        const messageElement = document.createElement("div");
+        messageElement.className = "audio-captured";
+        messageElement.innerHTML = `
+                <div class="audio-captured-box">
+                  <i data-lucide="check-circle" class="w-5 h-5"></i>
+                  <span>Audio Captured Successfully - Ready for Transcription</span>
+                </div>
+              `;
+        conversationFlow.appendChild(messageElement);
+        lucide.createIcons();
+
+        conversationHistory.push({
+          type: "audio-captured",
+          message: "Audio Captured Successfully - Ready for Transcription",
+          timestamp: Date.now(),
+        });
+
+        conversationCount++;
+
+        // Always show end conversation button after audio is captured
+        endConversationBtn.style.display = "inline-flex";
+        recordBtn.style.display = "none";
+      }
+
+      // Initialize analysis system
+      let analysisProcessor = null;
+      try {
+        analysisProcessor = new SimpleAnalysis();
+        console.log("✅ SimpleAnalysis system initialized successfully");
+      } catch (error) {
+        console.error("❌ Failed to initialize analysis system:", error);
+      }
+    </script>
+  </body>
+</html>

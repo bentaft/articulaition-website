@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30-Second Story Drill - Articulaition</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    
+    <style>
+        :root {
+            --voice-primary: #6366f1;
+            --voice-secondary: #8b5cf6;
+            --voice-accent: #06b6d4;
+            --voice-warm: #f59e0b;
+            --voice-success: #10b981;
+            --voice-neural: #64748b;
+            --voice-dark: #1a1f2e;
+            --voice-darker: #0f1419;
+            --voice-light: #f7fafc;
+            --voice-bg-primary: #fafbfc;
+            --voice-bg-secondary: #f4f6f8;
+            --voice-glass: rgba(255, 255, 255, 0.9);
+            --voice-glass-dark: rgba(15, 20, 25, 0.9);
+            --voice-glass-border: rgba(255, 255, 255, 0.3);
+            --voice-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+            --voice-shadow-lg: 0 35px 60px -12px rgba(0, 0, 0, 0.12);
+            --voice-text-primary: #1a202c;
+            --voice-text-secondary: #4a5568;
+            --voice-text-muted: #718096;
+            --voice-premium: #fbbf24;
+            --voice-premium-dark: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e17;
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Premium Dark Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            padding: 1.5rem 2.5rem;
+            background: rgba(15, 20, 25, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin: -2rem -2rem 2rem -2rem;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.75rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .drill-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--voice-premium), var(--voice-premium-dark));
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--voice-dark);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .drill-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(135deg, var(--voice-premium), var(--voice-warm));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--voice-dark);
+        }
+
+        .drill-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, white, rgba(255, 255, 255, 0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .drill-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.5), transparent);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            color: var(--voice-premium);
+        }
+
+        .section-content {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            font-size: 1.125rem;
+        }
+
+        /* Recording Section */
+        .recording-section {
+            text-align: center;
+        }
+
+        .timer-display {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--voice-premium);
+            margin-bottom: 2rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .recording-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .record-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.25rem 2rem;
+            border: none;
+            border-radius: 1rem;
+            font-weight: 600;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 180px;
+            justify-content: center;
+        }
+
+        .record-btn.primary {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .record-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .record-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .record-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .recording-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--voice-premium);
+        }
+
+        .recording-indicator {
+            width: 12px;
+            height: 12px;
+            background: #ef4444;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Analysis Section */
+        .analysis-section {
+            display: none;
+        }
+
+        .analysis-section.visible {
+            display: block;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--voice-premium);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .feedback-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .feedback-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--voice-premium);
+            margin-bottom: 1rem;
+        }
+
+        .feedback-content {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--voice-premium), var(--voice-warm));
+            color: var(--voice-dark);
+        }
+
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Instructions List */
+        .instruction-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .instruction-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            background: var(--voice-premium);
+            color: var(--voice-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .drill-title {
+                font-size: 2rem;
+            }
+
+            .timer-display {
+                font-size: 3rem;
+            }
+
+            .recording-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .analysis-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="improvement-hub-dashboard.html" class="back-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="m19 12-7 7-7-7"></path>
+                </svg>
+                Back to Drills
+            </a>
+            <div class="drill-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+                Filler Word Elimination
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="drill-icon">🌟</div>
+            <h1 class="drill-title">30-Second Story</h1>
+            <p class="drill-subtitle">
+                Tell a compelling story about a recent experience in exactly 30 seconds without using any filler words. 
+                Master smooth transitions and natural storytelling flow.
+            </p>
+        </section>
+
+        <!-- Objective Section -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h4"></path>
+                    <path d="M15 11h4a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-4"></path>
+                    <path d="M12 2v20"></path>
+                </svg>
+                Objective
+            </h2>
+            <div class="section-content">
+                <p>This drill trains you to eliminate verbal crutches while maintaining natural storytelling flow. You'll practice organizing thoughts quickly and speaking confidently without relying on filler words like "um," "uh," "like," or "you know."</p>
+            </div>
+        </section>
+
+        <!-- Instructions Section -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 6h13"></path>
+                    <path d="M8 12h13"></path>
+                    <path d="M8 18h13"></path>
+                    <path d="M3 6h.01"></path>
+                    <path d="M3 12h.01"></path>
+                    <path d="M3 18h.01"></path>
+                </svg>
+                How It Works
+            </h2>
+            <ul class="instruction-list">
+                <li>
+                    <div class="step-number">1</div>
+                    <div>Think of a recent experience - something that happened to you in the last week</div>
+                </li>
+                <li>
+                    <div class="step-number">2</div>
+                    <div>Click record and tell your story in exactly 30 seconds</div>
+                </li>
+                <li>
+                    <div class="step-number">3</div>
+                    <div>Focus on smooth transitions between ideas without using filler words</div>
+                </li>
+                <li>
+                    <div class="step-number">4</div>
+                    <div>Use purposeful pauses instead of "um" or "uh" when you need thinking time</div>
+                </li>
+                <li>
+                    <div class="step-number">5</div>
+                    <div>Receive instant AI feedback on your fluency and storytelling clarity</div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Recording Section -->
+        <section class="content-section recording-section">
+            <h2 class="section-title">
+                <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M12 1v6m0 6v6"></path>
+                    <path d="m21 12-6-6m-6 6-6-6"></path>
+                </svg>
+                Start Recording
+            </h2>
+            
+            <div class="timer-display" id="timer">00:30</div>
+            
+            <div class="recording-status" id="recordingStatus" style="display: none;">
+                <div class="recording-indicator"></div>
+                Recording in progress...
+            </div>
+            
+            <div class="recording-controls">
+                <button class="record-btn primary" id="recordBtn" onclick="toggleRecording()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6"></path>
+                        <path d="m21 12-6-6m-6 6-6-6"></path>
+                    </svg>
+                    Start Recording
+                </button>
+                <button class="record-btn secondary" id="resetBtn" onclick="resetRecording()" disabled>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                        <path d="M21 3v5h-5"></path>
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                        <path d="M3 21v-5h5"></path>
+                    </svg>
+                    Reset
+                </button>
+            </div>
+        </section>
+
+        <!-- Analysis Section -->
+        <section class="content-section analysis-section" id="analysisSection">
+            <h2 class="section-title">
+                <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 3v18h18"></path>
+                    <path d="m19 9-5 5-4-4-3 3"></path>
+                </svg>
+                Analysis Results
+            </h2>
+            
+            <div class="analysis-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="fillerCount">-</div>
+                    <div class="metric-label">Filler Words</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="fluencyScore">-</div>
+                    <div class="metric-label">Fluency Score</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="storyScore">-</div>
+                    <div class="metric-label">Story Structure</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="paceScore">-</div>
+                    <div class="metric-label">Pacing</div>
+                </div>
+            </div>
+            
+            <div class="feedback-box">
+                <div class="feedback-title">AI Feedback & Recommendations</div>
+                <div class="feedback-content" id="feedbackContent">
+                    Complete your recording to receive detailed feedback and improvement suggestions.
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn primary" onclick="resetRecording()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                        <path d="M21 3v5h-5"></path>
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                        <path d="M3 21v-5h5"></path>
+                    </svg>
+                    Try Again
+                </button>
+                <a href="improvement-hub-dashboard.html" class="action-btn secondary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h4"></path>
+                        <path d="M15 11h4a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-4"></path>
+                        <path d="M12 2v20"></path>
+                    </svg>
+                    More Drills
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/audio-recorder.js"></script>
+    <script src="js/gemini-ai-engine.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Recording state
+        let isRecording = false;
+        let recordingTimer = null;
+        let timeLeft = 30;
+        let mediaRecorder = null;
+        let audioChunks = [];
+
+        // DOM elements
+        const recordBtn = document.getElementById('recordBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const timer = document.getElementById('timer');
+        const recordingStatus = document.getElementById('recordingStatus');
+        const analysisSection = document.getElementById('analysisSection');
+
+        // Initialize audio recording
+        async function initializeRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+                
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    processRecording(audioBlob);
+                };
+                
+                return true;
+            } catch (error) {
+                console.error('Error accessing microphone:', error);
+                alert('Please allow microphone access to use this drill.');
+                return false;
+            }
+        }
+
+        // Toggle recording
+        async function toggleRecording() {
+            if (!isRecording) {
+                const initialized = await initializeRecording();
+                if (!initialized) return;
+                
+                startRecording();
+            } else {
+                stopRecording();
+            }
+        }
+
+        // Start recording
+        function startRecording() {
+            isRecording = true;
+            audioChunks = [];
+            timeLeft = 30;
+            
+            // Update UI
+            recordBtn.innerHTML = `
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="6" y="6" width="12" height="12"></rect>
+                </svg>
+                Stop Recording
+            `;
+            recordBtn.classList.remove('primary');
+            recordBtn.classList.add('secondary');
+            resetBtn.disabled = true;
+            recordingStatus.style.display = 'flex';
+            
+            // Start recording
+            mediaRecorder.start();
+            
+            // Start timer
+            recordingTimer = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                
+                if (timeLeft <= 0) {
+                    stopRecording();
+                }
+            }, 1000);
+        }
+
+        // Stop recording
+        function stopRecording() {
+            isRecording = false;
+            
+            if (recordingTimer) {
+                clearInterval(recordingTimer);
+                recordingTimer = null;
+            }
+            
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+            }
+            
+            // Update UI
+            recordBtn.innerHTML = `
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M12 1v6m0 6v6"></path>
+                    <path d="m21 12-6-6m-6 6-6-6"></path>
+                </svg>
+                Start Recording
+            `;
+            recordBtn.classList.remove('secondary');
+            recordBtn.classList.add('primary');
+            resetBtn.disabled = false;
+            recordingStatus.style.display = 'none';
+        }
+
+        // Reset recording
+        function resetRecording() {
+            if (isRecording) {
+                stopRecording();
+            }
+            
+            timeLeft = 30;
+            updateTimer();
+            analysisSection.classList.remove('visible');
+            resetBtn.disabled = true;
+            
+            // Reset analysis display
+            document.getElementById('fillerCount').textContent = '-';
+            document.getElementById('fluencyScore').textContent = '-';
+            document.getElementById('storyScore').textContent = '-';
+            document.getElementById('paceScore').textContent = '-';
+            document.getElementById('feedbackContent').textContent = 'Complete your recording to receive detailed feedback and improvement suggestions.';
+        }
+
+        // Update timer display
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Process recording with Gemini AI
+        async function processRecording(audioBlob) {
+            try {
+                // Show analysis section
+                analysisSection.classList.add('visible');
+                
+                // Convert audio to text (placeholder - would use speech recognition)
+                const transcript = await transcribeAudio(audioBlob);
+                
+                // Analyze with Gemini AI
+                const analysis = await analyzeStoryDrill(transcript, 30 - timeLeft);
+                
+                // Update UI with results
+                updateAnalysisResults(analysis);
+                
+            } catch (error) {
+                console.error('Error processing recording:', error);
+                document.getElementById('feedbackContent').textContent = 'Error analyzing recording. Please try again.';
+                analysisSection.classList.add('visible');
+            }
+        }
+
+        // Transcribe audio (placeholder implementation)
+        async function transcribeAudio(audioBlob) {
+            // In a real implementation, this would use Web Speech API or send to a transcription service
+            return "This is a placeholder transcript. In the real implementation, this would contain the actual spoken words from the audio recording.";
+        }
+
+        // Analyze story drill with Gemini AI
+        async function analyzeStoryDrill(transcript, duration) {
+            // Placeholder implementation - would integrate with your Gemini AI system
+            const fillerWords = countFillerWords(transcript);
+            const fluencyScore = calculateFluencyScore(transcript, fillerWords);
+            const storyScore = calculateStoryScore(transcript);
+            const paceScore = calculatePaceScore(transcript, duration);
+            
+            const feedback = generateFeedback(fillerWords, fluencyScore, storyScore, paceScore);
+            
+            return {
+                fillerWords,
+                fluencyScore,
+                storyScore,
+                paceScore,
+                feedback
+            };
+        }
+
+        // Count filler words in transcript
+        function countFillerWords(transcript) {
+            const fillers = ['um', 'uh', 'like', 'you know', 'so', 'actually', 'basically'];
+            const words = transcript.toLowerCase().split(/\s+/);
+            return words.filter(word => fillers.includes(word.replace(/[^\w]/g, ''))).length;
+        }
+
+        // Calculate fluency score
+        function calculateFluencyScore(transcript, fillerWords) {
+            const totalWords = transcript.split(/\s+/).length;
+            const fillerRatio = fillerWords / totalWords;
+            return Math.max(0, Math.round((1 - fillerRatio) * 100));
+        }
+
+        // Calculate story structure score
+        function calculateStoryScore(transcript) {
+            // Simplified scoring based on story elements
+            const hasBeginning = transcript.toLowerCase().includes('yesterday') || transcript.toLowerCase().includes('last') || transcript.toLowerCase().includes('recently');
+            const hasMiddle = transcript.length > 50;
+            const hasEnd = transcript.toLowerCase().includes('finally') || transcript.toLowerCase().includes('ended') || transcript.toLowerCase().includes('so');
+            
+            return Math.round(((hasBeginning ? 1 : 0) + (hasMiddle ? 1 : 0) + (hasEnd ? 1 : 0)) / 3 * 100);
+        }
+
+        // Calculate pacing score
+        function calculatePaceScore(transcript, duration) {
+            const wordsPerSecond = transcript.split(/\s+/).length / duration;
+            const idealRate = 2.5; // words per second
+            const deviation = Math.abs(wordsPerSecond - idealRate);
+            return Math.max(0, Math.round((1 - deviation / idealRate) * 100));
+        }
+
+        // Generate feedback
+        function generateFeedback(fillerWords, fluencyScore, storyScore, paceScore) {
+            let feedback = '';
+            
+            if (fillerWords === 0) {
+                feedback += '🎉 Excellent! You told your story without any filler words. ';
+            } else if (fillerWords <= 2) {
+                feedback += '👍 Good job! Only a few filler words detected. ';
+            } else {
+                feedback += '💡 Focus on reducing filler words. Try using brief pauses instead. ';
+            }
+            
+            if (storyScore >= 80) {
+                feedback += 'Your story had clear structure and flow. ';
+            } else {
+                feedback += 'Consider organizing your story with a clear beginning, middle, and end. ';
+            }
+            
+            if (paceScore >= 80) {
+                feedback += 'Great pacing - you maintained an ideal speaking rate.';
+            } else {
+                feedback += 'Try to maintain a steady, conversational pace.';
+            }
+            
+            return feedback;
+        }
+
+        // Update analysis results in UI
+        function updateAnalysisResults(analysis) {
+            document.getElementById('fillerCount').textContent = analysis.fillerWords;
+            document.getElementById('fluencyScore').textContent = analysis.fluencyScore + '%';
+            document.getElementById('storyScore').textContent = analysis.storyScore + '%';
+            document.getElementById('paceScore').textContent = analysis.paceScore + '%';
+            document.getElementById('feedbackContent').textContent = analysis.feedback;
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTimer();
+        });
+    </script>
+</body>
+</html>

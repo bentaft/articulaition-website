@@ -1,0 +1,2273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI-Powered Dating & Romantic Conversation Analysis - Articulaition"
+    />
+    <title>Dating & Romantic Conversations - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Analysis System -->
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --primary-blue: #4a90e2;
+        --success-green: #10b981;
+        --client-teal: #0891b2;
+        --relationship-purple: #7c3aed;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --bg-primary: #fafbfc;
+        --bg-secondary: #f4f6f8;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Background Effects */
+      .dashboard-container {
+        background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 100%);
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .dashboard-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(74, 144, 226, 0.03) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(74, 144, 226, 0.025) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(16, 185, 129, 0.02) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(124, 58, 237, 0.015) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Advanced Animations */
+      .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+        opacity: 0;
+      }
+      .slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      .slide-right {
+        animation: slideRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      .scale-in {
+        animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes slideRight {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      @keyframes scaleIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-500 {
+        animation-delay: 0.5s;
+      }
+      .delay-600 {
+        animation-delay: 0.6s;
+      }
+
+      /* Header Styles */
+      .header {
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+      }
+
+      .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+      }
+
+      .logo img {
+        height: 32px;
+        width: auto;
+      }
+
+      .brand-text {
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+
+      .brand-articul {
+        background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .brand-ai {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .brand-tion {
+        background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .header-nav {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .nav-link {
+        color: #64748b;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+
+      .nav-link:hover {
+        color: #1e293b;
+        background: rgba(74, 144, 226, 0.05);
+      }
+
+      .nav-link.active {
+        color: var(--voice-primary);
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid #4a90e2;
+        border-radius: 0;
+        padding-bottom: 0.4rem;
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem 1rem;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .user-menu:hover {
+        background: #f1f5f9;
+        border-color: #cbd5e1;
+      }
+
+      .user-avatar {
+        width: 32px;
+        height: 32px;
+        background: #4a90e2;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      .user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1px;
+      }
+
+      .user-name {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #1e293b;
+        line-height: 1.2;
+      }
+
+      .user-plan {
+        font-size: 0.75rem;
+        color: #64748b;
+        font-weight: 400;
+        line-height: 1.2;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        padding: 1.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: #64748b;
+      }
+
+      .breadcrumb a {
+        color: #64748b;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .breadcrumb a:hover {
+        color: #4a90e2;
+      }
+
+      .breadcrumb-separator {
+        color: #94a3b8;
+      }
+
+      /* Page Title Section */
+      .page-title-section {
+        padding: 2rem 0 3rem;
+        text-align: center;
+      }
+
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .page-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #4a90e2 0%, #7c3aed 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a202c;
+        margin: 0;
+        line-height: 1.2;
+      }
+
+      .page-description {
+        font-size: 1.125rem;
+        color: #4a5568;
+        line-height: 1.6;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Analysis Options Section */
+      .analysis-section {
+        padding: 2rem 0 4rem;
+      }
+
+      /* Analysis Options Grid */
+      .analysis-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .analysis-option {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.06);
+        border-radius: 24px;
+        padding: 2.5rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .analysis-option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .analysis-option:hover {
+        transform: translateY(-8px);
+        border-color: rgba(74, 144, 226, 0.3);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .analysis-option:hover::before {
+        opacity: 1;
+      }
+
+      .analysis-option.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-4px);
+      }
+
+      .option-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        border-radius: 20px;
+        background: linear-gradient(135deg, var(--primary-blue), var(--relationship-purple));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+        box-shadow: 0 8px 20px rgba(74, 144, 226, 0.25);
+      }
+
+      .analysis-option:hover .option-icon {
+        transform: scale(1.1);
+      }
+
+      .option-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .option-features {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .features-list {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      /* Upload Section */
+      .upload-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .upload-section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-subtitle {
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-center {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .upload-option-single {
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px dashed rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 3rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .upload-option-single:hover {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.02);
+      }
+
+      .file-selected {
+        margin-top: 1.5rem;
+        background: rgba(16, 185, 129, 0.05);
+        border: 2px solid rgba(16, 185, 129, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .file-selected .file-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--success-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .file-selected .file-details {
+        flex: 1;
+        text-align: left;
+      }
+
+      .file-selected .file-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+
+      .file-selected .file-size {
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+      }
+
+      .file-selected .remove-file {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .file-selected .remove-file:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+
+      .upload-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1rem;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary-blue), var(--relationship-purple));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        box-shadow: 0 8px 20px rgba(74, 144, 226, 0.25);
+      }
+
+      .upload-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .upload-button {
+        background: var(--primary-blue);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .upload-button:hover {
+        background: var(--relationship-purple);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* AI Practice Section */
+      .ai-practice-section {
+        display: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .ai-practice-section.active {
+        display: block;
+      }
+
+      /* Scenario Grid */
+      .scenario-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .scenario-type {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-type:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary-blue);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .scenario-type.selected {
+        border-color: var(--primary-blue);
+        background: rgba(74, 144, 226, 0.05);
+        transform: translateY(-2px);
+      }
+
+      .scenario-type::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(74, 144, 226, 0.02) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .scenario-type:hover::before,
+      .scenario-type.selected::before {
+        opacity: 1;
+      }
+
+      .scenario-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 1.5rem;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary-blue), var(--relationship-purple));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+        box-shadow: 0 8px 20px rgba(74, 144, 226, 0.25);
+      }
+
+      .scenario-type:hover .scenario-icon {
+        transform: scale(1.1);
+      }
+
+      .scenario-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Conversation Interface */
+      .conversation-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .scenario-intro {
+        background: linear-gradient(135deg, var(--primary-blue), var(--relationship-purple));
+        color: white;
+        padding: 2rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scenario-intro::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>')
+          repeat;
+        opacity: 0.3;
+      }
+
+      .scenario-intro .scenario-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scenario-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        position: relative;
+        z-index: 2;
+      }
+
+      .conversation-flow {
+        space-y: 1.5rem;
+      }
+
+      .message {
+        display: flex;
+        margin-bottom: 1.5rem;
+      }
+
+      .message.ai {
+        justify-content: flex-start;
+      }
+
+      .message.user {
+        justify-content: flex-end;
+      }
+
+      .message-content {
+        max-width: 80%;
+        padding: 1.25rem 1.5rem;
+        border-radius: 20px;
+        position: relative;
+      }
+
+      .message.ai .message-content {
+        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-bottom-left-radius: 8px;
+      }
+
+      .message.user .message-content {
+        background: linear-gradient(135deg, var(--primary-blue), var(--relationship-purple));
+        color: white;
+        border-bottom-right-radius: 8px;
+      }
+
+      .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 1rem;
+        flex-shrink: 0;
+      }
+
+      .message.ai .message-avatar {
+        background: linear-gradient(135deg, var(--primary-blue), var(--relationship-purple));
+        color: white;
+        order: -1;
+      }
+
+      .message.user .message-avatar {
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+      }
+
+      /* Audio Captured Message */
+      .audio-captured {
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .audio-captured-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: linear-gradient(135deg, var(--success-green), #059669);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 16px;
+        font-weight: 600;
+        box-shadow: var(--shadow-md);
+        animation: slideInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes slideInScale {
+        0% {
+          opacity: 0;
+          transform: translateY(20px) scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .primary-button {
+        background: linear-gradient(135deg, #4a90e2, #7c3aed);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .primary-button:hover:not(:disabled) {
+        background: linear-gradient(135deg, #7c3aed, #4a90e2);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .primary-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .secondary-button {
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--text-primary);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .secondary-button:hover {
+        background: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Ensure record button is always clickable and visible */
+      #recordButton {
+        pointer-events: auto !important;
+        z-index: 1000 !important;
+        position: relative !important;
+        cursor: pointer !important;
+        user-select: none;
+      }
+
+      #recordButton:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: var(--shadow-lg) !important;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .header-content {
+          padding: 0 1rem;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .main-content {
+          padding: 0 1rem;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .analysis-options {
+          grid-template-columns: 1fr;
+        }
+
+        .scenario-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .title-with-icon {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+
+      /* Enhanced Scenario and Conversation Sections */
+      .enhanced-scenario-section,
+      .enhanced-conversation-section {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        border: 1px solid rgba(74, 144, 226, 0.1);
+        padding: 0;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+      }
+
+      .enhanced-scenario-section:hover,
+      .enhanced-conversation-section:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .scenario-header,
+      .conversation-header {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--relationship-purple) 100%);
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .conversation-header {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      }
+
+      .scenario-icon-small {
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .conversation-icon {
+        font-size: 1.5rem;
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .scenario-header h3,
+      .conversation-header h3 {
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      .scenario-content,
+      .conversation-content {
+        padding: 24px;
+      }
+
+      .scenario-content p,
+      .conversation-content p {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .scenario-context p {
+        margin: 0 0 20px 0;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+        padding: 16px;
+        background: rgba(74, 144, 226, 0.04);
+        border-radius: 12px;
+        border-left: 4px solid var(--primary-blue);
+      }
+
+      .conversation-starter {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .starter-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .starter-icon {
+        font-size: 1.2rem;
+      }
+
+      .starter-text {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .conversation-starter p {
+        margin: 0;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 500;
+        font-style: italic;
+        position: relative;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .conversation-starter p::before {
+        content: '"';
+        position: absolute;
+        top: -4px;
+        left: 0;
+        font-size: 2rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        font-family: serif;
+      }
+
+      .conversation-starter p::after {
+        content: '"';
+        position: absolute;
+        bottom: -12px;
+        right: 0;
+        font-size: 2rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        font-family: serif;
+      }
+
+      /* Utility Classes */
+      .hidden {
+        display: none !important;
+      }
+
+      .flex {
+        display: flex;
+      }
+
+      .items-center {
+        align-items: center;
+      }
+
+      .gap-4 {
+        gap: 1rem;
+      }
+
+      .relative {
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <a href="index.html" class="logo">
+            <img src="images/tree-logo.svg" alt="Articulaition Logo" />
+            <span class="brand-text">
+              <span class="brand-articul">articul</span>
+              <span class="brand-ai">ai</span>
+              <span class="brand-tion">tion</span>
+              <span class="brand-tion">.com</span>
+            </span>
+          </a>
+
+          <nav class="header-nav">
+            <div class="nav-links">
+              <a href="dashboard.html" class="nav-link">Dashboard</a>
+              <a href="professional-communication.html" class="nav-link">Professional</a>
+              <a href="personal-communication.html" class="nav-link active">Personal</a>
+              <a href="improvement-hub.html" class="nav-link">Improvement</a>
+              <a href="pricing.html" class="nav-link">Pricing</a>
+            </div>
+
+            <div class="user-menu">
+              <div class="user-avatar">
+                <span>U</span>
+              </div>
+              <div class="user-info">
+                <div class="user-name">User Account</div>
+                <div class="user-plan">Free Plan</div>
+              </div>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb fade-in">
+          <a href="dashboard.html">Dashboard</a>
+          <span class="breadcrumb-separator">›</span>
+          <a href="personal-communication.html">Personal Communication</a>
+          <span class="breadcrumb-separator">›</span>
+          <span>Dating & Romance</span>
+        </nav>
+
+        <!-- Page Title Section -->
+        <section class="page-title-section">
+          <div class="title-with-icon slide-up delay-100">
+            <div class="page-icon">
+              <i data-lucide="heart" class="w-8 h-8"></i>
+            </div>
+            <div>
+              <h1 class="page-title">Dating & Romantic Conversation Mastery</h1>
+            </div>
+          </div>
+          <p class="page-description slide-up delay-200">
+            Navigate the delicate dance of romantic connection with confidence and authenticity. Master attraction, vulnerability, and emotional intimacy in dating conversations.
+          </p>
+        </section>
+
+        <!-- Analysis Options Section -->
+        <section class="analysis-section">
+          <!-- Analysis Options -->
+          <div class="analysis-options">
+            <!-- Upload Existing Recording -->
+            <div class="analysis-option scale-in delay-300" data-type="upload" id="uploadOption">
+              <div class="option-icon">
+                <i data-lucide="upload" class="w-8 h-8"></i>
+              </div>
+              <h3 class="option-title">Upload Romantic Conversation</h3>
+              <p class="option-description">
+                Discover how effectively you create romantic spark, build emotional intimacy, and express your authentic self in dating contexts.
+              </p>
+              <div class="option-features">
+                <div class="features-list">
+                  Attraction dynamics • Vulnerability balance • Authentic charm • Emotional intelligence • Connection depth
+                </div>
+              </div>
+            </div>
+
+            <!-- AI Practice Session -->
+            <div class="analysis-option scale-in delay-400" data-type="practice" id="practiceOption">
+              <div class="option-icon">
+                <i data-lucide="message-circle" class="w-8 h-8"></i>
+              </div>
+              <h3 class="option-title">AI Romantic Practice</h3>
+              <p class="option-description">
+                Practice the art of romantic conversation in safe scenarios that help you build confidence, authenticity, and emotional connection skills.
+              </p>
+              <div class="option-features">
+                <div class="features-list">
+                  First date conversations • Emotional intimacy • Authentic flirting • Vulnerability practice
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upload Section -->
+          <div class="upload-section" id="uploadSection">
+            <h2 class="section-title">Upload Your Dating Conversation</h2>
+            <p class="section-subtitle">
+              Upload an audio or video file of your dating conversation for detailed romantic communication analysis
+            </p>
+
+            <div class="upload-center">
+              <div class="upload-option-single" id="fileUpload">
+                <div class="upload-icon">
+                  <i data-lucide="file-audio" class="w-8 h-8"></i>
+                </div>
+                <div class="upload-title">Choose File</div>
+                <div class="upload-description">
+                  Select an audio or video file from your device (MP3, M4A, WAV, MP4, MOV)
+                </div>
+                <button class="upload-button" id="chooseFileBtn">
+                  <i data-lucide="upload" class="w-4 h-4"></i>
+                  Select File
+                </button>
+                <input type="file" id="audioFile" accept=".mp3,.m4a,.wav,.mp4,.mov" hidden />
+
+                <div class="file-selected" id="fileSelected" style="display: none">
+                  <div class="file-icon">
+                    <i data-lucide="file-audio" class="w-5 h-5"></i>
+                  </div>
+                  <div class="file-details">
+                    <div class="file-name" id="fileName">conversation.mp3</div>
+                    <div class="file-size" id="fileSize">1.2 MB</div>
+                  </div>
+                  <button class="remove-file" id="removeFile">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="action-buttons">
+              <button class="secondary-button" id="backToOptions">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Options
+              </button>
+              <button class="primary-button" id="analyzeUpload" disabled>
+                <i data-lucide="zap" class="w-4 h-4"></i>
+                Analyze Recording
+              </button>
+            </div>
+          </div>
+
+          <!-- AI Practice Section -->
+          <div class="ai-practice-section" id="practiceSection">
+            <h2 class="section-title">Choose Your Dating Communication Focus</h2>
+            <p class="section-subtitle">
+              Select a specific area of romantic communication to practice with our AI
+            </p>
+
+            <!-- Scenario Grid -->
+            <div class="scenario-grid">
+              <div class="scenario-type" data-scenario="first-date-mastery">
+                <div class="scenario-icon">
+                  <i data-lucide="coffee" class="w-6 h-6"></i>
+                </div>
+                <div class="scenario-title">First Date Mastery</div>
+                <div class="scenario-description">Perfect your first date conversations, from breaking the ice to creating genuine connection</div>
+              </div>
+
+              <div class="scenario-type" data-scenario="online-dating-messaging">
+                <div class="scenario-icon">
+                  <i data-lucide="smartphone" class="w-6 h-6"></i>
+                </div>
+                <div class="scenario-title">Online Dating & Messaging</div>
+                <div class="scenario-description">Master digital romance from compelling first messages to seamless offline transitions</div>
+              </div>
+
+              <div class="scenario-type" data-scenario="flirting-chemistry">
+                <div class="scenario-icon">
+                  <i data-lucide="sparkles" class="w-6 h-6"></i>
+                </div>
+                <div class="scenario-title">Flirting & Chemistry</div>
+                <div class="scenario-description">Build playful banter, create romantic tension, and develop natural chemistry through conversation</div>
+              </div>
+
+              <div class="scenario-type" data-scenario="expressing-interest">
+                <div class="scenario-icon">
+                  <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                </div>
+                <div class="scenario-title">Expressing Interest</div>
+                <div class="scenario-description">Communicate romantic intentions authentically and navigate the transition from friendship to romance</div>
+              </div>
+
+              <div class="scenario-type" data-scenario="vulnerability-intimacy">
+                <div class="scenario-icon">
+                  <i data-lucide="shield-heart" class="w-6 h-6"></i>
+                </div>
+                <div class="scenario-title">Vulnerability & Intimacy</div>
+                <div class="scenario-description">Practice emotional openness, share personal stories, and create deeper intimate connections</div>
+              </div>
+
+              <div class="scenario-type" data-scenario="relationship-defining">
+                <div class="scenario-icon">
+                  <i data-lucide="users" class="w-6 h-6"></i>
+                </div>
+                <div class="scenario-title">Relationship Defining</div>
+                <div class="scenario-description">Navigate milestone conversations about exclusivity, commitment, and future relationship goals</div>
+              </div>
+            </div>
+
+            <div class="conversation-container" id="conversationContainer" style="display: none">
+              <!-- Scenario Introduction -->
+              <div class="scenario-intro">
+                <div class="scenario-title">
+                  <i data-lucide="heart" class="w-5 h-5 inline mr-2"></i>
+                  <span id="scenarioTitle">Dating Conversation Practice</span>
+                </div>
+                <div class="scenario-text" id="scenarioText">
+                  Practice your romantic conversation skills in this scenario.
+                </div>
+              </div>
+
+              <!-- Combined Scenario & Conversation Starter -->
+              <div class="scenario-details" id="scenarioDetails">
+                <div class="enhanced-scenario-section">
+                  <div class="scenario-header">
+                    <div class="scenario-icon-small">
+                      <i data-lucide="play-circle" class="w-4 h-4"></i>
+                    </div>
+                    <h3>Your Practice Scenario</h3>
+                  </div>
+                  <div class="scenario-content">
+                    <div class="scenario-context">
+                      <p id="scenarioContext">Scenario details will appear here.</p>
+                    </div>
+                    <div class="conversation-starter" id="conversationPrompt" style="display: none;">
+                      <p id="conversationPromptText">Generating conversation prompt...</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-buttons">
+                <button class="secondary-button" id="backToScenarios">
+                  <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                  Back to Scenarios
+                </button>
+                <button class="secondary-button" id="newStarter">
+                  <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                  New Starter
+                </button>
+                <button class="secondary-button" id="recordButton">
+                  <i data-lucide="mic" class="w-4 h-4"></i>
+                  Record Response
+                </button>
+                <button class="primary-button" id="submitForAnalysis">
+                  <i data-lucide="check-circle" class="w-4 h-4"></i>
+                  Submit for Analysis
+                </button>
+              </div>
+            </div>
+
+            <div class="action-buttons" id="scenarioActions">
+              <button class="secondary-button" id="backToPracticeBtn">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Options
+              </button>
+              <button class="primary-button" id="startPracticeBtn" disabled>
+                <i data-lucide="play" class="w-4 h-4"></i>
+                Start Practice Session
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <!-- API Configuration - Copy api-config-template.js to api-config.js and add your keys -->
+    <script src="js/api-config.js"></script>
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Initialize Gemini AI Engine
+      const aiEngine = new GeminiAIEngine();
+      // Make it globally available
+      window.geminiEngine = aiEngine;
+
+      // Dating scenarios
+      const datingScenarios = {
+        "first-date-mastery": {
+          title: "First Date Mastery",
+          description:
+            "Perfect your first date conversations, from breaking the ice to creating genuine connection",
+          whatWeLookFor:
+            "Dating conversations are the foundation of romantic connection, where two people discover compatibility and build intimate bonds. These skills determine whether initial attraction develops into lasting love and partnership.",
+        },
+        "online-dating-messaging": {
+          title: "Online Dating & Messaging",
+          description:
+            "Master digital romance from compelling first messages to seamless offline transitions",
+          whatWeLookFor:
+            "Dating conversations are the foundation of romantic connection, where two people discover compatibility and build intimate bonds. These skills determine whether initial attraction develops into lasting love and partnership.",
+        },
+        "flirting-chemistry": {
+          title: "Flirting & Chemistry",
+          description:
+            "Build playful banter, create romantic tension, and develop natural chemistry through conversation",
+          whatWeLookFor:
+            "Dating conversations are the foundation of romantic connection, where two people discover compatibility and build intimate bonds. These skills determine whether initial attraction develops into lasting love and partnership.",
+        },
+        "expressing-interest": {
+          title: "Expressing Interest",
+          description:
+            "Communicate romantic intentions authentically and navigate the transition from friendship to romance",
+          whatWeLookFor:
+            "Dating conversations are the foundation of romantic connection, where two people discover compatibility and build intimate bonds. These skills determine whether initial attraction develops into lasting love and partnership.",
+        },
+        "vulnerability-intimacy": {
+          title: "Vulnerability & Intimacy",
+          description:
+            "Practice emotional openness, share personal stories, and create deeper intimate connections",
+          whatWeLookFor:
+            "Dating conversations are the foundation of romantic connection, where two people discover compatibility and build intimate bonds. These skills determine whether initial attraction develops into lasting love and partnership.",
+        },
+        "relationship-defining": {
+          title: "Relationship Defining",
+          description:
+            "Navigate milestone conversations about exclusivity, commitment, and future relationship goals",
+          whatWeLookFor:
+            "Dating conversations are the foundation of romantic connection, where two people discover compatibility and build intimate bonds. These skills determine whether initial attraction develops into lasting love and partnership.",
+        },
+      };
+
+      // State management
+      let currentMode = null;
+      let selectedScenario = null;
+      let conversationHistory = [];
+      let conversationCount = 0;
+      
+      // Recording variables
+      let isRecording = false;
+      let mediaRecorder = null;
+      let audioChunks = [];
+      let recordedAudioBlob = null;
+
+      // DOM elements
+      const analysisOptions = document.querySelectorAll(".analysis-option");
+      const uploadOption = document.getElementById('uploadOption');
+      const practiceOption = document.getElementById('practiceOption');
+      const uploadSection = document.getElementById('uploadSection');
+      const practiceSection = document.getElementById('practiceSection');
+      const backToPracticeBtn = document.getElementById('backToPracticeBtn');
+      const scenarioTypes = document.querySelectorAll(".scenario-type");
+      const conversationContainer = document.getElementById("conversationContainer");
+      const startPracticeBtn = document.getElementById("startPracticeBtn");
+      const backToScenariosBtn = document.getElementById("backToScenarios");
+      const recordBtn = document.getElementById("recordButton");
+      const submitBtn = document.getElementById("submitForAnalysis");
+      const scenarioActionsDiv = document.getElementById("scenarioActions");
+      
+      // Handle upload option selection
+      uploadOption.addEventListener('click', () => {
+        uploadOption.classList.add('selected');
+        practiceOption.classList.remove('selected');
+        uploadSection.style.display = 'block';
+        practiceSection.style.display = 'none';
+      });
+
+      // Handle practice option selection
+      practiceOption.addEventListener('click', () => {
+        practiceOption.classList.add('selected');
+        uploadOption.classList.remove('selected');
+        practiceSection.style.display = 'block';
+        uploadSection.style.display = 'none';
+      });
+
+      // Handle back to practice button
+      backToPracticeBtn.addEventListener('click', () => {
+        practiceSection.style.display = 'none';
+        uploadSection.style.display = 'none';
+        practiceOption.classList.remove('selected');
+        uploadOption.classList.remove('selected');
+      });
+
+      // Back to options button
+      document.getElementById('backToOptions').addEventListener('click', () => {
+        uploadSection.style.display = 'none';
+        practiceSection.style.display = 'none';
+        uploadOption.classList.remove('selected');
+        practiceOption.classList.remove('selected');
+      });
+
+      // Scenario selection - auto-start when clicked
+      let currentScenarioType = null;
+      
+      scenarioTypes.forEach((scenario) => {
+        scenario.addEventListener("click", () => {
+          const scenarioType = scenario.dataset.scenario;
+          currentScenarioType = scenarioType;
+          startConversationPractice(scenarioType);
+        });
+      });
+      
+      // AI-generated scenario function
+      async function generateAIScenario(scenarioKey) {
+        const scenario = datingScenarios[scenarioKey];
+        if (!scenario) return "You are having a romantic conversation.";
+        
+        try {
+          // Check if Gemini is configured
+          if (!window.geminiEngine || !window.geminiEngine.isConfigured()) {
+            console.warn('Gemini API not configured, using fallback');
+            return getFallbackScenario(scenarioKey);
+          }
+          
+          const prompt = `Generate a specific, realistic scenario for romantic conversation practice: ${scenario.title}
+
+Create a single, specific scenario that puts the user in a realistic dating moment where they would naturally engage in this type of conversation.
+
+Format: Start with "You are..." or "You notice..." or "You see..." and describe a specific dating situation.
+
+Examples:
+- For first dates: "You are at a cozy wine bar and your date just mentioned they love to cook, but seems nervous about sharing more."
+- For flirting: "You are at a bookstore coffee shop and someone attractive just asked for your opinion on the book you're reading."
+- For expressing interest: "You just finished a great first date and are walking to your cars."
+
+Generate one specific dating scenario for ${scenario.title}. Keep it realistic and romantic, 1-2 sentences maximum.`;
+
+          const response = await window.geminiEngine.callGeminiAPI(prompt);
+          return response.trim();
+        } catch (error) {
+          console.error('Error generating AI scenario:', error);
+          return getFallbackScenario(scenarioKey);
+        }
+      }
+
+      // Fallback scenarios for when AI is unavailable
+      function getFallbackScenario(scenarioKey) {
+        const fallbacks = {
+          'first-date-mastery': 'You are at a cozy coffee shop and your date just shared something personal about their family.',
+          'online-dating-messaging': 'You are texting someone you matched with and want to move beyond small talk.',
+          'flirting-chemistry': 'You are at a party and someone attractive just made a witty comment about your drink choice.',
+          'expressing-interest': 'You just finished a great date and are walking to your cars.',
+          'vulnerability-intimacy': 'You are on a third date and feeling a real connection developing.',
+          'relationship-defining': 'You have been dating for two months and are discussing your future together.'
+        };
+        return fallbacks[scenarioKey] || 'You are having a romantic conversation.';
+      }
+
+      // AI-generated dating conversation starter function
+      async function generateAIConversationStarter(scenarioKey, context) {
+        const scenario = datingScenarios[scenarioKey];
+        if (!scenario) return "How has your day been?";
+        
+        try {
+          // Check if Gemini is configured
+          if (!window.geminiEngine || !window.geminiEngine.isConfigured()) {
+            console.warn('Gemini API not configured, using fallback');
+            const scenarioData = getDatingScenarioData(scenarioKey);
+            return scenarioData.starters[Math.floor(Math.random() * scenarioData.starters.length)];
+          }
+          
+          const prompt = `Generate 5 different romantic conversation starters for: ${scenario.title}
+
+Context: ${context}
+
+Create 5 brief, realistic conversation starters from the user's perspective that feel natural and authentic for dating scenarios.
+
+Format each as a natural conversation opener that creates connection.
+
+Examples for dating scenarios:
+- "I love how passionate you get when you talk about your work. What first drew you to that field?"
+- "You have this energy about you that's really attractive. What gets you most excited in life right now?"
+- "I can't tell if you're flirting with me or if you're just naturally this charming."
+- "I have to be honest with you - I'm really attracted to you, and I'd love to take you on a proper date."
+- "I don't usually share this with people, but I feel like I can trust you with it."
+
+Generate 5 different romantic conversation starters within the topic. Keep each natural and engaging.`;
+
+          const response = await window.geminiEngine.callGeminiAPI(prompt);
+          
+          // Parse the response to get multiple starters and pick one randomly
+          const starters = response.trim().split('\n').filter(line => line.trim().startsWith('-') || line.trim().startsWith('•') || line.trim().match(/^\d+\./));
+          if (starters.length > 0) {
+            const randomStarter = starters[Math.floor(Math.random() * starters.length)];
+            // Clean up the starter text (remove bullet points, numbers, etc.)
+            return randomStarter.replace(/^[-•\d.\s]+/, '').trim();
+          }
+          
+          return response.trim();
+        } catch (error) {
+          console.error('Error generating AI conversation starter:', error);
+          // Fallback to random pre-written starter
+          const scenarioData = getDatingScenarioData(scenarioKey);
+          return scenarioData.starters[Math.floor(Math.random() * scenarioData.starters.length)];
+        }
+      }
+
+      // Dating scenario data
+      function getDatingScenarioData(scenarioType) {
+        const scenarioData = {
+          'first-date-mastery': {
+            contexts: [
+              'You\'re sitting across from someone at a cozy coffee shop and there\'s an awkward silence after they just shared something personal about their family.',
+              'Your date just admitted they\'re nervous because they don\'t go on many dates, and you can see they\'re genuinely vulnerable right now.',
+              'You\'re walking through a park after dinner and your date stops to point out a constellation, creating a perfect intimate moment.',
+              'Your date just asked you what you\'re passionate about, and you can tell they\'re genuinely curious about who you really are.',
+              'You\'re at a restaurant and your date just laughed at your joke, but now you want to shift the conversation to something more meaningful.',
+              'Your date just mentioned they love to travel and their eyes lit up - you sense this is your chance to connect on a deeper level.'
+            ],
+            starters: [
+              "I love how passionate you get when you talk about your work. What first drew you to that field?",
+              "You have such an interesting perspective on things. What's something you believe that might surprise people?",
+              "I'm really enjoying getting to know you. What's been the best part of your week so far?",
+              "You seem like someone who has great stories. What's the most spontaneous thing you've done recently?",
+              "I love that you're so thoughtful about [topic]. What's something you've been thinking about lately?",
+              "You have this energy about you that's really attractive. What gets you most excited in life right now?",
+              "I'm curious about what makes you laugh. What's your sense of humor like?",
+              "You seem like you'd be fun to travel with. What's been your favorite trip or place you've visited?"
+            ]
+          },
+          'online-dating-messaging': {
+            contexts: [
+              'You\'ve been texting someone for a week and they just sent a photo of themselves at a concert - you want to escalate the conversation beyond small talk.',
+              'You matched with someone attractive and noticed they mention loving hiking in their profile, but you need to stand out from other matches.',
+              'You\'ve been chatting online for a few days and there\'s clear chemistry, but you want to suggest meeting in person without seeming pushy.',
+              'Your online conversation has been going well, but you just noticed they\'re about to go on vacation and you want to make a memorable impression.',
+              'You\'re messaging someone who seems genuinely interesting, but they just mentioned being disappointed by past dating experiences.',
+              'You\'ve been having great banter online and they just asked what you\'re looking for - this is your chance to create romantic anticipation.'
+            ],
+            starters: [
+              "I have to say, I really love spending time with you. There's something about your energy that just draws me in.",
+              "I find myself thinking about you more than I expected to. What is it about you that's so captivating?",
+              "You have this way of making everything more interesting. I love how your mind works.",
+              "I'm really attracted to how confident you are. What makes you feel most like yourself?",
+              "There's something about the way you [specific compliment]. It's really attractive.",
+              "I love how easy it is to talk to you. When do you feel most connected to someone?",
+              "You have beautiful eyes. I love how expressive they are when you talk about things you care about.",
+              "I'm really enjoying this connection we're building. What are you looking for in someone you're dating?"
+            ]
+          },
+          'flirting-chemistry': {
+            contexts: [
+              'You\'re at a bar and someone just made a witty comment about your drink choice - they\'re clearly flirting and you want to match their energy.',
+              'You\'re talking to someone at a party and they just playfully teased you about something, creating the perfect opportunity for flirtatious banter.',
+              'You\'re on a second date and there\'s obvious mutual attraction, but you want to build more sexual tension through playful conversation.',
+              'Someone just complimented your outfit in a way that feels like flirting, and you want to escalate the playful romantic energy.',
+              'You\'re having drinks with someone and they just leaned in closer while talking - the chemistry is obvious and you want to acknowledge it playfully.',
+              'You\'re at a bookstore and someone just caught you checking them out, smiled, and made a comment about your book choice - perfect flirting opportunity.'
+            ],
+            starters: [
+              "I have to say, you're much more interesting than I expected when I first saw you.",
+              "You have this mischievous look in your eyes. I bet you're trouble, aren't you?",
+              "I love how you think. You're definitely going to be dangerous for my productivity.",
+              "You're pretty confident, aren't you? I like that about you.",
+              "I can't tell if you're flirting with me or if you're just naturally this charming.",
+              "You have this way of making everything sound more interesting. What's your secret?",
+              "I'm trying to figure out if you're always this witty or if you're just showing off for me.",
+              "You're going to get me in trouble with that smile. You know that, right?"
+            ]
+          },
+          'expressing-interest': {
+            contexts: [
+              'You just finished a great date and you\'re saying goodbye, but you want to get something off your chest about your feelings.',
+              'You\'ve been friends with someone for months and you\'re realizing you have romantic feelings - tonight feels like the right time to tell them.',
+              'You\'re at a coffee shop with someone you\'ve been casually seeing, and you want to clarify that you\'re interested in something more serious.',
+              'You\'ve been getting mixed signals from someone you\'re attracted to, and you need to be direct about your feelings to know where you stand.',
+              'You\'re texting someone after a few great dates and you want to express that you\'re only interested in dating them, not others.',
+              'You\'re walking someone home after a perfect evening and you feel like this is the moment to be honest about how much you like them.'
+            ],
+            starters: [
+              "I have to be honest with you - I\'m really attracted to you, and I\'d love to take you on a proper date.",
+              "I\'ve been thinking about this for a while, and I really like you. I\'d love to see where this could go.",
+              "I don\'t want to misread things, but I feel like there\'s something special between us. Do you feel it too?",
+              "I have to tell you, spending time with you has become the best part of my week.",
+              "I\'m really drawn to you. Would you be interested in going out sometime, just the two of us?",
+              "I keep finding myself thinking about you. I\'d love to explore this connection we have.",
+              "I don\'t usually do this, but I\'m really interested in you. Would you like to go on a date with me?",
+              "I\'ve been enjoying our friendship so much, but I have to admit I\'m developing feelings for you."
+            ]
+          },
+          'vulnerability-intimacy': {
+            contexts: [
+              'You\'re on a quiet walk after dinner and your date just shared something deeply personal about their family - you feel compelled to match their vulnerability.',
+              'You\'re sitting close on a couch during a movie night and there\'s a pause in conversation where you both feel the intimacy of the moment.',
+              'Your date just asked you about your biggest fear or dream, and you can tell they genuinely want to know the real you.',
+              'You\'ve been dating for a few weeks and you\'re starting to feel something real - you want to share something meaningful about your past.',
+              'You\'re having late-night pillow talk after being physically intimate, and the emotional walls are down for deeper conversation.',
+              'You\'re at your place making breakfast together and your date mentions feeling comfortable with you - it\'s the perfect moment to open up.'
+            ],
+            starters: [
+              "I don\'t usually share this with people, but I feel like I can trust you with it.",
+              "You make me feel so comfortable being myself. I\'ve been thinking about something personal lately.",
+              "I love how honest we can be with each other. Can I share something that\'s been on my mind?",
+              "I feel like you really understand me. I\'d love to tell you about something that shaped who I am.",
+              "I\'ve been through some tough times, and I\'d like to share that with you if you\'re open to it.",
+              "You\'re so easy to talk to. I find myself wanting to share things with you I don\'t tell many people.",
+              "I feel like we have this connection where I can be completely honest. Can I tell you something vulnerable?",
+              "I\'ve been thinking about what makes me feel most alive, and I\'d love to share that with you."
+            ]
+          },
+          'relationship-defining': {
+            contexts: [
+              'You\'ve been dating for two months and you\'re having dinner when your date mentions a wedding they\'re attending - it\'s the perfect opening to discuss your future.',
+              'You\'re lying in bed together after a perfect weekend and you both seem to be wondering if you should delete your dating apps.',
+              'Your date just introduced you to their best friend as their "friend" and you felt a pang of disappointment - you need to address what you are.',
+              'You\'re planning a vacation together and the conversation naturally turns to where you both see this relationship going.',
+              'You\'ve been exclusive for a while but haven\'t made it official - your date just mentioned someone asking if they\'re single.',
+              'You\'re at a family gathering and your date fits in perfectly with everyone - you\'re realizing you want something serious with them.'
+            ],
+            starters: [
+              "I\'ve been thinking about us a lot lately. How are you feeling about where things are going between us?",
+              "I really value what we\'re building together. What does a healthy relationship look like to you?",
+              "I\'m finding myself caring about you more than I expected. How do you feel about taking things to the next level?",
+              "I love how comfortable I feel with you. What are you looking for in a serious relationship?",
+              "I\'ve been wondering if you\'re seeing other people, because I\'m really only interested in getting to know you better.",
+              "I feel like we have something really special. What are your thoughts on us becoming exclusive?",
+              "I\'m at a point where I\'d love to introduce you to my friends. How do you feel about that?",
+              "I\'m really happy with how things are developing between us. What would make you feel most loved in a relationship?"
+            ]
+          }
+        };
+        
+        return scenarioData[scenarioType] || { contexts: ['You are having a dating conversation.'], starters: ['How has your day been?'] };
+      }
+
+      // Start conversation practice - show scenario info
+      async function startConversationPractice(scenarioKey) {
+        const scenario = datingScenarios[scenarioKey];
+        if (!scenario) return;
+        
+        // Store current scenario for "New Starter" button
+        currentScenarioType = scenarioKey;
+        
+        // Update UI with proper format
+        document.getElementById("scenarioTitle").textContent = scenario.title;
+        document.getElementById("scenarioText").textContent = scenario.description;
+        
+        // Generate AI scenario context
+        const aiScenario = await generateAIScenario(scenarioKey);
+        document.getElementById("scenarioContext").textContent = aiScenario;
+        
+        // Update conversation prompt with loading state
+        const conversationPromptElement = document.getElementById("conversationPromptText");
+        if (conversationPromptElement) {
+          conversationPromptElement.textContent = "Generating conversation starter...";
+          conversationPromptElement.style.fontStyle = "italic";
+          
+          // Remove AI conversation starter
+          conversationPromptElement.style.display = 'none';
+        }
+
+        // Hide scenario grid and show scenario details
+        document.querySelector(".scenario-grid").style.display = "none";
+        document.querySelector("#practiceSection h2").style.display = "none";
+        document.querySelector(
+          "#practiceSection .section-subtitle"
+        ).style.display = "none";
+        scenarioActionsDiv.style.display = "none";
+        conversationContainer.style.display = "block";
+        
+        // Show scenario details only (no conversation prompt)
+        document.getElementById("scenarioDetails").style.display = "block";
+        document.getElementById("conversationPrompt").style.display = "none";
+      }
+
+      // Back to scenarios button
+      backToScenariosBtn.addEventListener("click", () => {
+        conversationContainer.style.display = "none";
+        scenarioActionsDiv.style.display = "flex";
+        document.querySelector(".scenario-grid").style.display = "grid";
+        document.querySelector("#practiceSection h2").style.display = "block";
+        document.querySelector(
+          "#practiceSection .section-subtitle"
+        ).style.display = "block";
+        resetPracticeSession();
+      });
+      
+      // New Starter button functionality
+      const newStarterBtn = document.getElementById('newStarter');
+      if (newStarterBtn) {
+        newStarterBtn.addEventListener('click', async function() {
+          if (currentScenarioType) {
+            // Show loading state for scenario
+            const scenarioContextElement = document.getElementById("scenarioContext");
+            scenarioContextElement.textContent = "Generating new scenario...";
+            scenarioContextElement.style.fontStyle = "italic";
+            
+            // Add animation to show the change
+            const scenarioDetailsElement = document.getElementById('scenarioDetails');
+            if (scenarioDetailsElement) {
+              scenarioDetailsElement.style.opacity = '0.7';
+              setTimeout(() => {
+                scenarioDetailsElement.style.opacity = '1';
+              }, 300);
+            }
+            
+            // Generate new AI scenario
+            const newAIScenario = await generateAIScenario(currentScenarioType);
+            
+            // Update the displayed content
+            scenarioContextElement.textContent = newAIScenario;
+            scenarioContextElement.style.fontStyle = "normal";
+          }
+        });
+      }
+
+      // Reset practice session
+      function resetPracticeSession() {
+        scenarioTypes.forEach((s) => s.classList.remove("selected"));
+        selectedScenario = null;
+        startPracticeBtn.disabled = true;
+        
+        // Reset recording state
+        isRecording = false;
+        recordedAudioBlob = null;
+        audioChunks = [];
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+        }
+
+        // Reset record button UI
+        if (recordBtn) {
+          recordBtn.innerHTML = '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+          recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+          recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+          recordBtn.style.color = "var(--text-primary)";
+          lucide.createIcons();
+        }
+      }
+
+      // File upload functionality
+      document.getElementById('chooseFileBtn').addEventListener('click', () => {
+        document.getElementById('audioFile').click();
+      });
+
+      document.getElementById('audioFile').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          // Show file details
+          document.getElementById('fileName').textContent = file.name;
+          document.getElementById('fileSize').textContent = (file.size / (1024 * 1024)).toFixed(1) + ' MB';
+          document.getElementById('fileSelected').style.display = 'flex';
+          document.getElementById('analyzeUpload').disabled = false;
+        }
+      });
+
+      // Remove file functionality
+      document.getElementById('removeFile').addEventListener('click', () => {
+        document.getElementById('audioFile').value = '';
+        document.getElementById('fileSelected').style.display = 'none';
+        document.getElementById('analyzeUpload').disabled = true;
+      });
+
+      // Analyze upload button
+      document.getElementById('analyzeUpload').addEventListener('click', async () => {
+        const audioFile = document.getElementById('audioFile');
+        if (!audioFile.files[0]) {
+          alert('Please select a file first');
+          return;
+        }
+
+        // Update button state
+        const analyzeBtn = document.getElementById('analyzeUpload');
+        analyzeBtn.disabled = true;
+        analyzeBtn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+
+        try {
+          // Use the analysis processor
+          const processor = new SimpleAnalysis();
+          const results = await processor.analyzeAudio(audioFile.files[0], 'dating-conversation');
+
+          // Store results and redirect
+          sessionStorage.setItem('analysisResults', JSON.stringify(results));
+          window.location.href = 'dating-analysis-results.html?type=dating-conversation&source=upload';
+        } catch (error) {
+          console.error('Analysis failed:', error);
+          alert('Analysis failed. Please try again.');
+          analyzeBtn.disabled = false;
+          analyzeBtn.innerHTML = '<i data-lucide="zap" class="w-4 h-4"></i> Analyze Recording';
+        }
+      });
+
+      // Recording functionality - ensure button is properly referenced
+      if (recordBtn) {
+        recordBtn.addEventListener("click", async () => {
+        if (!isRecording) {
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
+            
+            mediaRecorder.ondataavailable = (event) => {
+              audioChunks.push(event.data);
+            };
+            
+            mediaRecorder.onstop = () => {
+              recordedAudioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+              stream.getTracks().forEach(track => track.stop());
+              
+              // Show recording success confirmation
+              showRecordingConfirmation();
+            };
+            
+            mediaRecorder.start();
+            isRecording = true;
+            
+            // Update button UI and show recording started feedback
+            recordBtn.innerHTML = '<i data-lucide="stop-circle" class="w-4 h-4"></i> Stop Recording';
+            recordBtn.style.background = "#ef4444";
+            recordBtn.style.borderColor = "#ef4444";
+            recordBtn.style.color = "white";
+            lucide.createIcons();
+            
+            // Show recording started confirmation
+            showRecordingStarted();
+          } catch (error) {
+            console.error('Error accessing microphone:', error);
+            alert('Unable to access microphone. Please check your permissions.');
+          }
+        } else {
+          // Stop recording
+          if (mediaRecorder && mediaRecorder.state !== "inactive") {
+            mediaRecorder.stop();
+            isRecording = false;
+            
+            // Update button UI
+            recordBtn.innerHTML = '<i data-lucide="mic" class="w-4 h-4"></i> Record Response';
+            recordBtn.style.background = "rgba(255, 255, 255, 0.8)";
+            recordBtn.style.borderColor = "rgba(0, 0, 0, 0.1)";
+            recordBtn.style.color = "var(--text-primary)";
+            lucide.createIcons();
+          }
+        }
+        });
+      } else {
+        console.error('Record button not found - check HTML structure');
+      }
+
+      // Analysis function for dating communication
+      async function analyzeConversation(audioBlob, analysisType) {
+        console.log('Starting dating communication analysis...', analysisType);
+        
+        // Convert blob to file for analysis
+        const audioFile = new File([audioBlob], 'recording.webm', { type: audioBlob.type });
+        
+        try {
+          // Initialize analysis system
+          const simpleAnalysis = new SimpleAnalysis();
+          
+          // Get transcript from audio
+          console.log('Transcribing audio...');
+          const analysisResult = await simpleAnalysis.analyzeAudio(audioFile, 'dating');
+          
+          return {
+            ...analysisResult,
+            analysisType: analysisType,
+            timestamp: Date.now(),
+            status: 'analyzed'
+          };
+          
+        } catch (error) {
+          console.error('Analysis error:', error);
+          
+          // Return error result with audio preserved
+          return {
+            audioBlob: audioBlob,
+            audioFile: audioFile,
+            analysisType: analysisType,
+            timestamp: Date.now(),
+            status: 'error',
+            error: error.message,
+            transcript: 'Error transcribing audio. Please try again.'
+          };
+        }
+      }
+
+      // Submit for analysis
+      submitBtn.addEventListener("click", async () => {
+        if (!recordedAudioBlob) {
+          alert('Please record your response first.');
+          return;
+        }
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing...';
+        lucide.createIcons();
+
+        try {
+          // Prepare audio data for personal communication analysis
+          console.log("🔄 Preparing audio for dating communication analysis...");
+          
+          // Convert blob to base64 for transfer
+          const reader = new FileReader();
+          reader.onloadend = function() {
+            const base64Audio = reader.result;
+            
+            // Prepare audio data object
+            const audioData = {
+              base64: base64Audio,
+              size: recordedAudioBlob.size,
+              type: recordedAudioBlob.type,
+              name: "dating-conversation.webm",
+              analysisType: "dating"
+            };
+
+            console.log("📱 Storing audio data for analysis:", audioData.name, audioData.analysisType);
+
+            // Store audio data for the analysis page
+            sessionStorage.setItem("audioForAnalysis", JSON.stringify(audioData));
+            
+            // Redirect to dating conversation analysis results page
+            window.location.href = "dating-analysis-results.html";
+          };
+          
+          reader.readAsDataURL(recordedAudioBlob);
+        } catch (error) {
+          console.error('Analysis error:', error);
+          alert('Error analyzing conversation. Please try again.');
+          
+          // Reset button
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4"></i> Submit for Analysis';
+          lucide.createIcons();
+        }
+      });
+
+      // Recording confirmation functions
+      function showRecordingStarted() {
+        // Create or update recording status indicator
+        let statusIndicator = document.getElementById('recordingStatus');
+        if (!statusIndicator) {
+          statusIndicator = document.createElement('div');
+          statusIndicator.id = 'recordingStatus';
+          statusIndicator.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: slideInFromRight 0.3s ease-out;
+          `;
+          document.body.appendChild(statusIndicator);
+        }
+        
+        statusIndicator.innerHTML = `
+          <div style="width: 8px; height: 8px; background: white; border-radius: 50%; animation: pulse 1.5s infinite;"></div>
+          Recording in progress...
+        `;
+        
+        // Add CSS animations if not already added
+        if (!document.getElementById('recordingAnimations')) {
+          const style = document.createElement('style');
+          style.id = 'recordingAnimations';
+          style.textContent = `
+            @keyframes slideInFromRight {
+              from { transform: translateX(100%); opacity: 0; }
+              to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes pulse {
+              0%, 100% { opacity: 1; }
+              50% { opacity: 0.5; }
+            }
+            @keyframes successPulse {
+              0% { transform: scale(1); }
+              50% { transform: scale(1.05); }
+              100% { transform: scale(1); }
+            }
+          `;
+          document.head.appendChild(style);
+        }
+      }
+
+      function showRecordingConfirmation() {
+        const statusIndicator = document.getElementById('recordingStatus');
+        if (statusIndicator) {
+          // Update to success state
+          statusIndicator.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+          statusIndicator.style.animation = 'successPulse 0.5s ease-out';
+          statusIndicator.innerHTML = `
+            <i data-lucide="check-circle" style="width: 16px; height: 16px;"></i>
+            Recording saved successfully!
+          `;
+          
+          // Reinitialize lucide icons for the new icon
+          if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+          }
+          
+          // Auto-hide after 3 seconds
+          setTimeout(() => {
+            if (statusIndicator) {
+              statusIndicator.style.animation = 'slideInFromRight 0.3s ease-out reverse';
+              setTimeout(() => {
+                if (statusIndicator && statusIndicator.parentNode) {
+                  statusIndicator.parentNode.removeChild(statusIndicator);
+                }
+              }, 300);
+            }
+          }, 3000);
+        }
+        
+        // Also show confirmation in the action area
+        showInlineRecordingConfirmation();
+      }
+
+      function showInlineRecordingConfirmation() {
+        // Find the action buttons area
+        const actionButtonsArea = document.querySelector('.action-buttons');
+        if (actionButtonsArea) {
+          // Remove any existing confirmation
+          const existingConfirmation = document.getElementById('inlineRecordingConfirmation');
+          if (existingConfirmation) {
+            existingConfirmation.remove();
+          }
+          
+          // Create new confirmation message
+          const confirmation = document.createElement('div');
+          confirmation.id = 'inlineRecordingConfirmation';
+          confirmation.style.cssText = `
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            animation: slideUp 0.4s ease-out;
+          `;
+          
+          confirmation.innerHTML = `
+            <i data-lucide="check-circle" style="width: 20px; height: 20px;"></i>
+            <div>
+              <div style="font-size: 16px; margin-bottom: 4px;">Recording Captured Successfully!</div>
+              <div style="font-size: 14px; opacity: 0.9;">Ready to submit for analysis</div>
+            </div>
+          `;
+          
+          // Insert before the action buttons
+          actionButtonsArea.parentNode.insertBefore(confirmation, actionButtonsArea);
+          
+          // Reinitialize lucide icons
+          if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+          }
+          
+          // Add slide up animation if not already added
+          if (!document.getElementById('slideUpAnimation')) {
+            const style = document.createElement('style');
+            style.id = 'slideUpAnimation';
+            style.textContent = `
+              @keyframes slideUp {
+                from { 
+                  transform: translateY(20px); 
+                  opacity: 0; 
+                }
+                to { 
+                  transform: translateY(0); 
+                  opacity: 1; 
+                }
+              }
+            `;
+            document.head.appendChild(style);
+          }
+        }
+      }
+
+      // Initialize analysis system
+      let analysisProcessor = null;
+      try {
+        analysisProcessor = new SimpleAnalysis();
+        console.log('✅ SimpleAnalysis system initialized successfully');
+      } catch (error) {
+        console.error('❌ Failed to initialize analysis system:', error);
+      }
+
+      // Initialize Gemini AI engine
+      let geminiEngine = null;
+      try {
+        geminiEngine = new GeminiAIEngine();
+        console.log('Gemini AI Engine initialized:', geminiEngine.isConfigured() ? 'Configured' : 'Not configured');
+      } catch (error) {
+        console.warn('Gemini AI Engine not available:', error);
+      }
+    </script>
+  </body>
+</html>
