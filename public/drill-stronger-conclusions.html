@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stronger Conclusions Master Drill - Articulaition</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    
+    <!-- AI Integration -->
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+    <script src="js/achievement-tracker.js"></script>
+    <script src="js/user-data-tracker.js"></script>
+    
+    <style>
+        :root {
+            --drill-primary: #10b981;
+            --drill-secondary: #059669;
+            --drill-accent: #34d399;
+            --drill-warning: #f59e0b;
+            --drill-info: #06b6d4;
+            --drill-dark: #1a1f2e;
+            --drill-glass: rgba(255, 255, 255, 0.9);
+            --drill-glass-dark: rgba(15, 20, 25, 0.9);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 25%, #047857 50%, #059669 75%, #10b981 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Advanced Background Effects */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(52, 211, 153, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(5, 150, 105, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Enhanced Navigation */
+        .top-nav {
+            padding: 1.5rem 2.5rem;
+            background: rgba(15, 20, 25, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 0 0 1rem 1rem;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.75rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .drill-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--drill-primary), var(--drill-accent));
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .drill-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            border-radius: 2rem;
+            background: linear-gradient(135deg, var(--drill-primary), var(--drill-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.4);
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 8px 32px rgba(16, 185, 129, 0.4); }
+            50% { box-shadow: 0 12px 40px rgba(16, 185, 129, 0.6); }
+        }
+
+        .drill-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, white, rgba(255, 255, 255, 0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .drill-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* Conclusion Framework */
+        .framework-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .framework-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .framework-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .framework-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--drill-primary), var(--drill-accent));
+        }
+
+        .framework-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .framework-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--drill-accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .framework-desc {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .framework-example {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Training Scenarios */
+        .scenarios-section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .scenario-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .scenario-tab {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .scenario-tab.active {
+            background: linear-gradient(135deg, var(--drill-primary), var(--drill-accent));
+            border-color: var(--drill-primary);
+        }
+
+        .scenario-tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .scenario-content {
+            display: none;
+        }
+
+        .scenario-content.active {
+            display: block;
+        }
+
+        .scenario-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--drill-primary);
+        }
+
+        .scenario-card.selected {
+            border-color: var(--drill-primary);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .scenario-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.75rem;
+        }
+
+        .scenario-desc {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-metrics {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            flex-wrap: wrap;
+        }
+
+        /* Practice Session */
+        .practice-session {
+            display: none;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .practice-session.active {
+            display: block;
+        }
+
+        .session-prompt {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .prompt-text {
+            font-size: 1.25rem;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .prompt-context {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .conclusion-framework {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .framework-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .framework-step {
+            padding: 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--drill-primary);
+        }
+
+        .step-number {
+            font-weight: 700;
+            color: var(--drill-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-text {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .timer-display {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--drill-primary);
+            margin: 2rem 0;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+
+        .conclusion-tracker {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tracker-item {
+            text-align: center;
+        }
+
+        .tracker-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--drill-accent);
+            display: block;
+        }
+
+        .tracker-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.5rem;
+        }
+
+        .live-analysis {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            min-height: 120px;
+            max-height: 200px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .analysis-text {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .conclusion-highlight {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--drill-accent);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+        }
+
+        /* Recording Controls */
+        .recording-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .record-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.25rem 2rem;
+            border: none;
+            border-radius: 1rem;
+            font-weight: 600;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 180px;
+            justify-content: center;
+        }
+
+        .record-btn.primary {
+            background: linear-gradient(135deg, var(--drill-primary), var(--drill-secondary));
+            color: white;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .record-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .record-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .record-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .recording-indicator {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            font-weight: 600;
+            color: var(--drill-primary);
+        }
+
+        .recording-indicator.active {
+            display: flex;
+        }
+
+        .recording-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--drill-primary);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.1); }
+        }
+
+        /* AI Analysis Results */
+        .analysis-results {
+            display: none;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .analysis-results.visible {
+            display: block;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .score-excellent { color: var(--drill-accent); }
+        .score-good { color: var(--drill-primary); }
+        .score-needs-work { color: var(--drill-warning); }
+        .score-poor { color: #ef4444; }
+
+        .ai-feedback {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .feedback-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feedback-content {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--drill-primary), var(--drill-accent));
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .progress-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--drill-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .drill-title {
+                font-size: 2rem;
+            }
+
+            .timer-display {
+                font-size: 3rem;
+            }
+
+            .recording-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .framework-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .conclusion-tracker {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .scenario-tabs {
+                justify-content: center;
+            }
+
+            .framework-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="improvement-hub-dashboard.html" class="back-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="m19 12-7 7-7-7"></path>
+                </svg>
+                Back to Drills
+            </a>
+            <div class="drill-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 12l2 2 4-4"></path>
+                    <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.51 0 2.93.37 4.18 1.03"></path>
+                </svg>
+                Stronger Conclusions Master
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="drill-icon">🎯</div>
+            <h1 class="drill-title">Stronger Conclusions</h1>
+            <p class="drill-subtitle">
+                Master the art of powerful endings that resonate, inspire action, and leave lasting impressions. Transform weak endings into memorable conclusions that drive results and command respect.
+            </p>
+        </section>
+
+        <!-- Progress Tracking -->
+        <section class="progress-section">
+            <div class="progress-card">
+                <div class="progress-value" id="totalConclusions">0</div>
+                <div class="progress-label">Conclusions Practiced</div>
+            </div>
+            <div class="progress-card">
+                <div class="progress-value" id="averageStrength">0%</div>
+                <div class="progress-label">Average Strength Score</div>
+            </div>
+            <div class="progress-card">
+                <div class="progress-value" id="bestImpact">0</div>
+                <div class="progress-label">Best Impact Rating</div>
+            </div>
+            <div class="progress-card">
+                <div class="progress-value" id="frameworksMastered">0</div>
+                <div class="progress-label">Frameworks Mastered</div>
+            </div>
+        </section>
+
+        <!-- Conclusion Frameworks -->
+        <section class="framework-section">
+            <h2 class="section-title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+                Master Conclusion Frameworks
+            </h2>
+            <div class="framework-grid">
+                <div class="framework-card">
+                    <div class="framework-title">
+                        🎯 The Power Close
+                    </div>
+                    <div class="framework-desc">
+                        End with undeniable clarity and conviction. Perfect for decisions, presentations, and leadership moments.
+                    </div>
+                    <div class="framework-example">
+                        "Here's what we need to do: [specific action]. The cost of waiting is too high, and the opportunity is clear. Let's move forward."
+                    </div>
+                </div>
+                <div class="framework-card">
+                    <div class="framework-title">
+                        💡 The Insight Bridge
+                    </div>
+                    <div class="framework-desc">
+                        Connect current discussion to bigger picture insights. Elevates conversations beyond immediate topics.
+                    </div>
+                    <div class="framework-example">
+                        "This tells us something important about [broader insight]. When we understand this principle, it changes how we approach [future situations]."
+                    </div>
+                </div>
+                <div class="framework-card">
+                    <div class="framework-title">
+                        🚀 The Forward Launch
+                    </div>
+                    <div class="framework-desc">
+                        Transform endings into beginnings. Creates momentum and engagement for next steps.
+                    </div>
+                    <div class="framework-example">
+                        "Now that we've established this foundation, the exciting part begins: [next phase]. Here's how we'll make it happen."
+                    </div>
+                </div>
+                <div class="framework-card">
+                    <div class="framework-title">
+                        🎭 The Emotional Anchor
+                    </div>
+                    <div class="framework-desc">
+                        End with emotional resonance that creates lasting memory. Perfect for stories and persuasive moments.
+                    </div>
+                    <div class="framework-example">
+                        "This moment taught me that [universal truth]. Every time I face [similar situation], I remember this lesson."
+                    </div>
+                </div>
+                <div class="framework-card">
+                    <div class="framework-title">
+                        🔄 The Circle Back
+                    </div>
+                    <div class="framework-desc">
+                        Return to opening theme with new understanding. Creates satisfying narrative completion.
+                    </div>
+                    <div class="framework-example">
+                        "Remember when I mentioned [opening theme]? Now you can see how [journey] brought us full circle to [deeper understanding]."
+                    </div>
+                </div>
+                <div class="framework-card">
+                    <div class="framework-title">
+                        ⚡ The Challenge Call
+                    </div>
+                    <div class="framework-desc">
+                        End with inspiring challenge that motivates action. Transforms listeners into participants.
+                    </div>
+                    <div class="framework-example">
+                        "The question isn't whether this is possible—it's whether you're ready to [specific challenge]. Who's in?"
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Training Scenarios -->
+        <section class="scenarios-section">
+            <h2 class="section-title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h4"></path>
+                    <path d="M15 11h4a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-4"></path>
+                    <path d="M12 2v20"></path>
+                </svg>
+                Choose Training Scenario
+            </h2>
+            
+            <div class="scenario-tabs">
+                <div class="scenario-tab active" data-scenario="presentation">📊 Presentations</div>
+                <div class="scenario-tab" data-scenario="meeting">🤝 Meetings</div>
+                <div class="scenario-tab" data-scenario="story">📚 Storytelling</div>
+                <div class="scenario-tab" data-scenario="persuasion">💪 Persuasion</div>
+                <div class="scenario-tab" data-scenario="conflict">⚖️ Conflict Resolution</div>
+            </div>
+
+            <div class="scenario-content active" id="presentation-scenarios">
+                <div class="scenario-card" data-id="quarterly-results">
+                    <div class="scenario-title">Quarterly Results Presentation</div>
+                    <div class="scenario-desc">Present Q3 results to stakeholders, addressing both successes and challenges while setting clear expectations for Q4.</div>
+                    <div class="scenario-metrics">
+                        <span>⏱️ 3 minutes</span>
+                        <span>🎯 Decisive conclusion</span>
+                        <span>📈 Forward-looking</span>
+                    </div>
+                </div>
+                <div class="scenario-card" data-id="product-launch">
+                    <div class="scenario-title">Product Launch Strategy</div>
+                    <div class="scenario-desc">Pitch new product launch strategy to executive team, requiring clear go/no-go decision and resource commitment.</div>
+                    <div class="scenario-metrics">
+                        <span>⏱️ 4 minutes</span>
+                        <span>🎯 Action-oriented</span>
+                        <span>💰 Investment decision</span>
+                    </div>
+                </div>
+                <div class="scenario-card" data-id="team-restructure">
+                    <div class="scenario-title">Team Restructuring Proposal</div>
+                    <div class="scenario-desc">Present sensitive team restructuring plan that requires buy-in from multiple departments and addresses concerns.</div>
+                    <div class="scenario-metrics">
+                        <span>⏱️ 5 minutes</span>
+                        <span>🎯 Consensus building</span>
+                        <span>👥 Change management</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-content" id="meeting-scenarios">
+                <div class="scenario-card" data-id="budget-discussion">
+                    <div class="scenario-title">Budget Allocation Discussion</div>
+                    <div class="scenario-desc">Conclude heated budget discussion with clear next steps and compromise that satisfies key stakeholders.</div>
+                    <div class="scenario-metrics">
+                        <span>⏱️ 2 minutes</span>
+                        <span>🎯 Consensus building</span>
+                        <span>💰 Resource allocation</span>
+                    </div>
+                </div>
+                <div class="scenario-card" data-id="project-review">
+                    <div class="scenario-title">Project Status Review</div>
+                    <div class="scenario-desc">Wrap up project review meeting with clear accountability, timeline adjustments, and resource needs.</div>
+                    <div class="scenario-metrics">
+                        <span>⏱️ 3 minutes</span>
+                        <span>🎯 Accountability focus</span>
+                        <span>📅 Timeline critical</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-content" id="story-scenarios">
+                <div class="scenario-card" data-id="leadership-story">
+                    <div class="scenario-title">Leadership Challenge Story</div>
+                    <div class="scenario-desc">Share a personal leadership challenge story that illustrates key principles and leaves listeners with actionable insights.</div>
+                    <div class="scenario-metrics">
+                        <span>⏱️ 4 minutes</span>
+                        <span>🎯 Inspiring conclusion</span>
+                        <span>📖 Universal lesson</span>
+                    </div>
+                </div>
+                <div class="scenario-card" data-id="failure-story">
+                    <div class="scenario-title">Learning from Failure</div>
+                    <div class="scenario-desc">Tell a failure story that demonstrates growth, resilience, and the value gained from the experience.</div>
+                    <div class="scenario-metrics">
+                        <span>⏱️ 3 minutes</span>
+                        <span>🎯 Growth-focused</span>
+                        <span>💪 Resilience theme</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-content" id="persuasion-scenarios">
+                <div class="scenario-card" data-id="investment-pitch">
+                    <div class="scenario-title">Investment Pitch</div>
+                    <div class="scenario-desc">Conclude investment pitch with compelling call to action that addresses risk concerns and creates urgency.</div>
+                    <div class="scenario-metrics">
+                        <span>⏱️ 2 minutes</span>
+                        <span>🎯 Investment decision</span>
+                        <span>⚡ Urgency creation</span>
+                    </div>
+                </div>
+                <div class="scenario-card" data-id="policy-change">
+                    <div class="scenario-title">Policy Change Advocacy</div>
+                    <div class="scenario-desc">Advocate for important policy change with conclusion that motivates action and addresses implementation concerns.</div>
+                    <div class="scenario-metrics">
+                        <span>⏱️ 3 minutes</span>
+                        <span>🎯 Policy advocacy</span>
+                        <span>🏛️ Implementation focus</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-content" id="conflict-scenarios">
+                <div class="scenario-card" data-id="team-conflict">
+                    <div class="scenario-title">Team Conflict Resolution</div>
+                    <div class="scenario-desc">Mediate team conflict and conclude with clear resolution, restored relationships, and prevention strategies.</div>
+                    <div class="scenario-metrics">
+                        <span>⏱️ 4 minutes</span>
+                        <span>🎯 Relationship repair</span>
+                        <span>🤝 Consensus building</span>
+                    </div>
+                </div>
+                <div class="scenario-card" data-id="vendor-dispute">
+                    <div class="scenario-title">Vendor Dispute Resolution</div>
+                    <div class="scenario-desc">Resolve vendor dispute with conclusion that preserves business relationship while establishing clear boundaries.</div>
+                    <div class="scenario-metrics">
+                        <span>⏱️ 3 minutes</span>
+                        <span>🎯 Relationship preservation</span>
+                        <span>📋 Clear boundaries</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="record-btn primary" onclick="startSelectedScenario()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5,3 19,12 5,21"></polygon>
+                    </svg>
+                    Start Selected Scenario
+                </button>
+            </div>
+        </section>
+
+        <!-- Practice Session -->
+        <section class="practice-session" id="practiceSession">
+            <div class="session-header">
+                <h3 class="section-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6"></path>
+                        <path d="m21 12-6-6m-6 6-6-6"></path>
+                    </svg>
+                    Conclusion Training Session
+                </h3>
+            </div>
+            
+            <div class="session-prompt" id="sessionPrompt">
+                <div class="prompt-text" id="promptText">
+                    Present quarterly results to stakeholders, addressing both successes and challenges.
+                </div>
+                <div class="prompt-context" id="promptContext">
+                    You're speaking to the board of directors. Q3 exceeded revenue targets by 12% but customer acquisition costs increased by 18%. You need to address both and set clear Q4 expectations.
+                </div>
+                <div class="conclusion-framework">
+                    <h4 style="color: var(--drill-accent); margin-bottom: 1rem;">Recommended Framework: The Forward Launch</h4>
+                    <div class="framework-steps">
+                        <div class="framework-step">
+                            <div class="step-number">1. Acknowledge</div>
+                            <div class="step-text">Acknowledge key findings honestly</div>
+                        </div>
+                        <div class="framework-step">
+                            <div class="step-number">2. Synthesize</div>
+                            <div class="step-text">Connect insights to bigger picture</div>
+                        </div>
+                        <div class="framework-step">
+                            <div class="step-number">3. Decide</div>
+                            <div class="step-text">State clear next steps</div>
+                        </div>
+                        <div class="framework-step">
+                            <div class="step-number">4. Energize</div>
+                            <div class="step-text">Create momentum for action</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timer-display" id="timerDisplay">03:00</div>
+            
+            <div class="conclusion-tracker">
+                <div class="tracker-item">
+                    <span class="tracker-value" id="strengthScore">0</span>
+                    <div class="tracker-label">Conclusion Strength</div>
+                </div>
+                <div class="tracker-item">
+                    <span class="tracker-value" id="clarityScore">0</span>
+                    <div class="tracker-label">Clarity Score</div>
+                </div>
+                <div class="tracker-item">
+                    <span class="tracker-value" id="impactScore">0</span>
+                    <div class="tracker-label">Impact Rating</div>
+                </div>
+            </div>
+            
+            <div class="live-analysis" id="liveAnalysis">
+                <div class="analysis-text" id="analysisText">AI will analyze your conclusion structure in real-time...</div>
+            </div>
+            
+            <div class="recording-indicator" id="recordingIndicator">
+                <div class="recording-dot"></div>
+                Recording in progress... AI analyzing conclusion strength
+            </div>
+            
+            <div class="recording-controls">
+                <button class="record-btn primary" id="recordBtn" onclick="toggleRecording()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6"></path>
+                        <path d="m21 12-6-6m-6 6-6-6"></path>
+                    </svg>
+                    Start Recording
+                </button>
+                <button class="record-btn secondary" id="resetBtn" onclick="resetSession()" disabled>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                        <path d="M21 3v5h-5"></path>
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                        <path d="M3 21v-5h5"></path>
+                    </svg>
+                    Reset Session
+                </button>
+                <button class="record-btn secondary" id="newScenarioBtn" onclick="generateNewScenario()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                    New Scenario
+                </button>
+            </div>
+        </section>
+
+        <!-- AI Analysis Results -->
+        <section class="analysis-results" id="analysisResults">
+            <h2 class="section-title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 3v18h18"></path>
+                    <path d="m19 9-5 5-4-4-3 3"></path>
+                </svg>
+                Conclusion Analysis Results
+            </h2>
+            
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-value score-excellent" id="finalStrengthScore">92</div>
+                    <div class="result-label">Conclusion Strength</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value score-good" id="finalClarityScore">88%</div>
+                    <div class="result-label">Message Clarity</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value score-excellent" id="finalImpactScore">95</div>
+                    <div class="result-label">Impact Rating</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value score-good" id="frameworkUsage">85%</div>
+                    <div class="result-label">Framework Usage</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value score-excellent" id="actionClarity">93%</div>
+                    <div class="result-label">Action Clarity</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value score-good" id="memoryFactor">87%</div>
+                    <div class="result-label">Memory Factor</div>
+                </div>
+            </div>
+            
+            <div class="ai-feedback">
+                <div class="feedback-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    AI Conclusion Coach Feedback
+                </div>
+                <div class="feedback-content" id="aiFeedbackContent">
+                    Complete your conclusion to receive personalized AI feedback on structure, impact, and memorability.
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn primary" onclick="startNewConclusion()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                        <path d="M21 3v5h-5"></path>
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                        <path d="M3 21v-5h5"></path>
+                    </svg>
+                    Practice Again
+                </button>
+                <button class="action-btn secondary" onclick="changeScenario()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h4"></path>
+                        <path d="M15 11h4a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-4"></path>
+                        <path d="M12 2v20"></path>
+                    </svg>
+                    Change Scenario
+                </button>
+                <a href="improvement-hub-dashboard.html" class="action-btn secondary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h4"></path>
+                        <path d="M15 11h4a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-4"></path>
+                        <path d="M12 2v20"></path>
+                    </svg>
+                    All Drills
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/drill-stronger-conclusions.js"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Dashboard Data - Articulaition</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            background: #f8fafc;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            background: #f3f4f6;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        button {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+        button:hover {
+            background: #4f46e5;
+        }
+        .log {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Dashboard Data Test</h1>
+        <p>This page tests the dynamic data system for the Projects dashboard.</p>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="total-analyses">0</div>
+                <div class="stat-label">Total Analyses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="average-score">0%</div>
+                <div class="stat-label">Average Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="speaking-time">0h</div>
+                <div class="stat-label">Speaking Time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="improvement-rate">+0%</div>
+                <div class="stat-label">Improvement Rate</div>
+            </div>
+        </div>
+
+        <div>
+            <button onclick="generateTestData()">Generate Test Data</button>
+            <button onclick="simulateAnalysis()">Simulate Analysis</button>
+            <button onclick="refreshStats()">Refresh Stats</button>
+            <button onclick="clearData()">Clear All Data</button>
+        </div>
+
+        <div id="log" class="log">
+            <div>🚀 Test dashboard initialized. Ready for testing.</div>
+        </div>
+    </div>
+
+    <!-- Include our data tracking systems -->
+    <script src="js/user-data-tracker.js"></script>
+    <script src="js/dashboard-data-integration.js"></script>
+
+    <script>
+        // Test functions
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function generateTestData() {
+            log('🧪 Generating test data...');
+            if (window.userDataTracker) {
+                window.userDataTracker.simulateHistoricalData(25);
+                setTimeout(() => {
+                    refreshStats();
+                    log('✅ Test data generated successfully');
+                }, 1000);
+            } else {
+                log('❌ User data tracker not available');
+            }
+        }
+
+        function simulateAnalysis() {
+            log('🎯 Simulating new analysis...');
+            if (window.userDataTracker) {
+                const types = ['professional', 'personal', 'communication'];
+                const type = types[Math.floor(Math.random() * types.length)];
+                const score = Math.floor(Math.random() * 30) + 65; // 65-95 range
+                const duration = Math.random() * 8 + 2; // 2-10 minutes
+                
+                window.userDataTracker.recordAnalysis(type, score, duration);
+                setTimeout(() => {
+                    refreshStats();
+                    log(`✅ Simulated ${type} analysis (${score}%, ${duration.toFixed(1)} min)`);
+                }, 500);
+            } else {
+                log('❌ User data tracker not available');
+            }
+        }
+
+        function refreshStats() {
+            log('🔄 Refreshing statistics...');
+            if (window.userDataTracker) {
+                const stats = window.userDataTracker.getDashboardStats();
+                
+                document.getElementById('total-analyses').textContent = stats.totalAnalyses;
+                document.getElementById('average-score').textContent = `${stats.averageScore}%`;
+                document.getElementById('speaking-time').textContent = `${stats.speakingTime}h`;
+                document.getElementById('improvement-rate').textContent = `+${stats.improvementRate}%`;
+                
+                log(`📊 Stats updated: ${stats.totalAnalyses} analyses, ${stats.averageScore}% avg score`);
+            } else {
+                log('❌ User data tracker not available');
+            }
+        }
+
+        function clearData() {
+            log('🗑️ Clearing all data...');
+            if (window.userDataTracker) {
+                window.userDataTracker.clearAllData();
+                setTimeout(() => {
+                    refreshStats();
+                    log('✅ All data cleared');
+                }, 500);
+            } else {
+                log('❌ User data tracker not available');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🏁 DOM loaded, initializing...');
+            
+            setTimeout(() => {
+                if (window.userDataTracker) {
+                    log('✅ User data tracker loaded');
+                    refreshStats();
+                } else {
+                    log('❌ User data tracker failed to load');
+                }
+            }, 1000);
+        });
+
+        // Listen for analysis completion events
+        document.addEventListener('analysisCompleted', function(event) {
+            log(`🎯 Analysis completed: ${event.detail.analysisType} (${event.detail.score}%)`);
+            refreshStats();
+        });
+    </script>
+</body>
+</html>

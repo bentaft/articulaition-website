@@ -39,7 +39,11 @@
       "Bash(for file in sales-analysis.html negotiation-analysis.html leadership-analysis.html client-calls-analysis.html)",
       "Bash(do echo \"=== $file ===\")",
       "Bash(true)",
-      "Bash(npm run static:*)"
+      "Bash(npm run static:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git config:*)"
     ],
     "deny": []
   }

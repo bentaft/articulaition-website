@@ -32,181 +32,300 @@
     <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/animations.css" />
     <link rel="stylesheet" href="css/responsive.css" />
-    
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .animate-fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
-            opacity: 0;
-            transform: translateY(-100px);
-        }
-        @keyframes fadeIn {
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Navigation Branding with Shiny Effect */
-        .nav-orange {
-            background: linear-gradient(
-                145deg,
-                #ff934d 0%,
-                #ffb366 30%,
-                #ff7f50 60%,
-                #ff934d 100%
-            );
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 2px 4px rgba(255, 147, 77, 0.3));
-        }
 
-        .nav-blue {
-            background: linear-gradient(
-                145deg,
-                #4a90e2 0%,
-                #6bb6ff 30%,
-                #4f94e8 60%,
-                #4a90e2 100%
-            );
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 2px 4px rgba(74, 144, 226, 0.3));
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.6s ease-out forwards;
+        opacity: 0;
+        transform: translateY(-100px);
+      }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-        
-        /* Hero Section Adjustments */
-        .modern-hero {
-            padding: 0 0 0 !important; /* No bottom padding */
-            margin-bottom: -7.2rem !important; /* 6 inches = ~7.2rem */
-            position: relative !important;
-            margin-top: -2rem !important;
-            min-height: auto !important; /* Remove fixed height */
-        }
-        
-        .hero-content {
-            gap: 1.25rem !important;
-            margin-top: 220px !important; /* Further increased to accommodate nav positioning */
-        }
-        
-        .hero-logo {
-            margin-bottom: 1rem !important;
-        }
-        
-        .hero-header {
-            gap: 0.75rem !important;
-        }
-        
-        /* Card Stack Animation CSS */
-        .card-1-active {
-            --_1-order: 3; --_1-scale: 1; --_1-opacity: 1; --_1-offset: 0;
-            --_2-order: 2; --_2-scale: var(--scale-steps-two); --_2-opacity: var(--opacity-steps-two); --_2-offset: var(--_offset-steps-two);
-            --_3-order: 1; --_3-scale: var(--scale-steps-three); --_3-opacity: var(--opacity-steps-three); --_3-offset: var(--_offset-steps-three);
-        }
-        
-        .card-2-active {
-            --_2-order: 3; --_2-scale: 1; --_2-opacity: 1; --_2-offset: 0;
-            --_3-order: 2; --_3-scale: var(--scale-steps-two); --_3-opacity: var(--opacity-steps-two); --_3-offset: var(--_offset-steps-two);
-            --_1-order: 1; --_1-scale: var(--scale-steps-three); --_1-opacity: var(--opacity-steps-three); --_1-offset: var(--_offset-steps-three);
-        }
-        
-        .card-3-active {
-            --_3-order: 3; --_3-scale: 1; --_3-opacity: 1; --_3-offset: 0;
-            --_1-order: 2; --_1-scale: var(--scale-steps-two); --_1-opacity: var(--opacity-steps-two); --_1-offset: var(--_offset-steps-two);
-            --_2-order: 1; --_2-scale: var(--scale-steps-three); --_2-opacity: var(--opacity-steps-three); --_2-offset: var(--_offset-steps-three);
-        }
+      }
+
+      /* Navigation Branding with Shiny Effect */
+      .nav-orange {
+        background: linear-gradient(
+          145deg,
+          #ff934d 0%,
+          #ffb366 30%,
+          #ff7f50 60%,
+          #ff934d 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 2px 4px rgba(255, 147, 77, 0.3));
+      }
+
+      .nav-blue {
+        background: linear-gradient(
+          145deg,
+          #4a90e2 0%,
+          #6bb6ff 30%,
+          #4f94e8 60%,
+          #4a90e2 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 2px 4px rgba(74, 144, 226, 0.3));
+      }
+
+      /* Hero Section Adjustments */
+      .modern-hero {
+        padding: 0 0 0 !important; /* No bottom padding */
+        margin-bottom: -7.2rem !important; /* 6 inches = ~7.2rem */
+        position: relative !important;
+        margin-top: -2rem !important;
+        min-height: auto !important; /* Remove fixed height */
+      }
+
+      .hero-content {
+        gap: 1.25rem !important;
+        margin-top: 220px !important; /* Further increased to accommodate nav positioning */
+      }
+
+      .hero-logo {
+        margin-bottom: 1rem !important;
+      }
+
+      .hero-header {
+        gap: 0.75rem !important;
+      }
+
+      /* Card Stack Animation CSS */
+      .card-1-active {
+        --_1-order: 3;
+        --_1-scale: 1;
+        --_1-opacity: 1;
+        --_1-offset: 0;
+        --_2-order: 2;
+        --_2-scale: var(--scale-steps-two);
+        --_2-opacity: var(--opacity-steps-two);
+        --_2-offset: var(--_offset-steps-two);
+        --_3-order: 1;
+        --_3-scale: var(--scale-steps-three);
+        --_3-opacity: var(--opacity-steps-three);
+        --_3-offset: var(--_offset-steps-three);
+      }
+
+      .card-2-active {
+        --_2-order: 3;
+        --_2-scale: 1;
+        --_2-opacity: 1;
+        --_2-offset: 0;
+        --_3-order: 2;
+        --_3-scale: var(--scale-steps-two);
+        --_3-opacity: var(--opacity-steps-two);
+        --_3-offset: var(--_offset-steps-two);
+        --_1-order: 1;
+        --_1-scale: var(--scale-steps-three);
+        --_1-opacity: var(--opacity-steps-three);
+        --_1-offset: var(--_offset-steps-three);
+      }
+
+      .card-3-active {
+        --_3-order: 3;
+        --_3-scale: 1;
+        --_3-opacity: 1;
+        --_3-offset: 0;
+        --_1-order: 2;
+        --_1-scale: var(--scale-steps-two);
+        --_1-opacity: var(--opacity-steps-two);
+        --_1-offset: var(--_offset-steps-two);
+        --_2-order: 1;
+        --_2-scale: var(--scale-steps-three);
+        --_2-opacity: var(--opacity-steps-three);
+        --_2-offset: var(--_offset-steps-three);
+      }
     </style>
   </head>
   <body class="bg-gray-50 antialiased">
     <main>
       <section class="hero modern-hero">
         <!-- Navigation inside hero section -->
-        <header class="max-w-6xl mx-auto px-4 md:px-8 animate-fade-in" style="position: absolute; top: 4rem; right: 8rem; width: calc(100% - 8rem); z-index: 10;">
-            <div class="backdrop-blur-lg bg-white/95 border border-gray-200/50 rounded-2xl shadow-sm flex items-center justify-between py-4 px-6 md:px-8 hover:shadow-md transition-all duration-300">
-                <!-- Logo -->
-                <a href="index.html" class="flex items-center gap-3 group">
-                    <img src="images/tree-logo.svg" alt="Tree Logo" class="h-9 w-auto group-hover:scale-105 transition-transform">
-                    <span class="font-semibold text-lg tracking-tight nav-brand-text">
-                        <span class="nav-orange">articul</span><span class="nav-blue">ai</span><span class="nav-orange">tion</span><span class="nav-orange">.com</span>
-                    </span>
-                </a>
+        <header
+          class="max-w-6xl mx-auto px-4 md:px-8 animate-fade-in"
+          style="
+            position: absolute;
+            top: 4rem;
+            right: 8rem;
+            width: calc(100% - 8rem);
+            z-index: 10;
+          "
+        >
+          <div
+            class="backdrop-blur-lg bg-white/95 border border-gray-200/50 rounded-2xl shadow-sm flex items-center justify-between py-4 px-6 md:px-8 hover:shadow-md transition-all duration-300"
+          >
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-3 group">
+              <img
+                src="images/tree-logo.svg"
+                alt="Tree Logo"
+                class="h-9 w-auto group-hover:scale-105 transition-transform"
+              />
+              <span class="font-semibold text-lg tracking-tight nav-brand-text">
+                <span class="nav-orange">articul</span
+                ><span class="nav-blue">ai</span
+                ><span class="nav-orange">tion</span
+                ><span class="nav-orange">.com</span>
+              </span>
+            </a>
 
-                <!-- Desktop Navigation -->
-                <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-                    <a href="dashboard.html" class="hover:text-gray-900 transition-colors duration-200 flex items-center gap-2">
-                        <i data-lucide="home" class="w-4 h-4"></i>
-                        Home
-                    </a>
-                    <a href="professional-communication.html" class="hover:text-gray-900 transition-colors duration-200 flex items-center gap-2">
-                        <i data-lucide="briefcase" class="w-4 h-4"></i>
-                        Professional
-                    </a>
-                    <a href="personal-communication.html" class="hover:text-gray-900 transition-colors duration-200 flex items-center gap-2">
-                        <i data-lucide="message-circle" class="w-4 h-4"></i>
-                        Personal
-                    </a>
-                    <a href="#pricing" class="hover:text-gray-900 transition-colors duration-200 flex items-center gap-2">
-                        <i data-lucide="star" class="w-4 h-4"></i>
-                        Pricing
-                    </a>
-                    <a href="login.html" class="inline-flex items-center gap-2 bg-gray-900 text-white rounded-full px-5 py-2.5 hover:bg-gray-800 transition-all duration-200 hover:shadow-lg">
-                        <i data-lucide="log-in" class="w-4 h-4"></i>
-                        Sign In
-                    </a>
-                </nav>
-
-                <!-- Mobile Menu Button -->
-                <button id="menuBtn" class="md:hidden flex items-center justify-center h-10 w-10 rounded-lg hover:bg-gray-100 transition-colors duration-200">
-                    <i data-lucide="menu" class="w-6 h-6 text-gray-600"></i>
-                </button>
-            </div>
-
-            <!-- Mobile Navigation -->
-            <nav id="mobileNav" class="md:hidden mt-4 backdrop-blur-lg bg-white/95 border border-gray-200/50 rounded-2xl shadow-sm divide-y divide-gray-100 overflow-hidden hidden">
-                <a href="dashboard.html" class="flex items-center gap-3 px-6 py-4 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
-                    <i data-lucide="home" class="w-4 h-4"></i>
-                    Home
-                </a>
-                <a href="professional-communication.html" class="flex items-center gap-3 px-6 py-4 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
-                    <i data-lucide="briefcase" class="w-4 h-4"></i>
-                    Professional
-                </a>
-                <a href="personal-communication.html" class="flex items-center gap-3 px-6 py-4 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
-                    <i data-lucide="message-circle" class="w-4 h-4"></i>
-                    Personal
-                </a>
-                <a href="#pricing" class="flex items-center gap-3 px-6 py-4 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
-                    <i data-lucide="star" class="w-4 h-4"></i>
-                    Pricing
-                </a>
-                <a href="login.html" class="flex items-center gap-3 px-6 py-4 text-sm font-medium text-gray-900 hover:bg-gray-50 transition-colors">
-                    <i data-lucide="log-in" class="w-4 h-4"></i>
-                    Sign In
-                </a>
+            <!-- Desktop Navigation -->
+            <nav
+              class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600"
+            >
+              <a
+                href="dashboard.html"
+                class="hover:text-gray-900 transition-colors duration-200 flex items-center gap-2"
+              >
+                <i data-lucide="home" class="w-4 h-4"></i>
+                Home
+              </a>
+              <a
+                href="professional-communication.html"
+                class="hover:text-gray-900 transition-colors duration-200 flex items-center gap-2"
+              >
+                <i data-lucide="briefcase" class="w-4 h-4"></i>
+                Professional
+              </a>
+              <a
+                href="personal-communication.html"
+                class="hover:text-gray-900 transition-colors duration-200 flex items-center gap-2"
+              >
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                Personal
+              </a>
+              <a
+                href="specialized-skill-drills.html"
+                class="hover:text-gray-900 transition-colors duration-200 flex items-center gap-2"
+              >
+                <i data-lucide="flask" class="w-4 h-4"></i>
+                Skill Drills
+              </a>
+              <a
+                href="projects-dashboard.html"
+                class="hover:text-gray-900 transition-colors duration-200 flex items-center gap-2"
+              >
+                <i data-lucide="bar-chart-4" class="w-4 h-4"></i>
+                Projects
+              </a>
+              <a
+                href="#pricing"
+                class="hover:text-gray-900 transition-colors duration-200 flex items-center gap-2"
+              >
+                <i data-lucide="star" class="w-4 h-4"></i>
+                Pricing
+              </a>
+              <a
+                href="login.html"
+                class="inline-flex items-center gap-2 bg-gray-900 text-white rounded-full px-5 py-2.5 hover:bg-gray-800 transition-all duration-200 hover:shadow-lg"
+              >
+                <i data-lucide="log-in" class="w-4 h-4"></i>
+                Sign In
+              </a>
             </nav>
+
+            <!-- Mobile Menu Button -->
+            <button
+              id="menuBtn"
+              class="md:hidden flex items-center justify-center h-10 w-10 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+            >
+              <i data-lucide="menu" class="w-6 h-6 text-gray-600"></i>
+            </button>
+          </div>
+
+          <!-- Mobile Navigation -->
+          <nav
+            id="mobileNav"
+            class="md:hidden mt-4 backdrop-blur-lg bg-white/95 border border-gray-200/50 rounded-2xl shadow-sm divide-y divide-gray-100 overflow-hidden hidden"
+          >
+            <a
+              href="dashboard.html"
+              class="flex items-center gap-3 px-6 py-4 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+            >
+              <i data-lucide="home" class="w-4 h-4"></i>
+              Home
+            </a>
+            <a
+              href="professional-communication.html"
+              class="flex items-center gap-3 px-6 py-4 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+            >
+              <i data-lucide="briefcase" class="w-4 h-4"></i>
+              Professional
+            </a>
+            <a
+              href="personal-communication.html"
+              class="flex items-center gap-3 px-6 py-4 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+            >
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              Personal
+            </a>
+            <a
+              href="specialized-skill-drills.html"
+              class="flex items-center gap-3 px-6 py-4 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+            >
+              <i data-lucide="flask" class="w-4 h-4"></i>
+              Skill Drills
+            </a>
+            <a
+              href="projects-dashboard.html"
+              class="flex items-center gap-3 px-6 py-4 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+            >
+              <i data-lucide="bar-chart-4" class="w-4 h-4"></i>
+              Projects
+            </a>
+            <a
+              href="#pricing"
+              class="flex items-center gap-3 px-6 py-4 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+            >
+              <i data-lucide="star" class="w-4 h-4"></i>
+              Pricing
+            </a>
+            <a
+              href="login.html"
+              class="flex items-center gap-3 px-6 py-4 text-sm font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+            >
+              <i data-lucide="log-in" class="w-4 h-4"></i>
+              Sign In
+            </a>
+          </nav>
         </header>
-        
+
         <div class="container">
           <div class="hero-layout">
-            
             <!-- Left column - Content -->
             <div class="hero-content">
-
               <!-- Hero Logo -->
               <div class="hero-logo">
                 <h1 class="hero-logo-text">
-                  <span class="orange-text">articul</span><span class="blue-text">ai</span><span class="orange-text">tion</span><span class="orange-text">.com</span>
+                  <span class="orange-text">articul</span
+                  ><span class="blue-text">ai</span
+                  ><span class="orange-text">tion</span
+                  ><span class="orange-text">.com</span>
                 </h1>
               </div>
 
               <!-- Main heading -->
               <div class="hero-header">
                 <h1 class="hero-title shiny-orange">
-                  Embark on the Art of Communication. Transform Your Greatest Asset.
+                  Embark on the Art of Communication. Transform Your Greatest
+                  Asset.
                 </h1>
                 <p class="hero-description">
-                  At Articulaition, we believe communication is a dance — a natural rhythm of words, presence, and connection. Our goal isn't to make you sound robotic. It's to help you find your unique flow through honest, data-driven insights that make every conversation more impactful, confident, and authentic.
+                  At Articulaition, we believe communication is a dance — a
+                  natural rhythm of words, presence, and connection. Our goal
+                  isn't to make you sound robotic. It's to help you find your
+                  unique flow through honest, data-driven insights that make
+                  every conversation more impactful, confident, and authentic.
                 </p>
               </div>
 
@@ -215,14 +334,16 @@
                 <div class="visual-card">
                   <div class="visual-header">
                     <div class="visual-logo">
-                      <span class="logo-part orange">articul</span><span class="logo-part blue">ai</span><span class="logo-part orange">tion</span>
+                      <span class="logo-part orange">articul</span
+                      ><span class="logo-part blue">ai</span
+                      ><span class="logo-part orange">tion</span>
                     </div>
                     <div class="visual-status">
                       <div class="status-indicator active"></div>
                       <span>AI Analysis</span>
                     </div>
                   </div>
-                  
+
                   <div class="visual-content">
                     <div class="analysis-preview">
                       <div class="analysis-item">
@@ -232,7 +353,7 @@
                         </div>
                         <span class="analysis-value">85%</span>
                       </div>
-                      
+
                       <div class="analysis-item">
                         <span class="analysis-label">Engagement</span>
                         <div class="analysis-bar">
@@ -240,7 +361,7 @@
                         </div>
                         <span class="analysis-value">92%</span>
                       </div>
-                      
+
                       <div class="analysis-item">
                         <span class="analysis-label">Pace</span>
                         <div class="analysis-bar">
@@ -272,9 +393,7 @@
             </div>
 
             <!-- Right column - Visual -->
-            <div class="hero-visual">
-            </div>
-
+            <div class="hero-visual"></div>
           </div>
         </div>
       </section>
@@ -282,17 +401,29 @@
       <section class="go-beyond modern-features" id="features">
         <div class="container">
           <div class="features-layout">
-            
             <!-- Left column - Content -->
             <div class="features-content">
               <!-- Status indicator -->
               <div class="status-badge">
                 <div class="status-dot"></div>
                 <span class="status-text">AI Systems Active</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="status-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="status-icon"
+                >
                   <path d="M12 2v6l3-3-3-3z"></path>
                   <path d="M9 21c0-7 4-10 13-10"></path>
-                  <path d="M20 17v2c0 .5-.5 1-1 1H5c-.5 0-1-.5-1-1V5c0-.5.5-1 1-1h3"></path>
+                  <path
+                    d="M20 17v2c0 .5-.5 1-1 1H5c-.5 0-1-.5-1-1V5c0-.5.5-1 1-1h3"
+                  ></path>
                 </svg>
               </div>
 
@@ -302,7 +433,9 @@
                   Data-driven communication analysis
                 </h1>
                 <p class="features-subtitle">
-                  Precision, personalization, and continuous insight. Our AI fuses cutting-edge generative technology with quantitative analytics to unlock your communication potential.
+                  Precision, personalization, and continuous insight. Our AI
+                  fuses cutting-edge generative technology with quantitative
+                  analytics to unlock your communication potential.
                 </p>
               </div>
 
@@ -310,53 +443,107 @@
               <div class="feature-blocks">
                 <div class="feature-block">
                   <div class="feature-icon blue">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <path d="M3 3v18h18"></path>
                       <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
                     </svg>
                   </div>
                   <div class="feature-text">
                     <h3>40+ Quantitative Metrics</h3>
-                    <p>Comprehensive analysis including pace, tone, clarity, word choice, and conversation flow patterns</p>
+                    <p>
+                      Comprehensive analysis including pace, tone, clarity, word
+                      choice, and conversation flow patterns
+                    </p>
                   </div>
                   <div class="feature-bar blue"></div>
                 </div>
 
                 <div class="feature-block">
                   <div class="feature-icon purple">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z"></path>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z"
+                      ></path>
                     </svg>
                   </div>
                   <div class="feature-text">
                     <h3>Software Powered Personalization</h3>
-                    <p>AI adapts to your unique speaking style and creates tailored improvement plans based on your goals</p>
+                    <p>
+                      AI adapts to your unique speaking style and creates
+                      tailored improvement plans based on your goals
+                    </p>
                   </div>
                   <div class="feature-bar purple"></div>
                 </div>
 
                 <div class="feature-block">
                   <div class="feature-icon green">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
                     </svg>
                   </div>
                   <div class="feature-text">
                     <h3>Instantaneous Feedback</h3>
-                    <p>Real-time analysis and immediate actionable insights to accelerate your communication growth</p>
+                    <p>
+                      Real-time analysis and immediate actionable insights to
+                      accelerate your communication growth
+                    </p>
                   </div>
                   <div class="feature-bar green"></div>
                 </div>
 
                 <div class="feature-block">
                   <div class="feature-icon orange">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                     </svg>
                   </div>
                   <div class="feature-text">
                     <h3>Tools for Long-Term Growth</h3>
-                    <p>Progress tracking, habit formation features, and milestone achievements for sustained improvement</p>
+                    <p>
+                      Progress tracking, habit formation features, and milestone
+                      achievements for sustained improvement
+                    </p>
                   </div>
                   <div class="feature-bar orange"></div>
                 </div>
@@ -366,7 +553,17 @@
               <div class="metrics-grid">
                 <div class="metric-card">
                   <div class="metric-icon blue">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <path d="M3 3v18h18"></path>
                       <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
                     </svg>
@@ -374,10 +571,20 @@
                   <div class="metric-label">Measurable Progress</div>
                   <div class="metric-bar blue"></div>
                 </div>
-                
+
                 <div class="metric-card">
                   <div class="metric-icon green">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <path d="M16 18L22 12L16 6"></path>
                       <path d="M8 6L2 12L8 18"></path>
                     </svg>
@@ -385,21 +592,45 @@
                   <div class="metric-label">Data-Driven</div>
                   <div class="metric-bar green"></div>
                 </div>
-                
+
                 <div class="metric-card">
                   <div class="metric-icon purple">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z"></path>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z"
+                      ></path>
                     </svg>
                   </div>
                   <div class="metric-label">Personalized</div>
                   <div class="metric-bar purple"></div>
                 </div>
-                
+
                 <div class="metric-card">
                   <div class="metric-icon orange">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22Z"></path>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22Z"
+                      ></path>
                       <path d="M8 12L11 15L16 9"></path>
                     </svg>
                   </div>
@@ -423,54 +654,126 @@
             <div class="features-visual">
               <!-- Floating tech badges -->
               <div class="floating-badge top-right">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
                   <path d="M12 2v6l3-3-3-3z"></path>
                   <path d="M9 21c0-7 4-10 13-10"></path>
-                  <path d="M20 17v2c0 .5-.5 1-1 1H5c-.5 0-1-.5-1-1V5c0-.5.5-1 1-1h3"></path>
+                  <path
+                    d="M20 17v2c0 .5-.5 1-1 1H5c-.5 0-1-.5-1-1V5c0-.5.5-1 1-1h3"
+                  ></path>
                 </svg>
               </div>
-              
+
               <div class="visual-container">
                 <div class="visual-inner">
                   <div class="visual-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="48"
+                      height="48"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <path d="M21 12a9 9 0 11-6.219-8.56"></path>
                       <path d="M9 12l2 2 4-4"></path>
                     </svg>
                   </div>
                 </div>
               </div>
-              
+
               <div class="floating-badge bottom-left">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
                   <circle cx="12" cy="12" r="10"></circle>
                   <circle cx="12" cy="12" r="6"></circle>
                   <circle cx="12" cy="12" r="2"></circle>
                 </svg>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      <section class="how-it-works" id="how-it-works" style="background: linear-gradient(135deg, #fafbfc 0%, #ffffff 25%, #f8fafc 50%, #f1f5f9 75%, #e2e8f0 100%); padding: 4rem 0; position: relative; overflow: hidden;">
+      <section
+        class="how-it-works"
+        id="how-it-works"
+        style="
+          background: linear-gradient(
+            135deg,
+            #fafbfc 0%,
+            #ffffff 25%,
+            #f8fafc 50%,
+            #f1f5f9 75%,
+            #e2e8f0 100%
+          );
+          padding: 4rem 0;
+          position: relative;
+          overflow: hidden;
+        "
+      >
         <!-- Floating particles -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
-          <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-          <div class="absolute top-1/3 right-1/3 w-1 h-1 bg-purple-400 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
-          <div class="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-pink-400 rounded-full animate-pulse" style="animation-delay: 2s;"></div>
-          <div class="absolute top-2/3 right-1/4 w-1 h-1 bg-green-400 rounded-full animate-pulse" style="animation-delay: 3s;"></div>
+          <div
+            class="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-pulse"
+          ></div>
+          <div
+            class="absolute top-1/3 right-1/3 w-1 h-1 bg-purple-400 rounded-full animate-pulse"
+            style="animation-delay: 1s"
+          ></div>
+          <div
+            class="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-pink-400 rounded-full animate-pulse"
+            style="animation-delay: 2s"
+          ></div>
+          <div
+            class="absolute top-2/3 right-1/4 w-1 h-1 bg-green-400 rounded-full animate-pulse"
+            style="animation-delay: 3s"
+          ></div>
         </div>
 
-        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2;">
-          <div class="flex flex-col lg:flex-row gap-16 xl:gap-24 items-center justify-between">
-            
+        <div
+          class="container"
+          style="
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+          "
+        >
+          <div
+            class="flex flex-col lg:flex-row gap-16 xl:gap-24 items-center justify-between"
+          >
             <!-- Left Content -->
             <div class="flex-1 max-w-xl lg:max-w-2xl">
               <div class="mb-12">
-                <h2 class="text-5xl lg:text-6xl font-semibold leading-tight tracking-tight mb-6">
-                  <span class="block bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700">
+                <h2
+                  class="text-5xl lg:text-6xl font-semibold leading-tight tracking-tight mb-6"
+                >
+                  <span
+                    class="block bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700"
+                  >
                     Unlock Your
                   </span>
                   <span class="block shiny-orange">
@@ -480,25 +783,40 @@
                     in Three Simple Steps
                   </span>
                 </h2>
-                <p class="text-xl lg:text-2xl text-gray-600 leading-relaxed mb-8">
-                  Our process is designed to be straightforward and impactful, guiding you towards becoming a more effective communicator.
+                <p
+                  class="text-xl lg:text-2xl text-gray-600 leading-relaxed mb-8"
+                >
+                  Our process is designed to be straightforward and impactful,
+                  guiding you towards becoming a more effective communicator.
                 </p>
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
                 <div class="text-center sm:text-left">
-                  <div class="w-3 h-3 bg-orange-400 rounded-full mb-3 mx-auto sm:mx-0"></div>
-                  <h3 class="text-sm font-medium text-gray-800 mb-1">Audio Analysis</h3>
+                  <div
+                    class="w-3 h-3 bg-orange-400 rounded-full mb-3 mx-auto sm:mx-0"
+                  ></div>
+                  <h3 class="text-sm font-medium text-gray-800 mb-1">
+                    Audio Analysis
+                  </h3>
                   <p class="text-sm text-gray-600">Advanced AI processing</p>
                 </div>
                 <div class="text-center sm:text-left">
-                  <div class="w-3 h-3 bg-blue-400 rounded-full mb-3 mx-auto sm:mx-0"></div>
-                  <h3 class="text-sm font-medium text-gray-800 mb-1">Expert Insights</h3>
+                  <div
+                    class="w-3 h-3 bg-blue-400 rounded-full mb-3 mx-auto sm:mx-0"
+                  ></div>
+                  <h3 class="text-sm font-medium text-gray-800 mb-1">
+                    Expert Insights
+                  </h3>
                   <p class="text-sm text-gray-600">Personalized feedback</p>
                 </div>
                 <div class="text-center sm:text-left">
-                  <div class="w-3 h-3 bg-green-400 rounded-full mb-3 mx-auto sm:mx-0"></div>
-                  <h3 class="text-sm font-medium text-gray-800 mb-1">Growth Plan</h3>
+                  <div
+                    class="w-3 h-3 bg-green-400 rounded-full mb-3 mx-auto sm:mx-0"
+                  ></div>
+                  <h3 class="text-sm font-medium text-gray-800 mb-1">
+                    Growth Plan
+                  </h3>
                   <p class="text-sm text-gray-600">Tailored development</p>
                 </div>
               </div>
@@ -516,23 +834,73 @@
             <!-- Right Side: Card Stack -->
             <div class="flex flex-col space-y-8 items-center flex-shrink-0">
               <!-- Card Stack -->
-              <section id="cards-container" class="card-1-active" style="--_offset-steps: 3rem; --_scale-steps: 8; --_opacity-steps: 12; --_offset-steps-two: calc(var(--_offset-steps) * -1); --_offset-steps-three: calc(var(--_offset-steps) * -2); --scale-steps-two: calc(1 - var(--_scale-steps) * 0.01); --scale-steps-three: calc(1 - var(--_scale-steps) * 0.02); --opacity-steps-two: calc(1 - var(--_opacity-steps) * 0.02); --opacity-steps-three: calc(1 - var(--_opacity-steps) * 0.04); display: grid; grid-template-areas: 'stack'; width: 320px;">
-                
+              <section
+                id="cards-container"
+                class="card-1-active"
+                style="
+                  --_offset-steps: 3rem;
+                  --_scale-steps: 8;
+                  --_opacity-steps: 12;
+                  --_offset-steps-two: calc(var(--_offset-steps) * -1);
+                  --_offset-steps-three: calc(var(--_offset-steps) * -2);
+                  --scale-steps-two: calc(1 - var(--_scale-steps) * 0.01);
+                  --scale-steps-three: calc(1 - var(--_scale-steps) * 0.02);
+                  --opacity-steps-two: calc(1 - var(--_opacity-steps) * 0.02);
+                  --opacity-steps-three: calc(1 - var(--_opacity-steps) * 0.04);
+                  display: grid;
+                  grid-template-areas: 'stack';
+                  width: 320px;
+                "
+              >
                 <!-- Card 1 -->
-                <article class="card-stack-item" style="grid-area: stack; transition: 500ms cubic-bezier(0.4, 0, 0.2, 1); translate: var(--_offset) 0; order: var(--_order); z-index: var(--_order); scale: var(--_scale); opacity: var(--_opacity); cursor: grab; user-select: none; transform-style: preserve-3d; --_order: var(--_1-order); --_scale: var(--_1-scale); --_opacity: var(--_1-opacity); --_offset: var(--_1-offset); background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(0, 0, 0, 0.08); width: 320px; height: 400px; border-radius: 1rem; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);">
+                <article
+                  class="card-stack-item"
+                  style="
+                    grid-area: stack;
+                    transition: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+                    translate: var(--_offset) 0;
+                    order: var(--_order);
+                    z-index: var(--_order);
+                    scale: var(--_scale);
+                    opacity: var(--_opacity);
+                    cursor: grab;
+                    user-select: none;
+                    transform-style: preserve-3d;
+                    --_order: var(--_1-order);
+                    --_scale: var(--_1-scale);
+                    --_opacity: var(--_1-opacity);
+                    --_offset: var(--_1-offset);
+                    background: rgba(255, 255, 255, 0.95);
+                    backdrop-filter: blur(20px);
+                    border: 1px solid rgba(0, 0, 0, 0.08);
+                    width: 320px;
+                    height: 400px;
+                    border-radius: 1rem;
+                    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+                  "
+                >
                   <div class="h-full flex flex-col p-8">
                     <div class="flex items-center justify-between mb-6">
-                      <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center">
+                      <div
+                        class="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center"
+                      >
                         <i data-lucide="upload" class="text-white w-6 h-6"></i>
                       </div>
                       <span class="text-xs text-gray-400 font-medium">01</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Upload Your Audio</h3>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">
+                      Upload Your Audio
+                    </h3>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">
-                      Simply drop in your audio recordings. Whether it's a friendly daily conversation, a professional discussion, or a response to our innovative live objection handling scenario, our platform is ready to analyze it.
+                      Simply drop in your audio recordings. Whether it's a
+                      friendly daily conversation, a professional discussion, or
+                      a response to our innovative live objection handling
+                      scenario, our platform is ready to analyze it.
                     </p>
                     <div class="mt-auto space-y-3">
-                      <div class="flex items-center space-x-2 text-xs text-gray-500">
+                      <div
+                        class="flex items-center space-x-2 text-xs text-gray-500"
+                      >
                         <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
                         <span>Ready to analyze</span>
                       </div>
@@ -541,20 +909,54 @@
                 </article>
 
                 <!-- Card 2 -->
-                <article class="card-stack-item" style="grid-area: stack; transition: 500ms cubic-bezier(0.4, 0, 0.2, 1); translate: var(--_offset) 0; order: var(--_order); z-index: var(--_order); scale: var(--_scale); opacity: var(--_opacity); cursor: grab; user-select: none; transform-style: preserve-3d; --_order: var(--_2-order); --_scale: var(--_2-scale); --_opacity: var(--_2-opacity); --_offset: var(--_2-offset); background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(0, 0, 0, 0.08); width: 320px; height: 400px; border-radius: 1rem; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);">
+                <article
+                  class="card-stack-item"
+                  style="
+                    grid-area: stack;
+                    transition: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+                    translate: var(--_offset) 0;
+                    order: var(--_order);
+                    z-index: var(--_order);
+                    scale: var(--_scale);
+                    opacity: var(--_opacity);
+                    cursor: grab;
+                    user-select: none;
+                    transform-style: preserve-3d;
+                    --_order: var(--_2-order);
+                    --_scale: var(--_2-scale);
+                    --_opacity: var(--_2-opacity);
+                    --_offset: var(--_2-offset);
+                    background: rgba(255, 255, 255, 0.95);
+                    backdrop-filter: blur(20px);
+                    border: 1px solid rgba(0, 0, 0, 0.08);
+                    width: 320px;
+                    height: 400px;
+                    border-radius: 1rem;
+                    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+                  "
+                >
                   <div class="h-full flex flex-col p-8">
                     <div class="flex items-center justify-between mb-6">
-                      <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
+                      <div
+                        class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center"
+                      >
                         <i data-lucide="brain" class="text-white w-6 h-6"></i>
                       </div>
                       <span class="text-xs text-gray-400 font-medium">02</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Receive Expert Insights</h3>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">
+                      Receive Expert Insights
+                    </h3>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">
-                      Our tailored software, curated by a leading salesman in the South Florida construction industry, provides detailed insights into your communication style, strengths, and areas for improvement.
+                      Our tailored software, curated by a leading salesman in
+                      the South Florida construction industry, provides detailed
+                      insights into your communication style, strengths, and
+                      areas for improvement.
                     </p>
                     <div class="mt-auto space-y-3">
-                      <div class="flex items-center space-x-2 text-xs text-gray-500">
+                      <div
+                        class="flex items-center space-x-2 text-xs text-gray-500"
+                      >
                         <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
                         <span>AI-powered analysis</span>
                       </div>
@@ -563,34 +965,75 @@
                 </article>
 
                 <!-- Card 3 -->
-                <article class="card-stack-item" style="grid-area: stack; transition: 500ms cubic-bezier(0.4, 0, 0.2, 1); translate: var(--_offset) 0; order: var(--_order); z-index: var(--_order); scale: var(--_scale); opacity: var(--_opacity); cursor: grab; user-select: none; transform-style: preserve-3d; --_order: var(--_3-order); --_scale: var(--_3-scale); --_opacity: var(--_3-opacity); --_offset: var(--_3-offset); background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(0, 0, 0, 0.08); width: 320px; height: 400px; border-radius: 1rem; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);">
+                <article
+                  class="card-stack-item"
+                  style="
+                    grid-area: stack;
+                    transition: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+                    translate: var(--_offset) 0;
+                    order: var(--_order);
+                    z-index: var(--_order);
+                    scale: var(--_scale);
+                    opacity: var(--_opacity);
+                    cursor: grab;
+                    user-select: none;
+                    transform-style: preserve-3d;
+                    --_order: var(--_3-order);
+                    --_scale: var(--_3-scale);
+                    --_opacity: var(--_3-opacity);
+                    --_offset: var(--_3-offset);
+                    background: rgba(255, 255, 255, 0.95);
+                    backdrop-filter: blur(20px);
+                    border: 1px solid rgba(0, 0, 0, 0.08);
+                    width: 320px;
+                    height: 400px;
+                    border-radius: 1rem;
+                    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+                  "
+                >
                   <div class="h-full flex flex-col p-8">
                     <div class="flex items-center justify-between mb-6">
-                      <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center">
+                      <div
+                        class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center"
+                      >
                         <i data-lucide="target" class="text-white w-6 h-6"></i>
                       </div>
                       <span class="text-xs text-gray-400 font-medium">03</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Get Your Personalized Plan</h3>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">
+                      Get Your Personalized Plan
+                    </h3>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">
-                      Receive a personalized development plan designed to enhance your communication, build stronger relationships, and boost your professional skills and income.
+                      Receive a personalized development plan designed to
+                      enhance your communication, build stronger relationships,
+                      and boost your professional skills and income.
                     </p>
                     <div class="mt-auto space-y-3">
-                      <div class="flex items-center space-x-2 text-xs text-gray-500">
+                      <div
+                        class="flex items-center space-x-2 text-xs text-gray-500"
+                      >
                         <div class="w-2 h-2 bg-green-400 rounded-full"></div>
                         <span>Tailored growth</span>
                       </div>
                     </div>
                   </div>
                 </article>
-
               </section>
 
               <!-- Navigation Dots -->
               <div class="flex space-x-3">
-                <button id="dot-1" class="w-2 h-2 rounded-full bg-orange-400 transition-all duration-300 scale-125"></button>
-                <button id="dot-2" class="w-2 h-2 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-300"></button>
-                <button id="dot-3" class="w-2 h-2 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-300"></button>
+                <button
+                  id="dot-1"
+                  class="w-2 h-2 rounded-full bg-orange-400 transition-all duration-300 scale-125"
+                ></button>
+                <button
+                  id="dot-2"
+                  class="w-2 h-2 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-300"
+                ></button>
+                <button
+                  id="dot-3"
+                  class="w-2 h-2 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-300"
+                ></button>
               </div>
             </div>
           </div>
@@ -603,7 +1046,13 @@
           <div class="testimonials-header">
             <div class="testimonials-badge">
               <div class="badge-pulse"></div>
-              <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                class="badge-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                 <circle cx="9" cy="7" r="4"></circle>
                 <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -617,7 +1066,9 @@
                 <span class="shiny-orange">across industries</span>
               </h2>
               <p class="section-subtitle">
-                Join thousands of professionals who've accelerated their career growth through better communication. From sales leaders to C-suite executives, our platform delivers measurable results.
+                Join thousands of professionals who've accelerated their career
+                growth through better communication. From sales leaders to
+                C-suite executives, our platform delivers measurable results.
               </p>
             </div>
             <div class="testimonials-stats">
@@ -646,11 +1097,31 @@
                 <div class="testimonial-header">
                   <div class="rating-container">
                     <div class="stars premium-stars">
-                      <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                      <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                      <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                      <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                      <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                      <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                        />
+                      </svg>
+                      <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                        />
+                      </svg>
+                      <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                        />
+                      </svg>
+                      <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                        />
+                      </svg>
+                      <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                        />
+                      </svg>
                     </div>
                     <div class="featured-badge">
                       <span>Success Story</span>
@@ -658,18 +1129,31 @@
                   </div>
                 </div>
                 <div class="testimonial-quote">
-                  <svg class="quote-mark" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/>
+                  <svg
+                    class="quote-mark"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"
+                    />
                   </svg>
                   <p class="testimonial-text hero-text">
-                    "In 90 days, Articulaition transformed how I communicate with my team and clients. The AI analysis revealed patterns I never noticed—like speaking too fast during negotiations. Now I close 40% more deals and my team meetings are incredibly productive. This platform didn't just improve my speaking; it accelerated my entire career trajectory."
+                    "In 90 days, Articulaition transformed how I communicate
+                    with my team and clients. The AI analysis revealed patterns
+                    I never noticed—like speaking too fast during negotiations.
+                    Now I close 40% more deals and my team meetings are
+                    incredibly productive. This platform didn't just improve my
+                    speaking; it accelerated my entire career trajectory."
                   </p>
                 </div>
                 <div class="testimonial-footer hero-footer">
                   <div class="author-profile">
                     <div class="author-info">
                       <h4 class="author-name">Michael R.</h4>
-                      <p class="author-title">VP of Sales, TechFlow Solutions</p>
+                      <p class="author-title">
+                        VP of Sales, TechFlow Solutions
+                      </p>
                       <div class="author-metrics">
                         <span class="metric">+40% Close Rate</span>
                         <span class="metric">90 Days</span>
@@ -678,7 +1162,9 @@
                   </div>
                   <div class="verification-badge">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
                     </svg>
                     <span>Verified</span>
                   </div>
@@ -692,16 +1178,38 @@
               <div class="testimonial-content">
                 <div class="testimonial-header">
                   <div class="stars premium-stars">
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
                   </div>
                   <div class="card-category">Leadership</div>
                 </div>
                 <p class="testimonial-text">
-                  "The platform's executive presence training was exactly what I needed. Board presentations went from stressful to powerful. I now command the room with confidence and clarity."
+                  "The platform's executive presence training was exactly what I
+                  needed. Board presentations went from stressful to powerful. I
+                  now command the room with confidence and clarity."
                 </p>
                 <div class="testimonial-footer">
                   <div class="author-profile">
@@ -722,16 +1230,38 @@
               <div class="testimonial-content">
                 <div class="testimonial-header">
                   <div class="stars premium-stars">
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
                   </div>
                   <div class="card-category">Sales Performance</div>
                 </div>
                 <p class="testimonial-text">
-                  "My pitch conversion rate increased by 35% in just 6 weeks. The AI caught subtle speech patterns that were undermining my credibility. Now every client call feels like a win."
+                  "My pitch conversion rate increased by 35% in just 6 weeks.
+                  The AI caught subtle speech patterns that were undermining my
+                  credibility. Now every client call feels like a win."
                 </p>
                 <div class="testimonial-footer">
                   <div class="author-profile">
@@ -752,16 +1282,38 @@
               <div class="testimonial-content">
                 <div class="testimonial-header">
                   <div class="stars premium-stars">
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
                   </div>
                   <div class="card-category">Team Management</div>
                 </div>
                 <p class="testimonial-text">
-                  "My team's engagement scores doubled after improving my communication style. The platform's feedback helped me become a more effective leader and better listener."
+                  "My team's engagement scores doubled after improving my
+                  communication style. The platform's feedback helped me become
+                  a more effective leader and better listener."
                 </p>
                 <div class="testimonial-footer">
                   <div class="author-profile">
@@ -782,16 +1334,38 @@
               <div class="testimonial-content">
                 <div class="testimonial-header">
                   <div class="stars premium-stars">
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                      />
+                    </svg>
                   </div>
                   <div class="card-category">Public Speaking</div>
                 </div>
                 <p class="testimonial-text">
-                  "From anxious speaker to confident presenter in 30 days. The AI's real-time analysis helped me master my pace and projection. I now speak at industry conferences regularly."
+                  "From anxious speaker to confident presenter in 30 days. The
+                  AI's real-time analysis helped me master my pace and
+                  projection. I now speak at industry conferences regularly."
                 </p>
                 <div class="testimonial-footer">
                   <div class="author-profile">
@@ -807,7 +1381,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
@@ -827,10 +1400,19 @@
             <!-- Status Badge -->
             <div class="transform-badge">
               <div class="badge-pulse"></div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M12 1v6l3-3-3-3z"></path>
                 <path d="M9 21c0-7 4-10 13-10"></path>
-                <path d="M20 17v2c0 .5-.5 1-1 1H5c-.5 0-1-.5-1-1V5c0-.5.5-1 1-1h3"></path>
+                <path
+                  d="M20 17v2c0 .5-.5 1-1 1H5c-.5 0-1-.5-1-1V5c0-.5.5-1 1-1h3"
+                ></path>
               </svg>
               <span>AI-Powered Transformation</span>
             </div>
@@ -839,10 +1421,14 @@
             <div class="transform-header">
               <h1 class="transform-title">
                 <span class="title-line">Transform Your</span>
-                <span class="title-highlight">Communication Journey</span>
+                <span class="title-highlight shiny-orange"
+                  >Communication Journey</span
+                >
               </h1>
               <p class="transform-subtitle">
-                Unlock your potential with our comprehensive communication platform. From foundational skills to advanced techniques, we guide you through every step of your professional growth.
+                Unlock your potential with our comprehensive communication
+                platform. From foundational skills to advanced techniques, we
+                guide you through every step of your professional growth.
               </p>
             </div>
 
@@ -850,7 +1436,14 @@
             <div class="value-cards">
               <div class="value-card">
                 <div class="value-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
                     <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                     <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                   </svg>
@@ -863,65 +1456,42 @@
 
               <div class="value-card">
                 <div class="value-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
                     <path d="M3 3v18h18"></path>
                     <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
                   </svg>
                 </div>
                 <div class="value-content">
                   <h3>Measurable Progress</h3>
-                  <p>Track your improvement with detailed analytics and insights</p>
+                  <p>
+                    Track your improvement with detailed analytics and insights
+                  </p>
                 </div>
               </div>
 
               <div class="value-card">
                 <div class="value-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
                     <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
                   </svg>
                 </div>
                 <div class="value-content">
                   <h3>Instant Feedback</h3>
                   <p>Get real-time analysis and actionable recommendations</p>
-                </div>
-              </div>
-            </div>
-
-
-            <!-- CTA Section -->
-            <div class="transform-cta">
-              <div class="cta-content">
-                <h3>Ready to Begin Your Transformation?</h3>
-                <p>Join thousands of professionals who've already started their journey</p>
-                <div class="cta-buttons">
-                  <a href="signup.html" class="cta-primary">
-                    <span>Start Free Analysis</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M5 12h14"></path>
-                      <path d="M12 5l7 7-7 7"></path>
-                    </svg>
-                  </a>
-                  <a href="#pricing" class="cta-secondary">
-                    <span>View All Plans</span>
-                  </a>
-                </div>
-              </div>
-              
-              <!-- Trust Indicators -->
-              <div class="transform-trust">
-                <div class="trust-stats">
-                  <div class="stat">
-                    <div class="stat-number">10k+</div>
-                    <div class="stat-label">Active Users</div>
-                  </div>
-                  <div class="stat">
-                    <div class="stat-number">95%</div>
-                    <div class="stat-label">Success Rate</div>
-                  </div>
-                  <div class="stat">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">AI Support</div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -937,34 +1507,38 @@
               <div class="badge-glow"></div>
               <span>Pricing Plans</span>
             </div>
-            <h2 class="section-title gradient-text">Choose Your Communication Journey</h2>
-            <p class="section-subtitle">Start free, grow at your pace. From exploring your baseline to mastering daily communication habits.</p>
+            <h2 class="section-title gradient-text">
+              Choose Your Communication Journey
+            </h2>
+            <p class="section-subtitle">
+              Start free, grow at your pace. From exploring your baseline to
+              mastering daily communication habits.
+            </p>
           </div>
 
           <!-- Premium Pricing Grid -->
           <div class="pricing-grid premium-grid">
-            
             <!-- Starter Plan -->
             <div class="pricing-card glass-card">
               <div class="card-glow"></div>
               <div class="card-inner">
                 <h3 class="plan-label">Starter</h3>
                 <p class="plan-tagline">Begin your journey</p>
-                
+
                 <div class="price">
                   <span class="amount">Free</span>
                 </div>
-                
+
                 <ul class="features-list">
                   <li>1 Audio Analysis</li>
                   <li>Basic Feedback</li>
                   <li>Key Strengths Overview</li>
                 </ul>
-                
+
                 <div class="plan-insight">
                   <p>Explore the platform and uncover your baseline.</p>
                 </div>
-                
+
                 <a href="signup.html" class="cta-button">Get Started Free</a>
               </div>
             </div>
@@ -975,23 +1549,25 @@
               <div class="card-inner">
                 <h3 class="plan-label">Essential Analysis Plan</h3>
                 <p class="plan-tagline">Build momentum</p>
-                
+
                 <div class="price">
                   <span class="currency">$</span>
                   <span class="amount">9.99</span>
                   <span class="period">/month</span>
                 </div>
-                
+
                 <ul class="features-list">
                   <li>10 Detailed Audio Analyses per Month</li>
                   <li>Monthly Improvement Catalog with Basic Drills & Tips</li>
                   <li>Email Support</li>
                 </ul>
-                
+
                 <div class="plan-insight">
-                  <p>Build consistent communication skills with focused insights.</p>
+                  <p>
+                    Build consistent communication skills with focused insights.
+                  </p>
                 </div>
-                
+
                 <a href="signup.html" class="cta-button">Start Base Plan</a>
               </div>
             </div>
@@ -1005,13 +1581,13 @@
               <div class="card-inner">
                 <h3 class="plan-label">Max Growth</h3>
                 <p class="plan-tagline">Accelerate growth</p>
-                
+
                 <div class="price">
                   <span class="currency">$</span>
                   <span class="amount">15.99</span>
                   <span class="period">/month</span>
                 </div>
-                
+
                 <ul class="features-list">
                   <li>Unlimited Audio Analysis</li>
                   <li>Weekly Expert Review Sessions</li>
@@ -1019,11 +1595,14 @@
                   <li>Priority Support</li>
                   <li>Full Access to the Improvement Hub</li>
                 </ul>
-                
+
                 <div class="plan-insight">
-                  <p>For people who don't just want change—they're ready to create it.</p>
+                  <p>
+                    For people who don't just want change—they're ready to
+                    create it.
+                  </p>
                 </div>
-                
+
                 <a href="signup.html" class="cta-button">Start Max Growth</a>
               </div>
             </div>
@@ -1034,23 +1613,30 @@
               <div class="card-inner">
                 <h3 class="plan-label">Enterprise</h3>
                 <p class="plan-tagline">Team transformation</p>
-                
+
                 <div class="price">
                   <span class="amount">Custom</span>
                 </div>
-                
+
                 <ul class="features-list">
                   <li>Custom dashboards for tracking team-wide progress</li>
-                  <li>Group metrics, training recommendations, and shared insights</li>
+                  <li>
+                    Group metrics, training recommendations, and shared insights
+                  </li>
                   <li>Scalable pricing built for volume</li>
                   <li>Dedicated support and onboarding</li>
                 </ul>
-                
+
                 <div class="plan-insight">
-                  <p>Empower your people with the most human skill in the digital age—communication.</p>
+                  <p>
+                    Empower your people with the most human skill in the digital
+                    age—communication.
+                  </p>
                 </div>
-                
-                <a href="mailto:enterprise@articulaition.com" class="cta-button">Contact Sales</a>
+
+                <a href="mailto:enterprise@articulaition.com" class="cta-button"
+                  >Contact Sales</a
+                >
               </div>
             </div>
           </div>
@@ -1060,21 +1646,51 @@
             <div class="trust-container">
               <div class="security-badges premium-badges">
                 <div class="badge-item glass-badge">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
                     <path d="m9 12 2 2 4-4"></path>
                   </svg>
                   <span>Bank-Level Security</span>
                 </div>
                 <div class="badge-item glass-badge">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                   </svg>
                   <span>99.99% Uptime</span>
                 </div>
                 <div class="badge-item glass-badge">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
                     <path d="M12 20h9M3 20h3m6-8v8m-3-8 3 8 3-8"></path>
                   </svg>
                   <span>AI-Powered Insights</span>
@@ -1090,7 +1706,13 @@
           <!-- Enhanced Header -->
           <div class="section-header text-center">
             <div class="faq-badge">
-              <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                class="badge-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                 <line x1="12" y1="17" x2="12.01" y2="17"></line>
@@ -1102,7 +1724,8 @@
               <span class="gradient-text">help you?</span>
             </h2>
             <p class="section-subtitle">
-              Find answers to common questions about Articulaition and improving your communication skills
+              Find answers to common questions about Articulaition and improving
+              your communication skills
             </p>
           </div>
 
@@ -1111,110 +1734,230 @@
             <details class="faq-item enhanced-faq-item">
               <summary class="faq-summary">
                 <div class="faq-icon-wrapper icon-blue">
-                  <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+                  <svg
+                    class="faq-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+                    ></path>
                     <path d="M12 6v6l4 2"></path>
                   </svg>
                 </div>
                 <div class="faq-content">
-                  <h3 class="faq-question">What makes Articulaition different from other speech coaching?</h3>
+                  <h3 class="faq-question">
+                    What makes Articulaition different from other speech
+                    coaching?
+                  </h3>
                   <p class="faq-category">Our Approach</p>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg
+                  class="chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </summary>
               <div class="faq-answer">
-                <p>Articulaition combines AI-powered analysis with personalized coaching. We analyze 40+ metrics including pace, tone, clarity, and emotional resonance. Unlike generic feedback, our system learns your unique speaking style and creates custom improvement plans that actually work for you.</p>
+                <p>
+                  Articulaition combines AI-powered analysis with personalized
+                  coaching. We analyze 40+ metrics including pace, tone,
+                  clarity, and emotional resonance. Unlike generic feedback, our
+                  system learns your unique speaking style and creates custom
+                  improvement plans that actually work for you.
+                </p>
               </div>
             </details>
 
             <details class="faq-item enhanced-faq-item">
               <summary class="faq-summary">
                 <div class="faq-icon-wrapper icon-orange">
-                  <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                    <rect x="3" y="11" width="18" height="10" rx="2" ry="2"></rect>
+                  <svg
+                    class="faq-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                  >
+                    <rect
+                      x="3"
+                      y="11"
+                      width="18"
+                      height="10"
+                      rx="2"
+                      ry="2"
+                    ></rect>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                   </svg>
                 </div>
                 <div class="faq-content">
-                  <h3 class="faq-question">How quickly will I see improvement?</h3>
+                  <h3 class="faq-question">
+                    How quickly will I see improvement?
+                  </h3>
                   <p class="faq-category">Results & Progress</p>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg
+                  class="chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </summary>
               <div class="faq-answer">
-                <p>Most users notice measurable improvements within 2-3 weeks of regular practice. Our data shows an average 25% improvement in clarity scores and 30% boost in confidence metrics within the first month. Your personalized dashboard tracks progress in real-time.</p>
+                <p>
+                  Most users notice measurable improvements within 2-3 weeks of
+                  regular practice. Our data shows an average 25% improvement in
+                  clarity scores and 30% boost in confidence metrics within the
+                  first month. Your personalized dashboard tracks progress in
+                  real-time.
+                </p>
               </div>
             </details>
 
             <details class="faq-item enhanced-faq-item">
               <summary class="faq-summary">
                 <div class="faq-icon-wrapper icon-purple">
-                  <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                  <svg
+                    class="faq-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    ></path>
                   </svg>
                 </div>
                 <div class="faq-content">
-                  <h3 class="faq-question">What types of communication can I practice?</h3>
+                  <h3 class="faq-question">
+                    What types of communication can I practice?
+                  </h3>
                   <p class="faq-category">Practice Scenarios</p>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg
+                  class="chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </summary>
               <div class="faq-answer">
-                <p>Practice everything from casual conversations to formal presentations and sales pitches. Our AI adapts to different contexts - whether you're preparing for a job interview, improving daily communication, or mastering public speaking. Each scenario provides targeted feedback.</p>
+                <p>
+                  Practice everything from casual conversations to formal
+                  presentations and sales pitches. Our AI adapts to different
+                  contexts - whether you're preparing for a job interview,
+                  improving daily communication, or mastering public speaking.
+                  Each scenario provides targeted feedback.
+                </p>
               </div>
             </details>
 
             <details class="faq-item enhanced-faq-item">
               <summary class="faq-summary">
                 <div class="faq-icon-wrapper icon-green">
-                  <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  <svg
+                    class="faq-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                    ></path>
                   </svg>
                 </div>
                 <div class="faq-content">
-                  <h3 class="faq-question">Is this for beginners or advanced speakers?</h3>
+                  <h3 class="faq-question">
+                    Is this for beginners or advanced speakers?
+                  </h3>
                   <p class="faq-category">Skill Levels</p>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg
+                  class="chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </summary>
               <div class="faq-answer">
-                <p>Both! Articulaition adapts to your current level. Beginners get foundational guidance on clarity and confidence, while advanced speakers receive nuanced feedback on persuasion techniques, emotional impact, and executive presence. Everyone gets personalized coaching.</p>
+                <p>
+                  Both! Articulaition adapts to your current level. Beginners
+                  get foundational guidance on clarity and confidence, while
+                  advanced speakers receive nuanced feedback on persuasion
+                  techniques, emotional impact, and executive presence. Everyone
+                  gets personalized coaching.
+                </p>
               </div>
             </details>
 
             <details class="faq-item enhanced-faq-item">
               <summary class="faq-summary">
                 <div class="faq-icon-wrapper icon-teal">
-                  <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                  <svg
+                    class="faq-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                  >
                     <circle cx="12" cy="12" r="3"></circle>
                     <path d="M12 1v6m0 6v6m11-6h-6m-6 0H1"></path>
                   </svg>
                 </div>
                 <div class="faq-content">
-                  <h3 class="faq-question">Can I use this for specific professional goals?</h3>
+                  <h3 class="faq-question">
+                    Can I use this for specific professional goals?
+                  </h3>
                   <p class="faq-category">Professional Development</p>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg
+                  class="chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </summary>
               <div class="faq-answer">
-                <p>Absolutely! Many users improve their pitch delivery, sales conversations, team presentations, and leadership communication. Set specific goals in your profile, and our AI will tailor exercises to help you excel in your professional context.</p>
+                <p>
+                  Absolutely! Many users improve their pitch delivery, sales
+                  conversations, team presentations, and leadership
+                  communication. Set specific goals in your profile, and our AI
+                  will tailor exercises to help you excel in your professional
+                  context.
+                </p>
               </div>
             </details>
 
             <details class="faq-item enhanced-faq-item">
               <summary class="faq-summary">
                 <div class="faq-icon-wrapper icon-red">
-                  <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                  <svg
+                    class="faq-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                  >
                     <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                     <circle cx="8.5" cy="7" r="4"></circle>
                     <line x1="20" y1="8" x2="20" y2="14"></line>
@@ -1222,15 +1965,30 @@
                   </svg>
                 </div>
                 <div class="faq-content">
-                  <h3 class="faq-question">How does the real-time feedback work?</h3>
+                  <h3 class="faq-question">
+                    How does the real-time feedback work?
+                  </h3>
                   <p class="faq-category">Live Analysis</p>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg
+                  class="chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </summary>
               <div class="faq-answer">
-                <p>When you submit your audio, our AI instantly analyzes your voice, providing detailed visual feedback on pace, tone, and energy. You'll receive comprehensive metrics and insights about your communication style. It's like having a communication coach analyze your performance and give you actionable feedback.</p>
+                <p>
+                  When you submit your audio, our AI instantly analyzes your
+                  voice, providing detailed visual feedback on pace, tone, and
+                  energy. You'll receive comprehensive metrics and insights
+                  about your communication style. It's like having a
+                  communication coach analyze your performance and give you
+                  actionable feedback.
+                </p>
               </div>
             </details>
           </div>
@@ -1264,9 +2022,7 @@
             <div class="cta-buttons">
               <a href="signup.html" class="cta-button cta-primary-large">
                 <span class="button-text">Start Your Transformation</span>
-                <span class="button-subtext"
-                  >Join today</span
-                >
+                <span class="button-subtext">Join today</span>
               </a>
               <div class="trust-indicators">
                 <span class="trust-item">✓ No contracts</span>
@@ -1290,140 +2046,144 @@
     <script src="js/animations.js"></script>
     <script src="js/threads-background.js"></script>
     <script src="js/main.js"></script>
-    
+
     <script>
-        // Initialize Lucide icons
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Mobile menu toggle
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileNav = document.getElementById("mobileNav");
+
+      menuBtn.addEventListener("click", () => {
+        mobileNav.classList.toggle("hidden");
+        const icon = menuBtn.querySelector("[data-lucide]");
+        if (mobileNav.classList.contains("hidden")) {
+          icon.setAttribute("data-lucide", "menu");
+        } else {
+          icon.setAttribute("data-lucide", "x");
+        }
         lucide.createIcons();
+      });
 
-        // Mobile menu toggle
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileNav = document.getElementById('mobileNav');
+      // Card Stack Interaction
+      const cardsContainer = document.getElementById("cards-container");
+      const dots = [
+        document.getElementById("dot-1"),
+        document.getElementById("dot-2"),
+        document.getElementById("dot-3"),
+      ];
 
-        menuBtn.addEventListener('click', () => {
-            mobileNav.classList.toggle('hidden');
-            const icon = menuBtn.querySelector('[data-lucide]');
-            if (mobileNav.classList.contains('hidden')) {
-                icon.setAttribute('data-lucide', 'menu');
-            } else {
-                icon.setAttribute('data-lucide', 'x');
-            }
-            lucide.createIcons();
-        });
+      let currentCard = 1;
+      let isAnimating = false;
 
-        // Card Stack Interaction
-        const cardsContainer = document.getElementById('cards-container');
-        const dots = [
-            document.getElementById('dot-1'),
-            document.getElementById('dot-2'),
-            document.getElementById('dot-3')
-        ];
-        
-        let currentCard = 1;
-        let isAnimating = false;
-        
-        function updateDots() {
-            dots.forEach((dot, index) => {
-                if (index === currentCard - 1) {
-                    if (index === 0) {
-                        dot.className = 'w-2 h-2 rounded-full bg-orange-400 transition-all duration-300 scale-125';
-                    } else if (index === 1) {
-                        dot.className = 'w-2 h-2 rounded-full bg-blue-400 transition-all duration-300 scale-125';
-                    } else {
-                        dot.className = 'w-2 h-2 rounded-full bg-green-400 transition-all duration-300 scale-125';
-                    }
-                } else {
-                    dot.className = 'w-2 h-2 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-300';
-                }
-            });
-        }
-        
-        function setActiveCard(cardNumber) {
-            if (isAnimating || cardNumber === currentCard) return;
-            
-            isAnimating = true;
-            cardsContainer.className = `card-${cardNumber}-active`;
-            currentCard = cardNumber;
-            updateDots();
-            
-            setTimeout(() => {
-                isAnimating = false;
-            }, 500);
-        }
-        
-        // Dot navigation
+      function updateDots() {
         dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                setActiveCard(index + 1);
-            });
-        });
-        
-        // Auto-rotation
-        setInterval(() => {
-            if (!isAnimating) {
-                const nextCard = currentCard === 3 ? 1 : currentCard + 1;
-                setActiveCard(nextCard);
+          if (index === currentCard - 1) {
+            if (index === 0) {
+              dot.className =
+                "w-2 h-2 rounded-full bg-orange-400 transition-all duration-300 scale-125";
+            } else if (index === 1) {
+              dot.className =
+                "w-2 h-2 rounded-full bg-blue-400 transition-all duration-300 scale-125";
+            } else {
+              dot.className =
+                "w-2 h-2 rounded-full bg-green-400 transition-all duration-300 scale-125";
             }
-        }, 4000);
+          } else {
+            dot.className =
+              "w-2 h-2 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-300";
+          }
+        });
+      }
 
-        // Transform Your Voice Section Interactivity
-        const journeySteps = document.querySelectorAll('.journey-step');
-        
-        journeySteps.forEach((step, index) => {
-            step.addEventListener('click', () => {
-                // Remove active class from all steps
-                journeySteps.forEach(s => s.classList.remove('active'));
-                
-                // Add active class to clicked step
-                step.classList.add('active');
-                
-                // Add subtle animation
-                step.style.transform = 'translateY(-8px)';
-                setTimeout(() => {
-                    step.style.transform = '';
-                }, 300);
-            });
-            
-            // Add hover effect for step indicators
-            step.addEventListener('mouseenter', () => {
-                const stepNumber = step.querySelector('.step-number');
-                if (!step.classList.contains('active')) {
-                    stepNumber.style.transform = 'scale(1.1)';
-                }
-            });
-            
-            step.addEventListener('mouseleave', () => {
-                const stepNumber = step.querySelector('.step-number');
-                stepNumber.style.transform = 'scale(1)';
-            });
+      function setActiveCard(cardNumber) {
+        if (isAnimating || cardNumber === currentCard) return;
+
+        isAnimating = true;
+        cardsContainer.className = `card-${cardNumber}-active`;
+        currentCard = cardNumber;
+        updateDots();
+
+        setTimeout(() => {
+          isAnimating = false;
+        }, 500);
+      }
+
+      // Dot navigation
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          setActiveCard(index + 1);
+        });
+      });
+
+      // Auto-rotation
+      setInterval(() => {
+        if (!isAnimating) {
+          const nextCard = currentCard === 3 ? 1 : currentCard + 1;
+          setActiveCard(nextCard);
+        }
+      }, 4000);
+
+      // Transform Your Voice Section Interactivity
+      const journeySteps = document.querySelectorAll(".journey-step");
+
+      journeySteps.forEach((step, index) => {
+        step.addEventListener("click", () => {
+          // Remove active class from all steps
+          journeySteps.forEach((s) => s.classList.remove("active"));
+
+          // Add active class to clicked step
+          step.classList.add("active");
+
+          // Add subtle animation
+          step.style.transform = "translateY(-8px)";
+          setTimeout(() => {
+            step.style.transform = "";
+          }, 300);
         });
 
-        // Add intersection observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for scroll animations
-        document.querySelectorAll('.value-card, .journey-step').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
+        // Add hover effect for step indicators
+        step.addEventListener("mouseenter", () => {
+          const stepNumber = step.querySelector(".step-number");
+          if (!step.classList.contains("active")) {
+            stepNumber.style.transform = "scale(1.1)";
+          }
         });
 
-        // Stagger animation for value cards
-        document.querySelectorAll('.value-card').forEach((card, index) => {
-            card.style.transitionDelay = `${index * 0.2}s`;
+        step.addEventListener("mouseleave", () => {
+          const stepNumber = step.querySelector(".step-number");
+          stepNumber.style.transform = "scale(1)";
         });
+      });
+
+      // Add intersection observer for animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -100px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      // Observe elements for scroll animations
+      document.querySelectorAll(".value-card, .journey-step").forEach((el) => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(30px)";
+        el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(el);
+      });
+
+      // Stagger animation for value cards
+      document.querySelectorAll(".value-card").forEach((card, index) => {
+        card.style.transitionDelay = `${index * 0.2}s`;
+      });
     </script>
   </body>
 </html>

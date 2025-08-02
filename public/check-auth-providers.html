@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Auth Providers - Articulaition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            background: #f8fafc;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .status {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            font-family: monospace;
+        }
+        .success { background: #dcfce7; color: #166534; }
+        .error { background: #fef2f2; color: #991b1b; }
+        .warning { background: #fefce8; color: #a16207; }
+        .info { background: #eff6ff; color: #1e40af; }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin: 0.5rem 0;
+            width: 100%;
+        }
+        button:hover { background: #2563eb; }
+        h2 { color: #1f2937; margin-top: 0; }
+        .fix-steps {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .fix-steps ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .fix-steps li {
+            margin: 0.5rem 0;
+        }
+        code {
+            background: #f3f4f6;
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🔍 Auth Provider Diagnostic</h2>
+        
+        <div id="status" class="status info">
+            Checking authentication setup...
+        </div>
+
+        <button onclick="checkProviders()">Run Diagnostic</button>
+        <button onclick="testGoogleAuth()">Test Google Sign-In</button>
+
+        <div id="results"></div>
+
+        <div class="fix-steps">
+            <h3>🛠️ How to Fix "provider not enabled" Error:</h3>
+            <ol>
+                <li><strong>Go to Supabase Dashboard</strong><br>
+                    <a href="https://supabase.com/dashboard/project/uxkvrwqnbyonzisvwczl/auth/providers" target="_blank">
+                        Open Auth Providers →
+                    </a>
+                </li>
+                <li><strong>Find Google in the list</strong></li>
+                <li><strong>Toggle the switch to ENABLE</strong></li>
+                <li><strong>Add credentials:</strong>
+                    <ul>
+                        <li>Client ID from Google Console</li>
+                        <li>Client Secret from Google Console</li>
+                    </ul>
+                </li>
+                <li><strong>Click Save</strong></li>
+                <li><strong>Wait 30 seconds</strong> for changes to propagate</li>
+                <li><strong>Test again</strong> using the button above</li>
+            </ol>
+        </div>
+
+        <div id="error-details" style="margin-top: 1rem;"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+
+    <script>
+        async function checkProviders() {
+            const statusDiv = document.getElementById('status');
+            const resultsDiv = document.getElementById('results');
+            
+            statusDiv.className = 'status info';
+            statusDiv.textContent = 'Running diagnostic...';
+            resultsDiv.innerHTML = '';
+
+            try {
+                // Check if Supabase is available
+                if (typeof supabase === 'undefined') {
+                    throw new Error('Supabase client not initialized');
+                }
+
+                // Check current session
+                const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+                
+                let results = '<h3>Diagnostic Results:</h3><ul>';
+                
+                // Supabase connection
+                results += '<li>✅ Supabase client connected</li>';
+                results += `<li>📍 Supabase URL: ${supabaseUrl}</li>`;
+                
+                // Session status
+                if (session) {
+                    results += `<li>✅ Active session: ${session.user.email}</li>`;
+                    results += `<li>📱 Provider: ${session.user.app_metadata.provider}</li>`;
+                } else {
+                    results += '<li>ℹ️ No active session</li>';
+                }
+
+                // Test Google provider by attempting sign-in
+                results += '<li>🔍 Testing Google provider configuration...</li>';
+                
+                results += '</ul>';
+                
+                resultsDiv.innerHTML = results;
+                
+                statusDiv.className = 'status warning';
+                statusDiv.innerHTML = `
+                    <strong>⚠️ Provider Status Check:</strong><br>
+                    If you're seeing "provider not enabled" error, follow the steps below to enable Google in Supabase.
+                `;
+
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = `Error: ${error.message}`;
+                console.error('Diagnostic error:', error);
+            }
+        }
+
+        async function testGoogleAuth() {
+            const statusDiv = document.getElementById('status');
+            const errorDiv = document.getElementById('error-details');
+            
+            statusDiv.className = 'status info';
+            statusDiv.textContent = 'Testing Google authentication...';
+            errorDiv.innerHTML = '';
+
+            try {
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: window.location.origin + '/dashboard.html'
+                    }
+                });
+
+                if (error) {
+                    throw error;
+                }
+
+                statusDiv.className = 'status success';
+                statusDiv.textContent = '✅ Google sign-in initiated successfully! You should be redirected...';
+
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = `❌ Error: ${error.message}`;
+                
+                // Provide specific guidance based on error
+                let guidance = '<div class="error"><h4>Error Details:</h4>';
+                
+                if (error.message.includes('provider is not enabled')) {
+                    guidance += `
+                        <p><strong>Issue:</strong> Google provider is not enabled in Supabase</p>
+                        <p><strong>Solution:</strong> Follow the steps above to enable Google in your Supabase dashboard</p>
+                        <p><strong>Direct link:</strong> <a href="https://supabase.com/dashboard/project/uxkvrwqnbyonzisvwczl/auth/providers" target="_blank">Open Supabase Auth Providers</a></p>
+                    `;
+                } else if (error.message.includes('redirect_uri_mismatch')) {
+                    guidance += `
+                        <p><strong>Issue:</strong> Redirect URI mismatch</p>
+                        <p><strong>Solution:</strong> Add this exact URI to Google Console:</p>
+                        <code>https://uxkvrwqnbyonzisvwczl.supabase.co/auth/v1/callback</code>
+                    `;
+                } else if (error.message.includes('Invalid client')) {
+                    guidance += `
+                        <p><strong>Issue:</strong> Invalid Google OAuth credentials</p>
+                        <p><strong>Solution:</strong> Check that Client ID and Secret in Supabase match Google Console</p>
+                    `;
+                }
+                
+                guidance += '</div>';
+                errorDiv.innerHTML = guidance;
+                
+                console.error('Google auth error:', error);
+            }
+        }
+
+        // Run diagnostic on load
+        window.addEventListener('load', () => {
+            setTimeout(checkProviders, 1000);
+        });
+    </script>
+</body>
+</html>

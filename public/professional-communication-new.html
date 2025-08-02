@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Professional Communication Mastery - Master the language and communication skills specific to your professional field"
+    />
+    <title>Professional Communication Mastery - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --voice-primary: #6366f1;
+        --voice-secondary: #8b5cf6;
+        --voice-accent: #06b6d4;
+        --voice-warm: #f59e0b;
+        --voice-success: #10b981;
+        --voice-neural: #64748b;
+        --voice-dark: #1a1f2e;
+        --voice-glass: rgba(255, 255, 255, 0.9);
+        --voice-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+        --voice-text-primary: #1a202c;
+        --voice-text-secondary: #4a5568;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Navigation */
+      .top-nav {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 1.5rem;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .nav-orange {
+        background: linear-gradient(
+          145deg,
+          #ff934d 0%,
+          #ffb366 30%,
+          #ff7f50 60%,
+          #ff934d 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .nav-blue {
+        background: linear-gradient(
+          145deg,
+          #4a90e2 0%,
+          #6bb6ff 30%,
+          #4f94e8 60%,
+          #4a90e2 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .nav-link {
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        color: #64748b;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .nav-link:hover {
+        background: rgba(99, 102, 241, 0.1);
+        color: var(--voice-primary);
+      }
+
+      .nav-link.active {
+        background: var(--voice-primary);
+        color: white;
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Header */
+      .page-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .page-header h1 {
+        font-size: 3rem;
+        font-weight: 900;
+        margin-bottom: 1rem;
+        color: var(--voice-text-primary);
+      }
+
+      .page-header p {
+        font-size: 1.25rem;
+        color: var(--voice-text-secondary);
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* Field Categories Grid */
+      .fields-grid {
+        display: grid;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .field-card {
+        background: var(--voice-glass);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        box-shadow: var(--voice-shadow);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .field-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.03) 0%,
+          transparent 100%
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .field-card:hover::before {
+        opacity: 1;
+      }
+
+      .field-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 35px 60px rgba(0, 0, 0, 0.15);
+      }
+
+      .field-header {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .field-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+
+      .field-icon.pr {
+        background: linear-gradient(135deg, #ec4899, #f97316);
+      }
+
+      .field-icon.tech {
+        background: linear-gradient(135deg, #06b6d4, #3b82f6);
+      }
+
+      .field-icon.management {
+        background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      }
+
+      .field-icon.sales {
+        background: linear-gradient(135deg, #10b981, #059669);
+      }
+
+      .field-icon.finance {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+      }
+
+      .field-content h2 {
+        font-size: 1.75rem;
+        font-weight: 800;
+        margin-bottom: 0.75rem;
+        color: var(--voice-text-primary);
+        position: relative;
+        z-index: 1;
+      }
+
+      .field-description {
+        color: var(--voice-text-secondary);
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .see-more-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.875rem 1.75rem;
+        background: var(--voice-primary);
+        color: white;
+        border: none;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
+      }
+
+      .see-more-btn:hover {
+        background: var(--voice-secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+      }
+
+      /* Coming Soon Badge */
+      .coming-soon {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(245, 158, 11, 0.1);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+        border-radius: 0.5rem;
+        color: #d97706;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-left: 1rem;
+      }
+
+      /* Animation Classes */
+      .fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+        opacity: 0;
+      }
+
+      .slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .scale-in {
+        animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes scaleIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-500 {
+        animation-delay: 0.5s;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 2rem 1rem;
+        }
+
+        .page-header h1 {
+          font-size: 2rem;
+        }
+
+        .field-header {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .field-card {
+          padding: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="top-nav">
+      <div class="nav-content">
+        <a href="index.html" class="nav-brand">
+          <span class="nav-orange">articul</span><span class="nav-blue">ai</span
+          ><span class="nav-orange">tion</span
+          ><span class="nav-orange">.com</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">
+            <i data-lucide="home"></i>
+            Home
+          </a>
+          <a href="professional-communication-new.html" class="nav-link active">
+            <i data-lucide="briefcase"></i>
+            Professional
+          </a>
+          <a href="personal-communication.html" class="nav-link">
+            <i data-lucide="message-circle"></i>
+            Personal
+          </a>
+          <a href="specialized-skill-drills.html" class="nav-link">
+            <i data-lucide="flask"></i>
+            Skill Drills
+          </a>
+          <a href="dashboard.html" class="nav-link">
+            <i data-lucide="bar-chart-4"></i>
+            Projects
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Header -->
+      <header class="page-header fade-in">
+        <h1>Professional Communication Mastery</h1>
+        <p>
+          Master the language and communication skills specific to your
+          professional field with comprehensive guides covering essential
+          vocabulary, core principles, and practical strategies.
+        </p>
+      </header>
+
+      <!-- Professional Fields -->
+      <section class="fields-grid">
+        <!-- Public Relations & Corporate Communications -->
+        <div class="field-card scale-in delay-100">
+          <div class="field-header">
+            <div class="field-icon pr">🗣️</div>
+            <div class="field-content">
+              <h2>Public Relations & Corporate Communications</h2>
+            </div>
+          </div>
+          <p class="field-description">
+            Master strategic communication disciplines for forging and
+            safeguarding organizational identity, reputation, and stakeholder
+            relationships in the modern media landscape.
+          </p>
+          <a href="public-relations-communication.html" class="see-more-btn">
+            See More
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- Technology -->
+        <div class="field-card scale-in delay-200">
+          <div class="field-header">
+            <div class="field-icon tech">💻</div>
+            <div class="field-content">
+              <h2>Technology</h2>
+            </div>
+          </div>
+          <p class="field-description">
+            Bridge the gap between technical complexity and business value by
+            translating sophisticated concepts into clear, actionable
+            information for diverse audiences.
+          </p>
+          <a href="technology-communication.html" class="see-more-btn">
+            See More
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- Management -->
+        <div class="field-card scale-in delay-300">
+          <div class="field-header">
+            <div class="field-icon management">📊</div>
+            <div class="field-content">
+              <h2>Management</h2>
+            </div>
+          </div>
+          <p class="field-description">
+            Execute core leadership functions through effective communication -
+            articulating vision, delegating tasks, providing feedback, and
+            fostering productive team culture.
+          </p>
+          <a href="management-communication.html" class="see-more-btn">
+            See More
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- Sales -->
+        <div class="field-card scale-in delay-400">
+          <div class="field-header">
+            <div class="field-icon sales">💼</div>
+            <div class="field-content">
+              <h2>Sales</h2>
+            </div>
+          </div>
+          <p class="field-description">
+            Master the art and science of persuasive communication through
+            consultative, relationship-based approaches that connect,
+            understand, and communicate value effectively.
+          </p>
+          <a href="sales-communication.html" class="see-more-btn">
+            See More
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- Business & Finance -->
+        <div class="field-card scale-in delay-500">
+          <div class="field-header">
+            <div class="field-icon finance">💰</div>
+            <div class="field-content">
+              <h2>Business & Finance</h2>
+            </div>
+          </div>
+          <p class="field-description">
+            Translate complex quantitative data into clear, credible insights
+            that guide strategic decision-making and communicate financial
+            health effectively.
+          </p>
+          <a href="business-finance-communication.html" class="see-more-btn">
+            See More
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Add smooth scroll behavior
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

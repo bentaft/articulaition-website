@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precision Under Pressure Master Drill - Articulaition</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    
+    <!-- AI Integration -->
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+    <script src="js/achievement-tracker.js"></script>
+    <script src="js/user-data-tracker.js"></script>
+    
+    <style>
+        :root {
+            --drill-primary: #dc2626;
+            --drill-secondary: #ea580c;
+            --drill-accent: #f59e0b;
+            --drill-warning: #ef4444;
+            --drill-info: #06b6d4;
+            --drill-dark: #1a1f2e;
+            --drill-glass: rgba(255, 255, 255, 0.9);
+            --drill-glass-dark: rgba(15, 20, 25, 0.9);
+            --drill-pressure: #b91c1c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #450a0a 0%, #7c2d12 25%, #dc2626 50%, #ea580c 75%, #f59e0b 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Advanced Background Effects */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(220, 38, 38, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(234, 88, 12, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Enhanced Navigation */
+        .top-nav {
+            padding: 1.5rem 2.5rem;
+            background: rgba(15, 20, 25, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 0 0 1rem 1rem;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.75rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .drill-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--drill-accent);
+        }
+
+        /* Main Header */
+        .drill-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--drill-glass-dark);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+        }
+
+        .drill-header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--drill-primary), var(--drill-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .drill-header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Pressure Types Grid */
+        .pressure-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .pressure-card {
+            background: rgba(15, 20, 25, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pressure-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--drill-primary), var(--drill-accent));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .pressure-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .pressure-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--drill-primary);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+        }
+
+        .pressure-card.selected {
+            border-color: var(--drill-primary);
+            background: rgba(220, 38, 38, 0.1);
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+        }
+
+        .pressure-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--drill-accent);
+            position: relative;
+            z-index: 1;
+        }
+
+        .pressure-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pressure-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pressure-feature {
+            background: rgba(220, 38, 38, 0.2);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--drill-accent);
+            font-weight: 500;
+        }
+
+        /* Intensity Selector */
+        .intensity-selector {
+            background: rgba(15, 20, 25, 0.9);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .intensity-selector h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--drill-accent);
+            text-align: center;
+        }
+
+        .intensity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .intensity-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .intensity-btn:hover {
+            background: rgba(220, 38, 38, 0.1);
+            border-color: var(--drill-primary);
+        }
+
+        .intensity-btn.selected {
+            background: rgba(220, 38, 38, 0.2);
+            border-color: var(--drill-primary);
+            box-shadow: 0 0 15px rgba(220, 38, 38, 0.4);
+        }
+
+        .intensity-btn h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--drill-accent);
+        }
+
+        .intensity-btn p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Practice Session */
+        .practice-session {
+            background: rgba(15, 20, 25, 0.9);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+
+        .practice-session.active {
+            display: block;
+        }
+
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .session-type {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--drill-accent);
+        }
+
+        .pressure-gauge {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .pressure-meter {
+            width: 100px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .pressure-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--drill-accent), var(--drill-primary));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .pressure-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Challenge Display */
+        .challenge-display {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .challenge-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--drill-accent);
+        }
+
+        .challenge-scenario {
+            font-size: 1.1rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .challenge-constraints {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .constraint-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Timer and Controls */
+        .practice-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .timer-display {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--drill-accent);
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .control-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .control-btn.primary {
+            background: var(--drill-primary);
+            color: white;
+        }
+
+        .control-btn.primary:hover {
+            background: var(--drill-pressure);
+            transform: translateY(-2px);
+        }
+
+        .control-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .control-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Live Feedback */
+        .live-feedback {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .feedback-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+
+        .feedback-panel h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--drill-accent);
+        }
+
+        .transcript-area {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            min-height: 150px;
+            font-family: 'Monaco', monospace;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            overflow-y: auto;
+        }
+
+        .precision-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 0.5rem;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--drill-accent);
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.5rem;
+        }
+
+        /* Pressure Indicators */
+        .pressure-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .pressure-indicator {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .pressure-indicator.active {
+            background: rgba(220, 38, 38, 0.2);
+            border-color: var(--drill-primary);
+            color: var(--drill-accent);
+            animation: pulse 2s infinite;
+        }
+
+        /* Analysis Results */
+        .analysis-results {
+            background: rgba(15, 20, 25, 0.9);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+
+        .analysis-results.visible {
+            display: block;
+        }
+
+        .analysis-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .analysis-header h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--drill-accent);
+        }
+
+        .performance-score {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--drill-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .score-label {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .analysis-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .analysis-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--drill-accent);
+        }
+
+        .analysis-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .analysis-description {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* AI Feedback */
+        .ai-feedback {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .ai-feedback h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--drill-accent);
+        }
+
+        .ai-feedback-content {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: rgba(15, 20, 25, 0.9);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--drill-accent);
+            text-align: center;
+        }
+
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-stat .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--drill-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-stat .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .pressure-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .pressure-types {
+                grid-template-columns: 1fr;
+            }
+            
+            .intensity-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .live-feedback {
+                grid-template-columns: 1fr;
+            }
+            
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .progress-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="top-nav">
+            <a href="index.html" class="back-btn">
+                <i data-lucide="arrow-left"></i>
+                Back to Home
+            </a>
+            <div class="drill-title">Precision Under Pressure</div>
+        </nav>
+
+        <!-- Main Header -->
+        <header class="drill-header">
+            <h1>Precision Under Pressure Master Drill</h1>
+            <p>Master clear, accurate communication under time constraints and cognitive stress. Build resilience and maintain verbal precision when it matters most.</p>
+        </header>
+
+        <!-- Pressure Types Selection -->
+        <section class="pressure-types">
+            <div class="pressure-card" data-type="time-pressure">
+                <h3>🕐 Time Pressure</h3>
+                <p>Master rapid-fire responses with strict time limits. Build speed while maintaining accuracy and clarity.</p>
+                <div class="pressure-features">
+                    <span class="pressure-feature">Quick Response</span>
+                    <span class="pressure-feature">Countdown Timer</span>
+                    <span class="pressure-feature">Speed Building</span>
+                </div>
+            </div>
+
+            <div class="pressure-card" data-type="cognitive-load">
+                <h3>🧠 Cognitive Load</h3>
+                <p>Handle complex information processing while speaking clearly. Multitask and maintain verbal precision.</p>
+                <div class="pressure-features">
+                    <span class="pressure-feature">Multi-tasking</span>
+                    <span class="pressure-feature">Information Overload</span>
+                    <span class="pressure-feature">Mental Juggling</span>
+                </div>
+            </div>
+
+            <div class="pressure-card" data-type="interruption">
+                <h3>🔄 Interruption</h3>
+                <p>Maintain focus and precision despite constant interruptions. Stay on message under disruption.</p>
+                <div class="pressure-features">
+                    <span class="pressure-feature">Distraction Resistance</span>
+                    <span class="pressure-feature">Focus Recovery</span>
+                    <span class="pressure-feature">Message Continuity</span>
+                </div>
+            </div>
+
+            <div class="pressure-card" data-type="high-stakes">
+                <h3>🎯 High Stakes</h3>
+                <p>Perform under pressure when everything depends on your words. Handle critical moments with precision.</p>
+                <div class="pressure-features">
+                    <span class="pressure-feature">Critical Moments</span>
+                    <span class="pressure-feature">High Consequence</span>
+                    <span class="pressure-feature">Performance Under Fire</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Intensity Selector -->
+        <section class="intensity-selector">
+            <h3>Select Pressure Intensity</h3>
+            <div class="intensity-grid">
+                <div class="intensity-btn" data-intensity="mild">
+                    <h4>Mild Pressure</h4>
+                    <p>Light constraints, gentle time limits</p>
+                </div>
+                <div class="intensity-btn" data-intensity="moderate">
+                    <h4>Moderate Pressure</h4>
+                    <p>Balanced challenge, focused stress</p>
+                </div>
+                <div class="intensity-btn" data-intensity="intense">
+                    <h4>Intense Pressure</h4>
+                    <p>High stress, demanding conditions</p>
+                </div>
+                <div class="intensity-btn" data-intensity="extreme">
+                    <h4>Extreme Pressure</h4>
+                    <p>Maximum stress, ultimate challenge</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Session -->
+        <section class="practice-session" id="practiceSession">
+            <div class="session-header">
+                <div class="session-type" id="sessionType">Time Pressure Training</div>
+                <div class="pressure-gauge">
+                    <div class="pressure-meter">
+                        <div class="pressure-fill" id="pressureFill"></div>
+                    </div>
+                    <span class="pressure-label" id="pressureLabel">Mild</span>
+                </div>
+            </div>
+
+            <!-- Challenge Display -->
+            <div class="challenge-display">
+                <div class="challenge-title" id="challengeTitle">Challenge Loading...</div>
+                <div class="challenge-scenario" id="challengeScenario">Prepare yourself for the ultimate test of precision under pressure.</div>
+                <div class="challenge-constraints" id="challengeConstraints">
+                    <div class="constraint-item">
+                        <i data-lucide="clock"></i>
+                        <span id="timeConstraint">60 seconds</span>
+                    </div>
+                    <div class="constraint-item">
+                        <i data-lucide="target"></i>
+                        <span id="accuracyTarget">95% accuracy</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practice Controls -->
+            <div class="practice-controls">
+                <button class="control-btn secondary" id="resetBtn" onclick="resetSession()">
+                    <i data-lucide="refresh-cw"></i>
+                    Reset
+                </button>
+                <div class="timer-display" id="timerDisplay">00:60</div>
+                <button class="control-btn primary" id="startBtn" onclick="togglePractice()">
+                    <i data-lucide="play"></i>
+                    Start Challenge
+                </button>
+            </div>
+
+            <!-- Pressure Indicators -->
+            <div class="pressure-indicators">
+                <div class="pressure-indicator" id="stressIndicator">
+                    <i data-lucide="zap"></i>
+                </div>
+                <div class="pressure-indicator" id="focusIndicator">
+                    <i data-lucide="target"></i>
+                </div>
+                <div class="pressure-indicator" id="precisionIndicator">
+                    <i data-lucide="crosshair"></i>
+                </div>
+            </div>
+
+            <!-- Live Feedback -->
+            <div class="live-feedback">
+                <div class="feedback-panel">
+                    <h4>Live Transcript</h4>
+                    <div class="transcript-area" id="transcriptArea">
+                        Your speech will appear here in real-time...
+                    </div>
+                </div>
+                <div class="feedback-panel">
+                    <h4>Precision Metrics</h4>
+                    <div class="precision-metrics">
+                        <div class="metric-item">
+                            <div class="metric-value" id="accuracyScore">0%</div>
+                            <div class="metric-label">Accuracy</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value" id="clarityScore">0%</div>
+                            <div class="metric-label">Clarity</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value" id="paceScore">0</div>
+                            <div class="metric-label">Words/Min</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value" id="stressLevel">Low</div>
+                            <div class="metric-label">Stress Level</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analysis Results -->
+        <section class="analysis-results" id="analysisResults">
+            <div class="analysis-header">
+                <h3>Performance Analysis</h3>
+                <div class="performance-score" id="overallScore">0</div>
+                <div class="score-label">Overall Precision Score</div>
+            </div>
+
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h4>Response Time</h4>
+                    <div class="analysis-value" id="responseTime">0.0s</div>
+                    <div class="analysis-description">Average response latency</div>
+                </div>
+                <div class="analysis-card">
+                    <h4>Accuracy Under Pressure</h4>
+                    <div class="analysis-value" id="pressureAccuracy">0%</div>
+                    <div class="analysis-description">Maintained precision despite stress</div>
+                </div>
+                <div class="analysis-card">
+                    <h4>Stress Recovery</h4>
+                    <div class="analysis-value" id="stressRecovery">0%</div>
+                    <div class="analysis-description">How quickly you adapted</div>
+                </div>
+                <div class="analysis-card">
+                    <h4>Verbal Fluency</h4>
+                    <div class="analysis-value" id="verbalFluency">0%</div>
+                    <div class="analysis-description">Smooth speech under pressure</div>
+                </div>
+            </div>
+
+            <div class="ai-feedback">
+                <h4>AI Performance Coaching</h4>
+                <div class="ai-feedback-content" id="aiFeedbackContent">
+                    Your personalized feedback will appear here after the session...
+                </div>
+            </div>
+
+            <div class="practice-controls">
+                <button class="control-btn secondary" onclick="startNewSession()">
+                    <i data-lucide="play"></i>
+                    New Session
+                </button>
+                <button class="control-btn primary" onclick="changeIntensity()">
+                    <i data-lucide="settings"></i>
+                    Change Intensity
+                </button>
+            </div>
+        </section>
+
+        <!-- Progress Tracking -->
+        <section class="progress-section">
+            <h3>Your Precision Progress</h3>
+            <div class="progress-stats">
+                <div class="progress-stat">
+                    <div class="stat-value" id="totalChallenges">0</div>
+                    <div class="stat-label">Total Challenges</div>
+                </div>
+                <div class="progress-stat">
+                    <div class="stat-value" id="averageScore">0</div>
+                    <div class="stat-label">Average Score</div>
+                </div>
+                <div class="progress-stat">
+                    <div class="stat-value" id="bestPerformance">0%</div>
+                    <div class="stat-label">Best Performance</div>
+                </div>
+                <div class="progress-stat">
+                    <div class="stat-value" id="improvementRate">0%</div>
+                    <div class="stat-label">Improvement Rate</div>
+                </div>
+                <div class="progress-stat">
+                    <div class="stat-value" id="stressResilience">0%</div>
+                    <div class="stat-label">Stress Resilience</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Load drill system -->
+    <script src="js/drill-precision-under-pressure.js"></script>
+</body>
+</html>

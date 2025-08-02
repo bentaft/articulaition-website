@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Management Communication - Execute core leadership functions through effective communication"
+    />
     <title>Management Communication - Articulaition</title>
 
     <!-- Fonts -->
@@ -13,948 +17,781 @@
       rel="stylesheet"
     />
 
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
     <!-- Custom Styles -->
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/auth.css" />
 
     <style>
+      :root {
+        --voice-primary: #6366f1;
+        --voice-secondary: #8b5cf6;
+        --voice-accent: #06b6d4;
+        --voice-warm: #f59e0b;
+        --voice-success: #10b981;
+        --voice-neural: #64748b;
+        --voice-dark: #1a1f2e;
+        --voice-glass: rgba(255, 255, 255, 0.9);
+        --voice-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+        --voice-text-primary: #1a202c;
+        --voice-text-secondary: #4a5568;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
       body {
         font-family: "Inter", sans-serif;
-        background: #0a0e17;
+        background: linear-gradient(
+          135deg,
+          #fafbfc 0%,
+          #f4f6f8 25%,
+          #edf2f7 50%,
+          #e2e8f0 75%,
+          #cbd5e0 100%
+        );
         min-height: 100vh;
-        color: white;
         overflow-x: hidden;
       }
 
-      body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(
-            circle at 20% 20%,
-            rgba(16, 185, 129, 0.1) 0%,
-            transparent 40%
-          ),
-          radial-gradient(
-            circle at 80% 80%,
-            rgba(16, 185, 129, 0.08) 0%,
-            transparent 40%
-          ),
-          radial-gradient(
-            circle at 50% 50%,
-            rgba(16, 185, 129, 0.05) 0%,
-            transparent 50%
-          );
-        pointer-events: none;
-        z-index: 1;
-      }
-
-      .main-content {
-        position: relative;
-        z-index: 2;
-      }
-    </style>
-  </head>
-
-  <body class="auth-body">
-    <!-- Navigation -->
-    <nav
-      style="
-        background: rgba(15, 15, 15, 0.95);
+      /* Navigation */
+      .top-nav {
+        background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 1rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
         position: sticky;
         top: 0;
         z-index: 100;
-      "
-    >
-      <div
-        style="
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 2rem;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        "
-      >
-        <div style="display: flex; align-items: center; gap: 2rem">
-          <img
-            src="images/logo-header.svg"
-            alt="Articulaition"
-            style="height: 40px"
-          />
-          <span
-            style="
-              color: rgba(255, 255, 255, 0.6);
-              font-size: 0.9rem;
-              font-weight: 500;
-            "
-            >Professional Communication Mastery</span
-          >
-        </div>
-        <div style="display: flex; align-items: center; gap: 1.5rem">
-          <a
-            href="improvement-hub-dashboard.html"
-            style="
-              background: linear-gradient(135deg, #10b981, #059669);
-              color: white;
-              padding: 0.75rem 1.5rem;
-              border-radius: 0.5rem;
-              text-decoration: none;
-              font-weight: 600;
-              font-size: 0.9rem;
-              transition: all 0.3s ease;
-              box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
-            "
-            >← Back to Improvement Hub</a
-          >
-          <a
-            href="dashboard.html"
-            style="
-              color: rgba(255, 255, 255, 0.8);
-              text-decoration: none;
-              font-weight: 500;
-              transition: color 0.3s ease;
-              padding: 0.5rem 1rem;
-            "
-            >Dashboard</a
-          >
+      }
+
+      .nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 1.5rem;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .nav-orange {
+        background: linear-gradient(
+          145deg,
+          #ff934d 0%,
+          #ffb366 30%,
+          #ff7f50 60%,
+          #ff934d 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .nav-blue {
+        background: linear-gradient(
+          145deg,
+          #4a90e2 0%,
+          #6bb6ff 30%,
+          #4f94e8 60%,
+          #4a90e2 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .nav-link {
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        color: #64748b;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .nav-link:hover {
+        background: rgba(99, 102, 241, 0.1);
+        color: var(--voice-primary);
+      }
+
+      .nav-link.active {
+        background: var(--voice-primary);
+        color: white;
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Back Button */
+      .back-nav {
+        margin-bottom: 2rem;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--voice-primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .back-link:hover {
+        color: var(--voice-secondary);
+        transform: translateX(-4px);
+      }
+
+      /* Header */
+      .page-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .page-header .icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+      }
+
+      .page-header h1 {
+        font-size: 3rem;
+        font-weight: 900;
+        margin-bottom: 1rem;
+        color: var(--voice-text-primary);
+      }
+
+      .page-header p {
+        font-size: 1.25rem;
+        color: var(--voice-text-secondary);
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* Content Sections */
+      .content-section {
+        background: var(--voice-glass);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        margin-bottom: 3rem;
+        box-shadow: var(--voice-shadow);
+      }
+
+      .content-section h2 {
+        color: var(--voice-text-primary);
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+      }
+
+      .content-section p {
+        line-height: 1.6;
+        color: var(--voice-text-secondary);
+        margin-bottom: 1rem;
+      }
+
+      .content-section p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Vocabulary Grid */
+      .vocab-grid {
+        display: grid;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .vocab-item {
+        background: rgba(99, 102, 241, 0.05);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .vocab-item:hover {
+        background: rgba(99, 102, 241, 0.08);
+        transform: translateY(-2px);
+      }
+
+      .vocab-term {
+        font-weight: 700;
+        color: var(--voice-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .vocab-definition {
+        color: var(--voice-text-secondary);
+        line-height: 1.6;
+      }
+
+      /* Pillars Grid */
+      .pillars-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .pillar-item {
+        background: rgba(99, 102, 241, 0.05);
+        border-left: 4px solid var(--voice-primary);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+      }
+
+      .pillar-title {
+        color: var(--voice-primary);
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .pillar-description {
+        color: var(--voice-text-secondary);
+        line-height: 1.6;
+      }
+
+      /* Strategies Grid */
+      .strategies-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .strategy-item {
+        background: rgba(99, 102, 241, 0.03);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+      }
+
+      .strategy-title {
+        color: var(--voice-primary);
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .strategy-description {
+        color: var(--voice-text-secondary);
+        line-height: 1.6;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 2rem 1rem;
+        }
+
+        .page-header h1 {
+          font-size: 2rem;
+        }
+
+        .content-section {
+          padding: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="top-nav">
+      <div class="nav-content">
+        <a href="index.html" class="nav-brand">
+          <span class="nav-orange">articul</span><span class="nav-blue">ai</span
+          ><span class="nav-orange">tion</span
+          ><span class="nav-orange">.com</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">
+            <i data-lucide="home"></i>
+            Home
+          </a>
+          <a href="professional-communication-new.html" class="nav-link active">
+            <i data-lucide="briefcase"></i>
+            Professional
+          </a>
+          <a href="personal-communication.html" class="nav-link">
+            <i data-lucide="message-circle"></i>
+            Personal
+          </a>
+          <a href="specialized-skill-drills.html" class="nav-link">
+            <i data-lucide="flask"></i>
+            Skill Drills
+          </a>
+          <a href="dashboard.html" class="nav-link">
+            <i data-lucide="bar-chart-4"></i>
+            Projects
+          </a>
         </div>
       </div>
     </nav>
 
-    <!-- Main Content -->
-    <main
-      class="main-content"
-      style="max-width: 1200px; margin: 0 auto; padding: 2rem"
-    >
-      <!-- Hero Section -->
-      <section style="text-align: center; margin-bottom: 4rem">
-        <div
-          style="
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            border-radius: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            margin: 0 auto 2rem auto;
-            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
-          "
-        >
-          👥
-        </div>
+    <div class="container">
+      <!-- Back Navigation -->
+      <div class="back-nav">
+        <a href="professional-communication-new.html" class="back-link">
+          <i data-lucide="arrow-left"></i>
+          Back to Professional Communication
+        </a>
+      </div>
 
-        <h1
-          style="
-            font-size: 3rem;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #10b981, #059669);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-          "
-        >
-          Management Communication
-        </h1>
-
-        <p
-          style="
-            font-size: 1.25rem;
-            color: #10b981;
-            font-weight: 600;
-            margin-bottom: 1rem;
-          "
-        >
-          Leadership Through Clear & Inspiring Communication
+      <!-- Header -->
+      <header class="page-header">
+        <div class="icon">📊</div>
+        <h1>Management Communication</h1>
+        <p>
+          Execute core leadership functions through effective communication -
+          articulating vision, delegating tasks, providing feedback, and
+          fostering productive team culture.
         </p>
+      </header>
 
-        <p
-          style="
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.8);
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
-          "
-        >
-          Master the art of leading through communication. Learn to delegate
-          effectively, provide constructive feedback, and motivate teams to
-          achieve exceptional results.
+      <!-- Introduction Section -->
+      <section class="content-section">
+        <h2>Introduction to the Communication Landscape</h2>
+        <p>
+          Effective leadership is functionally synonymous with effective
+          communication. In the field of management, communication is not an
+          ancillary task but the primary mechanism through which all core
+          functions are executed: articulating vision, delegating tasks,
+          providing feedback, motivating teams, and fostering a productive
+          culture. A manager's ability to communicate with clarity, confidence,
+          and empathy is the cornerstone of organizational success.
+        </p>
+        <p>
+          From one-on-one check-ins to company-wide addresses, their words and
+          actions set the tone, define expectations, and ultimately determine
+          whether a team is aligned and engaged or fragmented and confused. In
+          this context, miscommunication is not just a mistake; it is a direct
+          impediment to performance, morale, and goal attainment.
         </p>
       </section>
 
-      <!-- Content Sections -->
-      <div style="display: grid; gap: 3rem">
-        <!-- Introduction Section -->
-        <section
-          style="
-            background: linear-gradient(
-              145deg,
-              rgba(255, 255, 255, 0.08),
-              rgba(255, 255, 255, 0.03)
-            );
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 1.5rem;
-            padding: 3rem;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-          "
-        >
-          <div
-            style="
-              position: absolute;
-              top: 0;
-              left: 0;
-              right: 0;
-              height: 4px;
-              background: linear-gradient(90deg, #10b981, #059669);
-              border-radius: 1.5rem 1.5rem 0 0;
-            "
-          ></div>
+      <!-- Professional Lexicon Section -->
+      <section class="content-section">
+        <h2>1. The Professional Lexicon: 20 Essential Vocabulary Terms</h2>
+        <p>
+          A manager's vocabulary must encompass strategy, performance, and
+          interpersonal dynamics. Using these terms accurately demonstrates
+          leadership acumen and facilitates clear, high-level discussions about
+          organizational health and direction.
+        </p>
 
-          <h2
-            style="
-              font-size: 2rem;
-              font-weight: 700;
-              color: white;
-              margin-bottom: 1.5rem;
-              display: flex;
-              align-items: center;
-              gap: 1rem;
-            "
-          >
-            <span
-              style="
-                background: linear-gradient(135deg, #10b981, #059669);
-                padding: 0.5rem;
-                border-radius: 0.75rem;
-                font-size: 1.5rem;
-              "
-              >🎯</span
-            >
-            The Leadership Communication Landscape
-          </h2>
-
-          <div
-            style="
-              color: rgba(255, 255, 255, 0.95);
-              font-size: 1.1rem;
-              line-height: 1.8;
-              space-y: 1.5rem;
-            "
-          >
-            <p style="margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95)">
-              Management communication is the cornerstone of organizational
-              success. It encompasses the strategic and tactical use of
-              communication to inspire, direct, and coordinate teams toward
-              achieving business objectives. In today's complex business
-              environment, managers must communicate across multiple dimensions:
-              upward to executives, downward to direct reports, laterally to
-              peers, and externally to clients and stakeholders.
-            </p>
-
-            <p style="margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95)">
-              The modern manager faces unprecedented challenges: leading remote
-              and hybrid teams, navigating cultural diversity, managing change,
-              and maintaining engagement in an era of information overload.
-              Effective management communication requires the ability to
-              translate high-level strategy into actionable tasks, provide clear
-              direction while empowering autonomy, and create psychological
-              safety that encourages innovation and honest feedback.
-            </p>
-
-            <div
-              style="
-                background: rgba(16, 185, 129, 0.1);
-                border-left: 4px solid #10b981;
-                padding: 1.5rem;
-                border-radius: 0.5rem;
-                margin: 2rem 0;
-              "
-            >
-              <h3
-                style="color: #10b981; font-weight: 600; margin-bottom: 0.75rem"
-              >
-                Leadership Imperative
-              </h3>
-              <p
-                style="
-                  margin: 0;
-                  font-style: italic;
-                  color: rgba(255, 255, 255, 0.95);
-                "
-              >
-                "Research consistently shows that the quality of management
-                communication directly correlates with employee engagement,
-                retention, and performance. Poor communication from leadership
-                is cited as one of the top reasons employees leave
-                organizations."
-              </p>
+        <div class="vocab-grid">
+          <div class="vocab-item">
+            <div class="vocab-term">Stakeholder:</div>
+            <div class="vocab-definition">
+              Any individual, group, or organization that can affect or is
+              affected by a company's actions, objectives, and policies. Used to
+              broaden perspective beyond employees and customers to include
+              investors, suppliers, and community members when discussing
+              project impact.
             </div>
           </div>
-        </section>
-
-        <!-- Professional Lexicon Section -->
-        <section
-          style="
-            background: linear-gradient(
-              145deg,
-              rgba(255, 255, 255, 0.08),
-              rgba(255, 255, 255, 0.03)
-            );
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 1.5rem;
-            padding: 3rem;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-          "
-        >
-          <div
-            style="
-              position: absolute;
-              top: 0;
-              left: 0;
-              right: 0;
-              height: 4px;
-              background: linear-gradient(90deg, #06b6d4, #0891b2);
-              border-radius: 1.5rem 1.5rem 0 0;
-            "
-          ></div>
-
-          <h2
-            style="
-              font-size: 2rem;
-              font-weight: 700;
-              color: white;
-              margin-bottom: 1.5rem;
-              display: flex;
-              align-items: center;
-              gap: 1rem;
-            "
-          >
-            <span
-              style="
-                background: linear-gradient(135deg, #06b6d4, #0891b2);
-                padding: 0.5rem;
-                border-radius: 0.75rem;
-                font-size: 1.5rem;
-              "
-              >📚</span
-            >
-            Professional Lexicon: 20 Essential Terms
-          </h2>
-
-          <p
-            style="
-              color: rgba(255, 255, 255, 0.95);
-              font-size: 1.1rem;
-              line-height: 1.8;
-              margin-bottom: 2rem;
-            "
-          >
-            Mastery of management terminology enables precise communication
-            about leadership concepts, organizational dynamics, and performance
-            management strategies.
-          </p>
-
-          <div
-            style="
-              display: grid;
-              grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-              gap: 1.5rem;
-            "
-          >
-            <!-- Term Cards -->
-            <div
-              style="
-                background: rgba(6, 182, 212, 0.1);
-                padding: 1.5rem;
-                border-radius: 1rem;
-                border: 1px solid rgba(6, 182, 212, 0.2);
-              "
-            >
-              <h4
-                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
-              >
-                Delegation
-              </h4>
-              <p
-                style="
-                  color: rgba(255, 255, 255, 0.9);
-                  font-size: 0.9rem;
-                  margin-bottom: 0.75rem;
-                "
-              >
-                The process of assigning responsibility and authority to
-                subordinates to complete specific tasks or projects while
-                maintaining accountability for results.
-              </p>
-              <p
-                style="
-                  color: rgba(255, 255, 255, 0.7);
-                  font-size: 0.8rem;
-                  font-style: italic;
-                "
-              >
-                Effective delegation requires clear communication of
-                expectations, deadlines, resources, and success criteria.
-              </p>
-            </div>
-
-            <div
-              style="
-                background: rgba(6, 182, 212, 0.1);
-                padding: 1.5rem;
-                border-radius: 1rem;
-                border: 1px solid rgba(6, 182, 212, 0.2);
-              "
-            >
-              <h4
-                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
-              >
-                Performance Management
-              </h4>
-              <p
-                style="
-                  color: rgba(255, 255, 255, 0.9);
-                  font-size: 0.9rem;
-                  margin-bottom: 0.75rem;
-                "
-              >
-                The ongoing process of communicating expectations, monitoring
-                progress, providing feedback, and evaluating employee
-                performance to drive improvement and achievement.
-              </p>
-              <p
-                style="
-                  color: rgba(255, 255, 255, 0.7);
-                  font-size: 0.8rem;
-                  font-style: italic;
-                "
-              >
-                Involves regular one-on-ones, goal setting, performance reviews,
-                and development planning conversations.
-              </p>
-            </div>
-
-            <div
-              style="
-                background: rgba(6, 182, 212, 0.1);
-                padding: 1.5rem;
-                border-radius: 1rem;
-                border: 1px solid rgba(6, 182, 212, 0.2);
-              "
-            >
-              <h4
-                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
-              >
-                Change Management
-              </h4>
-              <p
-                style="
-                  color: rgba(255, 255, 255, 0.9);
-                  font-size: 0.9rem;
-                  margin-bottom: 0.75rem;
-                "
-              >
-                The structured approach to transitioning individuals, teams, and
-                organizations from current state to desired future state through
-                effective communication and stakeholder engagement.
-              </p>
-              <p
-                style="
-                  color: rgba(255, 255, 255, 0.7);
-                  font-size: 0.8rem;
-                  font-style: italic;
-                "
-              >
-                Requires transparent communication about the reasons for change,
-                expected benefits, and impact on team members.
-              </p>
-            </div>
-
-            <div
-              style="
-                background: rgba(6, 182, 212, 0.1);
-                padding: 1.5rem;
-                border-radius: 1rem;
-                border: 1px solid rgba(6, 182, 212, 0.2);
-              "
-            >
-              <h4
-                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
-              >
-                360-Degree Feedback
-              </h4>
-              <p
-                style="
-                  color: rgba(255, 255, 255, 0.9);
-                  font-size: 0.9rem;
-                  margin-bottom: 0.75rem;
-                "
-              >
-                A feedback process where an individual receives input about
-                their performance from multiple sources: supervisors, peers,
-                direct reports, and sometimes external stakeholders.
-              </p>
-              <p
-                style="
-                  color: rgba(255, 255, 255, 0.7);
-                  font-size: 0.8rem;
-                  font-style: italic;
-                "
-              >
-                Provides comprehensive insight into leadership effectiveness and
-                communication impact across all levels.
-              </p>
-            </div>
-
-            <div
-              style="
-                background: rgba(6, 182, 212, 0.1);
-                padding: 1.5rem;
-                border-radius: 1rem;
-                border: 1px solid rgba(6, 182, 212, 0.2);
-              "
-            >
-              <h4
-                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
-              >
-                Psychological Safety
-              </h4>
-              <p
-                style="
-                  color: rgba(255, 255, 255, 0.9);
-                  font-size: 0.9rem;
-                  margin-bottom: 0.75rem;
-                "
-              >
-                A team climate where individuals feel safe to speak up, share
-                ideas, ask questions, and admit mistakes without fear of
-                negative consequences.
-              </p>
-              <p
-                style="
-                  color: rgba(255, 255, 255, 0.7);
-                  font-size: 0.8rem;
-                  font-style: italic;
-                "
-              >
-                Created through consistent, respectful communication that
-                encourages open dialogue and learning from failures.
-              </p>
-            </div>
-
-            <div
-              style="
-                background: rgba(6, 182, 212, 0.1);
-                padding: 1.5rem;
-                border-radius: 1rem;
-                border: 1px solid rgba(6, 182, 212, 0.2);
-              "
-            >
-              <h4
-                style="color: #06b6d4; font-weight: 600; margin-bottom: 0.5rem"
-              >
-                Servant Leadership
-              </h4>
-              <p
-                style="
-                  color: rgba(255, 255, 255, 0.9);
-                  font-size: 0.9rem;
-                  margin-bottom: 0.75rem;
-                "
-              >
-                A leadership philosophy where the primary goal is to serve
-                others, empowering and developing team members to reach their
-                highest potential.
-              </p>
-              <p
-                style="
-                  color: rgba(255, 255, 255, 0.7);
-                  font-size: 0.8rem;
-                  font-style: italic;
-                "
-              >
-                Emphasizes listening, empathy, and supporting team member growth
-                through coaching-style communication.
-              </p>
+          <div class="vocab-item">
+            <div class="vocab-term">KPI (Key Performance Indicator):</div>
+            <div class="vocab-definition">
+              A measurable value that demonstrates how effectively a company is
+              achieving key business objectives. Essential for setting clear,
+              trackable goals for teams and individuals and for communicating
+              performance in objective terms.
             </div>
           </div>
-
-          <div style="text-align: center; margin-top: 2rem">
-            <button
-              style="
-                background: linear-gradient(135deg, #06b6d4, #0891b2);
-                color: white;
-                border: none;
-                padding: 0.75rem 1.5rem;
-                border-radius: 0.5rem;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.3s ease;
-              "
-              onclick="alert('Complete lexicon with all 20 terms available in full course')"
-            >
-              View All 20 Terms →
-            </button>
-          </div>
-        </section>
-
-        <!-- Communication Pillars Section -->
-        <section
-          style="
-            background: linear-gradient(
-              145deg,
-              rgba(255, 255, 255, 0.08),
-              rgba(255, 255, 255, 0.03)
-            );
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 1.5rem;
-            padding: 3rem;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-          "
-        >
-          <div
-            style="
-              position: absolute;
-              top: 0;
-              left: 0;
-              right: 0;
-              height: 4px;
-              background: linear-gradient(90deg, #8b5cf6, #a855f7);
-              border-radius: 1.5rem 1.5rem 0 0;
-            "
-          ></div>
-
-          <h2
-            style="
-              font-size: 2rem;
-              font-weight: 700;
-              color: white;
-              margin-bottom: 1.5rem;
-              display: flex;
-              align-items: center;
-              gap: 1rem;
-            "
-          >
-            <span
-              style="
-                background: linear-gradient(135deg, #8b5cf6, #a855f7);
-                padding: 0.5rem;
-                border-radius: 0.75rem;
-                font-size: 1.5rem;
-              "
-              >🏗️</span
-            >
-            The 10 Pillars of Effective Communication
-          </h2>
-
-          <p
-            style="
-              color: rgba(255, 255, 255, 0.95);
-              font-size: 1.1rem;
-              line-height: 1.8;
-              margin-bottom: 2rem;
-            "
-          >
-            Exceptional management communication is built upon ten foundational
-            pillars that enable leaders to inspire, guide, and empower their
-            teams to achieve extraordinary results.
-          </p>
-
-          <div
-            style="
-              display: grid;
-              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-              gap: 2rem;
-            "
-          >
-            <div
-              style="
-                background: rgba(139, 92, 246, 0.1);
-                padding: 2rem;
-                border-radius: 1rem;
-                border: 1px solid rgba(139, 92, 246, 0.2);
-              "
-            >
-              <h3
-                style="
-                  color: #a855f7;
-                  font-weight: 600;
-                  margin-bottom: 1rem;
-                  font-size: 1.2rem;
-                "
-              >
-                Clear Vision and Purpose Communication
-              </h3>
-              <p
-                style="color: rgba(255, 255, 255, 0.95); margin-bottom: 0.75rem"
-              >
-                Exceptional managers articulate the "why" behind work. They
-                consistently communicate the organization's mission, vision, and
-                strategic objectives in ways that help team members understand
-                how their individual contributions connect to larger purposes.
-              </p>
-              <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem">
-                This pillar transforms routine tasks into meaningful work by
-                providing context and fostering intrinsic motivation.
-              </p>
-            </div>
-
-            <div
-              style="
-                background: rgba(139, 92, 246, 0.1);
-                padding: 2rem;
-                border-radius: 1rem;
-                border: 1px solid rgba(139, 92, 246, 0.2);
-              "
-            >
-              <h3
-                style="
-                  color: #a855f7;
-                  font-weight: 600;
-                  margin-bottom: 1rem;
-                  font-size: 1.2rem;
-                "
-              >
-                Active Listening and Empathy
-              </h3>
-              <p
-                style="color: rgba(255, 255, 255, 0.95); margin-bottom: 0.75rem"
-              >
-                Great managers are exceptional listeners who create space for
-                team members to share ideas, concerns, and feedback. They
-                practice empathy by seeking to understand different perspectives
-                and responding to both the content and emotion of
-                communications.
-              </p>
-              <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem">
-                This builds trust, demonstrates respect, and creates
-                psychological safety that encourages open communication.
-              </p>
-            </div>
-
-            <div
-              style="
-                background: rgba(139, 92, 246, 0.1);
-                padding: 2rem;
-                border-radius: 1rem;
-                border: 1px solid rgba(139, 92, 246, 0.2);
-              "
-            >
-              <h3
-                style="
-                  color: #a855f7;
-                  font-weight: 600;
-                  margin-bottom: 1rem;
-                  font-size: 1.2rem;
-                "
-              >
-                Constructive Feedback and Recognition
-              </h3>
-              <p
-                style="color: rgba(255, 255, 255, 0.95); margin-bottom: 0.75rem"
-              >
-                Effective managers master the art of providing feedback that
-                drives improvement while maintaining motivation. They balance
-                recognition of achievements with specific, actionable guidance
-                for growth areas.
-              </p>
-              <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem">
-                Feedback is timely, specific, and focused on behaviors and
-                outcomes rather than personal characteristics.
-              </p>
-            </div>
-
-            <div
-              style="
-                background: rgba(139, 92, 246, 0.1);
-                padding: 2rem;
-                border-radius: 1rem;
-                border: 1px solid rgba(139, 92, 246, 0.2);
-              "
-            >
-              <h3
-                style="
-                  color: #a855f7;
-                  font-weight: 600;
-                  margin-bottom: 1rem;
-                  font-size: 1.2rem;
-                "
-              >
-                Adaptive Communication Styles
-              </h3>
-              <p
-                style="color: rgba(255, 255, 255, 0.95); margin-bottom: 0.75rem"
-              >
-                Exceptional managers recognize that different team members
-                require different communication approaches. They adapt their
-                style based on individual preferences, experience levels, and
-                situational contexts.
-              </p>
-              <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem">
-                This includes adjusting directness, detail level, frequency, and
-                channels based on what works best for each team member.
-              </p>
+          <div class="vocab-item">
+            <div class="vocab-term">SWOT Analysis:</div>
+            <div class="vocab-definition">
+              A strategic planning technique used to identify an organization's
+              internal Strengths and Weaknesses, as well as its external
+              Opportunities and Threats. A framework for facilitating strategic
+              discussions with a team to assess the current state and plan
+              future actions.
             </div>
           </div>
-
-          <div style="text-align: center; margin-top: 2rem">
-            <button
-              style="
-                background: linear-gradient(135deg, #8b5cf6, #a855f7);
-                color: white;
-                border: none;
-                padding: 0.75rem 1.5rem;
-                border-radius: 0.5rem;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.3s ease;
-              "
-              onclick="alert('Complete 10-pillar framework available in full course')"
-            >
-              Explore All 10 Pillars →
-            </button>
-          </div>
-        </section>
-
-        <!-- Key Statistics -->
-        <section
-          style="
-            background: linear-gradient(
-              145deg,
-              rgba(255, 255, 255, 0.08),
-              rgba(255, 255, 255, 0.03)
-            );
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 1.5rem;
-            padding: 3rem;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-          "
-        >
-          <h2
-            style="
-              font-size: 2rem;
-              font-weight: 700;
-              color: white;
-              margin-bottom: 2rem;
-              text-align: center;
-            "
-          >
-            Management Communication Impact
-          </h2>
-
-          <div
-            style="
-              display: grid;
-              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-              gap: 1.5rem;
-              margin-top: 2rem;
-            "
-          >
-            <div style="text-align: center; padding: 1.5rem">
-              <div
-                style="
-                  font-size: 2.5rem;
-                  margin-bottom: 1rem;
-                  background: linear-gradient(135deg, #10b981, #059669);
-                  -webkit-background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                  background-clip: text;
-                  font-weight: 800;
-                "
-              >
-                67%
-              </div>
-              <p style="color: rgba(255, 255, 255, 0.8); font-weight: 600">
-                higher engagement with effective manager communication
-              </p>
-            </div>
-
-            <div style="text-align: center; padding: 1.5rem">
-              <div
-                style="
-                  font-size: 2.5rem;
-                  margin-bottom: 1rem;
-                  background: linear-gradient(135deg, #06b6d4, #0891b2);
-                  -webkit-background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                  background-clip: text;
-                  font-weight: 800;
-                "
-              >
-                70%
-              </div>
-              <p style="color: rgba(255, 255, 255, 0.8); font-weight: 600">
-                of employees quit due to poor management communication
-              </p>
-            </div>
-
-            <div style="text-align: center; padding: 1.5rem">
-              <div
-                style="
-                  font-size: 2.5rem;
-                  margin-bottom: 1rem;
-                  background: linear-gradient(135deg, #8b5cf6, #a855f7);
-                  -webkit-background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                  background-clip: text;
-                  font-weight: 800;
-                "
-              >
-                40%
-              </div>
-              <p style="color: rgba(255, 255, 255, 0.8); font-weight: 600">
-                increase in team performance with strong leadership
-                communication
-              </p>
+          <div class="vocab-item">
+            <div class="vocab-term">Delegation:</div>
+            <div class="vocab-definition">
+              The assignment of responsibility for specific tasks from a manager
+              to a subordinate. A core management skill involving clarifying the
+              task, expected outcome, deadline, and level of authority.
             </div>
           </div>
-        </section>
-      </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Scope Creep:</div>
+            <div class="vocab-definition">
+              The tendency for a project's requirements to expand or change in
+              an uncontrolled way after the project has started. Critical for
+              managing project expectations with teams and clients, used to
+              justify renegotiating timelines or resources.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Change Management:</div>
+            <div class="vocab-definition">
+              The systematic approach to dealing with the transition or
+              transformation of an organization's goals, processes, or
+              technologies. Involves specific communication strategies to guide
+              employees through organizational change.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Bandwidth (Figurative):</div>
+            <div class="vocab-definition">
+              A professional's or team's capacity to take on additional tasks or
+              projects. Used in resource planning and task assignment to gauge a
+              team member's workload without being overly intrusive.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Action Item:</div>
+            <div class="vocab-definition">
+              A discrete task that must be accomplished, usually arising from a
+              meeting. Used to provide clarity at the end of discussions,
+              ensuring accountability by assigning ownership and deadlines to
+              specific next steps.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Onboarding:</div>
+            <div class="vocab-definition">
+              The process of integrating a new employee into an organization and
+              its culture, as well as getting them the tools and information
+              needed to become a productive member of the team.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Performance Review:</div>
+            <div class="vocab-definition">
+              A formal assessment in which a manager evaluates an employee's
+              work performance, identifies strengths and weaknesses, offers
+              feedback, and sets goals for future performance. A high-stakes
+              communication event requiring careful preparation.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Psychological Safety:</div>
+            <div class="vocab-definition">
+              A shared belief held by members of a team that the team is safe
+              for interpersonal risk-taking. Describes an environment of trust
+              and mutual respect where people are comfortable being themselves.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Micromanagement:</div>
+            <div class="vocab-definition">
+              A management style whereby a manager closely observes or controls
+              the work of their subordinates or employees. A negative term
+              describing ineffective leadership behavior that stifles autonomy
+              and trust.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">360-Degree Feedback:</div>
+            <div class="vocab-definition">
+              A feedback process where not just a manager's superiors but also
+              their peers and direct reports are asked to provide feedback on
+              their performance. A comprehensive tool for leadership
+              development.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Cascading Communication:</div>
+            <div class="vocab-definition">
+              A top-down communication strategy where information flows from
+              senior leadership down through the various levels of the
+              organization. A formal method for disseminating key strategic
+              messages.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Alignment:</div>
+            <div class="vocab-definition">
+              The state where different individuals or groups in an organization
+              are working toward the same goals. A primary objective of
+              management communication to ensure team activities align with
+              organizational objectives.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Empowerment:</div>
+            <div class="vocab-definition">
+              The practice of giving employees the authority, resources, and
+              confidence to make decisions and take action in their roles. A
+              management philosophy communicated through acts of trust and
+              delegation.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Core Competency:</div>
+            <div class="vocab-definition">
+              A defining capability or advantage that distinguishes an
+              enterprise from its competitors. A strategic term used to
+              communicate what the organization's unique strengths are and where
+              to focus efforts.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Deliverable:</div>
+            <div class="vocab-definition">
+              A tangible or intangible good or service produced as a result of a
+              project that is intended to be delivered to a customer. A project
+              management term used to provide absolute clarity on expected
+              outputs.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Gunnysacking:</div>
+            <div class="vocab-definition">
+              An unproductive conflict communication style where individuals
+              store up grievances over time and then "dump" them all at once
+              during a disagreement. Understanding this helps managers coach
+              employees away from this destructive pattern.
+            </div>
+          </div>
+          <div class="vocab-item">
+            <div class="vocab-term">Supportive Communication:</div>
+            <div class="vocab-definition">
+              A communication style that seeks to preserve a positive
+              relationship between communicators while addressing a problem.
+              Focuses on points, not personalities. The ideal approach for
+              managers giving constructive feedback.
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <!-- Back to Improvement Hub -->
-      <div style="text-align: center; margin-top: 4rem">
-        <a
-          href="improvement-hub-dashboard.html"
-          style="
-            display: inline-block;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 0.75rem;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
-          "
-          >← Back to Improvement Hub</a
-        >
-      </div>
-    </main>
+      <!-- Communication Pillars Section -->
+      <section class="content-section">
+        <h2>2. The Pillars of Effective Communication: 10 Core Elements</h2>
+        <p>
+          Managerial effectiveness is predicated on the mastery of ten essential
+          communication pillars. These are the foundational competencies that
+          enable managers to build high-performing, engaged, and resilient
+          teams.
+        </p>
+        <div class="pillars-grid">
+          <div class="pillar-item">
+            <div class="pillar-title">
+              Articulating a Clear Vision and Expectations:
+            </div>
+            <div class="pillar-description">
+              The foremost responsibility of a manager is to translate
+              high-level organizational goals into a clear, compelling vision
+              for their team. This involves not just stating objectives, but
+              explaining the "why" behind them, helping employees see how their
+              individual contributions connect to the larger mission.
+            </div>
+          </div>
+          <div class="pillar-item">
+            <div class="pillar-title">Active and Empathetic Listening:</div>
+            <div class="pillar-description">
+              Effective communication is a two-way process. Managers must
+              cultivate the ability to listen actively, giving their full
+              attention to employees, understanding not just the words but the
+              underlying emotions and concerns. Empathetic listening builds
+              trust and psychological safety.
+            </div>
+          </div>
+          <div class="pillar-item">
+            <div class="pillar-title">
+              Providing Constructive and Actionable Feedback:
+            </div>
+            <div class="pillar-description">
+              Delivering feedback is one of the most critical and challenging
+              managerial tasks. Excellence involves providing feedback that is
+              specific, behavioral (focused on actions, not personality traits),
+              timely, and forward-looking. The goal is not to criticize but to
+              coach.
+            </div>
+          </div>
+          <div class="pillar-item">
+            <div class="pillar-title">
+              Motivational Communication and Recognition:
+            </div>
+            <div class="pillar-description">
+              Great managers inspire and motivate their teams. This involves
+              more than giving instructions; it's about recognizing effort and
+              achievement, celebrating successes, and reinforcing a sense of
+              purpose and value. Public and private acknowledgment makes
+              employees feel appreciated.
+            </div>
+          </div>
+          <div class="pillar-item">
+            <div class="pillar-title">Effective Delegation:</div>
+            <div class="pillar-description">
+              Delegation is a core communication act that balances providing
+              clear direction with granting autonomy. A well-delegated task
+              includes clear definition of desired outcome, scope of authority,
+              available resources, and deadline. It's a demonstration of trust
+              that empowers employees.
+            </div>
+          </div>
+          <div class="pillar-item">
+            <div class="pillar-title">
+              Facilitating Open Dialogue and Collaboration:
+            </div>
+            <div class="pillar-description">
+              Managers are responsible for creating an environment where open,
+              honest dialogue is the norm. This means encouraging team members
+              to share ideas, voice concerns, and even disagree respectfully.
+              They facilitate effective team meetings and promote
+              cross-functional collaboration.
+            </div>
+          </div>
+          <div class="pillar-item">
+            <div class="pillar-title">Conflict Resolution and Mediation:</div>
+            <div class="pillar-description">
+              Where people work together, conflict is inevitable. A skilled
+              manager does not avoid conflict but addresses it constructively.
+              This involves acting as an impartial mediator, facilitating
+              conversation between conflicting parties, focusing on shared
+              interests, and guiding toward mutually acceptable solutions.
+            </div>
+          </div>
+          <div class="pillar-item">
+            <div class="pillar-title">Adaptable Communication Styles:</div>
+            <div class="pillar-description">
+              A manager communicates with a diverse range of audiences: direct
+              reports, senior executives, peers in other departments, and
+              external clients. This pillar is the ability to adapt
+              communication style, tone, and level of detail to suit the
+              specific audience and context.
+            </div>
+          </div>
+          <div class="pillar-item">
+            <div class="pillar-title">
+              Transparency and Information Sharing:
+            </div>
+            <div class="pillar-description">
+              In the absence of information, employees often assume the worst.
+              Effective managers combat this by being as transparent as
+              possible, sharing relevant company information, explaining the
+              rationale behind decisions, and keeping the team informed about
+              changes that affect them.
+            </div>
+          </div>
+          <div class="pillar-item">
+            <div class="pillar-title">Leading Through Crisis and Change:</div>
+            <div class="pillar-description">
+              During times of uncertainty, organizational change, or crisis, a
+              manager's communication becomes even more critical. This involves
+              communicating with clarity and confidence to reduce ambiguity,
+              showing empathy for employee anxieties, and providing a steady,
+              visible presence.
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <script src="js/utils.js"></script>
+      <!-- Advancement Strategies Section -->
+      <section class="content-section">
+        <h2>
+          3. A Blueprint for Advancement: 5 Strategies for Communication Mastery
+        </h2>
+        <p>
+          For managers aspiring to move from effective to exceptional leaders,
+          communication skills must be a focus of continuous and deliberate
+          practice. The following five strategies provide a structured approach
+          to achieving mastery.
+        </p>
+        <div class="strategies-grid">
+          <div class="strategy-item">
+            <div class="strategy-title">
+              1. Implement a Structured Feedback Framework:
+            </div>
+            <div class="strategy-description">
+              Move beyond ad-hoc feedback and adopt a formal, consistent model
+              for performance conversations. Use the Situation-Behavior-Impact
+              (SBI) framework to make feedback objective, actionable, and less
+              personal, improving your ability to handle difficult conversations
+              effectively.
+            </div>
+          </div>
+          <div class="strategy-item">
+            <div class="strategy-title">
+              2. Conduct Regular "Communication Audits":
+            </div>
+            <div class="strategy-description">
+              Proactively seek feedback on your own communication effectiveness.
+              After important team meetings, send brief, anonymous polls asking
+              about clarity and effectiveness. Schedule quarterly one-on-ones
+              with trusted peers or mentors specifically to discuss your
+              communication style.
+            </div>
+          </div>
+          <div class="strategy-item">
+            <div class="strategy-title">
+              3. Master the Art of Storytelling for Leadership:
+            </div>
+            <div class="strategy-description">
+              Go beyond simply relaying information and learn to use
+              storytelling to communicate vision, values, and strategy. Practice
+              crafting narratives that illustrate key points. Build a repository
+              of stories and practice telling them to make messages more
+              memorable and inspiring.
+            </div>
+          </div>
+          <div class="strategy-item">
+            <div class="strategy-title">
+              4. Engage in Deliberate "Style-Flexing" Exercises:
+            </div>
+            <div class="strategy-description">
+              Consciously practice adapting your communication style for
+              different audiences. Before meetings, explicitly identify the
+              primary audience and write down the goal and intended style. This
+              deliberate planning builds the mental agility required to switch
+              between communication modes effectively.
+            </div>
+          </div>
+          <div class="strategy-item">
+            <div class="strategy-title">
+              5. Enroll in Advanced Conflict Resolution or Mediation Training:
+            </div>
+            <div class="strategy-description">
+              While basic conflict resolution is a core skill, advanced training
+              provides sophisticated tools for handling highly emotional or
+              politically charged disputes. Formal mediation techniques can
+              equip a manager with confidence to turn difficult conflicts into
+              opportunities for strengthening relationships.
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+    </script>
   </body>
 </html>

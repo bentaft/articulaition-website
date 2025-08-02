@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filler Word Elimination Master Drill - Articulaition</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    
+    <!-- AI Integration -->
+    <script src="js/gemini-ai-engine.js"></script>
+    <script src="js/simple-analysis.js"></script>
+    <script src="js/achievement-tracker.js"></script>
+    <script src="js/user-data-tracker.js"></script>
+    
+    <style>
+        :root {
+            --drill-primary: #ef4444;
+            --drill-secondary: #f97316;
+            --drill-success: #10b981;
+            --drill-warning: #f59e0b;
+            --drill-info: #06b6d4;
+            --drill-dark: #1a1f2e;
+            --drill-glass: rgba(255, 255, 255, 0.9);
+            --drill-glass-dark: rgba(15, 20, 25, 0.9);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Advanced Background Effects */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(249, 115, 22, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Enhanced Navigation */
+        .top-nav {
+            padding: 1.5rem 2.5rem;
+            background: rgba(15, 20, 25, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 0 0 1rem 1rem;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.75rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .drill-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--drill-primary), var(--drill-secondary));
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .drill-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            border-radius: 2rem;
+            background: linear-gradient(135deg, var(--drill-primary), var(--drill-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 8px 32px rgba(239, 68, 68, 0.4);
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 8px 32px rgba(239, 68, 68, 0.4); }
+            50% { box-shadow: 0 12px 40px rgba(239, 68, 68, 0.6); }
+        }
+
+        .drill-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, white, rgba(255, 255, 255, 0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .drill-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* Progress Tracking */
+        .progress-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .progress-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--drill-success);
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        /* Difficulty Selector */
+        .difficulty-section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .difficulty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .difficulty-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .difficulty-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .difficulty-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .difficulty-card:hover::before {
+            opacity: 1;
+        }
+
+        .difficulty-card.selected {
+            border-color: var(--drill-primary);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .difficulty-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .difficulty-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .difficulty-metrics {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Training Modes */
+        .modes-section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .mode-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .mode-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .mode-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, var(--drill-info), var(--drill-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .mode-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.75rem;
+        }
+
+        .mode-desc {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .mode-button {
+            background: linear-gradient(135deg, var(--drill-primary), var(--drill-secondary));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .mode-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 16px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Practice Session */
+        .practice-session {
+            display: none;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .practice-session.active {
+            display: block;
+        }
+
+        .session-header {
+            margin-bottom: 2rem;
+        }
+
+        .session-mode {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--drill-info), var(--drill-secondary));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .session-prompt {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .prompt-text {
+            font-size: 1.25rem;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .prompt-instructions {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .timer-display {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--drill-primary);
+            margin: 2rem 0;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        }
+
+        .filler-counter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .filler-count {
+            text-align: center;
+        }
+
+        .filler-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--drill-warning);
+            display: block;
+        }
+
+        .filler-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.5rem;
+        }
+
+        .live-transcript {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            min-height: 120px;
+            max-height: 200px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .transcript-text {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .filler-highlight {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--drill-primary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+        }
+
+        /* Recording Controls */
+        .recording-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .record-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.25rem 2rem;
+            border: none;
+            border-radius: 1rem;
+            font-weight: 600;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 180px;
+            justify-content: center;
+        }
+
+        .record-btn.primary {
+            background: linear-gradient(135deg, var(--drill-primary), #dc2626);
+            color: white;
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+        }
+
+        .record-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .record-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .record-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .recording-indicator {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            font-weight: 600;
+            color: var(--drill-primary);
+        }
+
+        .recording-indicator.active {
+            display: flex;
+        }
+
+        .recording-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--drill-primary);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.1); }
+        }
+
+        /* AI Analysis Results */
+        .analysis-results {
+            display: none;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .analysis-results.visible {
+            display: block;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .score-excellent { color: var(--drill-success); }
+        .score-good { color: var(--drill-info); }
+        .score-needs-work { color: var(--drill-warning); }
+        .score-poor { color: var(--drill-primary); }
+
+        .ai-feedback {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .feedback-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feedback-content {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--drill-primary), var(--drill-secondary));
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .drill-title {
+                font-size: 2rem;
+            }
+
+            .timer-display {
+                font-size: 3rem;
+            }
+
+            .recording-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .difficulty-grid,
+            .modes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filler-counter {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="improvement-hub-dashboard.html" class="back-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="m19 12-7 7-7-7"></path>
+                </svg>
+                Back to Drills
+            </a>
+            <div class="drill-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+                Filler Word Elimination Master
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="drill-icon">🚫</div>
+            <h1 class="drill-title">Filler Word Elimination</h1>
+            <p class="drill-subtitle">
+                Master the art of eloquent speech by eliminating filler words and replacing them with purposeful pauses, strategic silence, and powerful transitions. Transform your communication with AI-powered real-time feedback.
+            </p>
+        </section>
+
+        <!-- Progress Tracking -->
+        <section class="progress-section">
+            <div class="progress-card">
+                <div class="progress-value" id="totalSessions">0</div>
+                <div class="progress-label">Sessions Completed</div>
+            </div>
+            <div class="progress-card">
+                <div class="progress-value" id="averageReduction">0%</div>
+                <div class="progress-label">Average Filler Reduction</div>
+            </div>
+            <div class="progress-card">
+                <div class="progress-value" id="bestScore">0</div>
+                <div class="progress-label">Best Fluency Score</div>
+            </div>
+            <div class="progress-card">
+                <div class="progress-value" id="currentStreak">0</div>
+                <div class="progress-label">Day Streak</div>
+            </div>
+        </section>
+
+        <!-- Difficulty Selection -->
+        <section class="difficulty-section">
+            <h2 class="section-title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+                Choose Your Challenge Level
+            </h2>
+            <div class="difficulty-grid">
+                <div class="difficulty-card" data-difficulty="beginner">
+                    <div class="difficulty-title">🌱 Beginner</div>
+                    <div class="difficulty-desc">Perfect for those just starting their filler word elimination journey. Gentle awareness building with simple exercises.</div>
+                    <div class="difficulty-metrics">
+                        <span>⏱️ 60 seconds</span>
+                        <span>🎯 0-3 fillers allowed</span>
+                        <span>📝 Basic prompts</span>
+                    </div>
+                </div>
+                <div class="difficulty-card" data-difficulty="intermediate">
+                    <div class="difficulty-title">🔥 Intermediate</div>
+                    <div class="difficulty-desc">For speakers with some awareness of their filler word usage. More challenging scenarios and stricter targets.</div>
+                    <div class="difficulty-metrics">
+                        <span>⏱️ 90 seconds</span>
+                        <span>🎯 0-2 fillers allowed</span>
+                        <span>📝 Complex topics</span>
+                    </div>
+                </div>
+                <div class="difficulty-card" data-difficulty="advanced">
+                    <div class="difficulty-title">⚡ Advanced</div>
+                    <div class="difficulty-desc">Professional-level training with high-pressure scenarios. Zero tolerance for filler words in extended speaking.</div>
+                    <div class="difficulty-metrics">
+                        <span>⏱️ 120 seconds</span>
+                        <span>🎯 0 fillers allowed</span>
+                        <span>📝 Professional scenarios</span>
+                    </div>
+                </div>
+                <div class="difficulty-card" data-difficulty="expert">
+                    <div class="difficulty-title">🏆 Expert</div>
+                    <div class="difficulty-desc">Master-level training with spontaneous topics and interruptions. Ultimate test of filler word elimination mastery.</div>
+                    <div class="difficulty-metrics">
+                        <span>⏱️ 180 seconds</span>
+                        <span>🎯 Perfect fluency</span>
+                        <span>📝 Surprise elements</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Training Modes -->
+        <section class="modes-section">
+            <h2 class="section-title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h4"></path>
+                    <path d="M15 11h4a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-4"></path>
+                    <path d="M12 2v20"></path>
+                </svg>
+                Select Training Mode
+            </h2>
+            <div class="modes-grid">
+                <div class="mode-card">
+                    <div class="mode-icon">🎯</div>
+                    <div class="mode-title">Elimination Focus</div>
+                    <div class="mode-desc">Pure focus on identifying and eliminating filler words. Real-time counting with immediate visual feedback when fillers are detected.</div>
+                    <button class="mode-button" onclick="startMode('elimination')">Start Elimination Training</button>
+                </div>
+                <div class="mode-card">
+                    <div class="mode-icon">🔄</div>
+                    <div class="mode-title">Substitution Mastery</div>
+                    <div class="mode-desc">Learn to replace filler words with powerful alternatives: strategic pauses, transition phrases, and purposeful silence.</div>
+                    <button class="mode-button" onclick="startMode('substitution')">Start Substitution Training</button>
+                </div>
+                <div class="mode-card">
+                    <div class="mode-icon">⚡</div>
+                    <div class="mode-title">Pressure Training</div>
+                    <div class="mode-desc">High-pressure scenarios with interruptions, challenging topics, and time constraints to test filler elimination under stress.</div>
+                    <button class="mode-button" onclick="startMode('pressure')">Start Pressure Training</button>
+                </div>
+                <div class="mode-card">
+                    <div class="mode-icon">🧠</div>
+                    <div class="mode-title">AI Coach Mode</div>
+                    <div class="mode-desc">Personalized training with Gemini AI providing real-time feedback, customized prompts, and adaptive difficulty based on your progress.</div>
+                    <button class="mode-button" onclick="startMode('ai-coach')">Start AI Coaching</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Session -->
+        <section class="practice-session" id="practiceSession">
+            <div class="session-header">
+                <div class="session-mode" id="sessionMode">Elimination Focus</div>
+                <h3 class="section-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6"></path>
+                        <path d="m21 12-6-6m-6 6-6-6"></path>
+                    </svg>
+                    Practice Session
+                </h3>
+            </div>
+            
+            <div class="session-prompt" id="sessionPrompt">
+                <div class="prompt-text" id="promptText">
+                    Describe your ideal work environment and what elements would make you most productive.
+                </div>
+                <div class="prompt-instructions" id="promptInstructions">
+                    Speak naturally about this topic. Focus on eliminating all filler words like "um," "uh," "like," and "you know."
+                </div>
+            </div>
+            
+            <div class="timer-display" id="timerDisplay">01:00</div>
+            
+            <div class="filler-counter">
+                <div class="filler-count">
+                    <span class="filler-number" id="fillerCount">0</span>
+                    <div class="filler-label">Filler Words Detected</div>
+                </div>
+                <div class="filler-count">
+                    <span class="filler-number" id="fluencyScore">100</span>
+                    <div class="filler-label">Fluency Score</div>
+                </div>
+                <div class="filler-count">
+                    <span class="filler-number" id="targetScore">95</span>
+                    <div class="filler-label">Target Score</div>
+                </div>
+            </div>
+            
+            <div class="live-transcript" id="liveTranscript">
+                <div class="transcript-text" id="transcriptText">Your speech will appear here in real-time...</div>
+            </div>
+            
+            <div class="recording-indicator" id="recordingIndicator">
+                <div class="recording-dot"></div>
+                Recording in progress... AI analyzing your speech
+            </div>
+            
+            <div class="recording-controls">
+                <button class="record-btn primary" id="recordBtn" onclick="toggleRecording()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6"></path>
+                        <path d="m21 12-6-6m-6 6-6-6"></path>
+                    </svg>
+                    Start Recording
+                </button>
+                <button class="record-btn secondary" id="resetBtn" onclick="resetSession()" disabled>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                        <path d="M21 3v5h-5"></path>
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                        <path d="M3 21v-5h5"></path>
+                    </svg>
+                    Reset Session
+                </button>
+                <button class="record-btn secondary" id="newPromptBtn" onclick="generateNewPrompt()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                    New Prompt
+                </button>
+            </div>
+        </section>
+
+        <!-- AI Analysis Results -->
+        <section class="analysis-results" id="analysisResults">
+            <h2 class="section-title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 3v18h18"></path>
+                    <path d="m19 9-5 5-4-4-3 3"></path>
+                </svg>
+                AI Analysis Results
+            </h2>
+            
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-value score-excellent" id="finalFillerCount">0</div>
+                    <div class="result-label">Filler Words Used</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value score-good" id="finalFluencyScore">95%</div>
+                    <div class="result-label">Fluency Score</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value score-excellent" id="speechPace">142</div>
+                    <div class="result-label">Words Per Minute</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value score-good" id="pauseQuality">88%</div>
+                    <div class="result-label">Strategic Pauses</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value score-excellent" id="improvementRate">+23%</div>
+                    <div class="result-label">Improvement vs Last</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value score-good" id="consistencyScore">91%</div>
+                    <div class="result-label">Consistency</div>
+                </div>
+            </div>
+            
+            <div class="ai-feedback">
+                <div class="feedback-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    AI Coach Feedback
+                </div>
+                <div class="feedback-content" id="aiFeedbackContent">
+                    Complete your recording to receive personalized AI feedback on your filler word elimination performance.
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn primary" onclick="startNewSession()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                        <path d="M21 3v5h-5"></path>
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                        <path d="M3 21v-5h5"></path>
+                    </svg>
+                    Practice Again
+                </button>
+                <button class="action-btn secondary" onclick="changeDifficulty()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    Change Level
+                </button>
+                <a href="improvement-hub-dashboard.html" class="action-btn secondary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h4"></path>
+                        <path d="M15 11h4a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-4"></path>
+                        <path d="M12 2v20"></path>
+                    </svg>
+                    All Drills
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/drill-filler-elimination.js"></script>
+</body>
+</html>

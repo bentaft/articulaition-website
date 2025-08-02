@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Speech Science - The Science of Communication Excellence | Articulaition
+    </title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/logo-main.svg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script defer src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+      .font-inter {
+        font-family: "Inter", sans-serif;
+      }
+
+      .animate-fade-in {
+        animation: fadeIn 0.6s ease-out forwards;
+        opacity: 0;
+      }
+      .delay-75 {
+        animation-delay: 75ms;
+      }
+      .delay-100 {
+        animation-delay: 100ms;
+      }
+      .delay-150 {
+        animation-delay: 150ms;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Shiny Effects */
+      .shiny-orange {
+        background: linear-gradient(
+          145deg,
+          #ff934d 0%,
+          #ffb366 30%,
+          #ff7f50 60%,
+          #ff934d 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 2px 4px rgba(255, 147, 77, 0.3));
+      }
+
+      .shiny-blue {
+        background: linear-gradient(
+          145deg,
+          #4a90e2 0%,
+          #6bb6ff 30%,
+          #4f94e8 60%,
+          #4a90e2 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 2px 4px rgba(74, 144, 226, 0.3));
+      }
+
+      /* Professional Enhancement Styles */
+      .professional-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .professional-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08),
+          0 4px 10px rgba(0, 0, 0, 0.05);
+        border-color: #cbd5e1;
+      }
+
+      .module-status-complete {
+        background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+        border-left: 4px solid #22c55e;
+        border-color: #bbf7d0;
+      }
+
+      .module-status-active {
+        background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        border-left: 4px solid #f59e0b;
+        border-color: #fde68a;
+      }
+
+      .module-status-locked {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border-left: 4px solid #94a3b8;
+        border-color: #e2e8f0;
+      }
+
+      .professional-stat {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border: 1px solid #e2e8f0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .professional-stat::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #3b82f6, #6366f1, #8b5cf6);
+      }
+
+      .professional-button {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border: none;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .professional-button:hover {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
+
+      .professional-button-secondary {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border: 1px solid #e2e8f0;
+        color: #475569;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .professional-button-secondary:hover {
+        background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      .progress-bar-professional {
+        background: linear-gradient(90deg, #e2e8f0 0%, #f1f5f9 100%);
+        height: 6px;
+        border-radius: 3px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .progress-fill-professional {
+        height: 100%;
+        border-radius: 3px;
+        position: relative;
+        transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .progress-fill-complete {
+        background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+      }
+
+      .progress-fill-active {
+        background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+      }
+
+      .module-icon-professional {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: 600;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .module-icon-complete {
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+      }
+
+      .module-icon-active {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      }
+
+      .module-icon-locked {
+        background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(148, 163, 184, 0.2);
+      }
+
+      .sidebar-module-item {
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border-left: 3px solid transparent;
+        position: relative;
+      }
+
+      .sidebar-module-item:hover {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        transform: translateX(2px);
+      }
+
+      .sidebar-module-item.active {
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        border-left-color: #3b82f6;
+        box-shadow: inset 0 1px 3px rgba(59, 130, 246, 0.1);
+      }
+
+      .professional-header {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border-bottom: 1px solid #e2e8f0;
+        backdrop-filter: blur(20px);
+        position: relative;
+      }
+
+      .professional-header::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+      }
+    </style>
+  </head>
+
+  <body
+    class="h-full bg-gradient-to-br from-gray-50 via-blue-50 to-gray-100 text-gray-900 font-inter"
+  >
+    <div class="flex h-full">
+      <!-- Mobile trigger -->
+      <button
+        id="mobileToggle"
+        class="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white/90 rounded-lg border border-gray-200 backdrop-blur shadow-sm"
+      >
+        <i data-lucide="menu" class="w-5 h-5 text-gray-600"></i>
+      </button>
+
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="fixed lg:relative inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col gap-6 border-r border-gray-200 bg-white/90 backdrop-blur p-6 shadow-sm"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="h-8 w-8 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg grid place-content-center"
+          >
+            <i data-lucide="mic" class="h-5 w-5"></i>
+          </div>
+          <div class="text-lg font-semibold tracking-tight">
+            <span class="shiny-orange">articul</span
+            ><span class="shiny-blue">ai</span
+            ><span class="shiny-orange">tion</span
+            ><span class="text-gray-600">.com</span>
+          </div>
+        </div>
+
+        <nav class="flex flex-col gap-1 text-sm">
+          <a
+            href="dashboard.html"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition text-gray-700"
+            ><i data-lucide="home" class="h-4 w-4"></i>Dashboard</a
+          >
+          <a
+            href="improvement-hub-dashboard.html"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition text-gray-700"
+            ><i data-lucide="trending-up" class="h-4 w-4"></i>Improvement Hub</a
+          >
+          <a
+            href="specialized-skill-drills.html"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition text-gray-700"
+            ><i data-lucide="target" class="h-4 w-4"></i>Drill Center</a
+          >
+          <a
+            href="#"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-100 text-blue-800"
+            ><i data-lucide="brain" class="h-4 w-4"></i>Speech Science</a
+          >
+          <a
+            href="business-finance-communication.html"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition text-gray-700"
+            ><i data-lucide="book-open" class="h-4 w-4"></i>Language Vault</a
+          >
+          <a
+            href="#"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition text-gray-700"
+            ><i data-lucide="calendar" class="h-4 w-4"></i>Weekly Review</a
+          >
+        </nav>
+
+        <!-- Module Navigation -->
+        <div class="border-t border-gray-200 pt-6">
+          <h3
+            class="text-sm font-semibold text-slate-900 mb-4 uppercase tracking-wide"
+          >
+            Course Modules
+          </h3>
+          <div class="space-y-2">
+            <div
+              class="sidebar-module-item active flex items-center gap-3 px-4 py-3 rounded-lg"
+            >
+              <i data-lucide="volume-2" class="w-4 h-4 flex-shrink-0"></i>
+              <div class="flex-1">
+                <div
+                  class="text-xs text-slate-500 font-medium uppercase tracking-wide"
+                >
+                  MODULE 1
+                </div>
+                <div class="text-sm font-semibold">Vocal Foundations</div>
+              </div>
+              <div
+                class="w-2 h-2 bg-emerald-500 rounded-full flex-shrink-0 shadow-sm"
+              ></div>
+            </div>
+            <div
+              class="sidebar-module-item flex items-center gap-3 px-4 py-3 rounded-lg"
+            >
+              <i data-lucide="users" class="w-4 h-4 flex-shrink-0"></i>
+              <div class="flex-1">
+                <div
+                  class="text-xs text-slate-500 font-medium uppercase tracking-wide"
+                >
+                  MODULE 2
+                </div>
+                <div class="text-sm font-semibold">Nonverbal Communication</div>
+              </div>
+              <div
+                class="w-2 h-2 bg-amber-500 rounded-full flex-shrink-0 shadow-sm"
+              ></div>
+            </div>
+            <div
+              class="sidebar-module-item flex items-center gap-3 px-4 py-3 rounded-lg"
+            >
+              <i data-lucide="puzzle" class="w-4 h-4 flex-shrink-0"></i>
+              <div class="flex-1">
+                <div
+                  class="text-xs text-slate-500 font-medium uppercase tracking-wide"
+                >
+                  MODULE 3
+                </div>
+                <div class="text-sm font-semibold">Contextual Mastery</div>
+              </div>
+              <div
+                class="w-2 h-2 bg-slate-300 rounded-full flex-shrink-0 shadow-sm"
+              ></div>
+            </div>
+            <div
+              class="sidebar-module-item flex items-center gap-3 px-4 py-3 rounded-lg"
+            >
+              <i data-lucide="target" class="w-4 h-4 flex-shrink-0"></i>
+              <div class="flex-1">
+                <div
+                  class="text-xs text-slate-500 font-medium uppercase tracking-wide"
+                >
+                  MODULE 4
+                </div>
+                <div class="text-sm font-semibold">Specialized Skills</div>
+              </div>
+              <div
+                class="w-2 h-2 bg-slate-300 rounded-full flex-shrink-0 shadow-sm"
+              ></div>
+            </div>
+            <div
+              class="sidebar-module-item flex items-center gap-3 px-4 py-3 rounded-lg"
+            >
+              <i data-lucide="trophy" class="w-4 h-4 flex-shrink-0"></i>
+              <div class="flex-1">
+                <div
+                  class="text-xs text-slate-500 font-medium uppercase tracking-wide"
+                >
+                  MODULE 5
+                </div>
+                <div class="text-sm font-semibold">Master Challenges</div>
+              </div>
+              <div
+                class="w-2 h-2 bg-slate-300 rounded-full flex-shrink-0 shadow-sm"
+              ></div>
+            </div>
+            <div
+              class="sidebar-module-item flex items-center gap-3 px-4 py-3 rounded-lg"
+            >
+              <i data-lucide="calendar" class="w-4 h-4 flex-shrink-0"></i>
+              <div class="flex-1">
+                <div
+                  class="text-xs text-slate-500 font-medium uppercase tracking-wide"
+                >
+                  MODULE 6
+                </div>
+                <div class="text-sm font-semibold">Daily Practice</div>
+              </div>
+              <div
+                class="w-2 h-2 bg-amber-500 rounded-full flex-shrink-0 shadow-sm"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Overlay -->
+      <div
+        id="overlay"
+        class="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 lg:hidden hidden"
+      ></div>
+
+      <!-- Main -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Topbar -->
+        <header
+          class="professional-header flex items-center justify-between px-6 py-5"
+        >
+          <div class="flex items-center gap-6">
+            <div class="lg:hidden w-8"></div>
+            <div>
+              <h1 class="text-xl font-bold text-slate-900 tracking-tight">
+                Speech Science
+              </h1>
+              <p class="text-sm text-slate-600 font-medium">
+                Master the science of effective communication
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <button
+              class="relative hidden sm:block p-2 rounded-lg hover:bg-slate-100 transition-colors"
+            >
+              <i data-lucide="bell" class="w-5 h-5 text-slate-600"></i>
+              <span
+                class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-rose-500 rounded-full ring-2 ring-white"
+              ></span>
+            </button>
+            <button
+              class="hidden sm:block p-2 rounded-lg hover:bg-slate-100 transition-colors"
+            >
+              <i data-lucide="help-circle" class="w-5 h-5 text-slate-600"></i>
+            </button>
+            <div
+              class="h-9 w-9 rounded-xl bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center text-sm font-bold text-slate-700 shadow-sm"
+            >
+              M
+            </div>
+          </div>
+        </header>
+
+        <!-- Content -->
+        <section class="flex-1 overflow-y-auto p-6 lg:p-8 space-y-8">
+          <!-- Section Introduction -->
+          <div class="professional-card rounded-2xl p-10 shadow-xl">
+            <div class="text-center max-w-3xl mx-auto animate-fade-in">
+              <div
+                class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl mb-6 shadow-lg"
+              >
+                <i data-lucide="brain" class="w-8 h-8 text-white"></i>
+              </div>
+              <h1 class="text-4xl font-bold text-slate-900 mb-6 tracking-tight">
+                Speech Science
+              </h1>
+              <p
+                class="text-xl text-slate-600 mb-10 leading-relaxed font-medium"
+              >
+                Unlock the scientific principles behind effective communication.
+                Build mastery through evidence-based techniques that transform
+                how you connect, persuade, and inspire through speech.
+              </p>
+            </div>
+          </div>
+
+          <!-- Course Modules -->
+          <div class="professional-card rounded-2xl p-8 shadow-xl">
+            <div class="flex items-center gap-4 mb-8">
+              <div
+                class="w-12 h-12 bg-gradient-to-br from-slate-700 to-slate-900 rounded-xl flex items-center justify-center"
+              >
+                <i data-lucide="layers" class="w-6 h-6 text-white"></i>
+              </div>
+              <div>
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">
+                  View
+                </h2>
+                <p class="text-slate-600 font-medium">
+                  Speech science modules and practice areas
+                </p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <!-- Module 1: Vocal Foundations -->
+              <div
+                class="professional-card module-status-complete rounded-2xl p-8 cursor-pointer animate-fade-in"
+              >
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="module-icon-professional module-icon-complete">
+                    <i data-lucide="volume-2" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-bold text-slate-900">
+                      Vocal Foundations
+                    </h3>
+                    <p
+                      class="text-sm font-semibold text-slate-600 uppercase tracking-wide"
+                    >
+                      Module 1
+                    </p>
+                  </div>
+                </div>
+                <p class="text-slate-600 mb-6 leading-relaxed">
+                  Master the fundamentals of voice production, breath control,
+                  and vocal power. Learn to project confidence and clarity
+                  through proper vocal technique.
+                </p>
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="progress-bar-professional flex-1">
+                    <div
+                      class="progress-fill-professional progress-fill-complete"
+                      style="width: 100%"
+                    ></div>
+                  </div>
+                  <span class="text-sm font-bold text-slate-700">100%</span>
+                </div>
+                <div class="flex gap-3">
+                  <a
+                    href="analysis.html"
+                    class="flex-1 text-center py-3 px-4 professional-button-secondary rounded-xl text-sm font-semibold"
+                    >Review</a
+                  >
+                  <a
+                    href="#"
+                    class="flex-1 text-center py-3 px-4 professional-button rounded-xl text-sm font-semibold text-white"
+                    >Certificate</a
+                  >
+                </div>
+              </div>
+
+              <!-- Module 2: Nonverbal Communication -->
+              <div
+                class="professional-card module-status-active rounded-2xl p-8 cursor-pointer animate-fade-in delay-75"
+              >
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="module-icon-professional module-icon-active">
+                    <i data-lucide="users" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-bold text-slate-900">
+                      Nonverbal Communication
+                    </h3>
+                    <p
+                      class="text-sm font-semibold text-slate-600 uppercase tracking-wide"
+                    >
+                      Module 2
+                    </p>
+                  </div>
+                </div>
+                <p class="text-slate-600 mb-6 leading-relaxed">
+                  Harness the power of body language, gestures, and spatial
+                  awareness. Learn to read and project nonverbal cues
+                  effectively.
+                </p>
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="progress-bar-professional flex-1">
+                    <div
+                      class="progress-fill-professional progress-fill-active"
+                      style="width: 60%"
+                    ></div>
+                  </div>
+                  <span class="text-sm font-bold text-slate-700">60%</span>
+                </div>
+                <div class="flex gap-3">
+                  <a
+                    href="analysis.html"
+                    class="flex-1 text-center py-3 px-4 professional-button rounded-xl text-sm font-semibold text-white"
+                    >Continue</a
+                  >
+                  <a
+                    href="#"
+                    class="flex-1 text-center py-3 px-4 professional-button-secondary rounded-xl text-sm font-semibold"
+                    >Resources</a
+                  >
+                </div>
+              </div>
+
+              <!-- Module 3: Contextual Mastery -->
+              <div
+                class="professional-card module-status-locked rounded-2xl p-8 opacity-60 cursor-not-allowed animate-fade-in delay-100"
+              >
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="module-icon-professional module-icon-locked">
+                    <i data-lucide="puzzle" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-bold text-slate-900">
+                      Contextual Mastery
+                    </h3>
+                    <p
+                      class="text-sm font-semibold text-slate-600 uppercase tracking-wide"
+                    >
+                      Module 3
+                    </p>
+                  </div>
+                </div>
+                <p class="text-slate-600 mb-6 leading-relaxed">
+                  Advanced skills for reading context, adapting your style, and
+                  responding appropriately to different audiences and
+                  situations.
+                </p>
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="progress-bar-professional flex-1">
+                    <div
+                      class="progress-fill-professional bg-slate-300"
+                      style="width: 0%"
+                    ></div>
+                  </div>
+                  <span class="text-sm font-bold text-slate-500">Locked</span>
+                </div>
+                <div class="flex gap-3">
+                  <a
+                    href="#"
+                    class="flex-1 text-center py-3 px-4 bg-slate-100 text-slate-500 rounded-xl text-sm font-semibold"
+                    >🔒 Complete Module 2</a
+                  >
+                </div>
+              </div>
+
+              <!-- Module 4: Specialized Skills -->
+              <div
+                class="professional-card module-status-locked rounded-2xl p-8 opacity-60 cursor-not-allowed animate-fade-in delay-150"
+              >
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="module-icon-professional module-icon-locked">
+                    <i data-lucide="target" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-bold text-slate-900">
+                      Specialized Skills
+                    </h3>
+                    <p
+                      class="text-sm font-semibold text-slate-600 uppercase tracking-wide"
+                    >
+                      Module 4
+                    </p>
+                  </div>
+                </div>
+                <p class="text-slate-600 mb-6 leading-relaxed">
+                  Expert-level techniques for specific communication challenges:
+                  negotiations, presentations, conflict resolution, and
+                  persuasion.
+                </p>
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="progress-bar-professional flex-1">
+                    <div
+                      class="progress-fill-professional bg-slate-300"
+                      style="width: 0%"
+                    ></div>
+                  </div>
+                  <span class="text-sm font-bold text-slate-500">Locked</span>
+                </div>
+                <div class="flex gap-3">
+                  <a
+                    href="#"
+                    class="flex-1 text-center py-3 px-4 bg-slate-100 text-slate-500 rounded-xl text-sm font-semibold"
+                    >🔒 Complete Module 3</a
+                  >
+                </div>
+              </div>
+
+              <!-- Module 5: Master Challenges -->
+              <div
+                class="professional-card module-status-locked rounded-2xl p-8 opacity-60 cursor-not-allowed animate-fade-in delay-100"
+              >
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="module-icon-professional module-icon-locked">
+                    <i data-lucide="trophy" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-bold text-slate-900">
+                      Master Challenges
+                    </h3>
+                    <p
+                      class="text-sm font-semibold text-slate-600 uppercase tracking-wide"
+                    >
+                      Module 5
+                    </p>
+                  </div>
+                </div>
+                <p class="text-slate-600 mb-6 leading-relaxed">
+                  Ultimate tests of your communication mastery. Complex
+                  scenarios that challenge everything you've learned.
+                </p>
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="progress-bar-professional flex-1">
+                    <div
+                      class="progress-fill-professional bg-slate-300"
+                      style="width: 0%"
+                    ></div>
+                  </div>
+                  <span class="text-sm font-bold text-slate-500">Locked</span>
+                </div>
+                <div class="flex gap-3">
+                  <a
+                    href="#"
+                    class="flex-1 text-center py-3 px-4 bg-slate-100 text-slate-500 rounded-xl text-sm font-semibold"
+                    >🔒 Complete Module 4</a
+                  >
+                </div>
+              </div>
+
+              <!-- Module 6: Daily Practice -->
+              <div
+                class="professional-card module-status-active rounded-2xl p-8 cursor-pointer animate-fade-in delay-75"
+              >
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="module-icon-professional module-icon-active">
+                    <i data-lucide="calendar" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-bold text-slate-900">
+                      Daily Practice
+                    </h3>
+                    <p
+                      class="text-sm font-semibold text-slate-600 uppercase tracking-wide"
+                    >
+                      Module 6
+                    </p>
+                  </div>
+                </div>
+                <p class="text-slate-600 mb-6 leading-relaxed">
+                  Build consistency through daily exercises and challenges.
+                  Maintain your skills with structured practice routines.
+                </p>
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="progress-bar-professional flex-1">
+                    <div
+                      class="progress-fill-professional progress-fill-active"
+                      style="width: 85%"
+                    ></div>
+                  </div>
+                  <span class="text-sm font-bold text-slate-700">85%</span>
+                </div>
+                <div class="flex gap-3">
+                  <a
+                    href="specialized-skill-drills.html"
+                    class="flex-1 text-center py-3 px-4 professional-button rounded-xl text-sm font-semibold text-white"
+                    >Today's Drill</a
+                  >
+                  <a
+                    href="#"
+                    class="flex-1 text-center py-3 px-4 professional-button-secondary rounded-xl text-sm font-semibold"
+                    >Streak: 5 days</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Mobile menu toggle
+      const mobileToggle = document.getElementById("mobileToggle");
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      mobileToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("-translate-x-full");
+        overlay.classList.toggle("hidden");
+      });
+
+      overlay.addEventListener("click", () => {
+        sidebar.classList.add("-translate-x-full");
+        overlay.classList.add("hidden");
+      });
+
+      // Module tab interactions
+      document.querySelectorAll(".sidebar-module-item").forEach((tab) => {
+        tab.addEventListener("click", function () {
+          document
+            .querySelectorAll(".sidebar-module-item")
+            .forEach((t) => t.classList.remove("active"));
+          this.classList.add("active");
+        });
+      });
+
+      // Module card interactions
+      document.querySelectorAll(".cursor-pointer").forEach((card) => {
+        card.addEventListener("click", function (e) {
+          if (e.target.tagName === "A" || e.target.closest("a")) {
+            return; // Don't interfere with link clicks
+          }
+          // Handle module card click
+          const primaryBtn = this.querySelector(".professional-button");
+          if (primaryBtn) {
+            window.location.href = primaryBtn.href;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

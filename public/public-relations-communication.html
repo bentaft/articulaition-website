@@ -1,470 +1,475 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Public Relations & Corporate Communications - Master strategic communication disciplines for forging and safeguarding organizational identity" />
     <title>Public Relations & Corporate Communications - Articulaition</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/components.css" />
-    <link rel="stylesheet" href="css/responsive.css" />
-  </head>
-  <body>
-    <!-- Header -->
-    <header class="header">
-      <div class="header-content">
-        <div class="logo">
-          <a href="index.html">
-            <img
-              src="images/logo-header.svg"
-              alt="Articulaition"
-              class="logo-image"
-            />
-          </a>
-        </div>
-        <nav class="nav">
-          <a href="index.html" class="nav-link">Home</a>
-          <a href="improvement-hub-dashboard.html" class="nav-link"
-            >Improvement Hub</a
-          >
-          <a href="pricing.html" class="nav-link">Pricing</a>
-          <a href="faq.html" class="nav-link">FAQ</a>
-        </nav>
-        <div class="header-actions">
-          <a href="login.html" class="btn btn-outline">Login</a>
-          <a href="signup.html" class="btn btn-primary">Get Started</a>
-        </div>
-      </div>
-    </header>
+    
+    <style>
+        :root {
+            --voice-primary: #6366f1;
+            --voice-secondary: #8b5cf6;
+            --voice-accent: #06b6d4;
+            --voice-warm: #f59e0b;
+            --voice-success: #10b981;
+            --voice-neural: #64748b;
+            --voice-dark: #1a1f2e;
+            --voice-glass: rgba(255, 255, 255, 0.9);
+            --voice-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+            --voice-text-primary: #1a202c;
+            --voice-text-secondary: #4a5568;
+        }
 
-    <!-- Main Content -->
-    <main style="padding: 2rem 0; min-height: 100vh; background: #fafafa">
-      <div style="max-width: 1000px; margin: 0 auto; padding: 0 2rem">
-        <!-- Breadcrumb -->
-        <div style="margin-bottom: 2rem">
-          <a
-            href="improvement-hub-dashboard.html"
-            style="color: var(--voice-premium); text-decoration: none"
-            >← Back to Language Center</a
-          >
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fafbfc 0%, #f4f6f8 25%, #edf2f7 50%, #e2e8f0 75%, #cbd5e0 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .top-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .nav-orange {
+            background: linear-gradient(145deg, #ff934d 0%, #ffb366 30%, #ff7f50 60%, #ff934d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-blue {
+            background: linear-gradient(145deg, #4a90e2 0%, #6bb6ff 30%, #4f94e8 60%, #4a90e2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--voice-primary);
+        }
+
+        .nav-link.active {
+            background: var(--voice-primary);
+            color: white;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Back Button */
+        .back-nav {
+            margin-bottom: 2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--voice-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--voice-secondary);
+            transform: translateX(-4px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--voice-text-primary);
+        }
+
+        .page-header p {
+            font-size: 1.25rem;
+            color: var(--voice-text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: var(--voice-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--voice-shadow);
+        }
+
+        .content-section h2 {
+            color: var(--voice-text-primary);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section p {
+            line-height: 1.6;
+            color: var(--voice-text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .content-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary Grid */
+        .vocab-grid {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .vocab-item {
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .vocab-item:hover {
+            background: rgba(99, 102, 241, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .vocab-term {
+            font-weight: 700;
+            color: var(--voice-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .vocab-definition {
+            color: var(--voice-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Pillars Grid */
+        .pillars-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .pillar-item {
+            background: rgba(99, 102, 241, 0.05);
+            border-left: 4px solid var(--voice-primary);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .pillar-title {
+            color: var(--voice-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .pillar-description {
+            color: var(--voice-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Strategies Grid */
+        .strategies-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .strategy-item {
+            background: rgba(99, 102, 241, 0.03);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+        }
+
+        .strategy-title {
+            color: var(--voice-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .strategy-description {
+            color: var(--voice-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="top-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-brand">
+                <span class="nav-orange">articul</span><span class="nav-blue">ai</span><span class="nav-orange">tion</span><span class="nav-orange">.com</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i data-lucide="home"></i>
+                    Home
+                </a>
+                <a href="professional-communication-new.html" class="nav-link active">
+                    <i data-lucide="briefcase"></i>
+                    Professional
+                </a>
+                <a href="personal-communication.html" class="nav-link">
+                    <i data-lucide="message-circle"></i>
+                    Personal
+                </a>
+                <a href="specialized-skill-drills.html" class="nav-link">
+                    <i data-lucide="flask"></i>
+                    Skill Drills
+                </a>
+                                    <a href="dashboard.html" class="nav-link">
+                    <i data-lucide="bar-chart-4"></i>
+                    Projects
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Back Navigation -->
+        <div class="back-nav">
+            <a href="professional-communication-new.html" class="back-link">
+                <i data-lucide="arrow-left"></i>
+                Back to Professional Communication
+            </a>
         </div>
 
         <!-- Header -->
-        <div style="text-align: center; margin-bottom: 3rem">
-          <div style="font-size: 4rem; margin-bottom: 1rem">🗣️</div>
-          <h1
-            style="
-              color: var(--voice-premium);
-              font-size: 3rem;
-              font-weight: 700;
-              margin-bottom: 1rem;
-            "
-          >
-            Public Relations & Corporate Communications
-          </h1>
-          <p
-            style="
-              color: rgba(0, 0, 0, 0.7);
-              font-size: 1.2rem;
-              max-width: 700px;
-              margin: 0 auto;
-            "
-          >
-            Master strategic communication disciplines for forging and
-            safeguarding organizational identity, reputation, and stakeholder
-            relationships in the modern media landscape.
-          </p>
-        </div>
+        <header class="page-header">
+            <div class="icon">🗣️</div>
+            <h1>Public Relations & Corporate Communications</h1>
+            <p>Master strategic communication disciplines for forging and safeguarding organizational identity, reputation, and stakeholder relationships in the modern media landscape.</p>
+        </header>
 
         <!-- Introduction Section -->
-        <div
-          style="
-            background: rgba(251, 191, 36, 0.02);
-            border-radius: 1rem;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            border-left: 4px solid var(--voice-premium);
-          "
-        >
-          <h2
-            style="
-              color: #1a202c;
-              font-size: 2rem;
-              font-weight: 600;
-              margin-bottom: 1.5rem;
-            "
-          >
-            Introduction to the Communication Landscape
-          </h2>
-          <p
-            style="
-              line-height: 1.6;
-              color: rgba(0, 0, 0, 0.8);
-              margin-bottom: 1rem;
-            "
-          >
-            Public Relations (PR) and Corporate Communications are the strategic
-            disciplines dedicated to forging and safeguarding an organization's
-            identity, reputation, and relationships. In the modern business
-            ecosystem, a positive reputation is not merely a byproduct of
-            success but one of its most valuable and fragile assets. The
-            practice has evolved far beyond the historical confines of press
-            agentry and publicity generation. Today's professionals are
-            architects of trust, tasked with creating a unified and coherent
-            purpose that resonates both inside and outside an organization.
-          </p>
-          <p style="line-height: 1.6; color: rgba(0, 0, 0, 0.8)">
-            The contemporary communication landscape is defined by its velocity
-            and volatility. The proliferation of social media and digital
-            channels means that information, and misinformation, can circle the
-            globe in minutes, turning a minor issue into a full-blown crisis.
-            Consequently, PR professionals operate in a perpetual state of
-            high-stakes communication, where every statement, press release, and
-            social media post is scrutinized and can have a significant impact
-            on public perception, investor confidence, and long-term business
-            value.
-          </p>
-        </div>
+        <section class="content-section">
+            <h2>Introduction to the Communication Landscape</h2>
+            <p>
+                Public Relations (PR) and Corporate Communications are the strategic
+                disciplines dedicated to forging and safeguarding an organization's
+                identity, reputation, and relationships. In the modern business
+                ecosystem, a positive reputation is not merely a byproduct of
+                success but one of its most valuable and fragile assets. The
+                practice has evolved far beyond the historical confines of press
+                agentry and publicity generation. Today's professionals are
+                architects of trust, tasked with creating a unified and coherent
+                purpose that resonates both inside and outside an organization.
+            </p>
+            <p>
+                The contemporary communication landscape is defined by its velocity
+                and volatility. The proliferation of social media and digital
+                channels means that information, and misinformation, can circle the
+                globe in minutes, turning a minor issue into a full-blown crisis.
+                Consequently, PR professionals operate in a perpetual state of
+                high-stakes communication, where every statement, press release, and
+                social media post is scrutinized and can have a significant impact
+                on public perception, investor confidence, and long-term business
+                value.
+            </p>
+        </section>
 
         <!-- Professional Lexicon Section -->
-        <div
-          style="
-            background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-          "
-        >
-          <h2
-            style="
-              color: #1a202c;
-              font-size: 2rem;
-              font-weight: 600;
-              margin-bottom: 1rem;
-            "
-          >
-            1. The Professional Lexicon: 20 Essential Vocabulary Terms
-          </h2>
-          <p
-            style="
-              line-height: 1.6;
-              color: rgba(0, 0, 0, 0.8);
-              margin-bottom: 2rem;
-            "
-          >
-            Mastery of a specialized lexicon is a hallmark of a seasoned PR
-            professional. The ability to use these terms correctly demonstrates
-            a sophisticated understanding of the field's strategic dimensions.
-          </p>
+        <section class="content-section">
+            <h2>1. The Professional Lexicon: 20 Essential Vocabulary Terms</h2>
+            <p>
+                Mastery of a specialized lexicon is a hallmark of a seasoned PR
+                professional. The ability to use these terms correctly demonstrates
+                a sophisticated understanding of the field's strategic dimensions.
+            </p>
 
-          <div style="display: grid; gap: 1rem">
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)">Boilerplate:</strong>
-              A standardized paragraph at the end of a press release that
-              provides a concise description of the company, its mission, and
-              what it does. Ensures consistent brand identity across all
-              official communications.
+            <div class="vocab-grid">
+                <div class="vocab-item">
+                    <div class="vocab-term">Boilerplate:</div>
+                    <div class="vocab-definition">A standardized paragraph at the end of a press release that provides a concise description of the company, its mission, and what it does. Ensures consistent brand identity across all official communications.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Embargo:</div>
+                    <div class="vocab-definition">An agreement with media outlets to withhold publication of specific news until a designated date and time. A high-stakes tactic used to coordinate and maximize the impact of major announcements.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Earned Media:</div>
+                    <div class="vocab-definition">Unpaid, third-party coverage of a brand generated through PR efforts rather than advertising. Considered the gold standard in PR because it carries higher credibility and authenticity.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Share of Voice (SOV):</div>
+                    <div class="vocab-definition">A metric that quantifies a brand's media presence or visibility compared to direct competitors within a specific timeframe or market.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Stakeholder Mapping:</div>
+                    <div class="vocab-definition">The process of identifying all individuals, groups, or organizations that can affect or are affected by a company's actions, categorizing them by influence and interest.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Message Strategy:</div>
+                    <div class="vocab-definition">A comprehensive plan that outlines key messages an organization wants to communicate, ensuring consistency and alignment with business objectives.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Crisis Communication:</div>
+                    <div class="vocab-definition">The specialized function of protecting and defending an organization's reputation during a public challenge, involving proactive planning and rapid response.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Front Group:</div>
+                    <div class="vocab-definition">An organization that purports to represent one agenda while secretly serving a different, often corporate or political, interest. Understanding this helps recognize unethical practices.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Thought Leadership:</div>
+                    <div class="vocab-definition">A proactive PR strategy focused on positioning an organization or executives as credible, authoritative experts within their industry.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Psychographics:</div>
+                    <div class="vocab-definition">Audience segmentation based on psychological attributes like values, beliefs, attitudes, interests, and lifestyles, as opposed to just demographics.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Media Impressions:</div>
+                    <div class="vocab-definition">The total number of times a piece of content is potentially seen by an audience, calculated based on circulation or viewership numbers.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Pitch:</div>
+                    <div class="vocab-definition">A highly targeted, concise message sent to a journalist or editor to gauge their interest in covering a specific story, client, or event.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Byline:</div>
+                    <div class="vocab-definition">The line in a publication that names the writer of an article. A "bylined article" is one authored by a company expert and placed in a media outlet.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Backgrounder:</div>
+                    <div class="vocab-definition">A supplementary document that provides in-depth historical or technical context about a company, product, or issue to educate journalists.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Media Relations:</div>
+                    <div class="vocab-definition">The strategic management of relationships and communication with journalists, editors, and producers to secure favorable media coverage.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Public Affairs:</div>
+                    <div class="vocab-definition">The branch of PR that deals with public policy and building relationships with governmental bodies to influence public opinion and policy.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Investor Relations (IR):</div>
+                    <div class="vocab-definition">The specialized corporate communications function that manages communication between a company, its investors, and the financial community.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Owned Media:</div>
+                    <div class="vocab-definition">Communication channels that an organization controls directly, such as its corporate website, blog, social media profiles, and newsletters.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">B-roll:</div>
+                    <div class="vocab-definition">Supplemental or alternative video footage that is intercut with the main shot in a video production, provided to television news outlets.</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="vocab-term">Spokesperson:</div>
+                    <div class="vocab-definition">A person designated and trained to speak on behalf of an organization to the media and the public during interviews and crises.</div>
+                </div>
             </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)">Embargo:</strong> An
-              agreement with media outlets to withhold publication of specific
-              news until a designated date and time. A high-stakes tactic used
-              to coordinate and maximize the impact of major announcements.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)">Earned Media:</strong>
-              Unpaid, third-party coverage of a brand generated through PR
-              efforts rather than advertising. Considered the gold standard in
-              PR because it carries higher credibility and authenticity.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)"
-                >Share of Voice (SOV):</strong
-              >
-              A metric that quantifies a brand's media presence or visibility
-              compared to direct competitors within a specific timeframe or
-              market.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)"
-                >Stakeholder Mapping:</strong
-              >
-              The process of identifying all individuals, groups, or
-              organizations that can affect or are affected by a company's
-              actions, categorizing them by influence and interest.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)"
-                >Message Strategy:</strong
-              >
-              A comprehensive plan that outlines key messages an organization
-              wants to communicate, ensuring consistency and alignment with
-              business objectives.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)"
-                >Crisis Communication:</strong
-              >
-              The specialized function of protecting and defending an
-              organization's reputation during a public challenge, involving
-              proactive planning and rapid response.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)">Front Group:</strong>
-              An organization that purports to represent one agenda while
-              secretly serving a different, often corporate or political,
-              interest. Understanding this helps recognize unethical practices.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)"
-                >Thought Leadership:</strong
-              >
-              A proactive PR strategy focused on positioning an organization or
-              executives as credible, authoritative experts within their
-              industry.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)"
-                >Psychographics:</strong
-              >
-              Audience segmentation based on psychological attributes like
-              values, beliefs, attitudes, interests, and lifestyles, as opposed
-              to just demographics.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)"
-                >Media Impressions:</strong
-              >
-              The total number of times a piece of content is potentially seen
-              by an audience, calculated based on circulation or viewership
-              numbers.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)">Pitch:</strong> A
-              highly targeted, concise message sent to a journalist or editor to
-              gauge their interest in covering a specific story, client, or
-              event.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)">Byline:</strong> The
-              line in a publication that names the writer of an article. A
-              "bylined article" is one authored by a company expert and placed
-              in a media outlet.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)">Backgrounder:</strong>
-              A supplementary document that provides in-depth historical or
-              technical context about a company, product, or issue to educate
-              journalists.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)"
-                >Media Relations:</strong
-              >
-              The strategic management of relationships and communication with
-              journalists, editors, and producers to secure favorable media
-              coverage.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)"
-                >Public Affairs:</strong
-              >
-              The branch of PR that deals with public policy and building
-              relationships with governmental bodies to influence public opinion
-              and policy.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)"
-                >Investor Relations (IR):</strong
-              >
-              The specialized corporate communications function that manages
-              communication between a company, its investors, and the financial
-              community.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)">Owned Media:</strong>
-              Communication channels that an organization controls directly,
-              such as its corporate website, blog, social media profiles, and
-              newsletters.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)">B-roll:</strong>
-              Supplemental or alternative video footage that is intercut with
-              the main shot in a video production, provided to television news
-              outlets.
-            </div>
-            <div
-              style="
-                background: rgba(251, 191, 36, 0.05);
-                border: 1px solid rgba(251, 191, 36, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-              "
-            >
-              <strong style="color: var(--voice-premium)">Spokesperson:</strong>
-              A person designated and trained to speak on behalf of an
-              organization to the media and the public during interviews and
-              crises.
-            </div>
-          </div>
-        </div>
+        </section>
 
         <!-- Communication Pillars Section -->
-        <div
-          style="
-            background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-          "
-        >
-          <h2
-            style="
-              color: #1a202c;
-              font-size: 2rem;
-              font-weight: 600;
-              margin-bottom: 1rem;
-            "
-          >
-            2. The Pillars of Effective Communication: 10 Core Elements
-          </h2>
-          <div style="display: grid; gap: 1.5rem">
+        <section class="content-section">
+            <h2>2. The Pillars of Effective Communication: 10 Core Elements</h2>
+            <div class="pillars-grid">
             <div
               style="
                 background: rgba(251, 191, 36, 0.05);
@@ -473,7 +478,7 @@
                 border-radius: 0.5rem;
               "
             >
-              <strong style="color: var(--voice-premium); font-size: 1.1rem"
+              <strong style="color: var(--voice-primary); font-size: 1.1rem"
                 >Strategic Alignment with Business Objectives:</strong
               >
               <p
@@ -841,40 +846,21 @@
             </div>
           </div>
         </div>
-      </div>
-    </main>
+    </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>Communication Practice</h3>
-          <a href="casual-conversation-practice.html">Casual Conversation</a>
-          <a href="professional-communication.html">Professional</a>
-          <a href="personal-communication.html">Personal</a>
-        </div>
-        <div class="footer-section">
-          <h3>Analysis Tools</h3>
-          <a href="speech-analysis.html">Speech Analysis</a>
-          <a href="presentation-analysis.html">Presentation Skills</a>
-          <a href="conflict-resolution-analysis.html">Conflict Resolution</a>
-        </div>
-        <div class="footer-section">
-          <h3>Learning Hub</h3>
-          <a href="improvement-hub-dashboard.html">Improvement Hub</a>
-          <a href="active-listening-science.html">Active Listening</a>
-          <a href="body-language-science.html">Body Language</a>
-        </div>
-        <div class="footer-section">
-          <h3>Support</h3>
-          <a href="faq.html">FAQ</a>
-          <a href="pricing.html">Pricing</a>
-          <a href="testimonials.html">Testimonials</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2024 Articulaition. All rights reserved.</p>
-      </div>
-    </footer>
-  </body>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
 </html>
